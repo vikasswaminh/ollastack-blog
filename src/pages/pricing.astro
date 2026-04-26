@@ -1,0 +1,234 @@
+---
+import Base from "../layouts/Base.astro";
+const APP = "https://login.form4dev.com";
+
+const tiers = [
+  {
+    name: "Free",
+    price: "₹0",
+    period: "forever",
+    blurb: "Hobby projects, demos, side hustles.",
+    features: [
+      "100 submissions / month",
+      "Unlimited forms",
+      "Spam filter + honeypot",
+      "Webhooks (1 retry)",
+      "CSV export",
+      "Community support",
+    ],
+    cta: "Start free",
+    href: `${APP}/register`,
+    emphasis: false,
+  },
+  {
+    name: "Pro",
+    price: "₹499",
+    period: "/ month",
+    blurb: "Indie devs and small teams.",
+    features: [
+      "10,000 submissions / month",
+      "CAPTCHA (Turnstile / hCaptcha / reCAPTCHA)",
+      "Webhooks with retry + replay",
+      "Slack, Discord, Telegram, Sheets",
+      "Personal API tokens",
+      "JSON + Excel export",
+      "Email support",
+    ],
+    cta: "Subscribe",
+    href: `${APP}/register?plan=pro`,
+    emphasis: true,
+  },
+  {
+    name: "Business",
+    price: "₹1,999",
+    period: "/ month",
+    blurb: "Production teams shipping at scale.",
+    features: [
+      "100,000 submissions / month",
+      "Razorpay payments plugin",
+      "Multi-step + conditional logic",
+      "Custom email templates per form",
+      "Submission retention policies",
+      "Org members + roles",
+      "Priority support",
+    ],
+    cta: "Subscribe",
+    href: `${APP}/register?plan=business`,
+    emphasis: false,
+  },
+];
+
+const faqs = [
+  { q: "What counts as a submission?", a: "Any successful POST to your form endpoint. Spam-flagged submissions count toward the quota only after they pass through filters; honeypot-rejected ones don't." },
+  { q: "Do you store the form payload?", a: "Yes — until you delete it or until your form's retention policy expires. You can also configure auto-delete after N days per form." },
+  { q: "Can I bring my own SMTP?", a: "Yes. Form4Dev sends notifications via Resend by default, but you can configure SMTP per workspace." },
+  { q: "Is there an EU / India data residency option?", a: "Indian (ap-northeast-1) by default. EU residency is on the Business+ tier — talk to us." },
+  { q: "How do refunds work?", a: "Cancel any time and the next billing cycle is skipped. No prorated refunds on the current cycle." },
+];
+---
+
+<Base current="pricing" title="Pricing — Form4Dev">
+  <section class="head">
+    <div class="container-wide">
+      <span class="eyebrow mono">/ pricing</span>
+      <h1 class="display title">Simple. Transparent. INR.</h1>
+      <p class="sub">No per-seat tax. No support tax. Pay for the volume you actually receive.</p>
+    </div>
+  </section>
+
+  <section class="tiers">
+    <div class="container-wide tier-grid">
+      {tiers.map((t) => (
+        <article class={`tier card ${t.emphasis ? "emph" : ""}`}>
+          {t.emphasis && <span class="badge">Most popular</span>}
+          <h3 class="tier-name">{t.name}</h3>
+          <div class="tier-price">
+            <strong>{t.price}</strong>
+            <span class="period mono">{t.period}</span>
+          </div>
+          <p class="tier-blurb">{t.blurb}</p>
+          <a href={t.href} class={`btn btn-lg ${t.emphasis ? "btn-accent" : "btn-ghost"}`}>{t.cta}</a>
+          <hr class="hr" />
+          <ul>
+            {t.features.map((f) => (
+              <li>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 12l5 5L20 7"/></svg>
+                <span>{f}</span>
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="faq">
+    <div class="container">
+      <span class="eyebrow mono">/ faq</span>
+      <h2 class="display section-title">Frequently asked questions</h2>
+      <div class="faq-list">
+        {faqs.map((f) => (
+          <details class="faq-item">
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .head { padding: 80px 0 40px; }
+  .title { font-size: 56px; margin: 18px 0 12px; letter-spacing: -0.03em; line-height: 1; }
+  .sub { font-size: 18px; color: var(--muted); max-width: 580px; margin: 0; }
+  .eyebrow {
+    color: var(--muted);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .tiers { padding: 24px 0 80px; }
+  .tier-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .tier {
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .tier.emph {
+    border-color: var(--ink);
+    box-shadow: 0 24px 48px -16px rgba(10, 10, 10, 0.18);
+  }
+  .badge {
+    position: absolute;
+    top: -10px;
+    left: 28px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-weight: 500;
+  }
+  .tier-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--muted);
+    margin: 0 0 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-family: var(--font-mono);
+  }
+  .tier-price {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+  .tier-price strong {
+    font-size: 40px;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1;
+  }
+  .tier-price .period { color: var(--muted); font-size: 13px; }
+  .tier-blurb { color: var(--muted); font-size: 14px; min-height: 42px; margin: 0 0 20px; }
+  .tier .hr { margin: 24px 0 18px; }
+  .tier ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .tier li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--ink-2);
+  }
+  .tier li svg {
+    color: var(--accent);
+    margin-top: 4px;
+    flex-shrink: 0;
+  }
+
+  .faq { padding: 56px 0 80px; }
+  .section-title { font-size: 36px; margin: 14px 0 32px; letter-spacing: -0.02em; }
+  .faq-list { display: flex; flex-direction: column; gap: 0; border-top: 1px solid var(--line); }
+  .faq-item {
+    border-bottom: 1px solid var(--line);
+    padding: 20px 0;
+  }
+  .faq-item summary {
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .faq-item summary::after {
+    content: "+";
+    color: var(--muted);
+    font-size: 20px;
+    font-weight: 400;
+  }
+  .faq-item[open] summary::after { content: "−"; }
+  .faq-item p { margin: 12px 0 0; color: var(--muted); font-size: 15px; line-height: 1.6; }
+
+  @media (max-width: 900px) {
+    .tier-grid { grid-template-columns: 1fr; }
+    .title { font-size: 40px; }
+  }
+</style>

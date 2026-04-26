@@ -1,0 +1,209 @@
+---
+import Base from "../layouts/Base.astro";
+const APP = "https://login.form4dev.com";
+
+const sections = [
+  { id: "quickstart", title: "Quickstart" },
+  { id: "html", title: "HTML form" },
+  { id: "react", title: "React" },
+  { id: "fetch", title: "fetch / curl" },
+  { id: "magic-fields", title: "Magic fields" },
+  { id: "captcha", title: "CAPTCHA" },
+  { id: "webhooks", title: "Webhooks" },
+  { id: "errors", title: "Error responses" },
+];
+---
+
+<Base current="docs" title="Docs — Form4Dev">
+  <div class="docs-shell container-wide">
+    <aside class="sidebar">
+      <div class="side-eyebrow mono">/ docs</div>
+      <nav>
+        <ul>
+          {sections.map((s) => (
+            <li><a href={`#${s.id}`}>{s.title}</a></li>
+          ))}
+        </ul>
+      </nav>
+    </aside>
+
+    <article class="content">
+      <h1 class="display">Get a form working in 30 seconds.</h1>
+      <p class="lede">
+        Create a form in the dashboard, copy the endpoint URL, point an HTML
+        <code>action=</code> at it. That's the whole quickstart.
+      </p>
+
+      <h2 id="quickstart">Quickstart</h2>
+      <ol>
+        <li>Sign up at <a href={`${APP}/register`}>{APP.replace('https://','')}/register</a> and verify your email.</li>
+        <li>Click <strong>Create form</strong>, name it, copy the endpoint URL — it looks like <code>https://login.form4dev.com/api/submit/&lt;slug&gt;</code>.</li>
+        <li>Submit to it from anywhere. That's it.</li>
+      </ol>
+
+      <h2 id="html">HTML form</h2>
+      <pre class="code"><span class="t">&lt;form</span> <span class="a">action</span>=<span class="s">"https://login.form4dev.com/api/submit/contact"</span> <span class="a">method</span>=<span class="s">"POST"</span><span class="t">&gt;</span>
+  <span class="t">&lt;input</span> <span class="a">name</span>=<span class="s">"email"</span> <span class="a">type</span>=<span class="s">"email"</span> <span class="a">required</span><span class="t">&gt;</span>
+  <span class="t">&lt;textarea</span> <span class="a">name</span>=<span class="s">"message"</span> <span class="a">required</span><span class="t">&gt;&lt;/textarea&gt;</span>
+  <span class="t">&lt;input</span> <span class="a">type</span>=<span class="s">"text"</span> <span class="a">name</span>=<span class="s">"_gotcha"</span> <span class="a">style</span>=<span class="s">"display:none"</span><span class="t">&gt;</span>
+  <span class="t">&lt;button&gt;</span>Send<span class="t">&lt;/button&gt;</span>
+<span class="t">&lt;/form&gt;</span></pre>
+      <p class="muted-note"><strong><code>_gotcha</code></strong> is the honeypot — leave it empty in your real form, bots will fill it.</p>
+
+      <h2 id="react">React</h2>
+      <pre class="code"><span class="k">import</span> <span class="p">{`{`}</span> useForm, ValidationError <span class="p">{`}`}</span> <span class="k">from</span> <span class="s">"@form4dev/react"</span><span class="p">;</span>
+
+<span class="k">export function</span> <span class="fn">Contact</span><span class="p">() {`{`}</span>
+  <span class="k">const</span> <span class="p">[</span>state, handleSubmit<span class="p">]</span> <span class="p">=</span> <span class="fn">useForm</span><span class="p">(</span><span class="s">"contact"</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span>state.succeeded<span class="p">)</span> <span class="k">return</span> <span class="s">&lt;p&gt;Thanks!&lt;/p&gt;</span><span class="p">;</span>
+
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="t">&lt;form onSubmit=</span><span class="p">{`{`}</span>handleSubmit<span class="p">{`}`}</span><span class="t">&gt;</span>
+      <span class="t">&lt;input name="email" type="email" required/&gt;</span>
+      <span class="t">&lt;ValidationError errors=</span><span class="p">{`{`}</span>state.errors<span class="p">{`}`}</span><span class="t"> field="email"/&gt;</span>
+      <span class="t">&lt;button disabled=</span><span class="p">{`{`}</span>state.submitting<span class="p">{`}`}</span><span class="t">&gt;Send&lt;/button&gt;</span>
+    <span class="t">&lt;/form&gt;</span>
+  <span class="p">);</span>
+<span class="p">{`}`}</span></pre>
+
+      <h2 id="fetch">fetch / curl</h2>
+      <pre class="code"><span class="k">curl</span> -X POST https://login.form4dev.com/api/submit/contact \
+     -H <span class="s">"Content-Type: application/json"</span> \
+     -d <span class="s">'{`{`}"email":"ada@example.com","message":"hi"{`}`}'</span></pre>
+
+      <h2 id="magic-fields">Magic fields</h2>
+      <p>Drop these special fields into your payload and we'll route or label things automatically.</p>
+      <table>
+        <thead><tr><th>field</th><th>behavior</th></tr></thead>
+        <tbody>
+          <tr><td><code>_replyto</code></td><td>Reply-To on the notification + autoresponder target.</td></tr>
+          <tr><td><code>_subject</code></td><td>Overrides the notification subject.</td></tr>
+          <tr><td><code>_cc</code> / <code>_bcc</code></td><td>Comma-separated extra recipients.</td></tr>
+          <tr><td><code>_next</code></td><td>Override the success-redirect URL.</td></tr>
+          <tr><td><code>_gotcha</code></td><td>Honeypot — leave blank. Filled = bot.</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="captcha">CAPTCHA</h2>
+      <p>An admin configures the provider once in system settings. Per-form, toggle <code>captchaRequired</code>. The submit endpoint accepts the token via the <code>X-Captcha-Token</code> header or the <code>_captcha</code> field. Supported: Cloudflare Turnstile, reCAPTCHA v2 + v3, hCaptcha.</p>
+
+      <h2 id="webhooks">Webhooks</h2>
+      <p>Add a webhook URL on the form's settings page. Every successful, non-spam submission POSTs the payload with an <code>X-Form4Dev-Signature</code> header (HMAC-SHA256 of the raw body, hex). Failed deliveries retry with exponential backoff for up to 5 attempts; the dashboard shows full delivery history.</p>
+
+      <h2 id="errors">Error responses</h2>
+      <table>
+        <thead><tr><th>status</th><th>code</th><th>meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code>400</code></td><td><code>VALIDATION_ERROR</code></td><td><code>error.details</code> maps field id → list of messages.</td></tr>
+          <tr><td><code>401</code></td><td>—</td><td>CAPTCHA token missing or rejected.</td></tr>
+          <tr><td><code>403</code></td><td><code>ORIGIN_NOT_ALLOWED</code></td><td>Submitting from a non-allowlisted origin.</td></tr>
+          <tr><td><code>429</code></td><td><code>RATE_LIMITED</code></td><td>Per-IP, per-form, or org quota exceeded.</td></tr>
+        </tbody>
+      </table>
+    </article>
+  </div>
+</Base>
+
+<style>
+  .docs-shell {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 56px;
+    padding: 64px 28px 96px;
+  }
+  .sidebar {
+    position: sticky;
+    top: 80px;
+    align-self: start;
+  }
+  .side-eyebrow {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 14px;
+  }
+  .sidebar nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .sidebar nav a {
+    display: block;
+    padding: 6px 10px;
+    border-radius: 6px;
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .sidebar nav a:hover {
+    background: var(--bg-sunken);
+    color: var(--ink);
+  }
+  .content { max-width: 720px; }
+  .content h1 { font-size: 44px; margin: 0 0 14px; letter-spacing: -0.02em; line-height: 1.05; }
+  .content h2 {
+    font-size: 22px;
+    margin: 48px 0 12px;
+    letter-spacing: -0.01em;
+    scroll-margin-top: 80px;
+  }
+  .content .lede { font-size: 18px; color: var(--muted); line-height: 1.6; max-width: 600px; }
+  .content p { line-height: 1.7; margin: 0 0 14px; }
+  .content code {
+    background: var(--bg-sunken);
+    border: 1px solid var(--line);
+    padding: 0 5px;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+  }
+  .content ol { line-height: 1.8; padding-left: 24px; }
+  .content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 14px;
+  }
+  .content th, .content td {
+    border-bottom: 1px solid var(--line);
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  .content th {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+  .muted-note {
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .code {
+    background: var(--code-bg);
+    color: var(--code-fg);
+    border-radius: 12px;
+    padding: 18px 22px;
+    font-family: var(--font-mono);
+    font-size: 13.5px;
+    line-height: 1.7;
+    overflow-x: auto;
+    white-space: pre;
+    margin: 8px 0 14px;
+  }
+  .code .k { color: var(--code-key); }
+  .code .s { color: var(--code-str); }
+  .code .p { color: var(--code-pun); }
+  .code .t { color: #6cd3ff; }
+  .code .a { color: var(--accent); }
+  .code .fn { color: #fff; font-weight: 500; }
+  @media (max-width: 900px) {
+    .docs-shell { grid-template-columns: 1fr; }
+    .sidebar { position: static; }
+  }
+</style>
