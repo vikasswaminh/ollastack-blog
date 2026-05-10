@@ -1,44 +1,74 @@
 @import url("https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap");
 
+/* Daytona-inspired tokens — clean monochrome, one saturated accent,
+   thin neutral borders, dense mono usage for labels. */
 :root {
+  /* Surfaces — pure white page, faint sunken sections. */
+  --bg: #ffffff;
+  --bg-elev: #fafafa;
+  --bg-sunken: #f4f4f5;
+  --bg-deep: #ebebed;
+
+  /* Ink scale */
   --ink: #0a0a0a;
-  --ink-2: #1a1a1a;
-  --muted: #5a5a5a;
-  --muted-2: #8a8a8a;
-  --line: #e7e7e4;
-  --line-2: #efefec;
-  --bg: #fafaf7;
-  --bg-elev: #ffffff;
-  --bg-sunken: #f3f2ed;
-  --accent: #c4fc5c;
-  --accent-2: #b5f23c;
-  --accent-soft: #ecfbc8;
-  --accent-ink: #0a0a0a;
-  --ok: #0a8f3a;
-  --err: #c1351d;
+  --ink-2: #18181b;
+  --muted: #52525b;
+  --muted-2: #8a8a93;
+  --muted-3: #b4b4ba;
+
+  /* Hairlines */
+  --line: #e5e5e7;
+  --line-2: #ddddde;
+  --line-3: #f0f0f1;
+
+  /* Accent — single saturated electric blue, used sparingly. */
+  --accent: #0066ff;
+  --accent-2: #0052cc;
+  --accent-soft: #e7efff;
+  --accent-ink: #ffffff;
+
+  /* Status (rarely used on marketing) */
+  --ok: #16a34a;
+  --err: #dc2626;
+
+  /* Code block — dark theme on light page, like Daytona's hero sample */
   --code-bg: #0a0a0a;
-  --code-fg: #e9e9e4;
-  --code-key: #c4fc5c;
-  --code-str: #f0b36a;
-  --code-num: #8cd3ff;
-  --code-com: #5a5a54;
-  --code-pun: #9a9a94;
+  --code-bg-2: #141414;
+  --code-fg: #e6e6e9;
+  --code-com: #6b7280;
+  --code-pun: #a1a1aa;
+  --code-key: #93c5fd;       /* blue tint for keywords */
+  --code-str: #86efac;       /* green for strings */
+  --code-num: #fcd34d;       /* warm for numbers */
+  --code-var: #f9a8d4;       /* pink for vars */
+  --code-fn: #fda4af;
+  --code-cmd: #ffffff;       /* shell commands */
+  --code-prompt: #93c5fd;
+  --code-ok: #86efac;
 
   --font-sans: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
-  --container: 1200px;
-  --container-wide: 1320px;
+  /* Container widths */
+  --container: 1180px;
+  --container-wide: 1260px;
+
+  /* Radii — Daytona uses tight 6-8px rather than soft 14px */
+  --r-1: 4px;
+  --r-2: 6px;
+  --r-3: 8px;
+  --r-4: 12px;
+
+  /* Subtle shadow only on dark surfaces */
+  --shadow-card: 0 1px 0 rgba(10, 10, 10, 0.04);
+  --shadow-deep: 0 24px 48px -16px rgba(10, 10, 10, 0.18);
 }
 
 *,
 *::before,
-*::after {
-  box-sizing: border-box;
-}
+*::after { box-sizing: border-box; }
 
-html,
-body {
+html, body {
   margin: 0;
   padding: 0;
   background: var(--bg);
@@ -51,10 +81,7 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+a { color: inherit; text-decoration: none; }
 
 button {
   font: inherit;
@@ -66,13 +93,11 @@ button {
 }
 
 ::selection {
-  background: var(--accent);
-  color: var(--accent-ink);
+  background: var(--ink);
+  color: #fff;
 }
 
-.mono {
-  font-family: var(--font-mono);
-}
+.mono { font-family: var(--font-mono); }
 
 .container {
   max-width: var(--container);
@@ -86,82 +111,74 @@ button {
   padding: 0 28px;
 }
 
+/* Buttons — Daytona-style: tight 6-8px radius, bold weight, mono-ish letter spacing */
 .btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  height: 40px;
+  height: 38px;
   padding: 0 16px;
-  border-radius: 6px;
+  border-radius: var(--r-2);
   font-size: 14px;
   font-weight: 500;
   letter-spacing: -0.005em;
   border: 1px solid transparent;
   white-space: nowrap;
-  transition: transform 0.08s ease, background 0.15s ease, border-color 0.15s ease;
+  transition: transform 0.08s ease, background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
   cursor: pointer;
 }
-
-.btn:active {
-  transform: translateY(1px);
-}
+.btn:active { transform: translateY(1px); }
 
 .btn-primary {
   background: var(--ink);
   color: #ffffff;
   border-color: var(--ink);
 }
-
-.btn-primary:hover {
-  background: #000;
-}
+.btn-primary:hover { background: #000; }
 
 .btn-accent {
   background: var(--accent);
   color: var(--accent-ink);
-  border-color: var(--accent-2);
+  border-color: var(--accent);
 }
-
-.btn-accent:hover {
-  background: var(--accent-2);
-}
+.btn-accent:hover { background: var(--accent-2); border-color: var(--accent-2); }
 
 .btn-ghost {
   background: transparent;
   color: var(--ink);
-  border-color: var(--line);
+  border-color: var(--line-2);
 }
-
-.btn-ghost:hover {
-  background: var(--bg-sunken);
-}
+.btn-ghost:hover { background: var(--bg-sunken); border-color: var(--muted-3); }
 
 .btn-lg {
-  height: 48px;
+  height: 44px;
   padding: 0 22px;
-  font-size: 15px;
+  font-size: 14.5px;
 }
 
+.btn-sm {
+  height: 32px;
+  padding: 0 12px;
+  font-size: 13px;
+}
+
+/* Mono-style chip used as eyebrow */
 .chip {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  height: 24px;
-  padding: 0 10px;
+  height: 22px;
+  padding: 0 9px;
   border-radius: 999px;
-  background: var(--bg-elev);
+  background: var(--bg-sunken);
   border: 1px solid var(--line);
-  font-size: 12px;
+  font-size: 11.5px;
   color: var(--muted);
   font-family: var(--font-mono);
+  letter-spacing: 0.01em;
 }
 
-.chip-accent {
-  background: var(--accent-soft);
-  border-color: #d9f2a0;
-  color: #3d5c12;
-}
-
+/* Keyboard shortcut */
 .kbd {
   display: inline-flex;
   align-items: center;
@@ -171,17 +188,18 @@ button {
   padding: 0 6px;
   border: 1px solid var(--line);
   border-bottom-width: 2px;
-  border-radius: 4px;
+  border-radius: var(--r-1);
   background: var(--bg-elev);
   font-family: var(--font-mono);
   font-size: 11px;
   color: var(--muted);
 }
 
+/* Card — flat, hairline border, no rounded soft corners */
 .card {
-  background: var(--bg-elev);
+  background: var(--bg);
   border: 1px solid var(--line);
-  border-radius: 14px;
+  border-radius: var(--r-4);
 }
 
 .hr {
@@ -191,6 +209,7 @@ button {
   margin: 0;
 }
 
+/* Display headline — large, weight 600, very tight tracking */
 .display {
   font-family: var(--font-sans);
   font-weight: 600;
@@ -198,25 +217,36 @@ button {
   line-height: 0.98;
 }
 
+/* Eyebrow label — lowercase mono, single short token like "/ pricing" */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.01em;
+}
+
 :focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: 2px;
-  border-radius: 4px;
+  border-radius: var(--r-1);
 }
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: #ddd transparent;
+  scrollbar-color: #d4d4d8 transparent;
 }
 
-*::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
+*::-webkit-scrollbar { width: 10px; height: 10px; }
 *::-webkit-scrollbar-thumb {
-  background: #ddd;
+  background: #d4d4d8;
   border-radius: 999px;
   border: 2px solid transparent;
   background-clip: content-box;
+}
+
+/* Subtle dotted-grid background utility (Daytona uses this on hero/sections) */
+.dot-grid {
+  background-image: radial-gradient(circle, var(--line-2) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-position: -1px -1px;
 }

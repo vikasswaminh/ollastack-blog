@@ -2,10 +2,10 @@
 import Logo from "./Logo.astro";
 
 const groups = [
-  { title: "Product", items: ["Overview", "Quickstart", "Integrations", "Changelog"] },
+  { title: "Product",    items: ["Overview", "Quickstart", "Integrations", "Changelog"] },
   { title: "Developers", items: ["REST API", "JS SDK", "React SDK", "Webhooks"] },
-  { title: "Company", items: ["About", "Blog", "Careers", "Brand"] },
-  { title: "Legal", items: ["Privacy", "Terms", "Security", "DPA"] },
+  { title: "Company",    items: ["Pricing", "Library", "Blog", "Brand"] },
+  { title: "Legal",      items: ["Privacy", "Terms", "Security", "Contact"] },
 ];
 ---
 
@@ -15,14 +15,10 @@ const groups = [
       <div>
         <Logo size={22} />
         <p class="tagline">The form backend for developers who'd rather ship than configure.</p>
-        <div class="badges">
-          <span class="mono badge">SOC 2</span>
-          <span class="mono badge">GDPR</span>
-        </div>
       </div>
       {groups.map((g) => (
         <div>
-          <div class="group-title">{g.title}</div>
+          <div class="group-title mono">{g.title}</div>
           <ul>
             {g.items.map((item) => <li><a href="#">{item}</a></li>)}
           </ul>
@@ -31,10 +27,9 @@ const groups = [
     </div>
     <hr class="hr" />
     <div class="foot-bottom mono">
-      <span>© 2026 Form4Dev — All bytes reserved.</span>
-      <span class="status">
-        <span class="dot"></span>
-        All systems normal · 99.998% (30d)
+      <span>© 2026 Form4Dev</span>
+      <span class="foot-meta">
+        <a href="mailto:hello@form4dev.com">hello@form4dev.com</a>
       </span>
     </div>
   </div>
@@ -43,40 +38,27 @@ const groups = [
 <style>
   footer {
     border-top: 1px solid var(--line);
-    margin-top: 80px;
-    padding: 56px 0 32px;
+    margin-top: 0;
+    padding: 56px 0 28px;
     background: var(--bg);
   }
   .foot-grid {
     display: grid;
-    grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr 1fr;
     gap: 48px;
   }
   .tagline {
     color: var(--muted);
     font-size: 13px;
-    max-width: 260px;
-    margin: 14px 0 16px;
-    line-height: 1.6;
-  }
-  .badges {
-    display: flex;
-    gap: 8px;
-    margin-top: 14px;
-  }
-  .badge {
-    font-size: 11px;
-    padding: 2px 8px;
-    border-radius: 999px;
-    background: var(--bg-sunken);
-    border: 1px solid var(--line);
-    color: var(--muted);
+    max-width: 280px;
+    margin: 14px 0 0;
+    line-height: 1.55;
   }
   .group-title {
-    font-size: 12px;
+    font-size: 11px;
     color: var(--muted-2);
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.06em;
     font-weight: 500;
     margin-bottom: 14px;
   }
@@ -86,33 +68,29 @@ const groups = [
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 9px;
   }
   li a {
     font-size: 13px;
-    color: var(--ink-2);
+    color: var(--muted);
+    transition: color 0.12s ease;
   }
-  li a:hover {
-    color: var(--ink);
-  }
-  .hr { margin: 48px 0 20px; }
+  li a:hover { color: var(--ink); }
+  .hr { margin: 40px 0 18px; }
   .foot-bottom {
     display: flex;
     justify-content: space-between;
-    font-size: 12px;
-    color: var(--muted);
-  }
-  .status {
-    display: inline-flex;
     align-items: center;
-    gap: 8px;
+    font-size: 12px;
+    color: var(--muted-2);
   }
-  .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 999px;
-    background: var(--ok);
+  .foot-meta a {
+    color: var(--muted);
+    border-bottom: 1px solid transparent;
+    transition: color 0.12s ease, border-color 0.12s ease;
   }
+  .foot-meta a:hover { color: var(--ink); border-color: var(--muted-3); }
+
   @media (max-width: 760px) {
     .foot-grid { grid-template-columns: 1fr 1fr; }
     .foot-bottom { flex-direction: column; gap: 10px; }

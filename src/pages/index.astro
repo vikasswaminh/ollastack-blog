@@ -4,455 +4,600 @@ const APP = "https://login.form4dev.com";
 ---
 
 <Base current="home">
-  <!-- Hero ----------------------------------------------------------- -->
-  <section class="hero">
-    <div class="container-wide hero-inner">
+  <!-- =============================================================
+       1. ANNOUNCEMENT BANNER (top strip, dismissable in real impl)
+       ============================================================= -->
+  <div class="announce">
+    <div class="container-wide announce-inner">
+      <span class="announce-chip mono">NEW</span>
+      <span class="announce-text">
+        Form4Dev now sends notification emails from
+        <span class="mono announce-highlight">your form's display name</span>
+        — single-tenant brand polish, no DKIM setup required.
+      </span>
+      <a href="/changelog" class="announce-cta">Read changelog →</a>
+    </div>
+  </div>
+
+  <!-- =============================================================
+       2. HERO — left-aligned headline + subhead + CTA + tabbed code
+       ============================================================= -->
+  <section class="hero dot-grid">
+    <div class="container hero-inner">
       <span class="chip mono">
         <span class="dot"></span>
-        Forms as endpoints — built for developers
+        forms · for developers
       </span>
+
       <h1 class="display headline">
-        Forms<br />
-        for developers.<br />
-        <span class="accent-mark">Without the BS.</span>
+        The form backend<br/>
+        you'd build yourself.<br/>
+        <span class="muted">If you had the time.</span>
       </h1>
+
       <p class="subhead">
-        Point your HTML <code class="inline-code">action=</code> at a Form4Dev endpoint and you're done. Submissions land in a real inbox, fire webhooks, run through spam + captcha, and export anywhere — without you running a backend.
+        Point your HTML <code class="inline-code">action=</code> at a Form4Dev endpoint.
+        Submissions land in a real inbox, fire signed webhooks, run through spam +
+        captcha, and export anywhere — without you running a backend.
       </p>
+
       <div class="hero-ctas">
         <a class="btn btn-primary btn-lg" href={`${APP}/register`}>
           Start free
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </a>
         <a class="btn btn-ghost btn-lg" href="/docs">Read the docs</a>
-        <span class="kbd-hint">
-          <span class="kbd">⌘</span><span class="kbd">K</span> to search docs
-        </span>
       </div>
 
-      <!-- Terminal demo -->
-      <div class="terminal" aria-label="Quickstart terminal">
-        <div class="term-chrome">
-          <span class="dot red"></span>
-          <span class="dot yellow"></span>
-          <span class="dot green"></span>
-          <span class="term-title mono">~ ship a form in 30 seconds</span>
+      <!-- Tabbed code sample — Daytona pattern -->
+      <div class="code-tabs">
+        <div class="tabs-bar">
+          <button class="tab active" data-lang="curl">cURL</button>
+          <button class="tab" data-lang="js">fetch</button>
+          <button class="tab" data-lang="html">HTML</button>
+          <button class="tab" data-lang="react">React</button>
+          <span class="tabs-spacer"></span>
+          <span class="tabs-meta mono">$ ship a form in 30 seconds</span>
         </div>
-        <pre class="term-body"><span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.form4dev.com/api/submit/<span class="hl">contact</span> \
+
+        <pre class="code-pane" data-lang="curl"><span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.form4dev.com/api/submit/<span class="hl">contact</span> \
     -H <span class="str">"Content-Type: application/json"</span> \
-    -d <span class="str">'{`{`}"name":"Ada","message":"hi"{`}`}'</span>
-<span class="ok">{`{`} "success": true, "id": "sub_8f2…" {`}`}</span>
+    -d <span class="str">{`'{"name":"Ada","message":"hi"}'`}</span>
 
-<span class="prompt">$</span> <span class="cmd">tail</span> /forms/contact          <span class="comment"># real-time inbox</span>
-<span class="cur">▍</span></pre>
+<span class="ok">{`{"success": true, "id": "sub_8f2…"}`}</span></pre>
+
+        <pre class="code-pane hidden" data-lang="js"><span class="key">await</span> fetch(<span class="str">"https://login.form4dev.com/api/submit/contact"</span>, {`{`}
+  method: <span class="str">"POST"</span>,
+  headers: {`{`} <span class="str">"Content-Type"</span>: <span class="str">"application/json"</span> {`}`},
+  body: JSON.stringify({`{`} name, email, message {`}`}),
+{`}`});</pre>
+
+        <pre class="code-pane hidden" data-lang="html"><span class="pun">{`<form action=`}</span><span class="str">"https://login.form4dev.com/api/submit/contact"</span> method=<span class="str">"POST"</span><span class="pun">{`>`}</span>
+  <span class="pun">{`<input name=`}</span><span class="str">"email"</span> type=<span class="str">"email"</span> required<span class="pun">{`/>`}</span>
+  <span class="pun">{`<textarea name=`}</span><span class="str">"message"</span> required<span class="pun">{`/>`}</span>
+  <span class="pun">{`<button>`}</span>Send<span class="pun">{`</button>`}</span>
+<span class="pun">{`</form>`}</span></pre>
+
+        <pre class="code-pane hidden" data-lang="react"><span class="key">import</span> {`{`} useForm {`}`} <span class="key">from</span> <span class="str">"@form4dev/react"</span>;
+
+<span class="key">export function</span> <span class="fn">Contact</span>() {`{`}
+  <span class="key">const</span> [state, handleSubmit] = <span class="fn">useForm</span>(<span class="str">"contact"</span>);
+  <span class="key">if</span> (state.succeeded) <span class="key">return</span> <span class="str">{`<p>Thanks!</p>`}</span>;
+  <span class="key">return</span> (
+    <span class="str">{`<form onSubmit={handleSubmit}>...</form>`}</span>
+  );
+{`}`}</pre>
       </div>
+
+      <p class="hero-note mono">
+        Or copy a working form from <a href="/library">/library</a> — 10 production-ready templates.
+      </p>
     </div>
   </section>
 
-  <!-- Trusted by ---------------------------------------------------- -->
-  <section class="trust">
-    <div class="container-wide trust-inner">
-      <span class="trust-label mono">Trusted by indie devs and startups shipping fast</span>
-      <div class="trust-stats">
-        <div><strong>50ms</strong><span>p99 submit latency</span></div>
-        <div><strong>99.998%</strong><span>uptime (30d)</span></div>
-        <div><strong>13</strong><span>field types out of the box</span></div>
-        <div><strong>0</strong><span>servers you have to run</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Features ------------------------------------------------------ -->
-  <section class="features">
-    <div class="container-wide">
-      <div class="section-head">
-        <span class="eyebrow mono">/ features</span>
-        <h2 class="display section-title">Everything you'd build yourself.<br />Without doing any of it.</h2>
-      </div>
-
-      <div class="feature-grid">
-        <article class="card feature">
-          <div class="ico ico-shield"></div>
-          <h3>Spam, locked down by default</h3>
-          <p>Honeypot, regex blocklist, IP blocking, Akismet — and one-click <strong>Cloudflare Turnstile</strong>, <strong>reCAPTCHA</strong>, or <strong>hCaptcha</strong>.</p>
-        </article>
-
-        <article class="card feature">
-          <div class="ico ico-bolt"></div>
-          <h3>Webhooks with retry + replay</h3>
-          <p>HMAC-signed POSTs, exponential backoff, full delivery history. No more "did it fire?" debugging at 2am.</p>
-        </article>
-
-        <article class="card feature">
-          <div class="ico ico-form"></div>
-          <h3>13 field types, server-validated</h3>
-          <p>email · url · phone · date · select · radio · file · hidden · multi-step + <code>showIf</code>. The server enforces the schema, not the browser.</p>
-        </article>
-
-        <article class="card feature">
-          <div class="ico ico-card"></div>
-          <h3>Razorpay payments</h3>
-          <p>Turn any form into a paid form. Order created server-side, signature-verified callback, post-actions only fire on paid.</p>
-        </article>
-
-        <article class="card feature">
-          <div class="ico ico-plug"></div>
-          <h3>Slack, Discord, Telegram, Sheets</h3>
-          <p>One-click integrations + generic webhooks for everything else. Send a submission anywhere your team already lives.</p>
-        </article>
-
-        <article class="card feature">
-          <div class="ico ico-key"></div>
-          <h3>Personal API tokens</h3>
-          <p>Bearer-auth all the way through. Scope by capability, rotate from the dashboard, revoke instantly.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- Code split ----------------------------------------------------- -->
-  <section class="code-split">
-    <div class="container-wide split-inner">
-      <div>
-        <span class="eyebrow mono">/ react sdk</span>
-        <h2 class="display section-title">One hook.<br />Type-safe.</h2>
-        <p class="subhead-sm">
-          <code class="inline-code">@form4dev/react</code> exposes <code class="inline-code">useForm</code> with a discriminated-union response so you handle success and per-field errors without guessing. Zero deps beyond React.
-        </p>
-        <div class="code-meta mono">
-          <span>react ≥ 16.8</span>
-          <span>·</span>
-          <span>~2.1KB gzipped</span>
-        </div>
-      </div>
-      <pre class="code-panel mono"><span class="ln k">import</span> <span class="ln pn">{`{`} useForm, ValidationError {`}`}</span> <span class="ln k">from</span> <span class="ln s">"@form4dev/react"</span><span class="ln p">;</span>
-
-<span class="ln k">export function</span> <span class="ln pn">Contact</span><span class="ln p">() {`{`}</span>
-  <span class="ln k">const</span> <span class="ln p">[</span>state, handleSubmit<span class="ln p">]</span> <span class="ln p">=</span> <span class="ln pn">useForm</span><span class="ln p">(</span><span class="ln s">"contact"</span><span class="ln p">);</span>
-  <span class="ln k">if</span> <span class="ln p">(</span>state.succeeded<span class="ln p">)</span> <span class="ln k">return</span> <span class="ln s">&lt;p&gt;Thanks — we'll be in touch.&lt;/p&gt;</span><span class="ln p">;</span>
-
-  <span class="ln k">return</span> <span class="ln p">(</span>
-    <span class="ln s">&lt;form onSubmit={`{`}handleSubmit{`}`}&gt;</span>
-      <span class="ln s">&lt;input name=<span class="ln st">"email"</span> type=<span class="ln st">"email"</span> required/&gt;</span>
-      <span class="ln s">&lt;ValidationError errors={`{`}state.errors{`}`} field=<span class="ln st">"email"</span>/&gt;</span>
-      <span class="ln s">&lt;textarea name=<span class="ln st">"message"</span> required/&gt;</span>
-      <span class="ln s">&lt;button disabled={`{`}state.submitting{`}`}&gt;Send&lt;/button&gt;</span>
-    <span class="ln s">&lt;/form&gt;</span>
-  <span class="ln p">);</span>
-<span class="ln p">{`}`}</span></pre>
-    </div>
-  </section>
-
-  <!-- Big CTA -------------------------------------------------------- -->
-  <section class="cta">
+  <!-- =============================================================
+       3. PRICING — 3 tier USD plan
+       ============================================================= -->
+  <section class="pricing">
     <div class="container">
-      <div class="cta-card">
-        <h2 class="display cta-title">Ship the form. Skip the backend.</h2>
-        <p class="cta-sub">Free forever for hobby projects. No credit card. Inbox + webhooks + integrations on every plan.</p>
-        <div class="cta-actions">
-          <a class="btn btn-accent btn-lg" href={`${APP}/register`}>
-            Create your first form
-          </a>
-          <a class="btn btn-ghost btn-lg" href="/pricing">See pricing</a>
-        </div>
+      <div class="section-head">
+        <span class="eyebrow">/ pricing</span>
+        <h2 class="display section-title">
+          Honest pricing.<br/>
+          Pay for submissions, not seats.
+        </h2>
+        <p class="section-sub">
+          Hard limits, no overage charges. If you hit the cap, submissions queue —
+          they don't disappear, they don't auto-bill you.
+        </p>
+      </div>
+
+      <div class="price-grid">
+        <article class="price-card">
+          <header class="price-head">
+            <h3 class="price-name">Free</h3>
+            <p class="price-amount"><strong>$0</strong> <span class="muted">/ month</span></p>
+            <p class="price-blurb">For hobby projects and side hustles.</p>
+          </header>
+          <ul class="price-feats">
+            <li><strong>50</strong> submissions / month</li>
+            <li>Unlimited forms</li>
+            <li>Spam filter + honeypot</li>
+            <li>Webhooks (1 retry)</li>
+            <li>CSV export</li>
+            <li>Community support</li>
+          </ul>
+          <a class="btn btn-ghost btn-lg price-cta" href={`${APP}/register`}>Start free</a>
+        </article>
+
+        <article class="price-card price-card-pop">
+          <span class="price-pop-tag mono">most popular</span>
+          <header class="price-head">
+            <h3 class="price-name">Starter</h3>
+            <p class="price-amount"><strong>$5</strong> <span class="muted">/ month</span></p>
+            <p class="price-blurb">For indie devs and shipping freelancers.</p>
+          </header>
+          <ul class="price-feats">
+            <li><strong>250</strong> submissions / month</li>
+            <li>Everything in Free</li>
+            <li>CAPTCHA (Turnstile / hCaptcha / reCAPTCHA)</li>
+            <li>Webhooks with retry + replay</li>
+            <li>Slack, Discord, Telegram, Sheets</li>
+            <li>Personal API tokens</li>
+            <li>JSON + Excel export</li>
+            <li>Email support</li>
+          </ul>
+          <a class="btn btn-primary btn-lg price-cta" href={`${APP}/register?plan=starter`}>Get Starter</a>
+        </article>
+
+        <article class="price-card">
+          <header class="price-head">
+            <h3 class="price-name">Pro</h3>
+            <p class="price-amount"><strong>$10</strong> <span class="muted">/ month</span></p>
+            <p class="price-blurb">For production teams shipping at scale.</p>
+          </header>
+          <ul class="price-feats">
+            <li><strong>1,000</strong> submissions / month</li>
+            <li>Everything in Starter</li>
+            <li>Multi-step + conditional logic</li>
+            <li>Custom email templates per form</li>
+            <li>Submission retention policies</li>
+            <li>Org members + roles</li>
+            <li>Priority support</li>
+          </ul>
+          <a class="btn btn-ghost btn-lg price-cta" href={`${APP}/register?plan=pro`}>Get Pro</a>
+        </article>
+      </div>
+
+      <p class="price-foot mono">
+        Need more than 1,000/month? <a href="mailto:hello@form4dev.com">Talk to us →</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- =============================================================
+       4. CUSTOMER REVIEWS — real placeholders, no fake content
+       ============================================================= -->
+  <section class="reviews">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">/ what people say</span>
+        <h2 class="display section-title">
+          Reviews from the field.
+        </h2>
+        <p class="section-sub">
+          We're new — these slots fill up as real users ship and write in.
+          If you've shipped a form with us, drop us a line at
+          <a class="mono" href="mailto:hello@form4dev.com">hello@form4dev.com</a>.
+        </p>
+      </div>
+
+      <div class="review-grid">
+        <article class="review-card review-empty">
+          <span class="review-status mono">awaiting first review</span>
+          <p class="review-quote-empty">
+            "Your quote here."
+          </p>
+          <div class="review-attr">
+            <div class="avatar"></div>
+            <div>
+              <div class="review-name">— A real user</div>
+              <div class="review-role mono">role · company</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="review-card review-empty">
+          <span class="review-status mono">awaiting first review</span>
+          <p class="review-quote-empty">
+            "Your quote here."
+          </p>
+          <div class="review-attr">
+            <div class="avatar"></div>
+            <div>
+              <div class="review-name">— A real user</div>
+              <div class="review-role mono">role · company</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="review-card review-empty">
+          <span class="review-status mono">awaiting first review</span>
+          <p class="review-quote-empty">
+            "Your quote here."
+          </p>
+          <div class="review-attr">
+            <div class="avatar"></div>
+            <div>
+              <div class="review-name">— A real user</div>
+              <div class="review-role mono">role · company</div>
+            </div>
+          </div>
+        </article>
       </div>
     </div>
   </section>
 </Base>
 
+<script>
+  // Tab switching for the hero code sample
+  const tabs = document.querySelectorAll<HTMLButtonElement>(".tabs-bar .tab");
+  const panes = document.querySelectorAll<HTMLPreElement>(".code-pane");
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const lang = tab.dataset.lang;
+      tabs.forEach((t) => t.classList.toggle("active", t === tab));
+      panes.forEach((p) => p.classList.toggle("hidden", p.dataset.lang !== lang));
+    });
+  });
+</script>
+
 <style>
-  /* Hero */
-  .hero { padding: 88px 0 56px; }
-  .hero-inner { display: flex; flex-direction: column; align-items: flex-start; }
-  .headline {
-    font-size: 88px;
-    margin: 22px 0 24px;
-    letter-spacing: -0.04em;
-    line-height: 0.96;
-    max-width: 12ch;
+  /* ---- Announcement banner ---- */
+  .announce {
+    background: var(--ink);
+    color: #fff;
+    border-bottom: 1px solid #1f1f22;
   }
-  .accent-mark {
+  .announce-inner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 38px;
+    font-size: 13px;
+    color: #d4d4d8;
+  }
+  .announce-chip {
     background: var(--accent);
-    padding: 0 12px;
-    border-radius: 6px;
-    color: var(--accent-ink);
+    color: #ffffff;
+    border-radius: 4px;
+    padding: 2px 7px;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
   }
+  .announce-text { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .announce-highlight { color: #fff; }
+  .announce-cta {
+    color: #fff;
+    font-size: 13px;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.12s ease;
+  }
+  .announce-cta:hover { border-color: #fff; }
+
+  /* ---- Hero ---- */
+  .hero {
+    padding: 88px 0 64px;
+    border-bottom: 1px solid var(--line);
+  }
+  .hero-inner { display: flex; flex-direction: column; align-items: flex-start; }
+  .chip .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.18);
+  }
+
+  .headline {
+    font-size: 80px;
+    margin: 22px 0 22px;
+    letter-spacing: -0.04em;
+    line-height: 0.97;
+    max-width: 14ch;
+    color: var(--ink);
+  }
+  .headline .muted { color: var(--muted-2); font-weight: 500; }
+
   .subhead {
-    font-size: 19px;
+    font-size: 18px;
     color: var(--muted);
     line-height: 1.55;
     max-width: 620px;
-    margin: 0 0 32px;
+    margin: 0 0 28px;
   }
   .inline-code {
     background: var(--bg-sunken);
     border: 1px solid var(--line);
-    padding: 0 6px;
-    border-radius: 4px;
+    padding: 1px 6px;
+    border-radius: var(--r-1);
     font-family: var(--font-mono);
     font-size: 0.92em;
   }
   .hero-ctas {
     display: flex;
     align-items: center;
-    gap: 14px;
-    margin-bottom: 56px;
+    gap: 10px;
+    margin-bottom: 48px;
     flex-wrap: wrap;
   }
-  .kbd-hint {
-    color: var(--muted);
-    font-size: 12px;
-    margin-left: 8px;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
+
+  .hero-note {
+    margin-top: 20px;
+    color: var(--muted-2);
+    font-size: 12.5px;
   }
-  .chip .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 999px;
-    background: var(--accent);
-    box-shadow: 0 0 0 4px rgba(196, 252, 92, 0.18);
+  .hero-note a {
+    color: var(--ink);
+    border-bottom: 1px dashed var(--muted-3);
   }
 
-  /* Terminal */
-  .terminal {
+  /* ---- Code tabs ---- */
+  .code-tabs {
     width: 100%;
     max-width: 920px;
     background: var(--code-bg);
     color: var(--code-fg);
-    border-radius: 14px;
+    border-radius: var(--r-3);
     overflow: hidden;
-    box-shadow: 0 24px 48px -16px rgba(10, 10, 10, 0.18);
+    box-shadow: var(--shadow-deep);
     font-family: var(--font-mono);
+    border: 1px solid #1f1f22;
   }
-  .term-chrome {
+  .tabs-bar {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 10px 14px;
-    border-bottom: 1px solid #1f1f1f;
-    background: #0e0e0e;
+    gap: 2px;
+    padding: 6px 6px 0;
+    background: var(--code-bg-2);
+    border-bottom: 1px solid #1f1f22;
+    overflow-x: auto;
   }
-  .term-chrome .dot {
-    width: 11px;
-    height: 11px;
-    border-radius: 999px;
+  .tab {
+    background: transparent;
+    color: var(--muted-2);
+    padding: 8px 14px;
+    border-radius: var(--r-2) var(--r-2) 0 0;
+    font-size: 12.5px;
+    font-family: var(--font-mono);
+    border: 1px solid transparent;
+    border-bottom: 0;
+    margin-bottom: -1px;
+    cursor: pointer;
+    transition: color 0.12s ease, background 0.12s ease;
   }
-  .term-chrome .red { background: #ff5f56; }
-  .term-chrome .yellow { background: #ffbd2e; }
-  .term-chrome .green { background: #27c93f; }
-  .term-title { color: #777; font-size: 12px; margin-left: auto; }
-  .term-body {
+  .tab:hover { color: var(--code-fg); }
+  .tab.active {
+    color: var(--code-fg);
+    background: var(--code-bg);
+    border-color: #1f1f22;
+  }
+  .tabs-spacer { flex: 1; }
+  .tabs-meta {
+    color: #6b7280;
+    font-size: 11.5px;
+    padding: 0 10px;
+  }
+  .code-pane {
     padding: 22px 26px;
-    font-size: 13.5px;
+    font-size: 13px;
     line-height: 1.7;
     margin: 0;
     white-space: pre-wrap;
-    word-break: break-all;
+    word-break: break-word;
   }
-  .term-body .prompt { color: var(--accent); margin-right: 8px; }
-  .term-body .cmd { color: #fff; font-weight: 600; }
-  .term-body .str { color: var(--code-str); }
-  .term-body .hl { color: var(--accent); font-weight: 500; }
-  .term-body .ok { color: var(--accent); display: inline-block; margin-top: 6px; }
-  .term-body .comment { color: var(--code-com); }
-  .term-body .cur {
-    color: var(--accent);
-    animation: blink 1s steps(1) infinite;
+  .code-pane.hidden { display: none; }
+  .code-pane .prompt { color: var(--code-prompt); margin-right: 8px; }
+  .code-pane .cmd    { color: var(--code-cmd); font-weight: 600; }
+  .code-pane .str    { color: var(--code-str); }
+  .code-pane .key    { color: var(--code-key); }
+  .code-pane .fn     { color: var(--code-fn); }
+  .code-pane .pun    { color: var(--code-pun); }
+  .code-pane .hl     { color: var(--accent); }
+  .code-pane .ok     { color: var(--code-ok); display: inline-block; margin-top: 8px; }
+
+  /* ---- Section heads ---- */
+  .section-head {
+    margin-bottom: 40px;
+    max-width: 720px;
   }
-  @keyframes blink {
-    50% { opacity: 0; }
+  .section-head .eyebrow { display: inline-block; margin-bottom: 12px; }
+  .section-title {
+    font-size: 40px;
+    margin: 0 0 16px;
+    letter-spacing: -0.025em;
+  }
+  .section-sub {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin: 0;
+    max-width: 560px;
+  }
+  .section-sub a {
+    color: var(--ink);
+    border-bottom: 1px dashed var(--muted-3);
   }
 
-  /* Trust strip */
-  .trust { padding: 48px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--bg-elev); }
-  .trust-inner { display: flex; flex-direction: column; gap: 24px; }
-  .trust-label {
-    color: var(--muted);
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
-  .trust-stats {
+  /* ---- Pricing ---- */
+  .pricing { padding: 88px 0; }
+  .price-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0;
-    border-top: 1px solid var(--line-2);
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    align-items: stretch;
   }
-  .trust-stats > div {
-    padding: 24px 0;
-    border-right: 1px solid var(--line-2);
+  .price-card {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: var(--r-4);
+    padding: 28px;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    position: relative;
   }
-  .trust-stats > div:last-child { border-right: 0; }
-  .trust-stats strong {
-    font-family: var(--font-sans);
-    font-size: 36px;
-    font-weight: 600;
-    letter-spacing: -0.03em;
-    line-height: 1;
+  .price-card-pop {
+    border-color: var(--ink);
+    box-shadow: 0 0 0 1px var(--ink) inset;
   }
-  .trust-stats span {
-    font-size: 12px;
-    color: var(--muted);
-    font-family: var(--font-mono);
+  .price-pop-tag {
+    position: absolute;
+    top: -10px;
+    left: 24px;
+    background: var(--ink);
+    color: #fff;
+    font-size: 10.5px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    letter-spacing: 0.04em;
   }
-
-  /* Sections */
-  .section-head { margin-bottom: 40px; max-width: 720px; }
-  .eyebrow {
-    color: var(--muted);
-    font-size: 12px;
+  .price-head { margin-bottom: 20px; }
+  .price-name {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0 0 12px;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    display: inline-block;
-    margin-bottom: 14px;
+    letter-spacing: 0.06em;
+    color: var(--muted);
   }
-  .section-title {
-    font-size: 42px;
+  .price-amount {
+    font-size: 14px;
+    margin: 0 0 8px;
+    color: var(--muted);
+  }
+  .price-amount strong {
+    font-size: 40px;
+    color: var(--ink);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    margin-right: 4px;
+  }
+  .price-blurb {
+    font-size: 13.5px;
+    color: var(--muted);
     margin: 0;
-    letter-spacing: -0.02em;
+    line-height: 1.5;
   }
-  .features { padding: 88px 0; }
+  .price-feats {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 24px;
+    flex: 1;
+  }
+  .price-feats li {
+    font-size: 13.5px;
+    color: var(--ink-2);
+    padding: 8px 0 8px 22px;
+    position: relative;
+    line-height: 1.5;
+    border-bottom: 1px solid var(--line-3);
+  }
+  .price-feats li:last-child { border-bottom: 0; }
+  .price-feats li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 13px;
+    width: 12px;
+    height: 12px;
+    border-radius: 999px;
+    border: 1px solid var(--line-2);
+    background: var(--bg-elev);
+  }
+  .price-feats li::after {
+    content: "";
+    position: absolute;
+    left: 3px;
+    top: 16px;
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--accent);
+  }
+  .price-feats strong { color: var(--ink); font-weight: 600; }
+  .price-cta { width: 100%; justify-content: center; }
+  .price-foot {
+    text-align: center;
+    color: var(--muted-2);
+    font-size: 12.5px;
+    margin-top: 32px;
+  }
+  .price-foot a { color: var(--ink); border-bottom: 1px dashed var(--muted-3); }
 
-  /* Feature grid */
-  .feature-grid {
+  /* ---- Reviews ---- */
+  .reviews { padding: 88px 0; background: var(--bg-elev); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .review-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 16px;
   }
-  .feature {
+  .review-card {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: var(--r-4);
     padding: 24px;
-    transition: transform 0.15s ease, border-color 0.15s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-height: 220px;
   }
-  .feature:hover {
-    transform: translateY(-2px);
-    border-color: #d6d6d2;
+  .review-card.review-empty {
+    border-style: dashed;
+    background: transparent;
   }
-  .feature h3 {
-    font-size: 16px;
-    margin: 18px 0 8px;
-    letter-spacing: -0.01em;
-    font-weight: 600;
+  .review-status {
+    font-size: 10.5px;
+    color: var(--muted-2);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
   }
-  .feature p {
-    color: var(--muted);
-    font-size: 14px;
-    line-height: 1.6;
+  .review-quote-empty {
+    font-size: 17px;
+    color: var(--muted-2);
+    line-height: 1.4;
     margin: 0;
+    flex: 1;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    font-style: italic;
   }
-  .feature p strong { color: var(--ink); font-weight: 500; }
-
-  .ico {
+  .review-attr {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .avatar {
     width: 32px;
     height: 32px;
-    border-radius: 8px;
-    background: var(--ink);
-    position: relative;
+    border-radius: 999px;
+    background: var(--bg-sunken);
+    border: 1px dashed var(--line-2);
   }
-  .ico::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 18px;
-  }
-  .ico-shield::after { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c4fc5c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6l8-4z'/><path d='M9 12l2 2 4-4'/></svg>"); }
-  .ico-bolt::after   { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c4fc5c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M13 2L3 14h7l-1 8 11-13h-7l1-7z'/></svg>"); }
-  .ico-form::after   { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c4fc5c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='4' width='18' height='4' rx='1'/><rect x='3' y='12' width='18' height='4' rx='1'/><circle cx='7' cy='14' r='1.2' fill='%23c4fc5c'/></svg>"); }
-  .ico-card::after   { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c4fc5c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='5' width='18' height='14' rx='2'/><path d='M3 10h18'/><path d='M7 15h4'/></svg>"); }
-  .ico-plug::after   { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c4fc5c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M9 2v4M15 2v4'/><rect x='6' y='6' width='12' height='8' rx='2'/><path d='M12 14v4M9 22h6'/></svg>"); }
-  .ico-key::after    { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c4fc5c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='8' cy='12' r='4'/><path d='M12 12h10M19 12v4M16 12v3'/></svg>"); }
+  .review-name { font-size: 13.5px; font-weight: 500; color: var(--muted); }
+  .review-role { font-size: 11.5px; color: var(--muted-2); }
 
-  /* Code split */
-  .code-split { padding: 56px 0 88px; background: var(--bg-sunken); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-  .split-inner {
-    display: grid;
-    grid-template-columns: 0.8fr 1.2fr;
-    gap: 56px;
-    align-items: center;
-  }
-  .subhead-sm {
-    font-size: 16px;
-    color: var(--muted);
-    line-height: 1.6;
-    max-width: 420px;
-    margin: 0 0 18px;
-  }
-  .code-meta {
-    color: var(--muted);
-    font-size: 12px;
-    display: inline-flex;
-    gap: 8px;
-  }
-  .code-panel {
-    background: var(--code-bg);
-    color: var(--code-fg);
-    border-radius: 14px;
-    padding: 22px 26px;
-    font-size: 13.5px;
-    line-height: 1.7;
-    overflow-x: auto;
-    box-shadow: 0 24px 48px -16px rgba(10, 10, 10, 0.18);
-    margin: 0;
-    white-space: pre;
-  }
-  .code-panel .k { color: var(--code-key); font-weight: 500; }
-  .code-panel .s { color: var(--code-str); }
-  .code-panel .st { color: var(--code-num); }
-  .code-panel .p { color: var(--code-pun); }
-  .code-panel .pn { color: #fff; }
-
-  /* CTA */
-  .cta { padding: 80px 0; }
-  .cta-card {
-    background: var(--ink);
-    color: #fff;
-    border-radius: 20px;
-    padding: 64px 56px;
-    text-align: center;
-    box-shadow: 0 24px 48px -16px rgba(10, 10, 10, 0.18);
-  }
-  .cta-title {
-    font-size: 56px;
-    color: #fff;
-    margin: 0 0 16px;
-    letter-spacing: -0.03em;
-  }
-  .cta-sub {
-    color: #b3b3b3;
-    font-size: 17px;
-    max-width: 520px;
-    margin: 0 auto 32px;
-  }
-  .cta-actions {
-    display: inline-flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  .cta .btn-ghost { color: #fff; border-color: #2a2a2a; }
-  .cta .btn-ghost:hover { background: #1a1a1a; }
-
+  /* ---- Responsive ---- */
   @media (max-width: 960px) {
-    .headline { font-size: 60px; }
-    .feature-grid { grid-template-columns: 1fr 1fr; }
-    .split-inner { grid-template-columns: 1fr; }
-    .trust-stats { grid-template-columns: 1fr 1fr; }
-    .trust-stats > div:nth-child(2) { border-right: 0; }
-    .trust-stats > div:nth-child(1),
-    .trust-stats > div:nth-child(2) { border-bottom: 1px solid var(--line-2); }
-    .cta-title { font-size: 38px; }
-    .cta-card { padding: 40px 24px; }
+    .headline { font-size: 56px; }
+    .section-title { font-size: 32px; }
+    .price-grid { grid-template-columns: 1fr; }
+    .review-grid { grid-template-columns: 1fr; }
   }
   @media (max-width: 600px) {
-    .headline { font-size: 44px; }
-    .feature-grid { grid-template-columns: 1fr; }
-    .section-title { font-size: 30px; }
+    .headline { font-size: 40px; }
+    .announce-text { white-space: normal; }
   }
 </style>
-</Base>
