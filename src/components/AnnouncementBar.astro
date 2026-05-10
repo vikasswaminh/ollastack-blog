@@ -1,0 +1,63 @@
+---
+// Site-wide announcement strip rendered above the Nav. Pure-presentational —
+// content lives here, dismissable behavior could be added later via a
+// localStorage flag if needed.
+---
+
+<div class="announce">
+  <div class="container-wide announce-inner">
+    <span class="announce-chip mono">NEW</span>
+    <span class="announce-text">
+      Form4Dev now sends notification emails from
+      <span class="mono announce-highlight">your form's display name</span>
+      — single-tenant brand polish, no DKIM setup required.
+    </span>
+    <a href="/changelog" class="announce-cta">Read changelog →</a>
+  </div>
+</div>
+
+<style>
+  .announce {
+    background: var(--ink);
+    color: #fff;
+    border-bottom: 1px solid #1f1f22;
+  }
+  .announce-inner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 38px;
+    font-size: 13px;
+    color: #d4d4d8;
+  }
+  .announce-chip {
+    background: var(--accent);
+    color: #fff;
+    border-radius: 4px;
+    padding: 2px 7px;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .announce-text {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .announce-highlight { color: #fff; }
+  .announce-cta {
+    color: #fff;
+    font-size: 13px;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.12s ease;
+    flex-shrink: 0;
+  }
+  .announce-cta:hover { border-color: #fff; }
+
+  @media (max-width: 720px) {
+    .announce-text { white-space: normal; line-height: 1.3; }
+    .announce-inner { height: auto; padding: 8px 0; }
+  }
+</style>

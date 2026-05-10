@@ -5,22 +5,9 @@ const APP = "https://login.form4dev.com";
 
 <Base current="home">
   <!-- =============================================================
-       1. ANNOUNCEMENT BANNER (top strip, dismissable in real impl)
-       ============================================================= -->
-  <div class="announce">
-    <div class="container-wide announce-inner">
-      <span class="announce-chip mono">NEW</span>
-      <span class="announce-text">
-        Form4Dev now sends notification emails from
-        <span class="mono announce-highlight">your form's display name</span>
-        — single-tenant brand polish, no DKIM setup required.
-      </span>
-      <a href="/changelog" class="announce-cta">Read changelog →</a>
-    </div>
-  </div>
-
-  <!-- =============================================================
-       2. HERO — left-aligned headline + subhead + CTA + tabbed code
+       HERO — left-aligned headline + subhead + CTA + tabbed code
+       (Announcement banner is rendered site-wide by Base.astro,
+       above the nav.)
        ============================================================= -->
   <section class="hero dot-grid">
     <div class="container hero-inner">
@@ -255,38 +242,7 @@ const APP = "https://login.form4dev.com";
 </script>
 
 <style>
-  /* ---- Announcement banner ---- */
-  .announce {
-    background: var(--ink);
-    color: #fff;
-    border-bottom: 1px solid #1f1f22;
-  }
-  .announce-inner {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    height: 38px;
-    font-size: 13px;
-    color: #d4d4d8;
-  }
-  .announce-chip {
-    background: var(--accent);
-    color: #ffffff;
-    border-radius: 4px;
-    padding: 2px 7px;
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-  }
-  .announce-text { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .announce-highlight { color: #fff; }
-  .announce-cta {
-    color: #fff;
-    font-size: 13px;
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.12s ease;
-  }
-  .announce-cta:hover { border-color: #fff; }
+  /* (Announcement banner styles now live in components/AnnouncementBar.astro) */
 
   /* ---- Hero ---- */
   .hero {
@@ -598,6 +554,5 @@ const APP = "https://login.form4dev.com";
   }
   @media (max-width: 600px) {
     .headline { font-size: 40px; }
-    .announce-text { white-space: normal; }
   }
 </style>
