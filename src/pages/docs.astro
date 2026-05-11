@@ -91,15 +91,19 @@ const sections = [
       <p>Add a webhook URL on the form's settings page. Every successful, non-spam submission POSTs the payload with an <code>X-Form4Dev-Signature</code> header (HMAC-SHA256 of the raw body, hex). Failed deliveries retry with exponential backoff for up to 5 attempts; the dashboard shows full delivery history.</p>
 
       <h2 id="errors">Error responses</h2>
+      <p>Every error returns <code>{`{"error":{"code":"...","message":"...","fieldErrors"?:{},"retryAfter"?:N}}`}</code>.</p>
       <table>
         <thead><tr><th>status</th><th>code</th><th>meaning</th></tr></thead>
         <tbody>
-          <tr><td><code>400</code></td><td><code>VALIDATION_ERROR</code></td><td><code>error.details</code> maps field id → list of messages.</td></tr>
-          <tr><td><code>401</code></td><td>—</td><td>CAPTCHA token missing or rejected.</td></tr>
+          <tr><td><code>400</code></td><td><code>VALIDATION_ERROR</code></td><td><code>error.fieldErrors</code> maps field id → list of messages.</td></tr>
+          <tr><td><code>401</code></td><td><code>AUTHENTICATION_ERROR</code></td><td>CAPTCHA token missing/rejected, or Bearer invalid.</td></tr>
           <tr><td><code>403</code></td><td><code>ORIGIN_NOT_ALLOWED</code></td><td>Submitting from a non-allowlisted origin.</td></tr>
-          <tr><td><code>429</code></td><td><code>RATE_LIMITED</code></td><td>Per-IP, per-form, or org quota exceeded.</td></tr>
+          <tr><td><code>429</code></td><td><code>RATE_LIMIT_EXCEEDED</code></td><td>Per-IP, per-form, or org quota exceeded. <code>error.retryAfter</code> in seconds.</td></tr>
         </tbody>
       </table>
+      <p class="muted-note">
+        Building an AI agent integration? See <a href="/docs/agents">/docs/agents</a> — Bearer auth, cross-tenant guard, agent-skip-spam contract, and audit trail.
+      </p>
     </article>
   </div>
 </Base>

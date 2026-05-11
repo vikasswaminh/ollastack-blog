@@ -1,0 +1,265 @@
+---
+import Base from "../../layouts/Base.astro";
+const APP = "https://login.form4dev.com";
+
+const sections = [
+  { id: "why", title: "Why agents?" },
+  { id: "create-token", title: "Create an agent token" },
+  { id: "submit", title: "Submit with Bearer" },
+  { id: "behaviors", title: "Agent-mode behaviors" },
+  { id: "guards", title: "Cross-tenant guard" },
+  { id: "audit", title: "Audit trail" },
+  { id: "openapi", title: "OpenAPI spec" },
+];
+---
+
+<Base current="docs" title="Docs — AI agents — Form4Dev">
+  <div class="docs-shell container-wide">
+    <aside class="sidebar">
+      <div class="side-eyebrow mono">/ docs / agents</div>
+      <nav>
+        <ul>
+          {sections.map((s) => (
+            <li><a href={`#${s.id}`}>{s.title}</a></li>
+          ))}
+        </ul>
+      </nav>
+      <div class="side-back">
+        <a href="/docs">← Back to docs</a>
+      </div>
+    </aside>
+
+    <article class="content">
+      <span class="chip mono"><span class="dot"></span>agent-first</span>
+      <h1 class="display">Build agents that submit forms.</h1>
+      <p class="lede">
+        Form4Dev treats AI agents as first-class clients. Submit with a Bearer
+        token that belongs to a form's owner, and your submission is stamped
+        <code>🤖 agent</code>, skips the spam pipeline, and lands in the inbox
+        with the agent label attached.
+      </p>
+
+      <h2 id="why">Why agents?</h2>
+      <p>
+        Most form backends were built for browsers. When an LLM or scripted
+        agent submits, it gets flagged as a bot — captcha, honeypot, IP
+        rate-limit — exactly the friction you don't want for trusted automation.
+      </p>
+      <p>
+        Form4Dev's agent path:
+      </p>
+      <ul>
+        <li><strong>Bearer-authenticated</strong> — no captcha, no honeypot, no per-IP rate limit.</li>
+        <li><strong>Cross-tenant guarded</strong> — a token can only submit to forms its owner owns.</li>
+        <li><strong>Provenance-stamped</strong> — every submission records <code>submitted_via</code> + <code>submitted_by_token_id</code>.</li>
+        <li><strong>Audit-visible</strong> — humans see a <code>🤖 agent</code> chip in the inbox.</li>
+      </ul>
+
+      <h2 id="create-token">1. Create an agent token</h2>
+      <p>
+        Sign in, open <a href={`${APP}/dashboard/settings`}>Dashboard → Settings → API tokens</a>,
+        check <strong>"This token is for an AI agent"</strong>, give it a label
+        (e.g. <code>Claude Desktop</code>, <code>Cursor</code>, <code>internal-script</code>),
+        and click Create. Copy the <code>fmd_…</code> token immediately — it's shown once.
+      </p>
+      <pre class="code"><span class="prompt">$</span> <span class="k">curl</span> -X POST {APP}/api/user/tokens \
+     -H <span class="s">"Cookie: form4dev_session=…"</span> \
+     -H <span class="s">"Content-Type: application/json"</span> \
+     -d <span class="s">'{`{"name":"Claude Desktop","agentType":"agent","agentLabel":"Claude Desktop"}`}'</span></pre>
+      <p class="muted-note">Or do it from the UI — same outcome.</p>
+
+      <h2 id="submit">2. Submit with the Bearer header</h2>
+      <pre class="code"><span class="prompt">$</span> <span class="k">curl</span> -X POST {APP}/api/submit/<span class="hl">contact</span> \
+     -H <span class="s">"Authorization: Bearer fmd_…"</span> \
+     -H <span class="s">"Content-Type: application/json"</span> \
+     -d <span class="s">'{`{"name":"Ada","message":"hi from the agent"}`}'</span>
+
+<span class="ok">{`{"success": true, "id": "sub_8f2…"}`}</span></pre>
+
+      <h2 id="behaviors">Agent-mode behaviors</h2>
+      <table>
+        <thead><tr><th>check</th><th>browser path</th><th>agent path</th></tr></thead>
+        <tbody>
+          <tr><td>CAPTCHA</td><td>enforced if <code>captchaRequired</code></td><td>skipped</td></tr>
+          <tr><td>Honeypot</td><td>enforced</td><td>skipped</td></tr>
+          <tr><td>Spam pattern checks</td><td>enforced</td><td>skipped</td></tr>
+          <tr><td>Per-IP rate limit</td><td>enforced</td><td>skipped</td></tr>
+          <tr><td>Origin allowlist</td><td>enforced</td><td>skipped</td></tr>
+          <tr><td>Per-form rate limit</td><td>enforced</td><td><strong>still enforced</strong></td></tr>
+          <tr><td>Org monthly quota</td><td>enforced</td><td><strong>still enforced</strong></td></tr>
+        </tbody>
+      </table>
+      <p class="muted-note">
+        Per-form rate limits and org quotas are intentionally <em>not</em> skipped — they protect against
+        runaway scripts and protect your billing.
+      </p>
+
+      <h2 id="guards">Cross-tenant guard</h2>
+      <p>
+        A Bearer token can only submit to forms owned by the same user. If you
+        send <code>POST /api/submit/&lt;slug&gt;</code> with a token whose owner doesn't own
+        that form, the Bearer is ignored and the request falls back to anonymous
+        — meaning captcha + origin checks come back. You can't accidentally cross
+        tenant lines.
+      </p>
+
+      <h2 id="audit">Audit trail</h2>
+      <p>
+        Every agent-authenticated submission stores:
+      </p>
+      <ul>
+        <li><code>submitted_via = "agent:&lt;tokenId&gt;"</code></li>
+        <li><code>submitted_by_token_id = &lt;tokenId&gt;</code> (FK to <code>api_tokens</code>)</li>
+        <li>The token's <code>agentLabel</code> is shown in the inbox UI</li>
+      </ul>
+      <p>
+        Open <a href={`${APP}/dashboard/inbox`}>Dashboard → Inbox</a> — submissions
+        from agents have a <code>🤖 agent</code> chip; the per-form submissions table
+        shows the same. Revoking the token in Settings stops all future submissions
+        from that agent without touching historical records.
+      </p>
+
+      <h2 id="openapi">OpenAPI 3.1 spec</h2>
+      <p>
+        The full machine-readable contract lives at
+        <a href={`${APP}/api/openapi.json`}>{APP.replace('https://','')}/api/openapi.json</a>.
+        Public, CORS-open, no auth — agents fetch it before they have a token.
+        The submit endpoint is tagged <code>agent</code> and documents the
+        Bearer-bypasses-spam contract explicitly.
+      </p>
+
+      <div class="cta-row">
+        <a class="btn btn-primary btn-lg" href={`${APP}/register`}>Create your first agent token</a>
+        <a class="btn btn-ghost btn-lg" href={`${APP}/api/openapi.json`}>Open OpenAPI spec</a>
+      </div>
+    </article>
+  </div>
+</Base>
+
+<style>
+  .docs-shell {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 56px;
+    padding: 64px 28px 96px;
+  }
+  .sidebar {
+    position: sticky;
+    top: 80px;
+    align-self: start;
+  }
+  .side-eyebrow {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 14px;
+  }
+  .sidebar nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .sidebar nav a {
+    display: block;
+    padding: 6px 10px;
+    border-radius: 6px;
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .sidebar nav a:hover {
+    background: var(--bg-sunken);
+    color: var(--ink);
+  }
+  .side-back { margin-top: 24px; font-size: 13px; }
+  .side-back a { color: var(--muted); }
+  .content { max-width: 760px; }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 10px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+  .chip .dot {
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+  .content h1 { font-size: 44px; margin: 0 0 14px; letter-spacing: -0.02em; line-height: 1.05; }
+  .content h2 {
+    font-size: 22px;
+    margin: 48px 0 12px;
+    letter-spacing: -0.01em;
+    scroll-margin-top: 80px;
+  }
+  .content .lede { font-size: 18px; color: var(--muted); line-height: 1.6; max-width: 620px; }
+  .content p { line-height: 1.7; margin: 0 0 14px; }
+  .content ul { line-height: 1.8; padding-left: 22px; margin: 0 0 14px; }
+  .content code {
+    background: var(--bg-sunken);
+    border: 1px solid var(--line);
+    padding: 0 5px;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+  }
+  .content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 14px;
+  }
+  .content th, .content td {
+    border-bottom: 1px solid var(--line);
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  .content th {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+  .muted-note {
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .code {
+    background: var(--code-bg);
+    color: var(--code-fg);
+    border-radius: 12px;
+    padding: 18px 22px;
+    font-family: var(--font-mono);
+    font-size: 13.5px;
+    line-height: 1.7;
+    overflow-x: auto;
+    white-space: pre;
+    margin: 8px 0 14px;
+  }
+  .code .prompt { color: var(--code-prompt); margin-right: 8px; }
+  .code .k { color: var(--code-cmd); font-weight: 600; }
+  .code .s { color: var(--code-str); }
+  .code .hl { color: var(--accent); }
+  .code .ok { color: var(--code-ok); display: inline-block; margin-top: 8px; }
+  .cta-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+  }
+  @media (max-width: 900px) {
+    .docs-shell { grid-template-columns: 1fr; }
+    .sidebar { position: static; }
+  }
+</style>
