@@ -13,7 +13,7 @@ const APP = "https://login.form4dev.com";
     <div class="container hero-inner">
       <span class="chip mono">
         <span class="dot"></span>
-        forms · for developers
+        forms · for developers · and AI agents
       </span>
 
       <h1 class="display headline">
@@ -45,6 +45,7 @@ const APP = "https://login.form4dev.com";
           <button class="tab" data-lang="js">fetch</button>
           <button class="tab" data-lang="html">HTML</button>
           <button class="tab" data-lang="react">React</button>
+          <button class="tab" data-lang="bearer">Agent (Bearer) 🤖</button>
           <span class="tabs-spacer"></span>
           <span class="tabs-meta mono">$ ship a form in 30 seconds</span>
         </div>
@@ -76,6 +77,15 @@ const APP = "https://login.form4dev.com";
     <span class="str">{`<form onSubmit={handleSubmit}>...</form>`}</span>
   );
 {`}`}</pre>
+
+        <pre class="code-pane hidden" data-lang="bearer"><span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.form4dev.com/api/submit/<span class="hl">contact</span> \
+    -H <span class="str">"Authorization: Bearer fmd_…"</span> \
+    -H <span class="str">"Content-Type: application/json"</span> \
+    -d <span class="str">{`'{"name":"Ada","message":"hi"}'`}</span>
+
+<span class="ok">{`{"success": true, "id": "sub_8f2…"}`}</span>
+<span class="muted"># submission stamped 🤖 agent — skips captcha + spam pipeline
+# token must belong to the form's owner (cross-tenant guard)</span></pre>
       </div>
 
       <p class="hero-note mono">
@@ -364,6 +374,7 @@ const APP = "https://login.form4dev.com";
   .code-pane .pun    { color: var(--code-pun); }
   .code-pane .hl     { color: var(--accent); }
   .code-pane .ok     { color: var(--code-ok); display: inline-block; margin-top: 8px; }
+  .code-pane .muted  { color: var(--code-muted, #6b7280); display: inline-block; margin-top: 8px; }
 
   /* ---- Section heads ---- */
   .section-head {
