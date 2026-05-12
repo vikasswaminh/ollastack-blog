@@ -24,6 +24,7 @@ const tiers = [
     cta: "Start free",
     href: `${APP}/register`,
     emphasis: false,
+    planKey: "free",
   },
   {
     name: "Starter",
@@ -44,6 +45,7 @@ const tiers = [
     cta: "Get Starter",
     href: `${APP}/register?plan=starter`,
     emphasis: true,
+    planKey: "starter",
   },
   {
     name: "Pro",
@@ -62,6 +64,7 @@ const tiers = [
     cta: "Get Pro",
     href: `${APP}/register?plan=pro`,
     emphasis: false,
+    planKey: "pro",
   },
 ];
 
@@ -128,7 +131,10 @@ const faqs = [
             <span class="period mono">{t.period}</span>
           </div>
           <p class="tier-blurb">{t.blurb}</p>
-          <a href={t.href} class={`btn btn-lg ${t.emphasis ? "btn-primary" : "btn-ghost"}`}>{t.cta}</a>
+          <a
+            href={t.href}
+            class={`btn btn-lg ${t.emphasis ? "btn-primary" : "btn-ghost"} plausible-event-name=Signup+CTA plausible-event-location=pricing-${t.planKey} plausible-event-plan=${t.planKey}`}
+          >{t.cta}</a>
           <hr class="hr" />
           <ul>
             {t.features.map((f) => (
