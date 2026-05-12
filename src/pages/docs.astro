@@ -7,10 +7,24 @@ const sections = [
   { id: "html", title: "HTML form" },
   { id: "react", title: "React" },
   { id: "fetch", title: "fetch / curl" },
+  { id: "hosted", title: "Hosted form page" },
   { id: "magic-fields", title: "Magic fields" },
   { id: "captcha", title: "CAPTCHA" },
+  { id: "origins", title: "Allowed origins" },
+  { id: "validation", title: "Schema validation" },
+  { id: "multistep", title: "Multi-step + show-if" },
+  { id: "autoresponder", title: "Autoresponder" },
   { id: "webhooks", title: "Webhooks" },
-  { id: "errors", title: "Error responses" },
+  { id: "integrations", title: "Integrations" },
+  { id: "exports", title: "Exports" },
+  { id: "analytics", title: "Analytics" },
+  { id: "tokens", title: "API tokens + audit" },
+  { id: "agents", title: "AI agents" },
+  { id: "smtp", title: "Custom SMTP" },
+  { id: "payments", title: "Razorpay payments" },
+  { id: "openapi", title: "OpenAPI spec" },
+  { id: "errors", title: "Error envelope" },
+  { id: "limits", title: "Rate limits" },
 ];
 ---
 
@@ -25,13 +39,18 @@ const sections = [
           ))}
         </ul>
       </nav>
+      <div class="side-bottom mono">
+        <a href="/docs/agents">→ /docs/agents</a>
+        <a href="/docs/smtp">→ /docs/smtp</a>
+      </div>
     </aside>
 
     <article class="content">
       <h1 class="display">Get a form working in 30 seconds.</h1>
       <p class="lede">
         Create a form in the dashboard, copy the endpoint URL, point an HTML
-        <code>action=</code> at it. That's the whole quickstart.
+        <code>action=</code> at it. That's the whole quickstart. Everything below
+        is the long tail of things you'll want once that works.
       </p>
 
       <h2 id="quickstart">Quickstart</h2>
@@ -48,9 +67,10 @@ const sections = [
   <span class="t">&lt;input</span> <span class="a">type</span>=<span class="s">"text"</span> <span class="a">name</span>=<span class="s">"_gotcha"</span> <span class="a">style</span>=<span class="s">"display:none"</span><span class="t">&gt;</span>
   <span class="t">&lt;button&gt;</span>Send<span class="t">&lt;/button&gt;</span>
 <span class="t">&lt;/form&gt;</span></pre>
-      <p class="muted-note"><strong><code>_gotcha</code></strong> is the honeypot — leave it empty in your real form, bots will fill it.</p>
+      <p class="muted-note"><code>_gotcha</code> is the honeypot — leave it empty in your real form, bots will fill it.</p>
 
       <h2 id="react">React</h2>
+      <p>Install <code>@form4dev/react</code> from npm. The <code>useForm</code> hook handles state and serialization for you.</p>
       <pre class="code"><span class="k">import</span> <span class="p">{`{`}</span> useForm, ValidationError <span class="p">{`}`}</span> <span class="k">from</span> <span class="s">"@form4dev/react"</span><span class="p">;</span>
 
 <span class="k">export function</span> <span class="fn">Contact</span><span class="p">() {`{`}</span>
@@ -65,44 +85,203 @@ const sections = [
     <span class="t">&lt;/form&gt;</span>
   <span class="p">);</span>
 <span class="p">{`}`}</span></pre>
+      <p class="muted-note">Field errors come back as <code>state.errors.fieldErrors</code> — keyed by your form's field IDs.</p>
 
       <h2 id="fetch">fetch / curl</h2>
       <pre class="code"><span class="k">curl</span> -X POST https://login.form4dev.com/api/submit/contact \
      -H <span class="s">"Content-Type: application/json"</span> \
      -d <span class="s">'{`{`}"email":"ada@example.com","message":"hi"{`}`}'</span></pre>
+      <p>JSON and <code>application/x-www-form-urlencoded</code> are both accepted. Success returns <code>201 Created</code> with <code>{`{"success":true,"id":"sub_…","next":<url|null>}`}</code>.</p>
+
+      <h2 id="hosted">Hosted form page</h2>
+      <p>
+        Don't want to build your own UI? Every form gets a Form4Dev-hosted page at
+        <code>{APP.replace('https://','')}/f/&lt;slug&gt;</code> — rendered server-side,
+        with your form's title, fields, and (on Starter+) your custom CSS. Successful
+        submits route to <code>/thanks/&lt;slug&gt;</code> or a redirect you configure.
+      </p>
 
       <h2 id="magic-fields">Magic fields</h2>
       <p>Drop these special fields into your payload and we'll route or label things automatically.</p>
       <table>
         <thead><tr><th>field</th><th>behavior</th></tr></thead>
         <tbody>
-          <tr><td><code>_replyto</code></td><td>Reply-To on the notification + autoresponder target.</td></tr>
+          <tr><td><code>_replyto</code> / <code>email</code></td><td>Reply-To on the notification + autoresponder target.</td></tr>
           <tr><td><code>_subject</code></td><td>Overrides the notification subject.</td></tr>
-          <tr><td><code>_cc</code> / <code>_bcc</code></td><td>Comma-separated extra recipients.</td></tr>
-          <tr><td><code>_next</code></td><td>Override the success-redirect URL.</td></tr>
-          <tr><td><code>_gotcha</code></td><td>Honeypot — leave blank. Filled = bot.</td></tr>
-        </tbody>
-      </table>
-
-      <h2 id="captcha">CAPTCHA</h2>
-      <p>An admin configures the provider once in system settings. Per-form, toggle <code>captchaRequired</code>. The submit endpoint accepts the token via the <code>X-Captcha-Token</code> header or the <code>_captcha</code> field. Supported: Cloudflare Turnstile, reCAPTCHA v2 + v3, hCaptcha.</p>
-
-      <h2 id="webhooks">Webhooks</h2>
-      <p>Add a webhook URL on the form's settings page. Every successful, non-spam submission POSTs the payload with an <code>X-Form4Dev-Signature</code> header (HMAC-SHA256 of the raw body, hex). Failed deliveries retry with exponential backoff for up to 5 attempts; the dashboard shows full delivery history.</p>
-
-      <h2 id="errors">Error responses</h2>
-      <p>Every error returns <code>{`{"error":{"code":"...","message":"...","fieldErrors"?:{},"retryAfter"?:N}}`}</code>.</p>
-      <table>
-        <thead><tr><th>status</th><th>code</th><th>meaning</th></tr></thead>
-        <tbody>
-          <tr><td><code>400</code></td><td><code>VALIDATION_ERROR</code></td><td><code>error.fieldErrors</code> maps field id → list of messages.</td></tr>
-          <tr><td><code>401</code></td><td><code>AUTHENTICATION_ERROR</code></td><td>CAPTCHA token missing/rejected, or Bearer invalid.</td></tr>
-          <tr><td><code>403</code></td><td><code>ORIGIN_NOT_ALLOWED</code></td><td>Submitting from a non-allowlisted origin.</td></tr>
-          <tr><td><code>429</code></td><td><code>RATE_LIMIT_EXCEEDED</code></td><td>Per-IP, per-form, or org quota exceeded. <code>error.retryAfter</code> in seconds.</td></tr>
+          <tr><td><code>_next</code></td><td>Override the success-redirect URL. Must be on an allowed origin or your form's host.</td></tr>
+          <tr><td><code>_gotcha</code></td><td>Honeypot. Leave blank. Filled = bot.</td></tr>
         </tbody>
       </table>
       <p class="muted-note">
-        Building an AI agent integration? See <a href="/docs/agents">/docs/agents</a> — Bearer auth, cross-tenant guard, agent-skip-spam contract, and audit trail.
+        <code>_cc</code> / <code>_bcc</code> are <strong>not</strong> read from public payloads — that would let anonymous senders use your form as an email relay. Configure default CC/BCC in the form settings instead.
+      </p>
+
+      <h2 id="captcha">CAPTCHA</h2>
+      <p>Per-form, toggle <code>captchaRequired</code> in the dashboard. The submit endpoint accepts the token via the <code>X-Captcha-Token</code> header or the <code>_captcha</code> field. Supported providers: Cloudflare Turnstile, reCAPTCHA v2, reCAPTCHA v3, hCaptcha. The provider is configured once by the platform admin.</p>
+
+      <h2 id="origins">Allowed origins</h2>
+      <p>Set <code>allowedOrigins</code> on the form (comma-separated list, e.g. <code>https://example.com,https://www.example.com</code>) to lock the endpoint to those origins. Requests from anywhere else get <code>403 ORIGIN_NOT_ALLOWED</code>. Bearer-authed agent requests bypass this check (agents don't have a browser Origin).</p>
+
+      <h2 id="validation">Schema validation</h2>
+      <p>Every field you add in the form builder has a type and required/optional flag. The submit endpoint validates the payload before saving — missing required fields, wrong types, or out-of-range values come back as <code>400 VALIDATION_ERROR</code> with <code>error.fieldErrors</code> mapping each field id to a list of messages.</p>
+
+      <h2 id="multistep">Multi-step forms + show-if conditional logic</h2>
+      <p>
+        On Starter+, the form builder supports step-based layouts and conditional visibility:
+        each field can have a <code>showIf</code> rule that references the value of another field
+        (<code>equals</code>, <code>not-equals</code>, <code>contains</code>). Hidden fields are
+        not validated and not stored on the submission.
+      </p>
+
+      <h2 id="autoresponder">Autoresponder</h2>
+      <p>
+        Toggle the autoresponder on the form's settings page and write a template
+        with <code>{`{{field_name}}`}</code> placeholders. When a submission's
+        payload contains a recognizable email field (<code>_replyto</code>, <code>email</code>,
+        etc.), we send the rendered template back to that address automatically.
+        Template variables are HTML-escaped — safe to interpolate user input.
+      </p>
+
+      <h2 id="webhooks">Webhooks</h2>
+      <p>
+        Add one or more webhook URLs on the form's settings page. Every successful,
+        non-spam submission POSTs the payload with an
+        <code>X-Form4Dev-Signature</code> header (HMAC-SHA256 of the raw body, hex).
+        Failed deliveries retry with exponential backoff up to 5 attempts; the
+        dashboard shows full delivery history per webhook. Toggle a webhook on/off
+        without losing its config.
+      </p>
+      <pre class="code"><span class="k">crypto</span>
+  .createHmac(<span class="s">"sha256"</span>, secret)
+  .update(rawBody)
+  .digest(<span class="s">"hex"</span>);
+<span class="p">// === request.headers["x-form4dev-signature"]</span></pre>
+
+      <h2 id="integrations">Third-party integrations</h2>
+      <p>Per-form, attach one or more of these. Each runs alongside webhooks (not instead of them).</p>
+      <table>
+        <thead><tr><th>type</th><th>config</th></tr></thead>
+        <tbody>
+          <tr><td><code>slack</code></td><td>Incoming-webhook URL (must be HTTPS). Posts a formatted submission card.</td></tr>
+          <tr><td><code>discord</code></td><td>Incoming-webhook URL. Same payload format.</td></tr>
+          <tr><td><code>telegram</code></td><td><code>botToken</code> + <code>chatId</code>. DMs or channel post.</td></tr>
+          <tr><td><code>mailchimp</code></td><td><code>apiKey</code> + <code>audienceId</code> + <code>dataCenter</code> (e.g. <code>us19</code>). Adds the email field to your list.</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="exports">Exports</h2>
+      <p>
+        <code>GET /api/forms/&lt;formId&gt;/export?format=csv</code> (or <code>json</code>,
+        <code>excel</code>). Optional <code>from</code> and <code>to</code> ISO dates filter
+        by submitted-at. Returns a file attachment named after the form's slug.
+        Same data is available paginated via <code>GET /api/forms/&lt;formId&gt;/submissions</code>.
+      </p>
+
+      <h2 id="analytics">Analytics</h2>
+      <p>
+        <code>GET /api/forms/&lt;formId&gt;/analytics?days=30</code> returns
+        <code>{`{timeseries, spam, geo, days}`}</code>: daily submission counts, spam-vs-total ratio,
+        and country breakdown. The dashboard renders these as charts on each form's detail page.
+      </p>
+
+      <h2 id="tokens">API tokens + audit log</h2>
+      <p>
+        Create personal API tokens in <a href={`${APP}/dashboard/settings`}>Dashboard → Settings → API tokens</a>.
+        Tokens carry scopes (<code>forms:read</code>, <code>forms:write</code>, <code>submissions:read</code>,
+        <code>submissions:write</code>) and are shown only once at creation. Use them as
+        <code>Authorization: Bearer fmd_…</code>.
+      </p>
+      <p>
+        Every Bearer-authenticated API call writes a row to the audit log
+        (method, path, status, hashed IP, user-agent, timestamp). Expand
+        <strong>view activity</strong> on any token row to see its last 50 calls.
+        Per-token slide-window rate limit is 300 req/min — exceed it and you get
+        <code>429 RATE_LIMIT_EXCEEDED</code> with <code>retryAfter</code>.
+      </p>
+
+      <h2 id="agents">AI agents (Bearer)</h2>
+      <p>
+        Form4Dev is built for AI agents as a first-class client. Issue an
+        agent-type Bearer token (tick the agent checkbox on token create),
+        and Bearer-authed submissions are stamped with
+        <code>submitted_via='agent:&lt;tokenId&gt;'</code>, bypass captcha + per-IP
+        rate limit + honeypot + spam-pattern checks, and show as 🤖 in the inbox.
+      </p>
+      <p>
+        Cross-tenant guard: tokens can only submit to forms their owner owns.
+        Full walkthrough at <a href="/docs/agents">/docs/agents</a>.
+      </p>
+
+      <h2 id="smtp">Custom SMTP</h2>
+      <p>
+        Per organization, configure your own SMTP server in
+        <a href={`${APP}/dashboard/orgs`}>Dashboard → Orgs</a>. Submission
+        notifications, autoresponders, and digests route through your SMTP —
+        emails arrive from your domain. Passwords are encrypted at rest with
+        AES-256-GCM; failures fall back to the platform sender transparently.
+        Full walkthrough at <a href="/docs/smtp">/docs/smtp</a>.
+      </p>
+
+      <h2 id="payments">Razorpay payment-required forms</h2>
+      <p>
+        Toggle <code>paymentEnabled</code> + <code>paymentProvider=razorpay</code>
+        on a form and configure the order amount. The submit endpoint then returns
+        <code>202 Accepted</code> with a Razorpay order config; pass it to the
+        Razorpay checkout SDK, and the submission is held until
+        <code>POST /api/submit/&lt;slug&gt;/verify</code> confirms payment. Webhooks
+        + notifications fire only after successful payment verification.
+      </p>
+
+      <h2 id="openapi">OpenAPI 3.1 spec</h2>
+      <p>
+        The full machine-readable contract lives at
+        <a href={`${APP}/api/openapi.json`}>{APP.replace('https://','')}/api/openapi.json</a>
+        — public, CORS-open, cached 1h + SWR 24h. 23 paths, 13 reusable schemas,
+        9 tags. Both <code>bearerAuth</code> and <code>sessionCookie</code> security
+        schemes are documented. The submit endpoint is tagged <code>agent</code>
+        and documents the Bearer-bypasses-spam contract explicitly.
+      </p>
+
+      <h2 id="errors">Error envelope</h2>
+      <p>Every error returns the same shape:</p>
+      <pre class="code"><span class="p">{`{`}</span>
+  <span class="s">"error"</span><span class="p">: {`{`}</span>
+    <span class="s">"code"</span><span class="p">: </span><span class="s">"VALIDATION_ERROR"</span><span class="p">,</span>
+    <span class="s">"message"</span><span class="p">: </span><span class="s">"Invalid input"</span><span class="p">,</span>
+    <span class="s">"fieldErrors"</span><span class="p">: {`{`} </span><span class="s">"email"</span><span class="p">: [</span><span class="s">"Invalid email"</span><span class="p">] {`}`}, </span><span class="p">// optional</span>
+    <span class="s">"retryAfter"</span><span class="p">: </span><span class="k">60</span><span class="p"> // optional, seconds, on 429</span>
+  <span class="p">{`}`}
+{`}`}</span></pre>
+      <table>
+        <thead><tr><th>status</th><th>code</th><th>meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code>400</code></td><td><code>VALIDATION_ERROR</code></td><td><code>fieldErrors</code> maps field id → list of messages.</td></tr>
+          <tr><td><code>401</code></td><td><code>AUTHENTICATION_ERROR</code></td><td>Session missing/expired, or Bearer invalid.</td></tr>
+          <tr><td><code>403</code></td><td><code>ORIGIN_NOT_ALLOWED</code> / <code>AUTHORIZATION_ERROR</code></td><td>Origin not on the form's allowlist, or token missing required scope.</td></tr>
+          <tr><td><code>404</code></td><td><code>NOT_FOUND</code></td><td>Form/submission/token doesn't exist or isn't owned by caller.</td></tr>
+          <tr><td><code>409</code></td><td><code>CONFLICT</code></td><td>e.g. registering an email that already exists.</td></tr>
+          <tr><td><code>429</code></td><td><code>RATE_LIMIT_EXCEEDED</code></td><td>Per-IP, per-form, per-token, or org quota exceeded. <code>retryAfter</code> in seconds.</td></tr>
+          <tr><td><code>500</code></td><td><code>INTERNAL_ERROR</code></td><td>Server-side bug. We log and alert.</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="limits">Rate limits</h2>
+      <p>Form4Dev has four independent rate limits. Each emits <code>429 RATE_LIMIT_EXCEEDED</code> with a <code>retryAfter</code> seconds field.</p>
+      <table>
+        <thead><tr><th>scope</th><th>applies to</th><th>typical</th></tr></thead>
+        <tbody>
+          <tr><td>Per-IP</td><td>Anonymous submits + login + password-reset</td><td>tight (seconds)</td></tr>
+          <tr><td>Per-form</td><td>Submits to one form (any caller)</td><td>tight (per minute)</td></tr>
+          <tr><td>Per-token</td><td>Any Bearer-authed API call</td><td>300 / minute</td></tr>
+          <tr><td>Per-org / month</td><td>Counted submissions (post-spam-filter)</td><td>your plan's quota</td></tr>
+        </tbody>
+      </table>
+      <p class="muted-note">
+        Agents (Bearer-authed submits) skip the per-IP bucket — they typically share an outbound IP with the agent host — but per-form, per-token, and per-org quotas still apply.
+      </p>
+
+      <p class="muted-note" style="margin-top: 48px;">
+        Need something not documented? Email <a href="mailto:hello@form4dev.com">hello@form4dev.com</a> or check the <a href={`${APP}/api/openapi.json`}>OpenAPI spec</a>.
       </p>
     </article>
   </div>
@@ -140,13 +319,24 @@ const sections = [
     padding: 6px 10px;
     border-radius: 6px;
     color: var(--muted);
-    font-size: 14px;
+    font-size: 13.5px;
   }
   .sidebar nav a:hover {
     background: var(--bg-sunken);
     color: var(--ink);
   }
-  .content { max-width: 720px; }
+  .side-bottom {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 12px;
+  }
+  .side-bottom a { color: var(--muted); }
+  .side-bottom a:hover { color: var(--ink); }
+  .content { max-width: 760px; }
   .content h1 { font-size: 44px; margin: 0 0 14px; letter-spacing: -0.02em; line-height: 1.05; }
   .content h2 {
     font-size: 22px;
@@ -154,7 +344,7 @@ const sections = [
     letter-spacing: -0.01em;
     scroll-margin-top: 80px;
   }
-  .content .lede { font-size: 18px; color: var(--muted); line-height: 1.6; max-width: 600px; }
+  .content .lede { font-size: 18px; color: var(--muted); line-height: 1.6; max-width: 620px; }
   .content p { line-height: 1.7; margin: 0 0 14px; }
   .content code {
     background: var(--bg-sunken);
@@ -164,7 +354,7 @@ const sections = [
     font-family: var(--font-mono);
     font-size: 0.9em;
   }
-  .content ol { line-height: 1.8; padding-left: 24px; }
+  .content ol, .content ul { line-height: 1.8; padding-left: 24px; }
   .content table {
     width: 100%;
     border-collapse: collapse;

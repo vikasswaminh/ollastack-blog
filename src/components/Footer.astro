@@ -1,11 +1,46 @@
 ---
 import Logo from "./Logo.astro";
 
-const groups = [
-  { title: "Product",    items: ["Overview", "Quickstart", "Integrations", "Changelog"] },
-  { title: "Developers", items: ["REST API", "JS SDK", "React SDK", "Webhooks"] },
-  { title: "Company",    items: ["Pricing", "Library", "Blog", "Brand"] },
-  { title: "Legal",      items: ["Privacy", "Terms", "Security", "Contact"] },
+const APP = "https://login.form4dev.com";
+
+interface FooterLink { label: string; href: string }
+const groups: { title: string; items: FooterLink[] }[] = [
+  {
+    title: "Product",
+    items: [
+      { label: "Overview", href: "/" },
+      { label: "Pricing", href: "/pricing" },
+      { label: "Quickstart", href: "/docs#quickstart" },
+      { label: "Integrations", href: "/docs#integrations" },
+    ],
+  },
+  {
+    title: "Developers",
+    items: [
+      { label: "Docs", href: "/docs" },
+      { label: "For AI agents", href: "/docs/agents" },
+      { label: "OpenAPI spec", href: `${APP}/api/openapi.json` },
+      { label: "Webhooks", href: "/docs#webhooks" },
+    ],
+  },
+  {
+    title: "Tenant",
+    items: [
+      { label: "Custom SMTP", href: "/docs/smtp" },
+      { label: "API tokens + audit", href: "/docs#tokens" },
+      { label: "Rate limits", href: "/docs#limits" },
+      { label: "Error envelope", href: "/docs#errors" },
+    ],
+  },
+  {
+    title: "Account",
+    items: [
+      { label: "Sign in", href: `${APP}/login` },
+      { label: "Start free", href: `${APP}/register` },
+      { label: "Dashboard", href: `${APP}/dashboard` },
+      { label: "Contact", href: "mailto:hello@form4dev.com" },
+    ],
+  },
 ];
 ---
 
@@ -20,7 +55,7 @@ const groups = [
         <div>
           <div class="group-title mono">{g.title}</div>
           <ul>
-            {g.items.map((item) => <li><a href="#">{item}</a></li>)}
+            {g.items.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
           </ul>
         </div>
       ))}

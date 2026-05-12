@@ -89,7 +89,7 @@ const APP = "https://login.form4dev.com";
       </div>
 
       <p class="hero-note mono">
-        Or copy a working form from <a href="/library">/library</a> — 10 production-ready templates.
+        Building an agent? See <a href="/docs/agents">/docs/agents</a> — Bearer auth, audit log, cross-tenant guard.
       </p>
     </div>
   </section>
@@ -119,12 +119,13 @@ const APP = "https://login.form4dev.com";
             <p class="price-blurb">For hobby projects and side hustles.</p>
           </header>
           <ul class="price-feats">
-            <li><strong>50</strong> submissions / month</li>
+            <li><strong>100</strong> submissions / month</li>
             <li>Unlimited forms</li>
-            <li>Spam filter + honeypot</li>
-            <li>Webhooks (1 retry)</li>
-            <li>CSV export</li>
-            <li>Community support</li>
+            <li>Honeypot + per-IP rate limit</li>
+            <li>Webhooks (HMAC + 5-retry backoff)</li>
+            <li>CSV / JSON / Excel export</li>
+            <li>Slack / Discord / Telegram / Mailchimp</li>
+            <li>Public OpenAPI 3.1 spec</li>
           </ul>
           <a class="btn btn-ghost btn-lg price-cta" href={`${APP}/register`}>Start free</a>
         </article>
@@ -140,10 +141,10 @@ const APP = "https://login.form4dev.com";
             <li><strong>250</strong> submissions / month</li>
             <li>Everything in Free</li>
             <li>CAPTCHA (Turnstile / hCaptcha / reCAPTCHA)</li>
-            <li>Webhooks with retry + replay</li>
-            <li>Slack, Discord, Telegram, Sheets</li>
-            <li>Personal API tokens</li>
-            <li>JSON + Excel export</li>
+            <li>Multi-step + conditional logic</li>
+            <li>Per-form autoresponder</li>
+            <li>Per-form analytics (geo, spam, trend)</li>
+            <li>AI-agent Bearer tokens with audit</li>
             <li>Email support</li>
           </ul>
           <a class="btn btn-primary btn-lg price-cta" href={`${APP}/register?plan=starter`}>Get Starter</a>
@@ -158,10 +159,10 @@ const APP = "https://login.form4dev.com";
           <ul class="price-feats">
             <li><strong>1,000</strong> submissions / month</li>
             <li>Everything in Starter</li>
-            <li>Multi-step + conditional logic</li>
-            <li>Custom email templates per form</li>
+            <li>Custom SMTP (encrypted at rest, auto-fallback)</li>
             <li>Submission retention policies</li>
-            <li>Org members + roles</li>
+            <li>Razorpay payment-required forms</li>
+            <li>Org members + cross-form inbox</li>
             <li>Priority support</li>
           </ul>
           <a class="btn btn-ghost btn-lg price-cta" href={`${APP}/register?plan=pro`}>Get Pro</a>
