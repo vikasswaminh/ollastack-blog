@@ -35,6 +35,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://form4dev.co
   <meta name="twitter:description" content={description} />
   <meta name="theme-color" content="#fafaf7" />
   <title>{title}</title>
+  <!-- Plausible Analytics — self-hosted at analytics.networkershome.com.
+       Site domain `form4dev.com` must match the site created in the
+       Plausible dashboard exactly (it's the keying field). Defer keeps
+       the script off the critical render path. -->
+  <script defer data-domain="form4dev.com" src="https://analytics.networkershome.com/js/script.js"></script>
 </head>
 <body>
   <AnnouncementBar />
