@@ -18,14 +18,13 @@ const APP = "https://login.form4dev.com";
 
       <h1 class="display headline">
         The form backend<br/>
-        you'd build yourself.<br/>
-        <span class="muted">If you had the time.</span>
+        for humans and agents.
       </h1>
 
       <p class="subhead">
-        Point your HTML <code class="inline-code">action=</code> at a Form4Dev endpoint.
-        Submissions land in a real inbox, fire signed webhooks, run through spam +
-        captcha, and export anywhere — without you running a backend.
+        Point your HTML at our API or hit it from a script. We receive,
+        validate, filter spam, fire webhooks, and notify you by email.
+        No backend code on your side.
       </p>
 
       <div class="hero-ctas">
@@ -89,25 +88,141 @@ const APP = "https://login.form4dev.com";
       </div>
 
       <p class="hero-note mono">
-        Building an agent? See <a href="/docs/agents">/docs/agents</a> — Bearer auth, audit log, cross-tenant guard.
+        Or use a Bearer token and submit as an agent — <a href="/docs/agents">/docs/agents</a>.
       </p>
     </div>
   </section>
 
   <!-- =============================================================
-       3. PRICING — 3 tier USD plan
+       § 1 — three paths in, one inbox out
+       ============================================================= -->
+  <section class="paths">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">/ how it works</span>
+        <h2 class="display section-title">
+          Built for the two ways forms get submitted.
+        </h2>
+        <p class="section-sub">
+          Humans submit through a browser. Bots submit through a browser too —
+          they get filtered. Agents bring a token and skip the filter.
+          All three land in the same inbox.
+        </p>
+      </div>
+
+      <div class="paths-grid">
+        <article class="path-card">
+          <div class="path-eyebrow mono">from a browser</div>
+          <h3 class="path-name">HTML or React</h3>
+          <p class="path-body">
+            Point an HTML <code class="inline-code">action=</code> at our endpoint,
+            or use the React SDK. Honeypot, per-IP rate limit, and CAPTCHA run
+            automatically — off by default, on by a toggle.
+          </p>
+          <a class="path-link mono" href="/docs#html">→ /docs#html</a>
+        </article>
+
+        <article class="path-card">
+          <div class="path-eyebrow mono">from a script</div>
+          <h3 class="path-name">curl, fetch, anywhere</h3>
+          <p class="path-body">
+            POST JSON from a script, a CI runner, Postman — anything that
+            speaks HTTP. Same endpoint, same validation, same inbox.
+          </p>
+          <a class="path-link mono" href="/docs#fetch">→ /docs#fetch</a>
+        </article>
+
+        <article class="path-card path-card-accent">
+          <div class="path-eyebrow mono">from an AI agent 🤖</div>
+          <h3 class="path-name">Bearer token, audit log</h3>
+          <p class="path-body">
+            Issue an agent-type API token. Submissions are stamped in the
+            inbox, every API call is logged, and a cross-tenant guard
+            keeps the token in its own lane.
+          </p>
+          <a class="path-link mono" href="/docs/agents">→ /docs/agents</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================================
+       § 2 — what an endpoint should do
+       ============================================================= -->
+  <section class="capabilities">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">/ what's in the box</span>
+        <h2 class="display section-title">
+          Everything an endpoint should do.
+        </h2>
+        <p class="section-sub">
+          One endpoint per form. We do the rest.
+        </p>
+      </div>
+
+      <dl class="cap-list">
+        <div class="cap-row">
+          <dt>Spam filtering</dt>
+          <dd>
+            Honeypot, per-IP rate limit, and your choice of CAPTCHA
+            (Turnstile, hCaptcha, reCAPTCHA). Off by default; on by a toggle.
+          </dd>
+        </div>
+        <div class="cap-row">
+          <dt>Email notifications</dt>
+          <dd>
+            Sent the moment a submission lands. Reply-To set from the
+            submitter. Send through our SMTP or yours.
+          </dd>
+        </div>
+        <div class="cap-row">
+          <dt>Webhooks</dt>
+          <dd>
+            Signed, retried, replayable. Full delivery history in the
+            dashboard. Toggle a webhook on or off without losing its config.
+          </dd>
+        </div>
+        <div class="cap-row">
+          <dt>Inbox + export</dt>
+          <dd>
+            Search, tag, archive. Export as CSV, JSON, or Excel — by date range.
+          </dd>
+        </div>
+        <div class="cap-row">
+          <dt>API tokens</dt>
+          <dd>
+            Personal tokens for scripts. Agent-typed tokens for AI clients.
+            Every call is recorded — method, path, status, hashed IP, user-agent.
+          </dd>
+        </div>
+        <div class="cap-row">
+          <dt>Public API spec</dt>
+          <dd>
+            <a class="mono inline-link" href="https://login.form4dev.com/api/openapi.json">
+              /api/openapi.json
+            </a>
+            — read it before you sign up.
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- =============================================================
+       § 3 — pricing
        ============================================================= -->
   <section class="pricing">
     <div class="container">
       <div class="section-head">
         <span class="eyebrow">/ pricing</span>
         <h2 class="display section-title">
-          Honest pricing.<br/>
-          Pay for submissions, not seats.
+          Pricing. And what we're not.
         </h2>
         <p class="section-sub">
-          Hard limits, no overage charges. If you hit the cap, submissions queue —
-          they don't disappear, they don't auto-bill you.
+          Every tier includes every feature. The only thing that changes is the
+          monthly submission cap. No overage charges — if you hit the cap,
+          submissions stop until next month or you upgrade.
         </p>
       </div>
 
@@ -116,16 +231,12 @@ const APP = "https://login.form4dev.com";
           <header class="price-head">
             <h3 class="price-name">Free</h3>
             <p class="price-amount"><strong>$0</strong> <span class="muted">/ month</span></p>
-            <p class="price-blurb">For hobby projects and side hustles.</p>
+            <p class="price-blurb">For trying it out and side projects.</p>
           </header>
           <ul class="price-feats">
             <li><strong>100</strong> submissions / month</li>
             <li>Unlimited forms</li>
-            <li>Honeypot + per-IP rate limit</li>
-            <li>Webhooks (HMAC + 5-retry backoff)</li>
-            <li>CSV / JSON / Excel export</li>
-            <li>Slack / Discord / Telegram / Mailchimp</li>
-            <li>Public OpenAPI 3.1 spec</li>
+            <li>All features</li>
           </ul>
           <a class="btn btn-ghost btn-lg price-cta plausible-event-name=Signup+CTA plausible-event-location=pricing-free plausible-event-plan=free" href={`${APP}/register`}>Start free</a>
         </article>
@@ -133,110 +244,44 @@ const APP = "https://login.form4dev.com";
         <article class="price-card price-card-pop">
           <span class="price-pop-tag mono">most popular</span>
           <header class="price-head">
-            <h3 class="price-name">Starter</h3>
-            <p class="price-amount"><strong>$5</strong> <span class="muted">/ month</span></p>
-            <p class="price-blurb">For indie devs and shipping freelancers.</p>
+            <h3 class="price-name">Solo</h3>
+            <p class="price-amount"><strong>$9</strong> <span class="muted">/ month</span></p>
+            <p class="price-blurb">For indie devs and freelancers shipping real forms.</p>
           </header>
           <ul class="price-feats">
-            <li><strong>250</strong> submissions / month</li>
-            <li>Everything in Free</li>
-            <li>CAPTCHA (Turnstile / hCaptcha / reCAPTCHA)</li>
-            <li>Multi-step + conditional logic</li>
-            <li>Per-form autoresponder</li>
-            <li>Per-form analytics (geo, spam, trend)</li>
-            <li>AI-agent Bearer tokens with audit</li>
-            <li>Email support</li>
+            <li><strong>1,000</strong> submissions / month</li>
+            <li>Unlimited forms</li>
+            <li>All features</li>
           </ul>
-          <a class="btn btn-primary btn-lg price-cta plausible-event-name=Signup+CTA plausible-event-location=pricing-starter plausible-event-plan=starter" href={`${APP}/register?plan=starter`}>Get Starter</a>
+          <a class="btn btn-primary btn-lg price-cta plausible-event-name=Signup+CTA plausible-event-location=pricing-solo plausible-event-plan=solo" href={`${APP}/register?plan=solo`}>Get Solo</a>
         </article>
 
         <article class="price-card">
           <header class="price-head">
-            <h3 class="price-name">Pro</h3>
-            <p class="price-amount"><strong>$10</strong> <span class="muted">/ month</span></p>
-            <p class="price-blurb">For production teams shipping at scale.</p>
+            <h3 class="price-name">Team</h3>
+            <p class="price-amount"><strong>$29</strong> <span class="muted">/ month</span></p>
+            <p class="price-blurb">For teams collecting submissions at real volume.</p>
           </header>
           <ul class="price-feats">
-            <li><strong>1,000</strong> submissions / month</li>
-            <li>Everything in Starter</li>
-            <li>Custom SMTP (encrypted at rest, auto-fallback)</li>
-            <li>Submission retention policies</li>
-            <li>Razorpay payment-required forms</li>
-            <li>Org members + cross-form inbox</li>
-            <li>Priority support</li>
+            <li><strong>10,000</strong> submissions / month</li>
+            <li>Unlimited forms</li>
+            <li>All features</li>
           </ul>
-          <a class="btn btn-ghost btn-lg price-cta plausible-event-name=Signup+CTA plausible-event-location=pricing-pro plausible-event-plan=pro" href={`${APP}/register?plan=pro`}>Get Pro</a>
+          <a class="btn btn-ghost btn-lg price-cta plausible-event-name=Signup+CTA plausible-event-location=pricing-team plausible-event-plan=team" href={`${APP}/register?plan=team`}>Get Team</a>
         </article>
       </div>
 
+      <p class="price-honest">
+        No fake reviews. No "trusted by" logos. We're early. If you ship a form
+        with us, write to <a class="mono inline-link" href="mailto:hello@form4dev.com">hello@form4dev.com</a>
+        and we'll write back from a real founder.
+      </p>
       <p class="price-foot mono">
-        Need more than 1,000/month? <a href="mailto:hello@form4dev.com">Talk to us →</a>
+        Agent plan in beta. <a href="mailto:hello@form4dev.com?subject=Agent%20plan">Talk to us →</a>
       </p>
     </div>
   </section>
 
-  <!-- =============================================================
-       4. CUSTOMER REVIEWS — real placeholders, no fake content
-       ============================================================= -->
-  <section class="reviews">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow">/ what people say</span>
-        <h2 class="display section-title">
-          Reviews from the field.
-        </h2>
-        <p class="section-sub">
-          We're new — these slots fill up as real users ship and write in.
-          If you've shipped a form with us, drop us a line at
-          <a class="mono" href="mailto:hello@form4dev.com">hello@form4dev.com</a>.
-        </p>
-      </div>
-
-      <div class="review-grid">
-        <article class="review-card review-empty">
-          <span class="review-status mono">awaiting first review</span>
-          <p class="review-quote-empty">
-            "Your quote here."
-          </p>
-          <div class="review-attr">
-            <div class="avatar"></div>
-            <div>
-              <div class="review-name">— A real user</div>
-              <div class="review-role mono">role · company</div>
-            </div>
-          </div>
-        </article>
-
-        <article class="review-card review-empty">
-          <span class="review-status mono">awaiting first review</span>
-          <p class="review-quote-empty">
-            "Your quote here."
-          </p>
-          <div class="review-attr">
-            <div class="avatar"></div>
-            <div>
-              <div class="review-name">— A real user</div>
-              <div class="review-role mono">role · company</div>
-            </div>
-          </div>
-        </article>
-
-        <article class="review-card review-empty">
-          <span class="review-status mono">awaiting first review</span>
-          <p class="review-quote-empty">
-            "Your quote here."
-          </p>
-          <div class="review-attr">
-            <div class="avatar"></div>
-            <div>
-              <div class="review-name">— A real user</div>
-              <div class="review-role mono">role · company</div>
-            </div>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
 </Base>
 
 <script>
@@ -504,64 +549,107 @@ const APP = "https://login.form4dev.com";
     margin-top: 32px;
   }
   .price-foot a { color: var(--ink); border-bottom: 1px dashed var(--muted-3); }
+  .price-honest {
+    text-align: center;
+    max-width: 620px;
+    margin: 40px auto 0;
+    color: var(--muted);
+    font-size: 14.5px;
+    line-height: 1.65;
+  }
+  .inline-link {
+    color: var(--ink);
+    border-bottom: 1px dashed var(--muted-3);
+  }
+  .inline-link:hover { border-bottom-color: var(--ink); }
 
-  /* ---- Reviews ---- */
-  .reviews { padding: 88px 0; background: var(--bg-elev); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-  .review-grid {
+  /* ---- § 1 Paths ---- */
+  .paths { padding: 88px 0; border-top: 1px solid var(--line); }
+  .paths-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 16px;
   }
-  .review-card {
+  .path-card {
     background: var(--bg);
     border: 1px solid var(--line);
     border-radius: var(--r-4);
-    padding: 24px;
+    padding: 28px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
     min-height: 220px;
   }
-  .review-card.review-empty {
-    border-style: dashed;
-    background: transparent;
+  .path-card-accent {
+    border-color: var(--ink);
+    box-shadow: 0 24px 48px -16px rgba(10, 10, 10, 0.10);
   }
-  .review-status {
-    font-size: 10.5px;
+  .path-eyebrow {
+    font-size: 11px;
     color: var(--muted-2);
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
   }
-  .review-quote-empty {
-    font-size: 17px;
-    color: var(--muted-2);
-    line-height: 1.4;
+  .path-name {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin: 0;
+    color: var(--ink);
+  }
+  .path-body {
+    font-size: 14.5px;
+    color: var(--muted);
+    line-height: 1.6;
     margin: 0;
     flex: 1;
-    font-weight: 500;
-    letter-spacing: -0.005em;
-    font-style: italic;
   }
-  .review-attr {
+  .path-link {
+    font-size: 12.5px;
+    color: var(--ink);
+    margin-top: 8px;
+    border-bottom: 1px dashed var(--muted-3);
+    align-self: flex-start;
+  }
+  .path-link:hover { border-bottom-color: var(--ink); }
+
+  /* ---- § 2 Capabilities ---- */
+  .capabilities { padding: 88px 0; background: var(--bg-elev); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .cap-list {
+    margin: 0;
+    padding: 0;
     display: flex;
-    align-items: center;
-    gap: 10px;
+    flex-direction: column;
+    border-top: 1px solid var(--line-2);
   }
-  .avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 999px;
-    background: var(--bg-sunken);
-    border: 1px dashed var(--line-2);
+  .cap-row {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 32px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line-2);
   }
-  .review-name { font-size: 13.5px; font-weight: 500; color: var(--muted); }
-  .review-role { font-size: 11.5px; color: var(--muted-2); }
+  .cap-row dt {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .cap-row dd {
+    margin: 0;
+    font-size: 14.5px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+  .cap-row dd a { color: var(--ink); }
 
   /* ---- Responsive ---- */
   @media (max-width: 960px) {
     .headline { font-size: 56px; }
     .section-title { font-size: 32px; }
     .price-grid { grid-template-columns: 1fr; }
+    .paths-grid { grid-template-columns: 1fr; }
+    .cap-row { grid-template-columns: 1fr; gap: 6px; }
     .review-grid { grid-template-columns: 1fr; }
   }
   @media (max-width: 600px) {

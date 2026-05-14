@@ -7,65 +7,56 @@ const tiers = [
     name: "Free",
     price: "$0",
     period: "/ month",
-    blurb: "Hobby projects, demos, side hustles.",
-    features: [
-      "100 submissions / month",
-      "Unlimited forms",
-      "Honeypot + per-IP rate limit",
-      "Webhooks with HMAC + 5-retry backoff",
-      "CSV / JSON / Excel export",
-      "Slack / Discord / Telegram / Mailchimp",
-      "Per-form CAPTCHA (Turnstile / hCaptcha / reCAPTCHA)",
-      "Form4Dev-hosted form page",
-      "Personal API tokens (with audit log)",
-      "Public OpenAPI 3.1 spec",
-      "Community support",
-    ],
+    blurb: "For trying it out and side projects.",
+    submissions: "100",
     cta: "Start free",
     href: `${APP}/register`,
     emphasis: false,
     planKey: "free",
   },
   {
-    name: "Starter",
-    price: "$5",
+    name: "Solo",
+    price: "$9",
     period: "/ month",
-    blurb: "Indie devs and shipping freelancers.",
-    features: [
-      "250 submissions / month",
-      "Everything in Free",
-      "Submission tags + archive workflow",
-      "Per-form analytics (geo, spam, time series)",
-      "Per-form autoresponder + magic fields",
-      "Multi-step forms + conditional logic",
-      "Custom CSS on hosted form pages",
-      "AI-agent Bearer tokens with provenance stamp",
-      "Email support",
-    ],
-    cta: "Get Starter",
-    href: `${APP}/register?plan=starter`,
+    blurb: "For indie devs and freelancers shipping real forms.",
+    submissions: "1,000",
+    cta: "Get Solo",
+    href: `${APP}/register?plan=solo`,
     emphasis: true,
-    planKey: "starter",
+    planKey: "solo",
   },
   {
-    name: "Pro",
-    price: "$10",
+    name: "Team",
+    price: "$29",
     period: "/ month",
-    blurb: "Production teams shipping at scale.",
-    features: [
-      "1,000 submissions / month",
-      "Everything in Starter",
-      "Per-tenant SMTP (AES-256-GCM at rest)",
-      "Per-form retention policies",
-      "Razorpay payment-required forms",
-      "Org members + cross-form inbox",
-      "Priority email support",
-    ],
-    cta: "Get Pro",
-    href: `${APP}/register?plan=pro`,
+    blurb: "For teams collecting submissions at real volume.",
+    submissions: "10,000",
+    cta: "Get Team",
+    href: `${APP}/register?plan=team`,
     emphasis: false,
-    planKey: "pro",
+    planKey: "team",
   },
+];
+
+// Every tier includes everything. Shown once below the price grid.
+const allFeatures = [
+  "Unlimited forms",
+  "Spam filtering — honeypot, per-IP rate limit, CAPTCHA (Turnstile / hCaptcha / reCAPTCHA)",
+  "Email notifications — through our SMTP or yours",
+  "Webhooks — signed, retried, replayable, with delivery history",
+  "Multi-step forms + conditional show-if logic",
+  "Per-form autoresponder + magic fields",
+  "Per-form analytics — geo, spam rate, submissions over time",
+  "Form4Dev-hosted form page with custom CSS",
+  "Submission tags, archive, status workflow",
+  "Inbox export — CSV, JSON, Excel — by date range",
+  "Slack, Discord, Telegram, Mailchimp integrations",
+  "AI-agent Bearer tokens with audit log + 🤖 inbox stamp",
+  "Per-tenant SMTP — encrypted at rest, transparent fallback",
+  "Razorpay payment-required forms",
+  "Org members + cross-form inbox",
+  "Personal API tokens — every call recorded, 300/min per-token rate limit",
+  "Public OpenAPI 3.1 spec at /api/openapi.json",
 ];
 
 const faqs = [
@@ -79,7 +70,7 @@ const faqs = [
   },
   {
     q: "Do you store the form payload?",
-    a: "Yes — until you delete it or until your form's retention policy expires. Retention is configurable per-form on the Pro tier.",
+    a: "Yes — until you delete it or until your form's retention policy expires. Retention is configurable per-form on every paid tier.",
   },
   {
     q: "Can AI agents submit to my forms?",
@@ -87,7 +78,7 @@ const faqs = [
   },
   {
     q: "Can I bring my own SMTP?",
-    a: "Yes on the Pro tier. Configure host/port/credentials per organization; passwords are encrypted with AES-256-GCM at rest. If your SMTP server fails, we transparently fall back to the platform sender so notifications never silently drop. See /docs/smtp.",
+    a: "Yes, on every paid tier (and Free too). Configure host/port/credentials per organization; passwords are encrypted with AES-256-GCM at rest. If your SMTP server fails, we transparently fall back to the platform sender so notifications never silently drop. See /docs/smtp.",
   },
   {
     q: "Is the API stable? Can I script against it?",
@@ -136,20 +127,36 @@ const faqs = [
             class={`btn btn-lg ${t.emphasis ? "btn-primary" : "btn-ghost"} plausible-event-name=Signup+CTA plausible-event-location=pricing-${t.planKey} plausible-event-plan=${t.planKey}`}
           >{t.cta}</a>
           <hr class="hr" />
-          <ul>
-            {t.features.map((f) => (
-              <li>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 12l5 5L20 7"/></svg>
-                <span>{f}</span>
-              </li>
-            ))}
+          <ul class="tier-headline">
+            <li class="tier-quota">
+              <strong>{t.submissions}</strong> submissions / month
+            </li>
+            <li>Unlimited forms</li>
+            <li>All features (listed below)</li>
           </ul>
         </article>
       ))}
     </div>
 
+    <div class="all-features">
+      <h2 class="all-features-title">Every tier includes every feature.</h2>
+      <p class="all-features-sub">
+        We don't gate features by plan. The only thing that changes is the
+        monthly submission cap.
+      </p>
+      <ul class="all-features-list">
+        {allFeatures.map((f) => (
+          <li>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 12l5 5L20 7"/></svg>
+            <span>{f}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
     <p class="enterprise-note">
-      Need more than 1,000 submissions / month? <a href="mailto:hello@form4dev.com">Talk to us</a> — custom quotas and per-org SLAs available.
+      Need more than 10,000 submissions / month, or an Agent plan?
+      <a href="mailto:hello@form4dev.com">Talk to us</a>.
     </p>
   </section>
 
@@ -253,6 +260,50 @@ const faqs = [
     flex-shrink: 0;
   }
 
+  .tier-headline .tier-quota strong { color: var(--ink); font-weight: 600; font-size: 15px; }
+
+  .all-features {
+    margin: 56px auto 32px;
+    max-width: 800px;
+    padding: 36px 32px;
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    border-radius: var(--r-4);
+  }
+  .all-features-title {
+    font-size: 22px;
+    letter-spacing: -0.015em;
+    margin: 0 0 8px;
+    color: var(--ink);
+  }
+  .all-features-sub {
+    color: var(--muted);
+    font-size: 14.5px;
+    margin: 0 0 24px;
+    line-height: 1.6;
+  }
+  .all-features-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 24px;
+  }
+  .all-features-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.5;
+  }
+  .all-features-list li svg {
+    color: var(--accent);
+    margin-top: 4px;
+    flex-shrink: 0;
+  }
+
   .enterprise-note {
     text-align: center;
     margin: 32px 0 80px;
@@ -289,5 +340,6 @@ const faqs = [
   @media (max-width: 900px) {
     .tier-grid { grid-template-columns: 1fr; }
     .title { font-size: 40px; }
+    .all-features-list { grid-template-columns: 1fr; }
   }
 </style>
