@@ -1,4 +1,8 @@
 ---
+// form4dev mark — a single ~62° slash with a small accent-blue dot above it.
+// The slash is the literal `/` from a URL path; the dot is the request landing
+// on the endpoint. The mark visually substitutes for the `/` in the wordmark
+// when locked up: [mark] form4dev → reads as a path.
 interface Props {
   size?: number;
   withWordmark?: boolean;
@@ -7,15 +11,26 @@ const { size = 24, withWordmark = true } = Astro.props;
 ---
 
 <a href="/" aria-label="form4dev" class="logo-lockup">
-  <!-- Mark: tight black tile with mono "f4" inside, on a 1px square. Daytona-vibe. -->
-  <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
-    <rect width="24" height="24" rx="5" fill="#0a0a0a"/>
-    <text x="12" y="16.2" text-anchor="middle"
-          font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace"
-          font-size="11.5" font-weight="700" fill="#ffffff" letter-spacing="-0.5">f4</text>
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    aria-hidden="true"
+    class="logo-mark"
+  >
+    <!-- request dot -->
+    <circle cx="20" cy="4" r="2" fill="#0066ff" />
+    <!-- the slash itself: bottom-left to top-right, ~62° -->
+    <path
+      d="M7 22 L17 4"
+      stroke="#0a0a0a"
+      stroke-width="3"
+      stroke-linecap="square"
+    />
   </svg>
   {withWordmark && (
-    <span class="wordmark">form<span class="dim">4</span>dev</span>
+    <span class="wordmark">form4dev</span>
   )}
 </a>
 
@@ -25,13 +40,20 @@ const { size = 24, withWordmark = true } = Astro.props;
     align-items: center;
     gap: 8px;
     color: var(--ink);
+    text-decoration: none;
   }
+  .logo-mark { display: block; flex-shrink: 0; }
   .wordmark {
     font-family: var(--font-sans);
     font-weight: 600;
     letter-spacing: -0.02em;
     font-size: 16px;
     color: var(--ink);
+    line-height: 1;
   }
-  .dim { color: var(--muted-2); font-weight: 500; }
+  /* Dark-mode swap: stroke becomes white, dot stays accent.
+     We don't have a global dark theme yet, but the SVG is ready for it. */
+  @media (prefers-color-scheme: dark) {
+    .logo-mark path { stroke: #ffffff; }
+  }
 </style>
