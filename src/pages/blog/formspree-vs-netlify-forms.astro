@@ -1,0 +1,394 @@
+---
+import Base from "../../layouts/Base.astro";
+
+const APP = "https://login.form4dev.com";
+const title = "Formspree vs Netlify Forms (2026): a fair comparison";
+const description =
+  "Both Formspree and Netlify Forms handle form submissions for static and Jamstack sites — but they're built on different assumptions. Here's the honest tradeoff: when each one fits, when each one breaks, and what else to consider.";
+const publishedAt = "2026-05-16";
+const updatedAt = "2026-05-16";
+
+const fmtDate = (iso: string) =>
+  new Date(iso + "T00:00:00Z").toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+---
+
+<Base title={`${title} — Form4Dev`} description={description} current="blog">
+  <article class="post container-wide">
+    <header class="post-head">
+      <a href="/blog" class="back mono">← Blog</a>
+      <div class="post-meta mono">
+        <time datetime={publishedAt}>{fmtDate(publishedAt)}</time>
+        <span class="dot">·</span>
+        <span>8 min read</span>
+      </div>
+      <h1 class="display">{title}</h1>
+      <p class="lede">
+        Both let you take form submissions on a static site without
+        writing a backend. That's where the similarity ends. Here's the
+        comparison written by someone who builds in this space and
+        wants you to pick the right one — even when that's neither.
+      </p>
+    </header>
+
+    <section class="body">
+      <h2>Disclosure</h2>
+      <p>
+        I build <a href="https://form4dev.com">Form4Dev</a>, a third
+        option in this category. I've tried to write this neutrally —
+        Form4Dev is mentioned only at the end, where it's relevant.
+        If something feels slanted, email me.
+      </p>
+
+      <h2>The short answer</h2>
+      <p>
+        <strong>Pick Netlify Forms</strong> if your site is hosted on
+        Netlify, you have low submission volume, and you don't want to
+        sign up for another service. It's the path of least
+        resistance.
+      </p>
+      <p>
+        <strong>Pick Formspree</strong> if your site isn't on Netlify,
+        you need more integrations than Netlify offers, or you've
+        outgrown Netlify Forms' included quota and the credit-billing
+        math has gotten unfriendly.
+      </p>
+      <p>
+        Below is the long version, with the cases each one breaks down
+        on.
+      </p>
+
+      <h2>The fundamental difference</h2>
+      <p>
+        Netlify Forms is a feature of the Netlify hosting platform.
+        Formspree is a standalone product that works regardless of
+        where your site is hosted. That single difference cascades
+        into almost every other tradeoff.
+      </p>
+      <p>
+        Netlify Forms works because the Netlify build process
+        intercepts your HTML, finds forms with a special attribute,
+        and registers them with the platform. Submissions land in the
+        Netlify dashboard alongside your hosting, builds, and
+        functions. It's tightly integrated by design.
+      </p>
+      <p>
+        Formspree gives you an endpoint URL. You point any form on any
+        site at that URL, and submissions land in the Formspree
+        dashboard. It's hosting-agnostic by design.
+      </p>
+      <p>
+        Both designs have real advantages. Which one fits depends on
+        what you're optimizing for.
+      </p>
+
+      <h2>Setup: how each one works</h2>
+
+      <h3>Netlify Forms</h3>
+      <p>Add one attribute to your HTML form:</p>
+      <pre class="code">&lt;form name=<span class="s">"contact"</span> method=<span class="s">"POST"</span> data-netlify=<span class="s">"true"</span>&gt;
+  &lt;input name=<span class="s">"email"</span> type=<span class="s">"email"</span> required&gt;
+  &lt;textarea name=<span class="s">"message"</span> required&gt;&lt;/textarea&gt;
+  &lt;button&gt;Send&lt;/button&gt;
+&lt;/form&gt;</pre>
+      <p>
+        Netlify's build detects <code>data-netlify="true"</code>,
+        registers the form, and rewrites it to POST to its own
+        endpoint. Zero configuration, no signup beyond your existing
+        Netlify account.
+      </p>
+
+      <h3>Formspree</h3>
+      <p>
+        Sign up at Formspree, create a form, copy the endpoint URL,
+        point your form's <code>action</code> attribute at it:
+      </p>
+      <pre class="code">&lt;form action=<span class="s">"https://formspree.io/f/&lt;YOUR_FORM_ID&gt;"</span> method=<span class="s">"POST"</span>&gt;
+  &lt;input name=<span class="s">"email"</span> type=<span class="s">"email"</span> required&gt;
+  &lt;textarea name=<span class="s">"message"</span> required&gt;&lt;/textarea&gt;
+  &lt;input type=<span class="s">"text"</span> name=<span class="s">"_gotcha"</span> style=<span class="s">"display:none"</span>&gt;
+  &lt;button&gt;Send&lt;/button&gt;
+&lt;/form&gt;</pre>
+      <p>
+        Slightly more setup — one signup, one URL copy — but the form
+        works regardless of host.
+      </p>
+
+      <h2>Side-by-side comparison</h2>
+      <table>
+        <thead>
+          <tr><th>Axis</th><th>Netlify Forms</th><th>Formspree</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Setup effort</td><td>One HTML attribute</td><td>Sign up + copy URL</td></tr>
+          <tr><td>Hosting requirement</td><td>Netlify only</td><td>Any host</td></tr>
+          <tr><td>Free tier</td><td>Included with plan (now credit-based)</td><td>50 submissions/month</td></tr>
+          <tr><td>Paid starter</td><td>Tied to Netlify plan</td><td>$10/month</td></tr>
+          <tr><td>Dashboard</td><td>In Netlify console</td><td>Dedicated Formspree dashboard</td></tr>
+          <tr><td>Integrations</td><td>Slack, Zapier (limited)</td><td>40+ integrations</td></tr>
+          <tr><td>React library</td><td>None first-party</td><td><code>@formspree/react</code></td></tr>
+          <tr><td>Webhooks</td><td>Via Netlify Functions</td><td>Native, with HMAC signing</td></tr>
+          <tr><td>Spam filtering</td><td>Built-in + Akismet option</td><td>Built-in + reCAPTCHA option</td></tr>
+          <tr><td>File uploads</td><td>Yes (counts against bandwidth)</td><td>Yes (paid plans)</td></tr>
+          <tr><td>Programmatic submission</td><td>Possible, not designed for it</td><td>Possible, no first-class Bearer</td></tr>
+          <tr><td>Export</td><td>CSV from dashboard</td><td>CSV, JSON, integrations</td></tr>
+        </tbody>
+      </table>
+      <p class="muted-note">
+        Pricing and quotas as of {fmtDate(updatedAt)}. Both services
+        adjust pricing periodically — verify on their pricing pages
+        before deciding.
+      </p>
+
+      <h2>Where Netlify Forms wins</h2>
+
+      <h3>Zero friction if you're already on Netlify</h3>
+      <p>
+        One attribute. No signup. No second dashboard to remember.
+        Submissions show up in the same console where you check
+        builds and bandwidth. For low-volume sites with no
+        cross-platform requirements, this is hard to beat.
+      </p>
+
+      <h3>Tight integration with Netlify Functions</h3>
+      <p>
+        You can trigger a Netlify Function on every form submission —
+        useful for custom server-side logic without standing up a
+        separate backend. Formspree can do similar via webhooks, but
+        the Netlify path is more local.
+      </p>
+
+      <h3>One bill, one vendor</h3>
+      <p>
+        Procurement and billing are simpler when your hosting,
+        functions, and forms come from one company. For teams that
+        care about vendor count, this is a real factor.
+      </p>
+
+      <h2>Where Formspree wins</h2>
+
+      <h3>Works anywhere</h3>
+      <p>
+        Your site can be on Vercel, Cloudflare Pages, GitHub Pages, a
+        VPS, or a USB drive served from a coffee shop router.
+        Formspree doesn't care. If your hosting strategy might change
+        — or if you have multiple sites on different hosts — this is a
+        significant advantage.
+      </p>
+
+      <h3>Deeper integration catalog</h3>
+      <p>
+        Formspree has years of accumulated integrations: Slack, Discord,
+        Telegram, Mailchimp, Stripe, HubSpot, Salesforce, Zapier,
+        Make, custom webhooks. Netlify Forms covers the basics but
+        you'll often end up writing a Netlify Function to glue to
+        anything specific.
+      </p>
+
+      <h3>The React library</h3>
+      <p>
+        <code>@formspree/react</code> handles state, validation, and
+        error display with a single hook. For React-heavy sites, this
+        saves real implementation time. Netlify Forms has no
+        equivalent first-party library.
+      </p>
+
+      <h3>Predictable per-submission pricing</h3>
+      <p>
+        Formspree's pricing is straightforward: tiers with
+        submission caps, no credit math. Netlify Forms' shift to
+        credit-based billing makes the cost-per-form-submission a
+        moving target depending on what else your site consumes.
+      </p>
+
+      <h2>Where both break down</h2>
+
+      <h3>Programmatic submission (scripts, AI agents)</h3>
+      <p>
+        Neither was designed for non-browser submitters. Both will
+        accept POSTs from a script, but the spam defenses (captchas,
+        honeypots, referrer checks) are calibrated for browser
+        traffic, so agent and script submissions often get
+        misclassified. If you're building anything where an AI agent
+        submits on a user's behalf, look at a backend with first-class
+        Bearer-token auth. We wrote about this in detail in our
+        <a href="/blog/form-backend-for-ai-agents">form backend for
+        AI agents</a> post.
+      </p>
+
+      <h3>OpenAPI specs for tool-use frameworks</h3>
+      <p>
+        Neither publishes a machine-readable API spec at a public
+        URL. If you want an LLM agent to discover your form endpoint's
+        schema and call it directly, you're hand-rolling that
+        integration. This is a niche concern today; it won't be in
+        two years.
+      </p>
+
+      <h3>Per-tenant SMTP</h3>
+      <p>
+        If you run an app that sends form notifications on behalf of
+        multiple customer organizations, neither Formspree nor
+        Netlify Forms supports per-org SMTP. Notifications come from
+        the service's domain. For agencies and platforms, this is a
+        blocker.
+      </p>
+
+      <h2>What about Form4Dev?</h2>
+      <p>
+        For full disclosure, the alternative I build —
+        <a href="https://form4dev.com">Form4Dev</a> — sits in a third
+        position. It's hosting-agnostic like Formspree, designed for
+        programmatic submission from the start (Bearer tokens scoped
+        per-account, public OpenAPI 3.1 spec), and prices flat ($0 /
+        $9 / $29) with every feature on every tier.
+      </p>
+      <p>
+        It's not the right fit if you want the deepest integration
+        catalog (Formspree wins) or the zero-friction Netlify-native
+        experience (Netlify Forms wins). It is the right fit if
+        you're submitting forms from scripts, mobile apps, or AI
+        agents, or if you want transparent flat pricing without
+        per-tier feature gates.
+      </p>
+
+      <h2>Decision matrix</h2>
+      <p>If you're forced to pick between just Formspree and Netlify Forms, here's the heuristic:</p>
+      <ul>
+        <li>
+          <strong>Site on Netlify, &lt;100 submissions/month, no
+          unusual integrations</strong> → Netlify Forms.
+        </li>
+        <li>
+          <strong>Site on Netlify, but credit-billing changes made the
+          cost unpredictable</strong> → Formspree (and consider moving
+          off the bundled-with-hosting model entirely).
+        </li>
+        <li>
+          <strong>Site not on Netlify</strong> → Formspree. Netlify
+          Forms isn't an option.
+        </li>
+        <li>
+          <strong>Need a specific integration Netlify doesn't have
+          (Salesforce, HubSpot, Zapier flows)</strong> → Formspree.
+        </li>
+        <li>
+          <strong>Multiple sites on different hosts</strong> →
+          Formspree, so you have one form-backend system across all of
+          them.
+        </li>
+        <li>
+          <strong>Programmatic submission or AI agents matter</strong>
+          → neither — look at Form4Dev or a similar agent-first
+          backend.
+        </li>
+      </ul>
+
+      <h2>FAQ</h2>
+
+      <h3>Can I use Formspree and Netlify Forms together?</h3>
+      <p>
+        Technically yes — point some forms at Formspree and use
+        <code>data-netlify="true"</code> on others. In practice it's
+        not worth the operational complexity of two dashboards. Pick
+        one.
+      </p>
+
+      <h3>Is Netlify Forms still free?</h3>
+      <p>
+        There's still an included quota on most plans, but the
+        credit-based model means form submissions consume from the
+        same pool as functions and bandwidth. Heavy form usage can
+        affect your build/runtime budget. Predict carefully.
+      </p>
+
+      <h3>Does Formspree work with Next.js, Astro, SvelteKit, etc.?</h3>
+      <p>
+        Yes — it works with any framework that can render an HTML
+        form. The <code>@formspree/react</code> library is React-only,
+        but the underlying endpoint accepts any POST.
+      </p>
+
+      <h3>Which has better spam filtering?</h3>
+      <p>
+        Both have built-in spam filtering and optional CAPTCHA
+        integration. In practice, both block 95%+ of obvious bot
+        spam. Sophisticated scrapers get through both. There's no
+        meaningful difference in raw spam performance.
+      </p>
+
+      <h3>What about deliverability?</h3>
+      <p>
+        Both have years of operation behind their sending
+        infrastructure. Notifications from either service generally
+        land in normal inboxes; strict corporate inboxes occasionally
+        flag either. Test against your actual destination before
+        committing.
+      </p>
+
+      <h3>Can I migrate from one to the other?</h3>
+      <p>
+        Yes. Both let you export submissions as CSV. The work is
+        swapping your form's <code>action=</code> attribute. We have
+        a detailed
+        <a href="/blog/netlify-forms-alternatives">Netlify Forms
+        migration guide</a> with the exact diffs for several
+        alternatives.
+      </p>
+
+      <h2>The takeaway</h2>
+      <p>
+        Formspree and Netlify Forms solve the same problem with
+        different bets. Netlify Forms bets you're on Netlify and want
+        forms bundled. Formspree bets you'll have multiple sites,
+        multiple hosts, and want a dedicated form product. The right
+        choice depends on whether Netlify's bet is right about you.
+      </p>
+      <p>
+        If the answer is "neither fits because we need programmatic
+        submission" — that's the case
+        <a href="https://form4dev.com">Form4Dev</a> was built for.
+        <a href={`${APP}/register`} class="plausible-event-name=Signup+CTA plausible-event-location=blog-fs-vs-nf plausible-event-plan=free">
+          Start free
+        </a>
+        — every feature unlocked, 100 submissions/month, no credit
+        card.
+      </p>
+
+      <p class="muted-note last-updated">
+        Last updated {fmtDate(updatedAt)}. Pricing changes — spotted
+        something out of date? Email
+        <a href="mailto:hello@form4dev.com">hello@form4dev.com</a>.
+      </p>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .post { max-width: 720px; padding: 56px 28px 96px; }
+  .post-head { margin-bottom: 40px; }
+  .back { display: inline-block; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 24px; }
+  .back:hover { color: var(--ink); }
+  .post-meta { font-size: 12px; color: var(--muted-2); display: flex; align-items: center; gap: 8px; margin-bottom: 18px; }
+  .dot { opacity: 0.5; }
+  .post-head h1 { font-size: 38px; margin: 0 0 16px; letter-spacing: -0.02em; line-height: 1.15; }
+  .lede { font-size: 18px; color: var(--muted); line-height: 1.6; margin: 0; }
+  .body h2 { font-size: 24px; margin: 48px 0 14px; letter-spacing: -0.01em; line-height: 1.3; }
+  .body h3 { font-size: 18px; margin: 32px 0 10px; letter-spacing: -0.005em; color: var(--ink); }
+  .body p { line-height: 1.75; margin: 0 0 14px; font-size: 16px; color: var(--ink); }
+  .body ul, .body ol { line-height: 1.8; padding-left: 22px; margin: 0 0 16px; }
+  .body li { margin-bottom: 6px; }
+  .body code { background: var(--bg-sunken); border: 1px solid var(--line); padding: 0 5px; border-radius: 4px; font-family: var(--font-mono); font-size: 0.88em; }
+  .body a { color: var(--ink); border-bottom: 1px solid var(--muted-3); transition: border-color 0.12s ease, color 0.12s ease; }
+  .body a:hover { color: var(--accent); border-color: var(--accent); }
+  .body table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14px; }
+  .body th, .body td { border-bottom: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .body th { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500; }
+  .muted-note { color: var(--muted); font-size: 14px; }
+  .last-updated { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 13px; }
+  .code { background: var(--code-bg); color: var(--code-fg); border-radius: 12px; padding: 18px 22px; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.7; overflow-x: auto; white-space: pre; margin: 8px 0 18px; }
+  .code .s { color: var(--code-str); }
+</style>

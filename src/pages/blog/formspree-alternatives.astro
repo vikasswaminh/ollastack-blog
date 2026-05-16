@@ -1,0 +1,469 @@
+---
+import Base from "../../layouts/Base.astro";
+
+const APP = "https://login.form4dev.com";
+const title = "Formspree alternatives in 2026: an honest comparison from someone building one";
+const description =
+  "If you're shopping for a Formspree alternative, here's the landscape — Basin, Formcarry, Forminit, Web3Forms, Netlify Forms, Formspark, Form4Dev — with the tradeoffs each one carries. Written by someone who builds in this space and reads the competitor pages weekly.";
+const publishedAt = "2026-05-16";
+const updatedAt = "2026-05-16";
+
+const fmtDate = (iso: string) =>
+  new Date(iso + "T00:00:00Z").toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+---
+
+<Base title={`${title} — Form4Dev`} description={description} current="blog">
+  <article class="post container-wide">
+    <header class="post-head">
+      <a href="/blog" class="back mono">← Blog</a>
+      <div class="post-meta mono">
+        <time datetime={publishedAt}>{fmtDate(publishedAt)}</time>
+        <span class="dot">·</span>
+        <span>13 min read</span>
+      </div>
+      <h1 class="display">{title}</h1>
+      <p class="lede">
+        Formspree has been the default answer for "how do I add a contact
+        form to my static site" for a decade. It's a fine answer. It's
+        not the only one anymore. Here's the honest landscape in 2026 —
+        including the cases where I'd recommend a competitor over my own
+        product.
+      </p>
+    </header>
+
+    <section class="body">
+      <h2>Disclosure</h2>
+      <p>
+        I build <a href="https://form4dev.com">Form4Dev</a>, one of the
+        services on this list. The internet doesn't need another
+        promotional listicle pretending to be neutral. I've tried to
+        write this as the honest take I'd give a friend who emailed
+        asking "which form backend should I use?" — including the cases
+        where Formspree is still the right call and the cases where one
+        of the other competitors fits better than Form4Dev.
+      </p>
+
+      <h2>The short answer</h2>
+      <p>
+        If you want the safest, most documented option and don't mind
+        paying past 50 submissions a month, stay on Formspree. If you'll
+        live in the dashboard, look at Basin. If price is the dominant
+        axis, Formcarry. If you submit forms from scripts or AI agents,
+        Form4Dev. If you want unlimited free submissions and don't need a
+        dashboard, Web3Forms. Below is the long version.
+      </p>
+
+      <h2>How to pick a form backend (the framework)</h2>
+      <p>
+        Form backends compete on a small number of axes. Picking one is
+        about deciding which axis you weigh hardest — no service wins on
+        all of them, and anyone who says theirs does is selling.
+      </p>
+      <ul>
+        <li>
+          <strong>Maturity and ecosystem</strong> — how many integrations,
+          how much documentation, how many third-party tutorials.
+        </li>
+        <li>
+          <strong>Dashboard UX</strong> — how nice the inbox is to live in.
+        </li>
+        <li>
+          <strong>Developer ergonomics</strong> — OpenAPI spec, error
+          envelopes, framework libraries.
+        </li>
+        <li>
+          <strong>Programmatic submission</strong> — whether scripts and
+          AI agents can submit cleanly with Bearer auth.
+        </li>
+        <li>
+          <strong>Email deliverability</strong> — notifications landing
+          where you expect, Reply-To routing.
+        </li>
+        <li>
+          <strong>Price at scale</strong> — what you pay at 1k, 10k, 100k
+          submissions/month.
+        </li>
+        <li>
+          <strong>Self-hosting</strong> — whether you can run it
+          yourself.
+        </li>
+      </ul>
+      <p>
+        Below, I've ranked each alternative by best-fit-for-something,
+        not by "best overall," which is a meaningless ranking when the
+        right answer depends on what you're optimizing for.
+      </p>
+
+      <h2>The alternatives</h2>
+
+      <h3>1. Basin — for designers and dashboard quality</h3>
+      <p>
+        Basin (<code>usebasin.com</code>) is the prettiest dashboard in
+        the category by some distance. They've gone deep on visual
+        polish, onboarding flow, and the kind of design choices that
+        matter if you'll demo the dashboard to a client.
+      </p>
+      <p>
+        <strong>Where Basin wins</strong>: best-in-class UI, strong
+        out-of-the-box spam filtering, generous 100/mo free tier with
+        most features included, $8.25/mo starter that undercuts
+        Formspree.
+      </p>
+      <p>
+        <strong>Where Basin loses</strong>: developer ergonomics are a
+        secondary concern — no public OpenAPI spec, docs lean on
+        screenshots over code, programmatic submission is a
+        second-class path.
+      </p>
+      <p>
+        <strong>Pick Basin if</strong>: you'll spend real time in the
+        dashboard, you care about visual polish, and your forms are
+        filled by humans in browsers.
+      </p>
+
+      <h3>2. Formcarry — for price and lifetime archive</h3>
+      <p>
+        Formcarry's edge is pricing: $6/mo starter (cheapest in the
+        category), and the free tier keeps submissions in the lifetime
+        archive instead of rotating them out after 30 days like most
+        competitors.
+      </p>
+      <p>
+        <strong>Where Formcarry wins</strong>: cheapest paid plan,
+        lifetime archive on free tier, CSV + JSON export with no plan
+        gating, file uploads on most plans.
+      </p>
+      <p>
+        <strong>Where Formcarry loses</strong>: thinner product surface
+        — fewer integrations, no published OpenAPI spec, documentation
+        leans reference rather than tutorial.
+      </p>
+      <p>
+        <strong>Pick Formcarry if</strong>: price is the dominant axis
+        and you want submissions archived forever without paying for
+        retention.
+      </p>
+
+      <h3>3. Forminit (formerly Getform) — for static-site reliability</h3>
+      <p>
+        Getform rebranded to Forminit in January 2026. The product is
+        the same well-tested form backend it's been for years — strong
+        in the Hugo/Eleventy/Jekyll communities, good Zapier and webhook
+        support, file uploads on every paid plan. We wrote a dedicated
+        <a href="/blog/forminit-alternatives">Forminit alternatives
+        piece</a> with more detail.
+      </p>
+      <p>
+        <strong>Where Forminit wins</strong>: rock-solid reliability,
+        strong static-site-generator integration guides, mature
+        deliverability.
+      </p>
+      <p>
+        <strong>Where Forminit loses</strong>: pricing is mid-pack ($9
+        starter, climbing to $24+), dashboard is functional rather than
+        delightful, no first-class agent or Bearer-token primitive.
+      </p>
+      <p>
+        <strong>Pick Forminit if</strong>: you want a boring, mature
+        form backend with deep static-site-generator documentation, and
+        you're not optimizing for programmatic submission.
+      </p>
+
+      <h3>4. Web3Forms — for unlimited free submissions</h3>
+      <p>
+        Web3Forms takes a different monetization tack: unlimited
+        submissions on the free tier, most features open, paid tiers
+        unlock dashboards and team features. If your form volume is
+        unpredictable and you don't want to think about quota, this
+        removes the worry.
+      </p>
+      <p>
+        <strong>Where Web3Forms wins</strong>: unlimited free
+        submissions, simple pricing, fast setup, good for prototypes
+        and side projects.
+      </p>
+      <p>
+        <strong>Where Web3Forms loses</strong>: no dashboard on free
+        tier (email notifications only), less battle-tested
+        deliverability than Formspree-class services, integration depth
+        is thinner.
+      </p>
+      <p>
+        <strong>Pick Web3Forms if</strong>: you want a free form
+        backend for a personal site or prototype and the
+        email-only-no-dashboard flow is fine.
+      </p>
+
+      <h3>5. Netlify Forms — for Netlify-hosted sites</h3>
+      <p>
+        Netlify Forms is built into Netlify's hosting platform. If your
+        site is already on Netlify, you can wire up a form by adding
+        one attribute to your HTML — no third-party service to sign up
+        for.
+      </p>
+      <p>
+        <strong>Where Netlify Forms wins</strong>: zero-config when
+        you're on Netlify, included in their plans up to a quota,
+        native integration with Netlify Functions for custom logic.
+      </p>
+      <p>
+        <strong>Where Netlify Forms loses</strong>: locked to Netlify
+        hosting — move and you rewrite. Recent shift to credit-based
+        billing has made the cost less predictable. Not an option if
+        you're on Vercel, Cloudflare Pages, or anywhere else.
+      </p>
+      <p>
+        <strong>Pick Netlify Forms if</strong>: you're already on
+        Netlify, plan to stay, and your volume fits in the included
+        quota. We have a longer piece on
+        <a href="/blog/netlify-forms-alternatives">Netlify Forms
+        alternatives</a> if you're shopping after a pricing surprise.
+      </p>
+
+      <h3>6. Formspark — for one-time-payment simplicity</h3>
+      <p>
+        Formspark uses a credit-pool model: $25 one-time buys 50,000
+        submissions you use at your own pace. No recurring
+        subscription. Strong fit for low-traffic sites where a monthly
+        bill feels overweight.
+      </p>
+      <p>
+        <strong>Where Formspark wins</strong>: no recurring cost,
+        simple mental model, great for low-traffic single-site setups.
+      </p>
+      <p>
+        <strong>Where Formspark loses</strong>: intentionally minimal
+        feature surface, no first-class team features, less suited to
+        anyone running multiple production sites.
+      </p>
+      <p>
+        <strong>Pick Formspark if</strong>: you have one or two
+        low-traffic sites and want to pay once for a multi-year
+        submission budget.
+      </p>
+
+      <h3>7. Form4Dev — for agents, scripts, and OpenAPI</h3>
+      <p>
+        Full disclosure: this is my product. I'll keep it short.
+        Form4Dev was designed from day one with non-browser submitters
+        as first-class clients — Bearer-token authentication scoped
+        per-account, a published OpenAPI 3.1 spec at a public URL (so
+        agent frameworks can consume the schema directly), per-tenant
+        SMTP, and transparent flat pricing ($0 / $9 / $29) with every
+        feature on every tier.
+      </p>
+      <p>
+        <strong>Where Form4Dev wins</strong>: cleanest path for
+        programmatic submission (scripts, mobile apps, AI agents),
+        public OpenAPI spec, every feature available on free tier
+        (capped at 100 submissions/month), per-tenant SMTP on every
+        paid plan.
+      </p>
+      <p>
+        <strong>Where Form4Dev loses</strong>: we're early. No
+        decade-old integration catalog, no Formspree-tier tutorial
+        corpus, less brand recognition. Product is production-ready;
+        ecosystem is younger.
+      </p>
+      <p>
+        <strong>Pick Form4Dev if</strong>: you submit forms from
+        scripts, mobile apps, or AI agents; you value transparent flat
+        pricing; you'd consume an OpenAPI spec to integrate.
+      </p>
+
+      <h2>Side-by-side at a glance</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Service</th>
+            <th>Free tier</th>
+            <th>Starter</th>
+            <th>Best for</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Formspree</td><td>50/mo</td><td>$10/mo</td><td>Maturity, integrations</td></tr>
+          <tr><td>Basin</td><td>100/mo</td><td>$8.25/mo</td><td>UI quality</td></tr>
+          <tr><td>Formcarry</td><td>100/mo (lifetime)</td><td>$6/mo</td><td>Price + archive</td></tr>
+          <tr><td>Forminit</td><td>50/mo</td><td>$9/mo</td><td>Static-site reliability</td></tr>
+          <tr><td>Web3Forms</td><td>Unlimited</td><td>$10/mo (dashboard)</td><td>Free unlimited</td></tr>
+          <tr><td>Netlify Forms</td><td>Included on plan</td><td>Tied to hosting</td><td>Netlify-hosted sites</td></tr>
+          <tr><td>Formspark</td><td>—</td><td>$25 one-time / 50k</td><td>No subscription</td></tr>
+          <tr><td>Form4Dev</td><td>100/mo, all features</td><td>$9/mo</td><td>Agents, scripts, OpenAPI</td></tr>
+        </tbody>
+      </table>
+      <p class="muted-note">
+        Pricing accurate as of {fmtDate(updatedAt)} based on each
+        service's public pricing page. Verify before committing —
+        pricing changes more often than blog posts get updated.
+      </p>
+
+      <h2>Where Formspree is still the right call</h2>
+      <p>
+        It's easy to write a "leave Formspree, here's something better"
+        listicle. It's more honest to admit when Formspree is still the
+        right answer.
+      </p>
+      <ul>
+        <li>
+          <strong>You need an integration that only Formspree has.</strong>
+          They have the deepest catalog by a wide margin. If you need a
+          specific destination (a particular CRM, an obscure tool) and
+          Formspree supports it natively, that's worth paying for.
+        </li>
+        <li>
+          <strong>You're learning, and want the most-documented option.</strong>
+          Every JavaScript framework tutorial mentions Formspree first.
+          That ecosystem matters when you're stuck at 11pm.
+        </li>
+        <li>
+          <strong>You've already integrated <code>@formspree/react</code></strong>
+          and it works. Switching costs time. If nothing's broken,
+          don't switch just to switch.
+        </li>
+      </ul>
+      <p>
+        The point of this post isn't to talk you off Formspree. It's
+        to make sure you know what else exists if Formspree isn't
+        fitting.
+      </p>
+
+      <h2>How to actually migrate</h2>
+      <p>
+        Form backends are easy to switch. The work is mostly clerical.
+      </p>
+      <ol>
+        <li>
+          <strong>Export your existing submissions.</strong> Every
+          service supports CSV export. Do this first.
+        </li>
+        <li>
+          <strong>Sign up for the new service and recreate your forms.</strong>
+          Match field names so downstream automations don't break.
+        </li>
+        <li>
+          <strong>Update the <code>action=</code> URL on every form.</strong>
+          If you used an environment variable, this is one change. If
+          you hardcoded the endpoint everywhere, keep a list.
+        </li>
+        <li>
+          <strong>Test in staging.</strong> Submit each form, verify
+          the notification arrives, verify webhooks fire.
+        </li>
+        <li>
+          <strong>Ship.</strong> Leave the old service active for a
+          week in case traffic routes there. Then cancel.
+        </li>
+      </ol>
+      <p>Total time for most sites: under an afternoon.</p>
+
+      <h2>FAQ</h2>
+
+      <h3>What's the best Formspree alternative in 2026?</h3>
+      <p>
+        Depends on what you weigh. Basin is the best UI, Formcarry is
+        the cheapest, Forminit is the most reliable static-site option,
+        Web3Forms is the best free tier on volume, Form4Dev is the
+        best for AI agents and programmatic submission. There isn't a
+        single "best" — pick on the axis that matters to you.
+      </p>
+
+      <h3>Is there a free Formspree alternative with unlimited submissions?</h3>
+      <p>
+        Web3Forms offers unlimited submissions on its free tier, with
+        the caveat that you only get email notifications — no
+        dashboard. For most personal sites and prototypes, that's
+        fine.
+      </p>
+
+      <h3>Which form backend is best for AI agents?</h3>
+      <p>
+        Form4Dev is the only service on this list with first-class
+        Bearer-token authentication and a public OpenAPI 3.1 spec
+        designed for agent consumption. We wrote a deeper piece on
+        <a href="/blog/form-backend-for-ai-agents">form backends for
+        AI agents</a>.
+      </p>
+
+      <h3>Are there open-source Formspree alternatives?</h3>
+      <p>
+        FormGrid is the most active open-source form backend at time of
+        writing — you run it on your own infrastructure. None of the
+        hosted services here offer first-party self-hosting today.
+      </p>
+
+      <h3>How much will I pay at 10,000 submissions/month?</h3>
+      <p>
+        Roughly: Formspree $35-50, Basin $25, Formcarry $15-30,
+        Forminit $24, Web3Forms $10 (with dashboard), Form4Dev $29.
+        Check each on the current pricing page before deciding.
+      </p>
+
+      <h3>Can I keep using Formspree's React library with another backend?</h3>
+      <p>
+        No — <code>@formspree/react</code> is Formspree-specific. If
+        you switch, you'll either use the new service's library (most
+        have one), or write a small fetch wrapper yourself. It's about
+        20 lines of TypeScript.
+      </p>
+
+      <h2>The takeaway</h2>
+      <p>
+        The form-backend category isn't winner-take-all. Formspree
+        earned its position as the default by being the most mature
+        and most documented option for a decade — that doesn't
+        disappear because newer services exist. What's changed is
+        there are now real specialists worth knowing about: dashboard
+        quality, lifetime archive, unlimited free, agent submission,
+        one-time pricing.
+      </p>
+      <p>
+        Most people will look around and stay on Formspree. That's
+        fine. The point is to look around with an honest map.
+      </p>
+      <p>
+        If the agent-and-API-first angle is what brought you here,
+        <a href="https://form4dev.com">Form4Dev</a> is built around it.
+        <a href={`${APP}/register`} class="plausible-event-name=Signup+CTA plausible-event-location=blog-formspree-alts plausible-event-plan=free">
+          Start free
+        </a>
+        — every feature unlocked, capped at 100 submissions/month, no
+        credit card.
+      </p>
+
+      <p class="muted-note last-updated">
+        Last updated {fmtDate(updatedAt)}. Pricing changes — spotted
+        something out of date? Email
+        <a href="mailto:hello@form4dev.com">hello@form4dev.com</a>.
+      </p>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .post { max-width: 720px; padding: 56px 28px 96px; }
+  .post-head { margin-bottom: 40px; }
+  .back { display: inline-block; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 24px; }
+  .back:hover { color: var(--ink); }
+  .post-meta { font-size: 12px; color: var(--muted-2); display: flex; align-items: center; gap: 8px; margin-bottom: 18px; }
+  .dot { opacity: 0.5; }
+  .post-head h1 { font-size: 38px; margin: 0 0 16px; letter-spacing: -0.02em; line-height: 1.15; }
+  .lede { font-size: 18px; color: var(--muted); line-height: 1.6; margin: 0; }
+  .body h2 { font-size: 24px; margin: 48px 0 14px; letter-spacing: -0.01em; line-height: 1.3; }
+  .body h3 { font-size: 18px; margin: 32px 0 10px; letter-spacing: -0.005em; color: var(--ink); }
+  .body p { line-height: 1.75; margin: 0 0 14px; font-size: 16px; color: var(--ink); }
+  .body ul, .body ol { line-height: 1.8; padding-left: 22px; margin: 0 0 16px; }
+  .body li { margin-bottom: 6px; }
+  .body code { background: var(--bg-sunken); border: 1px solid var(--line); padding: 0 5px; border-radius: 4px; font-family: var(--font-mono); font-size: 0.88em; }
+  .body a { color: var(--ink); border-bottom: 1px solid var(--muted-3); transition: border-color 0.12s ease, color 0.12s ease; }
+  .body a:hover { color: var(--accent); border-color: var(--accent); }
+  .body table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14px; }
+  .body th, .body td { border-bottom: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
+  .body th { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500; }
+  .muted-note { color: var(--muted); font-size: 14px; }
+  .last-updated { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 13px; }
+</style>
