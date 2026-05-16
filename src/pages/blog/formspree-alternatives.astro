@@ -72,12 +72,12 @@ const fmtDate = (iso: string) =>
           <strong>Dashboard UX</strong> — how nice the inbox is to live in.
         </li>
         <li>
-          <strong>Developer ergonomics</strong> — OpenAPI spec, error
-          envelopes, framework libraries.
+          <strong>Developer ergonomics</strong> — clear errors,
+          predictable behaviour, framework libraries.
         </li>
         <li>
-          <strong>Programmatic submission</strong> — whether scripts and
-          AI agents can submit cleanly with Bearer auth.
+          <strong>Programmatic submission</strong> — whether
+          scripts and AI agents can submit cleanly.
         </li>
         <li>
           <strong>Email deliverability</strong> — notifications landing
@@ -114,9 +114,9 @@ const fmtDate = (iso: string) =>
         Formspree.
       </p>
       <p>
-        <strong>Where Basin loses</strong>: developer ergonomics are a
-        secondary concern — no public OpenAPI spec, docs lean on
-        screenshots over code, programmatic submission is a
+        <strong>Where Basin loses</strong>: developer ergonomics
+        are a secondary concern — docs lean on screenshots over
+        code, and submissions from non-browser clients are a
         second-class path.
       </p>
       <p>
@@ -138,9 +138,9 @@ const fmtDate = (iso: string) =>
         gating, file uploads on most plans.
       </p>
       <p>
-        <strong>Where Formcarry loses</strong>: thinner product surface
-        — fewer integrations, no published OpenAPI spec, documentation
-        leans reference rather than tutorial.
+        <strong>Where Formcarry loses</strong>: thinner product
+        surface — fewer integrations, documentation leans
+        reference rather than tutorial.
       </p>
       <p>
         <strong>Pick Formcarry if</strong>: price is the dominant axis
@@ -163,9 +163,10 @@ const fmtDate = (iso: string) =>
         deliverability.
       </p>
       <p>
-        <strong>Where Forminit loses</strong>: pricing is mid-pack ($9
-        starter, climbing to $24+), dashboard is functional rather than
-        delightful, no first-class agent or Bearer-token primitive.
+        <strong>Where Forminit loses</strong>: pricing is mid-pack
+        ($9 starter, climbing to $24+), the dashboard is
+        functional rather than delightful, and there's no
+        first-class story for agent or automation traffic.
       </p>
       <p>
         <strong>Pick Forminit if</strong>: you want a boring, mature
@@ -246,33 +247,33 @@ const fmtDate = (iso: string) =>
         submission budget.
       </p>
 
-      <h3>7. Form4Dev — for agents, scripts, and OpenAPI</h3>
+      <h3>7. Form4Dev — for agents, scripts, and flat pricing</h3>
       <p>
         Full disclosure: this is my product. I'll keep it short.
-        Form4Dev was designed from day one with non-browser submitters
-        as first-class clients — Bearer-token authentication scoped
-        per-account, a published OpenAPI 3.1 spec at a public URL (so
-        agent frameworks can consume the schema directly), per-tenant
-        SMTP, and transparent flat pricing ($0 / $9 / $29) with every
-        feature on every tier.
+        Form4Dev is built from day one with non-browser
+        submitters as first-class users — scripts, mobile apps,
+        and AI agents — with transparent flat pricing ($0 / $9 /
+        $29) and every feature on every plan.
       </p>
       <p>
         <strong>Where Form4Dev wins</strong>: cleanest path for
-        programmatic submission (scripts, mobile apps, AI agents),
-        public OpenAPI spec, every feature available on free tier
-        (capped at 100 submissions/month), per-tenant SMTP on every
-        paid plan.
+        scripted and agent submission, every feature available
+        on the free tier (capped at 100 submissions/month),
+        built-in support for sending notifications from your own
+        domain, flat pricing with no feature gating between
+        plans.
       </p>
       <p>
         <strong>Where Form4Dev loses</strong>: we're early. No
-        decade-old integration catalog, no Formspree-tier tutorial
-        corpus, less brand recognition. Product is production-ready;
-        ecosystem is younger.
+        decade-old integration catalog, no Formspree-tier
+        tutorial corpus, less brand recognition. Product is
+        production-ready; ecosystem is younger.
       </p>
       <p>
         <strong>Pick Form4Dev if</strong>: you submit forms from
-        scripts, mobile apps, or AI agents; you value transparent flat
-        pricing; you'd consume an OpenAPI spec to integrate.
+        scripts, mobile apps, or AI agents; you value flat
+        pricing; you want every capability available on a free
+        trial.
       </p>
 
       <h2>Side-by-side at a glance</h2>
@@ -293,7 +294,7 @@ const fmtDate = (iso: string) =>
           <tr><td>Web3Forms</td><td>Unlimited</td><td>$10/mo (dashboard)</td><td>Free unlimited</td></tr>
           <tr><td>Netlify Forms</td><td>Included on plan</td><td>Tied to hosting</td><td>Netlify-hosted sites</td></tr>
           <tr><td>Formspark</td><td>—</td><td>$25 one-time / 50k</td><td>No subscription</td></tr>
-          <tr><td>Form4Dev</td><td>100/mo, all features</td><td>$9/mo</td><td>Agents, scripts, OpenAPI</td></tr>
+          <tr><td>Form4Dev</td><td>100/mo, all features</td><td>$9/mo</td><td>Agents, scripts, flat pricing</td></tr>
         </tbody>
       </table>
       <p class="muted-note">
@@ -382,11 +383,11 @@ const fmtDate = (iso: string) =>
 
       <h3>Which form backend is best for AI agents?</h3>
       <p>
-        Form4Dev is the only service on this list with first-class
-        Bearer-token authentication and a public OpenAPI 3.1 spec
-        designed for agent consumption. We wrote a deeper piece on
-        <a href="/blog/form-backend-for-ai-agents">form backends for
-        AI agents</a>.
+        Of the services here, Form4Dev is built specifically for
+        agent submission as a first-class case. We wrote a
+        deeper piece on
+        <a href="/blog/form-backend-for-ai-agents">form
+        backends for AI agents</a>.
       </p>
 
       <h3>Are there open-source Formspree alternatives?</h3>

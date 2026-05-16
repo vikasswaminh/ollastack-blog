@@ -79,8 +79,8 @@ const fmtDate = (iso: string) =>
           in, especially if you'll spend time reviewing submissions.
         </li>
         <li>
-          <strong>Developer ergonomics</strong> — clear API, OpenAPI spec,
-          predictable error envelopes, CLI or library support.
+          <strong>Developer ergonomics</strong> — clear errors,
+          predictable behaviour, CLI or library support.
         </li>
         <li>
           <strong>Programmatic submission</strong> — whether non-browser
@@ -123,10 +123,11 @@ const fmtDate = (iso: string) =>
         it.
       </p>
       <p>
-        <strong>Where Formspree loses</strong>: pricing climbs fast above
-        the free tier (50 submissions/month on free), the dashboard
-        aesthetic feels like it was designed in 2017, and there's no
-        first-class Bearer-token authentication for non-browser clients.
+        <strong>Where Formspree loses</strong>: pricing climbs
+        fast above the free tier (50 submissions/month on free),
+        the dashboard aesthetic feels like it was designed in
+        2017, and there's no first-class story for non-browser
+        submitters.
       </p>
       <p>
         <strong>Pick Formspree if</strong>: you want the most mature,
@@ -149,10 +150,10 @@ const fmtDate = (iso: string) =>
         plan that's competitive.
       </p>
       <p>
-        <strong>Where Basin loses</strong>: developer ergonomics are a
-        secondary concern — there's no OpenAPI spec, the docs lean more
-        on screenshots than code, and programmatic submission is a
-        second-class path.
+        <strong>Where Basin loses</strong>: developer ergonomics
+        are a secondary concern — the docs lean more on
+        screenshots than code, and submissions from non-browser
+        clients (scripts, agents) are a second-class path.
       </p>
       <p>
         <strong>Pick Basin if</strong>: you'll spend real time in the
@@ -172,9 +173,9 @@ const fmtDate = (iso: string) =>
         no plan gating, file uploads on most plans.
       </p>
       <p>
-        <strong>Where Formcarry loses</strong>: the product surface is
-        thinner — fewer integrations, less polish, no published OpenAPI
-        spec — and the documentation is closer to "reference" than
+        <strong>Where Formcarry loses</strong>: the product
+        surface is thinner — fewer integrations, less polish —
+        and the documentation is closer to "reference" than
         "tutorial."
       </p>
       <p>
@@ -191,15 +192,17 @@ const fmtDate = (iso: string) =>
         always been.
       </p>
       <p>
-        <strong>Where Forminit wins</strong>: rock-solid reliability
-        (years of operation behind it), strong static-site-generator
-        integration guides, good Zapier and webhook support, file upload
-        support on all paid plans.
+        <strong>Where Forminit wins</strong>: rock-solid
+        reliability (years of operation behind it), strong
+        static-site-generator integration guides, good Zapier
+        and webhook support, file upload support on all paid
+        plans.
       </p>
       <p>
-        <strong>Where Forminit loses</strong>: pricing is mid-pack ($9/mo
-        starter, climbing to $24+), the dashboard is functional rather
-        than delightful, no first-class agent or Bearer-token primitive.
+        <strong>Where Forminit loses</strong>: pricing is mid-
+        pack ($9/mo starter, climbing to $24+), the dashboard
+        is functional rather than delightful, and there's no
+        first-class story for agent or automation traffic.
       </p>
       <p>
         <strong>Pick Forminit if</strong>: you're already on Getform and
@@ -280,35 +283,35 @@ const fmtDate = (iso: string) =>
 
       <h3>8. Form4Dev — the agent-first option</h3>
       <p>
-        Full disclosure (again): this is my product. I'll keep it short
-        and let you evaluate.
+        Full disclosure (again): this is my product. I'll keep it
+        short and let you evaluate.
       </p>
       <p>
-        Form4Dev is a form backend designed from day one with non-browser
-        submitters as first-class clients. The differentiators are
-        Bearer-token authentication scoped per-account, an OpenAPI 3.1
-        spec at a public URL (so agent frameworks can consume the schema
-        directly), per-tenant SMTP for organizations that want
-        notifications sent from their own domain, and transparent pricing
-        ($0 / $9 / $29) with no per-feature gating between tiers.
+        Form4Dev is a form backend built from day one with
+        non-browser submitters as first-class users — scripts,
+        mobile apps, and AI agents. Pricing is transparent and
+        flat ($0 / $9 / $29), and every feature is available on
+        every plan, including the free tier.
       </p>
       <p>
-        <strong>Where Form4Dev wins</strong>: cleanest path for agent and
-        scripted submission, published OpenAPI spec, per-tenant SMTP on
-        every paid plan, transparent flat pricing, every feature available
-        on free tier (just at lower quota).
+        <strong>Where Form4Dev wins</strong>: cleanest path for
+        scripted and agent submission, transparent flat pricing
+        with no per-feature gating, every feature on the free
+        tier (capped at submission volume), and built-in support
+        for sending notifications from your own domain.
       </p>
       <p>
-        <strong>Where Form4Dev loses</strong>: we're early. We don't have
-        Formspree's decade of integrations, Basin's dashboard polish, or
-        Forminit's static-site-generator tutorial corpus. The product is
-        production-ready; the surrounding ecosystem is younger.
+        <strong>Where Form4Dev loses</strong>: we're early. We
+        don't have Formspree's decade of integrations, Basin's
+        dashboard polish, or Forminit's static-site-generator
+        tutorial corpus. The product is production-ready; the
+        surrounding ecosystem is younger.
       </p>
       <p>
-        <strong>Pick Form4Dev if</strong>: you're submitting forms from
-        scripts, mobile apps, or AI agents; you value transparent flat
-        pricing over per-tier feature gating; you read OpenAPI specs for
-        fun.
+        <strong>Pick Form4Dev if</strong>: you're submitting
+        forms from scripts, mobile apps, or AI agents; you value
+        flat pricing over feature-gated tiers; you want every
+        capability available on a free trial.
       </p>
 
       <h2>Side-by-side at a glance</h2>
@@ -368,7 +371,7 @@ const fmtDate = (iso: string) =>
             <td>Form4Dev</td>
             <td>100/mo, all features</td>
             <td>$9/mo</td>
-            <td>Agents, scripts, OpenAPI</td>
+            <td>Agents, scripts, flat pricing</td>
           </tr>
         </tbody>
       </table>
@@ -437,13 +440,12 @@ const fmtDate = (iso: string) =>
 
       <h3>Which form backend is best for AI agents?</h3>
       <p>
-        Of the services here, Form4Dev is the only one with first-class
-        Bearer-token authentication scoped per-account and a published
-        OpenAPI 3.1 spec built for agent consumption. The others can
-        accept agent submissions, but you'll be fighting their spam
-        defenses. We wrote about this in more depth in
-        <a href="/blog/form-backend-for-ai-agents">our post on form
-        endpoints for AI agents</a>.
+        Of the services here, Form4Dev is built specifically for
+        agent submission as a first-class case. The others can
+        accept agent submissions, but you'll be fighting their
+        spam defenses. We wrote about why this matters in
+        <a href="/blog/form-backend-for-ai-agents">our post on
+        form backends for AI agents</a>.
       </p>
 
       <h3>Which form backend has the best deliverability?</h3>
@@ -491,8 +493,9 @@ const fmtDate = (iso: string) =>
       </p>
       <p>
         If the agent-first angle is what brought you here,
-        <a href="https://form4dev.com">Form4Dev</a> is built around it
-        and the free tier includes Bearer-token auth.
+        <a href="https://form4dev.com">Form4Dev</a> is built around
+        it, and agent support is available on every plan
+        including the free tier.
         <a href={`${APP}/register`} class="plausible-event-name=Signup+CTA plausible-event-location=blog-forminit-alts plausible-event-plan=free">
           Start free
         </a>

@@ -4,9 +4,9 @@ import Base from "../../layouts/Base.astro";
 const APP = "https://login.form4dev.com";
 const title = "Send an HTML form to email without writing a backend";
 const description =
-  "Point an HTML form at an endpoint, get an email when someone submits. No server, no SDK. With the spam, validation, and reply-routing gotchas nobody warns you about.";
+  "Point an HTML form at an endpoint, get an email when someone submits. No server, no SDK. With the practical gotchas — spam, replies, redirects — most tutorials skip.";
 const publishedAt = "2026-05-15";
-const updatedAt = "2026-05-15";
+const updatedAt = "2026-05-16";
 
 const fmtDate = (iso: string) =>
   new Date(iso + "T00:00:00Z").toLocaleDateString("en-US", {
@@ -23,60 +23,60 @@ const fmtDate = (iso: string) =>
       <div class="post-meta mono">
         <time datetime={publishedAt}>{fmtDate(publishedAt)}</time>
         <span class="dot">·</span>
-        <span>8 min read</span>
+        <span>7 min read</span>
       </div>
       <h1 class="display">{title}</h1>
       <p class="lede">
-        Static sites, landing pages, weekend projects — at some point you need
-        a contact form, and you don't want to spin up a backend just to receive
-        an email. Here's how to do it properly in 2026, including the parts
-        most tutorials skip.
+        Static sites, landing pages, weekend projects — at some point
+        you need a contact form, and you don't want to run a server
+        just to receive an email. Here's how to do it properly in
+        2026, including the parts most tutorials skip.
       </p>
     </header>
 
     <section class="body">
       <h2>The short answer</h2>
       <p>
-        Use a form-backend service. Point your HTML <code>&lt;form&gt;</code>'s
-        <code>action</code> attribute at the service's endpoint URL, and every
-        submission gets parsed, filtered, and emailed to you. No server code.
-        No SDK. The browser does the POST for you — it's been doing that since
-        1995. The form backend handles everything that comes after.
+        Use a form-backend service. Point your HTML form at the
+        service's endpoint URL, and every submission gets filtered
+        for spam, stored, and emailed to you. No server code. No
+        SDK. The browser does the POST for you — it's been doing
+        that since 1995. The service handles everything after.
       </p>
       <p>
-        That's it. The rest of this post is what to look for in a form
-        backend, how to handle spam without breaking your form for real users,
-        what to do about replies, and the edge cases (file uploads, multi-step
-        forms, AI agents submitting on a user's behalf) that you'll hit within
-        a month of shipping.
+        The rest of this post is what to look for in a form backend,
+        how to handle spam without breaking your form for real
+        users, what to do about replies, and the edge cases you'll
+        hit within a month of shipping.
       </p>
 
-      <h2>Why "just use a backend" is the wrong answer</h2>
+      <h2>Why "just spin up a backend" is the wrong answer</h2>
       <p>
-        It's tempting advice — "spin up a Node server, use Nodemailer, done."
-        On paper, sure. In practice, here's what you end up owning:
+        It's tempting advice — write a tiny Node server, send mail
+        from it, done. In practice, here's what you end up owning:
       </p>
       <ul>
         <li>A server that has to stay up (the form breaks the moment it doesn't).</li>
-        <li>SMTP credentials, SPF, DKIM, DMARC alignment, and bounce handling so your notifications don't land in spam.</li>
-        <li>A spam-filtering layer, because the second your endpoint is public, bots find it.</li>
-        <li>Rate limiting, because one bored attacker with curl will burn through your SES quota in an afternoon.</li>
+        <li>Email setup so notifications don't land in spam.</li>
+        <li>Spam filtering, because the second your endpoint is public, bots find it.</li>
+        <li>Rate limiting, because one bored attacker will burn through your email quota in an afternoon.</li>
         <li>Storage, because eventually you'll want to see submissions you've already read.</li>
-        <li>A dashboard, because grep-ing logs to find a lead is a job you'll quit on by month two.</li>
+        <li>A dashboard, because grepping logs to find a lead is a job you'll quit on by month two.</li>
       </ul>
       <p>
-        None of this is hard individually. All of it is real work to maintain.
-        For a contact form on a marketing site, it's a category error — you're
-        building infrastructure to solve a five-minute problem.
+        None of this is hard individually. All of it is real work
+        to maintain. For a contact form on a marketing site, it's
+        a category error — you're building infrastructure to solve
+        a five-minute problem.
       </p>
 
       <h2>The clean approach: a form endpoint</h2>
       <p>
-        A form-backend endpoint is a URL you POST to. The service receives
-        the submission, runs validation and anti-spam, stores it, and emails
-        you (and optionally fires webhooks, integrations, autoresponders).
-        Your HTML stays plain. Your hosting stays static. You stay out of
-        the deliverability rabbit hole.
+        A form-backend endpoint is a URL you POST to. The service
+        receives the submission, filters spam, stores it, and
+        emails you (and optionally fires webhooks or notifications
+        in other places). Your HTML stays plain. Your hosting
+        stays static. You stay out of email-deliverability land.
       </p>
       <p>The minimum-viable version is six lines of HTML:</p>
       <pre class="code">&lt;form action=<span class="s">"https://login.form4dev.com/api/submit/contact"</span> method=<span class="s">"POST"</span>&gt;
@@ -86,128 +86,104 @@ const fmtDate = (iso: string) =>
   &lt;button&gt;Send&lt;/button&gt;
 &lt;/form&gt;</pre>
       <p>
-        Submit that, and you get an email. No JavaScript, no fetch, no
-        loading state to manage. Works in a 2009 browser. Works without
-        JavaScript enabled. Works on the worst hotel Wi-Fi of your life.
+        Submit that, and you get an email. No JavaScript, no
+        fetch, no loading state to manage. Works in any browser.
+        Works without JavaScript enabled. Works on the worst
+        hotel Wi-Fi of your life.
       </p>
 
-      <h2>What a good form endpoint actually does</h2>
+      <h2>What a good form endpoint actually gives you</h2>
       <p>
-        Picking a form backend isn't about the demo — every product has a
-        nice quickstart. It's about what happens on day 30, when real
-        traffic hits it. Here's what to evaluate.
+        Picking a form backend isn't about the demo — every
+        product has a nice quickstart. It's about what happens on
+        day 30, when real traffic hits it. Here's what to look
+        for.
       </p>
 
-      <h3>1. It handles spam without a CAPTCHA on the happy path</h3>
+      <h3>1. Spam gets blocked without punishing your visitors</h3>
       <p>
-        CAPTCHAs work, but they're a tax on every legitimate visitor.
-        A good form backend layers cheaper defenses first: a honeypot field
-        (a hidden input bots fill in but humans don't), rate limiting per
-        IP, and pattern-matching on obvious spam payloads. CAPTCHA becomes
-        the fallback for forms under active attack — not the default.
-      </p>
-      <p>
-        The honeypot trick is so old it sounds suspect, and it still works.
-        Bots don't render CSS, so a hidden <code>&lt;input&gt;</code> looks
-        like a normal field to them. They fill it. You drop the submission.
-        Your form never popped a "I'm not a robot" checkbox at a real human.
+        CAPTCHAs work, but they're a tax on every legitimate
+        visitor. A good form backend handles most spam quietly
+        in the background, with CAPTCHA only available as a
+        fallback for forms under active attack — not as the
+        default tax on every user.
       </p>
 
-      <h3>2. Validation happens server-side, with structured errors</h3>
+      <h3>2. Errors come back in a shape your frontend can use</h3>
       <p>
-        Client-side <code>required</code> attributes are a UX nicety, not a
-        defense. Anyone can curl your endpoint directly. The backend needs
-        to validate types, required fields, and value ranges, and return
-        errors in a shape your frontend can render — not a 500 with a stack
-        trace.
-      </p>
-      <p>
-        The good shape looks something like this:
-      </p>
-      <pre class="code">{`{
-  "error": {
-    "code": "VALIDATION_ERROR",
-    "message": "Invalid input",
-    "fieldErrors": { "email": ["Invalid email"] }
-  }
-}`}</pre>
-      <p>
-        Predictable error envelopes mean you can write one error-handling
-        path on your frontend instead of one per failure mode.
+        Client-side validation is a UX nicety, not a defense —
+        anyone can post to your endpoint directly. The backend
+        needs to validate the data and return useful errors so
+        your frontend can show the user exactly which field
+        needs fixing, instead of a generic "something went
+        wrong."
       </p>
 
-      <h3>3. Reply-To routing actually works</h3>
+      <h3>3. Reply-to routing actually works</h3>
       <p>
-        Most form notification emails land in your inbox with the sender
-        set to the form service — which means hitting "reply" emails the
-        service, not the person who filled the form. A good backend sets
-        the <code>Reply-To</code> header to the submitter's email address,
-        so reply goes where you'd expect.
+        Most form notification emails arrive in your inbox with
+        the sender set to the form service — which means hitting
+        "reply" emails the service, not the person who filled the
+        form. A good backend routes replies to the submitter
+        automatically.
       </p>
       <p>
-        This sounds trivial. It is the single most-requested feature on
-        every form-backend support channel. Verify it before you commit.
+        This sounds trivial. It is the single most-requested
+        feature on every form-backend support channel. Verify
+        it before you commit.
       </p>
 
       <h3>4. Webhooks, not just email</h3>
       <p>
         Email is fine for low volume. The moment you want to push
-        submissions into a CRM, a Slack channel, a Discord webhook, or
-        your own database, you need a webhook — an HTTP callback the
-        service makes to a URL you control, signed with HMAC so you can
-        verify it's actually from the form backend and not a forged POST.
-      </p>
-      <p>
-        A good service retries failed deliveries with backoff and lets you
-        see delivery history per webhook. A worse one fires once, fails
-        silently, and leaves you wondering why your CRM is missing
-        Tuesday's leads.
+        submissions into a CRM, a Slack channel, or your own
+        system, you need webhooks. A good service makes them
+        reliable — retrying on failure, showing you delivery
+        history, signed so you can verify they're real.
       </p>
 
       <h3>5. Exports you can actually use</h3>
       <p>
-        Every submission you collect is data you should be able to export
-        on demand — CSV at minimum, JSON if you're piping it into something,
-        Excel if your sales team lives in spreadsheets. If a form backend
-        locks your submissions behind a dashboard with no export, you don't
-        own your data. You're renting access to it.
+        Every submission you collect is data you should be able
+        to export on demand — CSV at minimum, JSON or Excel if
+        you're piping it elsewhere. If a form backend locks
+        your submissions behind a dashboard with no export, you
+        don't own your data. You're renting access to it.
       </p>
 
-      <h3>6. It treats agents as first-class clients</h3>
+      <h3>6. It works for automation too</h3>
       <p>
-        This one's new. In 2026, a meaningful share of form submissions
-        come from AI agents acting on a user's behalf — research assistants
-        filling contact forms, scheduling agents requesting demos,
-        comparison shoppers gathering quotes. Most form backends were
-        designed assuming a browser on the other end, with a referrer, a
-        user-agent string, and JavaScript-rendered fingerprints. Agents
-        have none of those, and the default spam filters flag them.
-      </p>
-      <p>
-        A modern form backend distinguishes between anonymous browser
-        submissions and authenticated agent submissions — usually via a
-        Bearer token the agent's owner has configured — and routes them
-        through different rules. Your humans get tight spam filters; your
-        agents get a clean path with full audit trails.
+        This one's newer. A growing share of form submissions
+        come from scripts, mobile apps, and AI agents — not just
+        humans in browsers. A modern form backend handles
+        trusted automation cleanly, instead of flagging it all
+        as spam. We wrote more on this in
+        <a href="/blog/form-backend-for-ai-agents">form backends
+        for AI agents</a>.
       </p>
 
       <h2>The setup, end to end</h2>
-      <p>Here's the actual flow, using <a href="https://form4dev.com">Form4Dev</a> as the example. Other form backends work similarly — the principles transfer.</p>
+      <p>
+        Here's the actual flow, using
+        <a href="https://form4dev.com">Form4Dev</a> as the
+        example. Other form backends work similarly — the
+        principles transfer.
+      </p>
 
       <h3>Step 1 — Create the form</h3>
       <p>
-        Sign up, click <strong>Create form</strong>, name it ("Contact",
-        "Newsletter", whatever), and copy the endpoint URL. It looks like
-        <code>{APP.replace("https://", "")}/api/submit/&lt;slug&gt;</code>.
-        That URL is the only piece of glue you need.
+        Sign up, click <strong>Create form</strong>, name it
+        ("Contact", "Newsletter", whatever), and copy the
+        endpoint URL. That URL is the only piece of glue you
+        need.
       </p>
 
       <h3>Step 2 — Drop the HTML into your site</h3>
       <p>
-        Point your form's <code>action</code> at that URL. Add a hidden
-        honeypot field named <code>_gotcha</code>. Add an
-        <code>email</code> field — that's what the service uses to set the
-        Reply-To header automatically.
+        Point your form's <code>action</code> at that URL. Add a
+        hidden honeypot field named <code>_gotcha</code>. Add an
+        <code>email</code> field — that's what the service uses
+        to route replies automatically.
       </p>
       <pre class="code">&lt;form action=<span class="s">"https://login.form4dev.com/api/submit/contact"</span> method=<span class="s">"POST"</span>&gt;
   &lt;label&gt;Your email
@@ -220,276 +196,216 @@ const fmtDate = (iso: string) =>
   &lt;button type=<span class="s">"submit"</span>&gt;Send&lt;/button&gt;
 &lt;/form&gt;</pre>
       <p class="muted-note">
-        Using <code>position:absolute;left:-9999px</code> instead of
-        <code>display:none</code> on the honeypot fools more bots — some
-        skip <code>display:none</code> fields on purpose.
+        Placing the honeypot off-screen instead of with
+        <code>display:none</code> fools more bots — some skip
+        <code>display:none</code> fields on purpose.
       </p>
 
       <h3>Step 3 — Test it once</h3>
       <p>
-        Submit it. Check your email. The notification should arrive within
-        seconds, with the submitter's email as Reply-To. If you're using a
-        React or Next.js app and want client-side validation states, the
-        same endpoint accepts JSON POSTs — fetch it like any other API.
+        Submit it. Check your email. The notification should
+        arrive within seconds, with the submitter's email as
+        Reply-To. If you're using a React or Next.js app and
+        want client-side validation states, the same endpoint
+        accepts JSON POSTs — fetch it like any other API.
       </p>
 
       <h3>Step 4 — Decide where else submissions should go</h3>
       <p>
-        Email is the default. Common next steps: a Slack webhook so the
-        team sees leads in real time, a webhook into your CRM, an
-        autoresponder so the submitter gets a "thanks, we'll reply within
-        a day" email automatically. All of this is configured in the form's
+        Email is the default. Common next steps: a Slack
+        webhook so the team sees leads in real time, a webhook
+        into your CRM, an autoresponder so the submitter gets
+        a "thanks, we'll reply within a day" email
+        automatically. All of this is configured in the form's
         settings page — no code changes on your site.
       </p>
 
       <h2>Common mistakes to avoid</h2>
-      <p>Things that look right and bite you a week later.</p>
 
       <h3>Using your personal email as the destination</h3>
       <p>
-        Notifications go to a real address. If that's your personal Gmail,
-        every form submission lives in your personal inbox forever. Use a
-        team alias (<code>contact@yourdomain.com</code>) routed to whoever
-        should see it. You'll thank yourself when you onboard your first
-        teammate.
+        Notifications go to a real address. If that's your
+        personal Gmail, every form submission lives in your
+        personal inbox forever. Use a team alias
+        (<code>contact@yourdomain.com</code>) routed to whoever
+        should see it. You'll thank yourself when you onboard
+        your first teammate.
       </p>
 
       <h3>Skipping the honeypot because "it can't be that simple"</h3>
       <p>
-        It is that simple, and it catches 80%+ of contact-form spam in our
-        experience. Add it. The five seconds it costs you to write a hidden
-        input pays back the first day a botnet finds your endpoint.
+        It is that simple, and it catches the vast majority of
+        contact-form spam. Add it. The five seconds it costs
+        you pays back the first day a botnet finds your
+        endpoint.
       </p>
 
       <h3>Forgetting the success-redirect URL</h3>
       <p>
-        By default, most form backends show a generic "Thanks!" page after
-        a submit. You can override this — point the form at
-        <code>/thanks</code> on your own site, write a real thank-you page,
-        fire a conversion event for your analytics. The default is fine for
-        a prototype. It's an instant downgrade for a real site.
+        By default, most form backends show a generic
+        "Thanks!" page after a submit. You can override this —
+        point the form at <code>/thanks</code> on your own
+        site, write a real thank-you page, fire a conversion
+        event for your analytics. The default is fine for a
+        prototype. It's an instant downgrade for a real site.
       </p>
 
       <h3>Treating spam as a binary problem</h3>
       <p>
-        Spam isn't "block or allow." It's "block obvious bots, quarantine
-        suspicious submissions, surface the rest." A form backend that
-        deletes flagged submissions silently is worse than one that puts
-        them in a spam folder you can review. Real submissions get
+        Spam isn't "block or allow." It's "block obvious bots,
+        quarantine suspicious submissions, surface the rest."
+        A form backend that deletes flagged submissions
+        silently is worse than one that puts them in a spam
+        folder you can review. Real submissions get
         misclassified. You need to be able to fish them out.
       </p>
 
       <h2>When you do need to write a backend</h2>
       <p>
-        Form backends cover ~95% of "I need to receive a form submission"
-        cases. They stop being the right answer when:
+        Form backends cover most "I need to receive a form
+        submission" cases. They stop being the right answer
+        when:
       </p>
       <ul>
         <li>
-          You need server-side logic that runs <em>during</em> the submit —
-          checking inventory, charging a card before saving, querying a
-          third-party API and branching on the result. (Most form backends
-          handle payments via Razorpay/Stripe integrations, but anything
-          beyond that wants real code.)
+          You need server-side logic that runs <em>during</em>
+          the submit — checking inventory, charging a card
+          before saving, querying a third-party API and
+          branching on the result. Many form backends handle
+          payments through built-in integrations, but anything
+          beyond that wants real code.
         </li>
         <li>
-          The submission needs to write to your own database in a
-          transaction with other state changes.
+          The submission needs to write to your own database
+          in a transaction with other state changes.
         </li>
         <li>
-          You're at a scale where the form backend's pricing per submission
-          beats the cost of hosting your own. This kicks in around the
-          hundred-thousand-submissions-a-month mark for most teams.
+          You're at a scale where the form backend's pricing
+          per submission beats the cost of hosting your own.
+          This kicks in around the hundred-thousand-
+          submissions-a-month mark for most teams.
         </li>
       </ul>
       <p>
-        Below those thresholds, building it yourself is a hobby project
-        dressed up as engineering. Ship the form, get the leads, write the
-        custom backend when you've earned the right to.
+        Below those thresholds, building it yourself is a
+        hobby project dressed up as engineering. Ship the
+        form, get the leads, write the custom backend when
+        you've earned the right to.
       </p>
 
       <h2>FAQ</h2>
 
-      <h3>Do I need to learn JavaScript to make a contact form work?</h3>
+      <h3>Do I need JavaScript to make a contact form work?</h3>
       <p>
-        No. A plain HTML <code>&lt;form&gt;</code> with an
-        <code>action</code> attribute pointing at a form-backend endpoint
-        submits via the browser's native POST. JavaScript is optional —
-        useful if you want inline error messages or a fancy success state,
-        unnecessary if you just want submissions to arrive.
+        No. A plain HTML form with an <code>action</code>
+        attribute pointing at a form-backend endpoint submits
+        via the browser's built-in POST. JavaScript is optional
+        — useful if you want inline error messages or a fancy
+        success state, unnecessary if you just want
+        submissions to arrive.
       </p>
 
       <h3>Will form submissions land in spam?</h3>
       <p>
-        If the form backend is configured correctly, no — they come from
-        the service's authenticated sending domain, with SPF and DKIM set
-        up on their side. The exception: if you forward notifications to a
-        strict corporate inbox, some receivers re-scan and flag aggressive
-        sender domains. Use Reply-To routing and send notifications to a
-        permissive inbox (Google Workspace, Fastmail).
+        If the form backend is set up correctly, no — they
+        come from the service's authenticated sending domain.
+        The exception: if you forward notifications to a
+        strict corporate inbox, some receivers re-scan and
+        flag aggressive sender domains. Send notifications to
+        a permissive inbox (Google Workspace, Fastmail) when
+        you can.
       </p>
 
       <h3>How do I handle file uploads?</h3>
       <p>
         Use <code>enctype="multipart/form-data"</code> on the
-        <code>&lt;form&gt;</code> and an <code>&lt;input type="file"&gt;</code>
-        field. The form backend stores the file and includes a download
-        link in the notification email and in the dashboard submission view.
-        Most backends cap file size per plan — check the limit before you
-        promise users they can upload a 200MB CAD file.
+        form and a file input. The form backend stores the
+        file and includes a download link in the notification
+        email and dashboard. Most backends cap file size per
+        plan — check the limit before you promise users they
+        can upload a 200MB file.
       </p>
 
       <h3>What about GDPR / privacy?</h3>
       <p>
-        Form backends store submissions. That makes them processors of
-        personal data under GDPR, so the service should publish a DPA
-        (data processing agreement) and let you delete submissions on
-        request. If you're collecting EU traffic, verify both before
-        committing. The same applies for HIPAA and any health-adjacent
-        data.
+        Form backends store submissions, so they handle
+        personal data on your behalf. The service should
+        publish a Data Processing Agreement and let you
+        delete submissions on request. If you're collecting
+        EU traffic, verify both before committing. The same
+        applies to HIPAA for health-adjacent data.
       </p>
 
       <h3>Can I migrate later if I outgrow it?</h3>
       <p>
-        Yes, if the backend lets you export submissions in CSV/JSON. The
-        only real lock-in is the endpoint URL — switching means updating
-        every form on every page to a new <code>action</code>. Keep a list
-        of where you've embedded the endpoint, or use a single environment
-        variable in your build so a global swap is one change.
+        Yes, if the backend lets you export submissions in
+        CSV/JSON. The only real lock-in is the endpoint URL
+        — switching means updating every form on every page
+        to a new URL. Keep a list of where you've embedded
+        it, or use a single source-of-truth variable so a
+        global swap is one change.
       </p>
 
       <h3>Is this safe to do without HTTPS?</h3>
       <p>
-        Your form backend's endpoint will be HTTPS. Your site should also
-        be HTTPS — submitting from an HTTP page to an HTTPS endpoint works,
-        but the form data travels in plain text on the first hop, and modern
-        browsers flag mixed-content forms. Use HTTPS everywhere. It's free.
+        Your form backend will be HTTPS. Your site should
+        also be HTTPS — submitting from an HTTP page to an
+        HTTPS endpoint works, but the form data travels in
+        plain text on the first hop, and modern browsers
+        flag mixed-content forms. Use HTTPS everywhere. It's
+        free.
       </p>
 
       <h2>The takeaway</h2>
       <p>
-        Receiving form submissions used to mean owning a server. It
-        doesn't anymore. Point an HTML form at an endpoint, add a
-        honeypot, set a redirect, and you're done — with a setup that's
-        more reliable than what most teams build themselves, because the
-        unsexy parts (deliverability, spam filtering, retries, exports)
+        Receiving form submissions used to mean running a
+        server. It doesn't anymore. Point an HTML form at an
+        endpoint, add a honeypot, set a redirect, and you're
+        done — with a setup that's more reliable than what
+        most teams build themselves, because the unsexy parts
         are someone else's full-time job.
       </p>
       <p>
-        We built <a href="https://form4dev.com">Form4Dev</a> because we
-        wanted a form backend that treated developers — and the AI agents
-        increasingly submitting on their behalf — as first-class users.
+        We built <a href="https://form4dev.com">Form4Dev</a>
+        because we wanted a form backend that treated
+        developers — and the AI agents increasingly
+        submitting on their behalf — as first-class users.
         If that sounds like what you're after,
         <a href={`${APP}/register`} class="plausible-event-name=Signup+CTA plausible-event-location=blog-post plausible-event-plan=free">
           start free
         </a>
-        and have a working endpoint in 30 seconds. No credit card, no
-        trial expiry.
+        and have a working endpoint in under a minute. No
+        credit card, no trial expiry.
       </p>
 
       <p class="muted-note last-updated">
-        Last updated {fmtDate(updatedAt)}. Spotted something wrong or
-        outdated? Email <a href="mailto:hello@form4dev.com">hello@form4dev.com</a>.
+        Last updated {fmtDate(updatedAt)}. Spotted something
+        out of date? Email
+        <a href="mailto:hello@form4dev.com">hello@form4dev.com</a>.
       </p>
     </section>
   </article>
 </Base>
 
 <style>
-  .post {
-    max-width: 720px;
-    padding: 56px 28px 96px;
-  }
+  .post { max-width: 720px; padding: 56px 28px 96px; }
   .post-head { margin-bottom: 40px; }
-  .back {
-    display: inline-block;
-    font-size: 12px;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 24px;
-  }
+  .back { display: inline-block; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 24px; }
   .back:hover { color: var(--ink); }
-  .post-meta {
-    font-size: 12px;
-    color: var(--muted-2);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 18px;
-  }
+  .post-meta { font-size: 12px; color: var(--muted-2); display: flex; align-items: center; gap: 8px; margin-bottom: 18px; }
   .dot { opacity: 0.5; }
-  .post-head h1 {
-    font-size: 40px;
-    margin: 0 0 16px;
-    letter-spacing: -0.02em;
-    line-height: 1.1;
-  }
-  .lede {
-    font-size: 18px;
-    color: var(--muted);
-    line-height: 1.6;
-    margin: 0;
-  }
-  .body h2 {
-    font-size: 24px;
-    margin: 48px 0 14px;
-    letter-spacing: -0.01em;
-    line-height: 1.3;
-  }
-  .body h3 {
-    font-size: 17px;
-    margin: 28px 0 10px;
-    letter-spacing: -0.005em;
-    color: var(--ink);
-  }
-  .body p {
-    line-height: 1.75;
-    margin: 0 0 14px;
-    font-size: 16px;
-    color: var(--ink);
-  }
-  .body ul {
-    line-height: 1.8;
-    padding-left: 22px;
-    margin: 0 0 16px;
-  }
+  .post-head h1 { font-size: 40px; margin: 0 0 16px; letter-spacing: -0.02em; line-height: 1.1; }
+  .lede { font-size: 18px; color: var(--muted); line-height: 1.6; margin: 0; }
+  .body h2 { font-size: 24px; margin: 48px 0 14px; letter-spacing: -0.01em; line-height: 1.3; }
+  .body h3 { font-size: 17px; margin: 28px 0 10px; letter-spacing: -0.005em; color: var(--ink); }
+  .body p { line-height: 1.75; margin: 0 0 14px; font-size: 16px; color: var(--ink); }
+  .body ul, .body ol { line-height: 1.8; padding-left: 22px; margin: 0 0 16px; }
   .body li { margin-bottom: 6px; }
-  .body code {
-    background: var(--bg-sunken);
-    border: 1px solid var(--line);
-    padding: 0 5px;
-    border-radius: 4px;
-    font-family: var(--font-mono);
-    font-size: 0.88em;
-  }
-  .body a {
-    color: var(--ink);
-    border-bottom: 1px solid var(--muted-3);
-    transition: border-color 0.12s ease, color 0.12s ease;
-  }
+  .body code { background: var(--bg-sunken); border: 1px solid var(--line); padding: 0 5px; border-radius: 4px; font-family: var(--font-mono); font-size: 0.88em; }
+  .body a { color: var(--ink); border-bottom: 1px solid var(--muted-3); transition: border-color 0.12s ease, color 0.12s ease; }
   .body a:hover { color: var(--accent); border-color: var(--accent); }
-  .muted-note {
-    color: var(--muted);
-    font-size: 14px;
-  }
-  .last-updated {
-    margin-top: 56px;
-    padding-top: 24px;
-    border-top: 1px solid var(--line);
-    font-size: 13px;
-  }
-  .code {
-    background: var(--code-bg);
-    color: var(--code-fg);
-    border-radius: 12px;
-    padding: 18px 22px;
-    font-family: var(--font-mono);
-    font-size: 13.5px;
-    line-height: 1.7;
-    overflow-x: auto;
-    white-space: pre;
-    margin: 8px 0 18px;
-  }
+  .muted-note { color: var(--muted); font-size: 14px; }
+  .last-updated { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 13px; }
+  .code { background: var(--code-bg); color: var(--code-fg); border-radius: 12px; padding: 18px 22px; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.7; overflow-x: auto; white-space: pre; margin: 8px 0 18px; }
   .code .s { color: var(--code-str); }
 </style>

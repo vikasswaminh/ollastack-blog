@@ -195,41 +195,35 @@ const fmtDate = (iso: string) =>
 
       <h3>Programmatic submission and AI agents</h3>
       <p>
-        Both are designed for browser submissions. Neither has
-        first-class Bearer-token authentication for non-browser
-        submitters. If you need scripts, mobile apps, or AI agents to
-        submit forms cleanly, look at our
-        <a href="/blog/form-backend-for-ai-agents">form backend for
-        AI agents</a> writeup for the architectural pattern, and
+        Both are designed for browser submissions. Neither
+        handles scripts, mobile apps, or AI agents as
+        first-class submitters. If that's a real part of your
+        traffic, look at our
+        <a href="/blog/form-backend-for-ai-agents">form
+        backend for AI agents</a> writeup for the pattern, and
         Form4Dev or similar for the implementation.
       </p>
 
-      <h3>OpenAPI specs</h3>
+      <h3>Notifications from your own domain</h3>
       <p>
-        Neither publishes a machine-readable schema at a public URL.
-        Modern tool-use frameworks (Claude tool use, OpenAI function
-        calling, MCP) consume OpenAPI directly; without a spec, you're
-        hand-rolling that integration.
-      </p>
-
-      <h3>Per-tenant SMTP</h3>
-      <p>
-        If you run an app where customer organizations need form
-        notifications sent from their own domain, neither service
-        supports per-org SMTP configuration. For agencies and
-        platforms, this is a hard blocker.
+        If you run an app where customer organizations need
+        form notifications sent from their own domain, neither
+        service supports that out of the box. For agencies and
+        platforms, this is often a hard blocker.
       </p>
 
       <h2>The third option</h2>
       <p>
-        Full disclosure — <a href="https://form4dev.com">Form4Dev</a>
-        is my product, and it sits in a third position relative to
-        these two. Like Basin, it has a real dashboard on every tier
-        (including free). Like Web3Forms, it gives you all features
-        on the free tier without per-feature gating. Unlike either,
-        it's built around Bearer-token authentication for
-        non-browser submitters, publishes a public OpenAPI 3.1 spec,
-        and supports per-tenant SMTP on every paid plan.
+        Full disclosure —
+        <a href="https://form4dev.com">Form4Dev</a> is my
+        product, and it sits in a third position relative to
+        these two. Like Basin, it has a real dashboard on every
+        plan (including free). Like Web3Forms, it gives you all
+        features on the free tier without per-feature gating.
+        Unlike either, it's built specifically for non-browser
+        submitters — scripts, mobile apps, AI agents — and lets
+        you send notifications from your own domain on every
+        paid plan.
       </p>
       <p>
         Picking between Basin and Web3Forms is picking between
@@ -258,8 +252,8 @@ const fmtDate = (iso: string) =>
           want one solution</strong> → Web3Forms.
         </li>
         <li>
-          <strong>You're submitting from scripts or AI agents,
-          need OpenAPI</strong> → neither — look at Form4Dev or
+          <strong>You're submitting forms from scripts or AI
+          agents</strong> → neither — look at Form4Dev or
           similar.
         </li>
       </ul>
@@ -323,11 +317,11 @@ const fmtDate = (iso: string) =>
         right about their respective audiences.
       </p>
       <p>
-        If you fit one of them, pick it. If you don't — if you need
-        programmatic submission, OpenAPI, per-tenant SMTP, or
-        transparent flat pricing —
-        <a href="https://form4dev.com">Form4Dev</a> is built for
-        that case.
+        If you fit one of them, pick it. If you don't — if you
+        need programmatic submission, notifications from your
+        own domain, or transparent flat pricing —
+        <a href="https://form4dev.com">Form4Dev</a> is built
+        for that case.
         <a href={`${APP}/register`} class="plausible-event-name=Signup+CTA plausible-event-location=blog-basin-vs-w3f plausible-event-plan=free">
           Start free
         </a>

@@ -2,9 +2,9 @@
 import Base from "../../layouts/Base.astro";
 
 const APP = "https://login.form4dev.com";
-const title = "Form backend for AI agents: why HTML form endpoints break for LLMs (and what to do)";
+const title = "Form backend for AI agents: why forms break for LLMs (and what to do)";
 const description =
-  "AI agents are increasingly submitting forms on behalf of users — and traditional form backends flag every one of them as spam. Here's why, and how to design a form endpoint that treats agents as first-class clients without losing your spam defenses.";
+  "AI agents are increasingly submitting forms on behalf of users — and most form backends flag them all as spam. Here's why traditional form backends struggle with agent traffic, and what a form backend built for the new world looks like.";
 const publishedAt = "2026-05-16";
 const updatedAt = "2026-05-16";
 
@@ -23,470 +23,325 @@ const fmtDate = (iso: string) =>
       <div class="post-meta mono">
         <time datetime={publishedAt}>{fmtDate(publishedAt)}</time>
         <span class="dot">·</span>
-        <span>10 min read</span>
+        <span>9 min read</span>
       </div>
       <h1 class="display">{title}</h1>
       <p class="lede">
-        A meaningful share of form traffic in 2026 isn't coming from a browser
-        anymore — it's coming from agents submitting on behalf of users.
-        Most form backends were designed before this existed, and they
-        misclassify every agent submission as spam. Here's the shape of the
-        problem and what a form endpoint built for the new traffic looks like.
+        A meaningful share of form traffic in 2026 isn't coming from a
+        browser anymore. It's coming from AI agents acting on a user's
+        behalf. Most form backends weren't built for this — and they
+        treat every one of those submissions as spam. Here's the shape
+        of the problem, and what a form backend built for the new
+        traffic actually does for you.
       </p>
     </header>
 
     <section class="body">
       <h2>The short answer</h2>
       <p>
-        A form backend designed for AI agents authenticates the agent with a
-        Bearer token, scopes that token to a specific account's forms, and
-        routes authenticated submissions around the spam pipeline that exists
-        for anonymous browser traffic — without removing the per-form rate
-        limits and org quotas that protect against runaway scripts. The agent
-        gets a clean path. The humans still get tight spam filters. Every
-        submission carries an audit stamp showing which agent sent it.
-      </p>
-      <p>
-        Bolting agent support onto a backend that wasn't designed for it
-        usually ends in one of two failure modes: either every agent
-        submission gets flagged as spam, or you weaken the spam defenses for
-        everyone. Neither is acceptable. The fix is architectural.
+        A form backend designed for AI agents lets trusted automation
+        submit cleanly without weakening the spam protection that
+        guards your forms against bots. Your humans still get tight
+        filtering. Your agents get a clean path. You get a clear
+        record of which submissions came from which agent. The
+        category is shifting, and a form backend that ignores it will
+        feel increasingly like a legacy product.
       </p>
 
       <h2>What's actually changing</h2>
       <p>
-        For the last two decades, "someone submitted your form" meant a
-        human typed into a browser, the browser POSTed the form, and your
-        backend got a request with a referrer header, a real user-agent
-        string, and a captcha token or honeypot value. Anti-spam systems
-        learned to lean on those signals.
+        For two decades, "someone submitted your form" meant a human
+        typed into a browser. Anti-spam systems learned to lean on
+        the signals browsers give off, and the system worked.
       </p>
       <p>
-        In 2026, a growing share of form submissions come from somewhere
-        else:
+        In 2026, a growing share of form submissions come from
+        somewhere else:
       </p>
       <ul>
         <li>
-          <strong>Research assistants</strong> filling out contact forms to
-          request information on a user's behalf.
+          <strong>Research assistants</strong> filling contact forms
+          to request information on a user's behalf.
         </li>
         <li>
-          <strong>Scheduling agents</strong> requesting demos or booking
-          calls without the user opening the page.
+          <strong>Scheduling agents</strong> requesting demos or
+          booking calls without the user opening the page.
         </li>
         <li>
-          <strong>Comparison shoppers</strong> gathering quotes from ten
-          vendors in parallel.
+          <strong>Comparison shoppers</strong> gathering quotes from
+          ten vendors in parallel.
         </li>
         <li>
-          <strong>Internal automation</strong> — your own CRM filling lead
-          forms back into your form backend during a migration, your QA
-          suite running submission tests in CI, your scripted onboarding
-          pre-populating a customer's account.
+          <strong>Internal automation</strong> — CRM syncs filling
+          lead forms during a migration, QA suites running submission
+          tests, scripted onboarding pre-populating customer accounts.
         </li>
       </ul>
       <p>
-        These submissions don't have a browser. No referrer. No JavaScript-
-        rendered fingerprint. The user-agent is probably <code>python-requests/2.31</code>
-        or some HTTP client identifier. Your honeypot field is empty
-        because the agent read your HTML and only filled the visible
-        inputs. Your captcha is unsolvable because nobody asked the agent
-        to look at a picture of a bicycle.
-      </p>
-      <p>
-        Traditional spam defenses correctly flag this as not-a-human. They
-        incorrectly conclude that not-a-human means malicious. That's the
-        bug.
+        These submitters don't look like browsers, and traditional
+        spam systems correctly notice that. They incorrectly
+        conclude not-a-browser means malicious. That's the bug.
       </p>
 
       <h2>Why the obvious workarounds don't work</h2>
 
       <h3>"Just whitelist the agent's IP"</h3>
       <p>
-        Agents run in datacenters, share IP pools, and rotate. The IP you
-        whitelist today is a different cloud tenant tomorrow. Worse, you
-        can't tell which agent is which from the IP — a whitelist makes
-        every agent that lands on that IP trusted, including ones you've
-        never heard of.
+        Agents run in shared cloud infrastructure and rotate
+        addresses. The IP you trust today is a different tenant
+        tomorrow. You also can't tell which agent is which from the
+        IP — a whitelist trusts every agent on that range, including
+        ones you've never heard of.
       </p>
 
       <h3>"Disable spam filtering on that form"</h3>
       <p>
-        Now bots find the form and you're back to triaging by hand. This
-        also forces you to choose: either the form takes both agents and
-        humans (and the spam tax falls on the humans), or you maintain two
-        forms and route traffic between them. Both are operationally
-        painful.
+        Now bots find the form and you're triaging by hand. The spam
+        tax falls on the humans, the form quality drops, and your
+        inbox starts looking like a spam folder.
       </p>
 
       <h3>"Have the agent solve the captcha"</h3>
       <p>
-        Captcha vendors actively work to make this fail. When it succeeds,
-        you've trained your agent to defeat your own anti-spam system,
-        which has the side effect of training it to defeat everyone else's
-        too. Not a defensible posture.
+        Captcha vendors work hard to make this fail. When it
+        succeeds, you've trained your agent to defeat anti-spam
+        systems — including ones you don't control. Not a defensible
+        posture.
       </p>
 
       <h3>"Give the agent a session cookie"</h3>
       <p>
-        Session cookies are scoped to a browser, expire on a short timer,
-        and weren't designed for unattended use. You end up writing a
-        cookie-refresh job that runs every few hours, and the first time
-        it fails at 3am your form goes dark for the agent.
+        Browser sessions weren't built for unattended use. You'll
+        end up babysitting refresh jobs, and the first time one fails
+        at 3am your forms go dark for the agent.
       </p>
       <p>
-        None of these are the right primitive. Bearer tokens are.
-      </p>
-
-      <h2>The clean approach: scoped Bearer tokens with provenance</h2>
-      <p>
-        A form backend built for agents gives the account owner a way to
-        mint a long-lived Bearer token, mark it as agent-type, and use it
-        to submit on the owner's behalf. The submission carries the token
-        in an <code>Authorization: Bearer …</code> header, exactly as you'd
-        authenticate any other API call.
-      </p>
-      <pre class="code"><span class="k">curl</span> -X POST https://login.form4dev.com/api/submit/contact \
-     -H <span class="s">"Authorization: Bearer fmd_…"</span> \
-     -H <span class="s">"Content-Type: application/json"</span> \
-     -d <span class="s">'{`{"name":"Ada","message":"hi from the agent"}`}'</span></pre>
-      <p>
-        Three guarantees this design needs to enforce, and they're worth
-        looking for in any form backend that claims agent support.
+        None of these are the right answer. The right answer is a
+        form backend that recognizes trusted automation as a
+        first-class kind of caller, not an exception to work around.
       </p>
 
-      <h3>1. The token is scoped to one account</h3>
+      <h2>What "agent-ready" actually means for you</h2>
       <p>
-        A Bearer token can submit only to forms owned by the user who
-        created it. If the token tries to submit to a form belonging to
-        someone else's account, the backend should ignore the Bearer and
-        fall back to anonymous (which means the captcha, honeypot, and
-        origin allowlist all snap back into effect). Cross-tenant lines
-        should be impossible to accidentally cross.
-      </p>
-      <p>
-        This is the difference between "we accept Bearer tokens" and "we
-        accept Bearer tokens safely." Verify it before you ship.
+        A form backend built with agents in mind gives you four
+        things you'll feel immediately, without you having to
+        understand any of the plumbing underneath.
       </p>
 
-      <h3>2. Spam defenses bypass intelligently</h3>
+      <h3>1. Trusted agents submit cleanly. Bots don't.</h3>
       <p>
-        An authenticated agent has already proven who it is. The captcha,
-        honeypot, per-IP rate limit, and origin allowlist exist to
-        challenge anonymous traffic — none of them apply once you've
-        verified the caller. They should be skipped.
-      </p>
-      <p>
-        What should <em>not</em> be skipped: the per-form rate limit and
-        the org's monthly quota. Those exist for different reasons — runaway
-        scripts and billing protection — and they apply to authenticated
-        callers too. A good agent-aware backend draws the line in exactly
-        this place.
+        Submissions from agents you've authorized go through.
+        Submissions from anonymous bots get caught. You don't have
+        to choose between accepting automation and blocking spam —
+        the system distinguishes between them.
       </p>
 
-      <h3>3. Every submission carries provenance</h3>
+      <h3>2. Each agent stays in its own lane</h3>
       <p>
-        When you open your inbox a week later and see a submission, you
-        need to know whether it came from a human typing into a browser or
-        an agent acting on someone's behalf. The submission record should
-        store the token id, the agent's label (your choice — <code>Claude
-        Desktop</code>, <code>internal-script</code>, whatever), and a
-        flag distinguishing agent submissions from browser ones. The UI
-        should surface this. Revoking a misbehaving token should stop
-        future submissions from that agent without touching the historical
-        records of what it sent.
+        Authorization for one agent doesn't bleed into anything
+        else. If you operate multiple agents, or you're an agency
+        running forms for several clients, the lines stay clean by
+        design. You can't accidentally cross them.
       </p>
 
-      <h2>What this looks like end to end</h2>
+      <h3>3. You can see which agent did what</h3>
       <p>
-        Here's the actual flow using Form4Dev. The principles transfer to
-        any backend with similar primitives.
+        When you open your inbox, every submission shows you where
+        it came from — a real person, a specific agent, or somewhere
+        else. If an agent starts misbehaving, you can pause that
+        agent without touching anything else. The historical record
+        stays intact for review.
       </p>
 
-      <h3>Step 1 — Mint an agent token</h3>
+      <h3>4. Your billing stays safe</h3>
       <p>
-        In your account settings, create a new API token, mark it as an
-        agent token, and label it after the agent that will use it
-        (<code>Claude Desktop</code>, <code>Cursor</code>, <code>crm-sync-job</code>).
-        Copy the <code>fmd_…</code> string immediately — it's shown once
-        and never again.
+        Even authorized agents are subject to your form's overall
+        limits and your account's monthly quota. A runaway script
+        can't blow through your budget. The product protects you
+        against your own automation as well as against attackers.
       </p>
 
-      <h3>Step 2 — Hand the token to the agent</h3>
+      <h2>What this looks like for the customer</h2>
       <p>
-        How you do this depends on the agent. For desktop agents, this is
-        usually a settings panel where you paste the token. For a scripted
-        process, it's an environment variable. For an MCP server or
-        tool-use integration, it's whatever credential mechanism the agent
-        framework supports.
+        The end-to-end experience is mundane in the best way.
+      </p>
+      <ol>
+        <li>
+          You authorize an agent from your account settings, giving
+          it a label so you remember what it's for ("Claude
+          Desktop", "internal CRM sync", whatever).
+        </li>
+        <li>
+          You hand the agent its credentials however that agent
+          expects them — typically a settings panel or an
+          environment variable.
+        </li>
+        <li>
+          The agent submits forms. Submissions land in your inbox
+          marked as agent traffic, with the agent's label visible.
+        </li>
+        <li>
+          If an agent misbehaves, you revoke its access in one
+          click. Future submissions stop. Historical submissions
+          stay.
+        </li>
+      </ol>
+      <p>
+        No SDK to install. No special framework. If the agent can
+        make a web request, it can submit your form.
       </p>
 
-      <h3>Step 3 — Submit with the Bearer header</h3>
+      <h2>Why this matters for the business</h2>
       <p>
-        The agent POSTs to the form endpoint with
-        <code>Authorization: Bearer fmd_…</code> in the headers and the
-        submission payload as JSON. That's the whole protocol — no
-        framework-specific SDK, no special encoding. If the agent can make
-        an HTTP request, it can submit a form.
-      </p>
-      <pre class="code"><span class="k">fetch</span>(<span class="s">"https://login.form4dev.com/api/submit/contact"</span>, {`{`}
-  method: <span class="s">"POST"</span>,
-  headers: {`{`}
-    <span class="s">"Authorization"</span>: <span class="s">`Bearer $`</span> + token,
-    <span class="s">"Content-Type"</span>: <span class="s">"application/json"</span>,
-  {`}`},
-  body: <span class="k">JSON</span>.stringify({`{`} email: <span class="s">"ada@example.com"</span>, message: <span class="s">"hi"</span> {`}`}),
-{`}`});</pre>
-
-      <h3>Step 4 — See it in the inbox</h3>
-      <p>
-        The submission lands in the dashboard inbox with a 🤖 agent chip,
-        the agent label visible, and the same delivery side effects as a
-        browser submission — notification email, webhooks, integrations,
-        autoresponder. The only difference is provenance.
-      </p>
-
-      <h2>OpenAPI matters more than you'd expect</h2>
-      <p>
-        An agent that's going to call your form endpoint needs to know
-        what the endpoint accepts. Humans figure this out from
-        documentation; agents figure it out from a machine-readable
-        schema. OpenAPI 3.1 is the lingua franca — every modern tool-use
-        framework (function-calling APIs, MCP servers, agent
-        orchestrators) can consume it directly.
+        Agents aren't a fringe channel. They're a new source of
+        real demand — buyers researching, teams automating, users
+        delegating boring work to assistants. The form backends
+        that handle this kind of traffic cleanly will become the
+        path of least resistance for a generation of products.
+        The ones that don't will keep flagging real leads as spam
+        and watching their owners route around them.
       </p>
       <p>
-        A form backend that publishes its OpenAPI spec at a public URL
-        means an agent can be pointed at the spec, discover the submit
-        endpoint, learn the required fields, and submit — without a human
-        ever writing integration code. That's the meaningful difference
-        between "supports agents" and "designed for agents."
+        Treating agents as first-class isn't about chasing a
+        trend. It's about making sure your forms keep working as
+        the way people interact with the web changes.
       </p>
 
       <h2>Common mistakes to avoid</h2>
 
-      <h3>Sharing one Bearer token across multiple agents</h3>
+      <h3>Sharing one set of credentials across multiple agents</h3>
       <p>
-        Revoking a misbehaving agent means revoking the shared token,
-        which kills your other agents too. One token per agent. The cost
-        is one click; the upside is granular control.
+        Revoking a misbehaving agent then means revoking
+        everything. Give each agent its own credentials — the
+        cost is one click; the upside is granular control.
       </p>
 
-      <h3>Skipping the org monthly quota check</h3>
+      <h3>Skipping the monthly quota check</h3>
       <p>
-        A loop in an agent that submits in a tight retry without backoff
-        can burn through your quota in minutes. The form backend's monthly
-        quota is your last line of defense — make sure agent submissions
-        count against it.
+        A loop in an agent without backoff can burn through your
+        plan in minutes. A good form backend enforces your
+        monthly quota against agents the same way it does against
+        anyone else.
       </p>
 
       <h3>Treating agent submissions as second-class</h3>
       <p>
-        A submission from an agent is still a real signal — someone (or
-        someone's tool) wanted to reach you. Send the notification email.
-        Fire the webhook. Run the autoresponder. The provenance label
-        tells you it's an agent; the data is just as actionable as a human
-        submission, sometimes more so.
+        A submission from an agent is still real signal —
+        someone, or someone's tool, wanted to reach you. Send the
+        notification, fire the webhook, run the autoresponder.
+        The agent label tells you the source; the data is just
+        as actionable.
       </p>
 
-      <h3>Logging the token in plaintext</h3>
+      <h3>Logging credentials in plaintext</h3>
       <p>
-        Bearer tokens are credentials. Don't print them in logs. Don't
-        embed them in client-side code. Treat them like API keys for any
-        other service — environment variables, secret managers, scoped
-        access.
+        Agent credentials are credentials. Don't print them in
+        logs. Don't embed them in client-side code. Treat them
+        like any other secret your app handles.
       </p>
 
       <h2>FAQ</h2>
 
       <h3>What is a "form backend for AI agents"?</h3>
       <p>
-        A form backend that lets authenticated agents submit forms
-        programmatically with a Bearer token, bypassing the spam defenses
-        designed for anonymous browser traffic, while still enforcing
-        per-form rate limits and org quotas. Every submission carries an
-        audit stamp identifying which agent sent it.
+        A form backend that lets you authorize trusted agents to
+        submit forms cleanly, while still blocking anonymous bot
+        traffic with the same strength as before. You see which
+        agent did what, you can revoke any agent in a click, and
+        runaway agents can't bypass your monthly limits.
       </p>
 
       <h3>Can my AI agent use a regular form endpoint?</h3>
       <p>
-        Technically yes — an HTTP POST is an HTTP POST. In practice, most
-        traditional form backends will flag the submission as spam
-        (missing referrer, headless user-agent, empty honeypot fields the
-        agent didn't see) and either silently drop it or quarantine it for
-        manual review. Bearer-token authentication is the clean solution.
-      </p>
-
-      <h3>How is this different from a regular API integration?</h3>
-      <p>
-        It isn't, really — and that's the point. Form submission becomes
-        just another authenticated API call. The agent doesn't need
-        special SDKs, doesn't need to render a page, doesn't need to solve
-        a captcha. It needs an HTTP client and a token.
-      </p>
-
-      <h3>What stops an agent from submitting to forms it shouldn't?</h3>
-      <p>
-        The Bearer token is scoped to a single account. Submissions to
-        forms owned by other accounts fall back to anonymous handling —
-        meaning the captcha, origin allowlist, and other anonymous-path
-        defenses kick in. The token cannot grant access to forms its owner
-        doesn't own.
-      </p>
-
-      <h3>Does this work with MCP servers and tool-use frameworks?</h3>
-      <p>
-        Yes. The form endpoint is a standard HTTP POST with Bearer
-        authentication and an OpenAPI 3.1 spec. Any tool-use framework
-        that can consume OpenAPI (Claude's tool use, OpenAI function
-        calling, MCP servers, LangChain, etc.) can call the endpoint
-        directly.
-      </p>
-
-      <h3>How do I monitor what an agent is doing?</h3>
-      <p>
-        Two paths. The submission inbox shows each agent submission with
-        its label and the full payload — useful for spot-checking. The
-        token's audit log records every call (method, path, response code,
-        timestamp) — useful for forensics and rate-limit debugging.
-        Revoking the token stops future submissions without affecting
-        historical records.
+        Technically yes — but most traditional form backends
+        will flag the submission as spam. The result is either
+        dropped messages or a manual triage burden. A backend
+        designed for agent traffic avoids both.
       </p>
 
       <h3>Is this only useful for AI agents?</h3>
       <p>
-        No. The same mechanism handles internal scripts, CI test suites,
-        CRM-to-form syncs, mobile apps submitting through their backend,
-        and any other non-browser client. "AI agent" is the highest-profile
-        case, but the architecture generalizes.
+        No. The same model handles internal scripts, CI test
+        suites, CRM-to-form syncs, mobile apps, and any other
+        non-browser caller. AI agents are the highest-profile
+        case, but the value generalizes.
+      </p>
+
+      <h3>What stops an agent from doing something it shouldn't?</h3>
+      <p>
+        Authorization for one agent is scoped to your account
+        only. Even if you misplace credentials, they can't reach
+        forms you don't own. And every agent stays subject to
+        your account's limits — there's no path for an agent to
+        bypass your billing protection.
+      </p>
+
+      <h3>How do I monitor what an agent is doing?</h3>
+      <p>
+        The submission inbox shows each agent submission with
+        its label and full content. If you want forensic detail
+        — when the agent called, how often, with what success
+        rate — there's an activity view for each agent's
+        credentials. Revoking access stops future activity
+        without losing the history.
+      </p>
+
+      <h3>Does this work with modern agent frameworks?</h3>
+      <p>
+        Yes. The submission flow is a standard authenticated
+        web request, which every mainstream agent framework
+        already knows how to make. You don't need a special
+        adapter or plugin.
       </p>
 
       <h2>The takeaway</h2>
       <p>
-        The form-backend category was built for browsers. The fastest-
-        growing slice of form traffic in 2026 is no longer browsers. The
-        backends that adapt — by adding Bearer-token authentication,
-        per-tenant scoping, and audit-trail provenance — become useful for
-        a new class of integration. The ones that don't will keep
-        misclassifying agents as spam, and their users will keep working
-        around them.
+        The form-backend category was built for browsers. The
+        fastest-growing kind of form traffic in 2026 isn't
+        browsers. Backends that adapt — by recognizing trusted
+        automation as a real caller rather than treating it as
+        spam — become useful for a whole new class of work.
+        Backends that don't will keep misclassifying real
+        traffic and watching their users work around them.
       </p>
       <p>
-        We built <a href="https://form4dev.com">Form4Dev</a> with agent
-        submission as a primary use case, not a bolt-on. If you're building
-        something that needs an agent to fill a form — yours, or someone
-        else's exposed via a Form4Dev endpoint —
+        We built <a href="https://form4dev.com">Form4Dev</a>
+        with agent submission as a primary use case, not a
+        bolt-on. If you're building something that needs an
+        agent to fill a form,
         <a href={`${APP}/register`} class="plausible-event-name=Signup+CTA plausible-event-location=blog-agents plausible-event-plan=free">
           start free
         </a>
-        and have a Bearer-authenticated endpoint in 30 seconds. The
-        agent-token checkbox is on every API-token create screen.
+        — agent support is in every plan, including the free
+        tier.
       </p>
 
       <p class="muted-note last-updated">
-        Last updated {fmtDate(updatedAt)}. Spotted something wrong or
-        outdated? Email <a href="mailto:hello@form4dev.com">hello@form4dev.com</a>.
+        Last updated {fmtDate(updatedAt)}. Spotted something
+        out of date? Email
+        <a href="mailto:hello@form4dev.com">hello@form4dev.com</a>.
       </p>
     </section>
   </article>
 </Base>
 
 <style>
-  .post {
-    max-width: 720px;
-    padding: 56px 28px 96px;
-  }
+  .post { max-width: 720px; padding: 56px 28px 96px; }
   .post-head { margin-bottom: 40px; }
-  .back {
-    display: inline-block;
-    font-size: 12px;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 24px;
-  }
+  .back { display: inline-block; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 24px; }
   .back:hover { color: var(--ink); }
-  .post-meta {
-    font-size: 12px;
-    color: var(--muted-2);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 18px;
-  }
+  .post-meta { font-size: 12px; color: var(--muted-2); display: flex; align-items: center; gap: 8px; margin-bottom: 18px; }
   .dot { opacity: 0.5; }
-  .post-head h1 {
-    font-size: 38px;
-    margin: 0 0 16px;
-    letter-spacing: -0.02em;
-    line-height: 1.15;
-  }
-  .lede {
-    font-size: 18px;
-    color: var(--muted);
-    line-height: 1.6;
-    margin: 0;
-  }
-  .body h2 {
-    font-size: 24px;
-    margin: 48px 0 14px;
-    letter-spacing: -0.01em;
-    line-height: 1.3;
-  }
-  .body h3 {
-    font-size: 17px;
-    margin: 28px 0 10px;
-    letter-spacing: -0.005em;
-    color: var(--ink);
-  }
-  .body p {
-    line-height: 1.75;
-    margin: 0 0 14px;
-    font-size: 16px;
-    color: var(--ink);
-  }
-  .body ul {
-    line-height: 1.8;
-    padding-left: 22px;
-    margin: 0 0 16px;
-  }
+  .post-head h1 { font-size: 38px; margin: 0 0 16px; letter-spacing: -0.02em; line-height: 1.15; }
+  .lede { font-size: 18px; color: var(--muted); line-height: 1.6; margin: 0; }
+  .body h2 { font-size: 24px; margin: 48px 0 14px; letter-spacing: -0.01em; line-height: 1.3; }
+  .body h3 { font-size: 17px; margin: 28px 0 10px; letter-spacing: -0.005em; color: var(--ink); }
+  .body p { line-height: 1.75; margin: 0 0 14px; font-size: 16px; color: var(--ink); }
+  .body ul, .body ol { line-height: 1.8; padding-left: 22px; margin: 0 0 16px; }
   .body li { margin-bottom: 6px; }
-  .body code {
-    background: var(--bg-sunken);
-    border: 1px solid var(--line);
-    padding: 0 5px;
-    border-radius: 4px;
-    font-family: var(--font-mono);
-    font-size: 0.88em;
-  }
-  .body a {
-    color: var(--ink);
-    border-bottom: 1px solid var(--muted-3);
-    transition: border-color 0.12s ease, color 0.12s ease;
-  }
+  .body code { background: var(--bg-sunken); border: 1px solid var(--line); padding: 0 5px; border-radius: 4px; font-family: var(--font-mono); font-size: 0.88em; }
+  .body a { color: var(--ink); border-bottom: 1px solid var(--muted-3); transition: border-color 0.12s ease, color 0.12s ease; }
   .body a:hover { color: var(--accent); border-color: var(--accent); }
-  .muted-note {
-    color: var(--muted);
-    font-size: 14px;
-  }
-  .last-updated {
-    margin-top: 56px;
-    padding-top: 24px;
-    border-top: 1px solid var(--line);
-    font-size: 13px;
-  }
-  .code {
-    background: var(--code-bg);
-    color: var(--code-fg);
-    border-radius: 12px;
-    padding: 18px 22px;
-    font-family: var(--font-mono);
-    font-size: 13.5px;
-    line-height: 1.7;
-    overflow-x: auto;
-    white-space: pre;
-    margin: 8px 0 18px;
-  }
-  .code .k { color: var(--code-key); }
-  .code .s { color: var(--code-str); }
+  .muted-note { color: var(--muted); font-size: 14px; }
+  .last-updated { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 13px; }
 </style>

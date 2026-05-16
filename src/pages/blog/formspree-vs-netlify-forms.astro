@@ -133,7 +133,7 @@ const fmtDate = (iso: string) =>
           <tr><td>Webhooks</td><td>Via Netlify Functions</td><td>Native, with HMAC signing</td></tr>
           <tr><td>Spam filtering</td><td>Built-in + Akismet option</td><td>Built-in + reCAPTCHA option</td></tr>
           <tr><td>File uploads</td><td>Yes (counts against bandwidth)</td><td>Yes (paid plans)</td></tr>
-          <tr><td>Programmatic submission</td><td>Possible, not designed for it</td><td>Possible, no first-class Bearer</td></tr>
+          <tr><td>Programmatic submission</td><td>Possible, not designed for it</td><td>Possible, second-class path</td></tr>
           <tr><td>Export</td><td>CSV from dashboard</td><td>CSV, JSON, integrations</td></tr>
         </tbody>
       </table>
@@ -208,43 +208,35 @@ const fmtDate = (iso: string) =>
 
       <h3>Programmatic submission (scripts, AI agents)</h3>
       <p>
-        Neither was designed for non-browser submitters. Both will
-        accept POSTs from a script, but the spam defenses (captchas,
-        honeypots, referrer checks) are calibrated for browser
-        traffic, so agent and script submissions often get
-        misclassified. If you're building anything where an AI agent
-        submits on a user's behalf, look at a backend with first-class
-        Bearer-token auth. We wrote about this in detail in our
-        <a href="/blog/form-backend-for-ai-agents">form backend for
-        AI agents</a> post.
+        Neither was designed for non-browser submitters. Both
+        will accept POSTs from a script, but their spam
+        defenses are calibrated for browser traffic, so agent
+        and script submissions often get misclassified. If
+        you're building anything where an AI agent submits on
+        a user's behalf, look at a backend built for that
+        case. We wrote about it in detail in our
+        <a href="/blog/form-backend-for-ai-agents">form
+        backend for AI agents</a> post.
       </p>
 
-      <h3>OpenAPI specs for tool-use frameworks</h3>
+      <h3>Notifications from your own domain</h3>
       <p>
-        Neither publishes a machine-readable API spec at a public
-        URL. If you want an LLM agent to discover your form endpoint's
-        schema and call it directly, you're hand-rolling that
-        integration. This is a niche concern today; it won't be in
-        two years.
-      </p>
-
-      <h3>Per-tenant SMTP</h3>
-      <p>
-        If you run an app that sends form notifications on behalf of
-        multiple customer organizations, neither Formspree nor
-        Netlify Forms supports per-org SMTP. Notifications come from
-        the service's domain. For agencies and platforms, this is a
-        blocker.
+        If you run an app that sends form notifications on
+        behalf of multiple customer organizations, neither
+        Formspree nor Netlify Forms lets the notifications
+        come from each customer's own domain. They come from
+        the service's domain. For agencies and platforms, this
+        is often a blocker.
       </p>
 
       <h2>What about Form4Dev?</h2>
       <p>
         For full disclosure, the alternative I build —
-        <a href="https://form4dev.com">Form4Dev</a> — sits in a third
-        position. It's hosting-agnostic like Formspree, designed for
-        programmatic submission from the start (Bearer tokens scoped
-        per-account, public OpenAPI 3.1 spec), and prices flat ($0 /
-        $9 / $29) with every feature on every tier.
+        <a href="https://form4dev.com">Form4Dev</a> — sits in a
+        third position. It's hosting-agnostic like Formspree,
+        built for programmatic submission from the start
+        (scripts, mobile apps, AI agents), and prices flat ($0
+        / $9 / $29) with every feature on every plan.
       </p>
       <p>
         It's not the right fit if you want the deepest integration
