@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://form4dev.com/sitemap.xml
