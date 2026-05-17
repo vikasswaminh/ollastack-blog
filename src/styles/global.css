@@ -27,6 +27,13 @@
   --accent-soft: #e7efff;
   --accent-ink: #ffffff;
 
+  /* Brand red — McDonald's red (PMS 485). Third brand color,
+     used on the announce bar + "form backend" wordmark in hero +
+     selective eyebrow accents. Target ~10% of site color presence. */
+  --brand-red: #DA291C;
+  --brand-red-2: #b3211a;
+  --brand-red-soft: #fde8e6;
+
   /* Status (rarely used on marketing) */
   --ok: #16a34a;
   --err: #dc2626;
@@ -98,6 +105,10 @@ button {
 }
 
 .mono { font-family: var(--font-mono); }
+
+/* Brand-red utility — use sparingly for accents that should match
+   the announce bar / hero "form backend" treatment. */
+.brand-red { color: var(--brand-red); }
 
 .container {
   max-width: var(--container);
