@@ -1,0 +1,406 @@
+---
+import Base from "./Base.astro";
+import { posts, fmtDate, type PostMeta } from "../data/posts";
+
+interface Props {
+  slug: string;
+  title: string;
+  description: string;
+  publishedAt: string;
+  updatedAt: string;
+  readingTime: string;
+  ctaLocation: string;
+}
+
+const APP = "https://login.form4dev.com";
+const { slug, title, description, publishedAt, updatedAt, readingTime, ctaLocation } = Astro.props;
+
+const related: PostMeta[] = posts.filter((p) => p.slug !== slug).slice(0, 3);
+---
+
+<Base title={`${title} — Form4Dev`} description={description} current="blog">
+  <div class="blog-shell container-wide">
+    <aside class="left-rail">
+      <a href="/blog" class="back mono">← All posts</a>
+      <div class="toc-eyebrow mono">On this page</div>
+      <nav class="toc" id="toc">
+        <!-- populated by client script from h2[id] in <article> -->
+      </nav>
+    </aside>
+
+    <article class="post">
+      <header class="post-head">
+        <div class="post-meta mono">
+          <time datetime={publishedAt}>{fmtDate(publishedAt)}</time>
+          <span class="dot">·</span>
+          <span>{readingTime}</span>
+        </div>
+        <h1 class="display">{title}</h1>
+      </header>
+
+      <section class="body">
+        <slot />
+
+        <p class="muted-note last-updated">
+          Last updated {fmtDate(updatedAt)}. Spotted something out of
+          date? Email
+          <a href="mailto:hello@form4dev.com">hello@form4dev.com</a>.
+        </p>
+      </section>
+    </article>
+
+    <aside class="right-rail">
+      <div class="cta-card">
+        <div class="cta-eyebrow mono">Form4Dev</div>
+        <p class="cta-line">
+          A form backend built for developers — and the agents
+          increasingly submitting on their behalf.
+        </p>
+        <a
+          href={`${APP}/register`}
+          class={`cta-button plausible-event-name=Signup+CTA plausible-event-location=blog-rail-${ctaLocation} plausible-event-plan=free`}
+        >
+          Start free →
+        </a>
+        <p class="cta-fine mono">No credit card · 100 submissions/mo</p>
+      </div>
+
+      <div class="related">
+        <div class="related-eyebrow mono">More posts</div>
+        <ul>
+          {related.map((p) => (
+            <li>
+              <a href={`/blog/${p.slug}`}>
+                <span class="rel-title">{p.title}</span>
+                <span class="rel-meta mono">{p.readingTime}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </aside>
+  </div>
+</Base>
+
+<script is:inline>
+  // Build ToC from h2[id] inside <article>. Scroll-spy active section.
+  (function () {
+    const toc = document.getElementById("toc");
+    if (!toc) return;
+    const headings = Array.from(
+      document.querySelectorAll("article .body h2[id]")
+    );
+    if (!headings.length) {
+      toc.innerHTML = '<p class="toc-empty mono">No sections</p>';
+      return;
+    }
+    toc.innerHTML = headings
+      .map(
+        (h) =>
+          '<a href="#' +
+          h.id +
+          '" data-toc-target="' +
+          h.id +
+          '">' +
+          h.textContent +
+          "</a>"
+      )
+      .join("");
+
+    const links = Array.from(toc.querySelectorAll("a[data-toc-target]"));
+    const byId = Object.fromEntries(
+      links.map((a) => [a.getAttribute("data-toc-target"), a])
+    );
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const id = entry.target.id;
+          const link = byId[id];
+          if (!link) continue;
+          if (entry.isIntersecting) {
+            links.forEach((l) => l.classList.remove("active"));
+            link.classList.add("active");
+          }
+        }
+      },
+      { rootMargin: "-80px 0px -70% 0px", threshold: 0 }
+    );
+    headings.forEach((h) => observer.observe(h));
+  })();
+</script>
+
+<style>
+  .blog-shell {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr) 240px;
+    gap: 48px;
+    padding: 56px 28px 96px;
+    align-items: start;
+  }
+
+  /* ---------- Left rail ---------- */
+  .left-rail {
+    position: sticky;
+    top: 80px;
+    align-self: start;
+  }
+  .back {
+    display: inline-block;
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 24px;
+  }
+  .back:hover { color: var(--ink); }
+  .toc-eyebrow {
+    font-size: 11px;
+    color: var(--muted-2);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+  }
+  .toc {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    border-left: 1px solid var(--line);
+    padding-left: 14px;
+  }
+  .toc :global(a) {
+    font-size: 13px;
+    color: var(--muted);
+    padding: 5px 0;
+    line-height: 1.4;
+    border-bottom: none;
+    transition: color 0.12s ease;
+  }
+  .toc :global(a:hover) { color: var(--ink); }
+  .toc :global(a.active) {
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .toc :global(.toc-empty) {
+    font-size: 12px;
+    color: var(--muted-2);
+  }
+
+  /* ---------- Article ---------- */
+  .post { min-width: 0; max-width: 720px; }
+  .post-head { margin-bottom: 36px; }
+  .post-meta {
+    font-size: 12px;
+    color: var(--muted-2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .dot { opacity: 0.5; }
+  .post-head h1 {
+    font-size: 40px;
+    margin: 0 0 16px;
+    letter-spacing: -0.02em;
+    line-height: 1.12;
+  }
+  .body :global(.lede) {
+    font-size: 18px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin: 0 0 36px;
+  }
+  .body :global(h2) {
+    font-size: 24px;
+    margin: 48px 0 14px;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+    scroll-margin-top: 80px;
+  }
+  .body :global(h3) {
+    font-size: 17px;
+    margin: 28px 0 10px;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+  }
+  .body :global(p) {
+    line-height: 1.75;
+    margin: 0 0 14px;
+    font-size: 16px;
+    color: var(--ink);
+  }
+  .body :global(ul),
+  .body :global(ol) {
+    line-height: 1.8;
+    padding-left: 22px;
+    margin: 0 0 16px;
+  }
+  .body :global(li) { margin-bottom: 6px; }
+  .body :global(code) {
+    background: var(--bg-sunken);
+    border: 1px solid var(--line);
+    padding: 0 5px;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+  }
+  .body :global(a) {
+    color: var(--ink);
+    border-bottom: 1px solid var(--muted-3);
+    transition: border-color 0.12s ease, color 0.12s ease;
+  }
+  .body :global(a:hover) {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  .body :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 14px;
+  }
+  .body :global(th),
+  .body :global(td) {
+    border-bottom: 1px solid var(--line);
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  .body :global(th) {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 500;
+  }
+  .body :global(.muted-note) {
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .body :global(.code) {
+    background: var(--code-bg);
+    color: var(--code-fg);
+    border-radius: 12px;
+    padding: 18px 22px;
+    font-family: var(--font-mono);
+    font-size: 13.5px;
+    line-height: 1.7;
+    overflow-x: auto;
+    white-space: pre;
+    margin: 8px 0 18px;
+  }
+  .body :global(.code .s) { color: var(--code-str); }
+  .body :global(.code .k) { color: var(--code-key); }
+  .body :global(.code .c) { color: var(--muted); font-style: italic; }
+  .body :global(.code .prompt) { color: var(--muted-2); user-select: none; }
+  .last-updated {
+    margin-top: 56px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    font-size: 13px;
+  }
+
+  /* ---------- Right rail ---------- */
+  .right-rail {
+    position: sticky;
+    top: 80px;
+    align-self: start;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .cta-card {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 20px 18px;
+    background: var(--bg);
+  }
+  .cta-eyebrow {
+    font-size: 11px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+  .cta-line {
+    font-size: 13.5px;
+    color: var(--ink);
+    line-height: 1.55;
+    margin: 0 0 14px;
+  }
+  .cta-button {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--bg);
+    padding: 9px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.12s ease;
+    border-bottom: none;
+  }
+  .cta-button:hover { background: var(--accent); }
+  .cta-fine {
+    margin: 10px 0 0;
+    font-size: 11px;
+    color: var(--muted-2);
+  }
+  .related {
+    border-top: 1px solid var(--line);
+    padding-top: 16px;
+  }
+  .related-eyebrow {
+    font-size: 11px;
+    color: var(--muted-2);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+  .related ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .related li a {
+    display: block;
+    color: var(--ink);
+    transition: color 0.12s ease;
+  }
+  .related li a:hover { color: var(--accent); }
+  .rel-title {
+    display: block;
+    font-size: 13px;
+    line-height: 1.4;
+    margin-bottom: 3px;
+  }
+  .rel-meta {
+    display: block;
+    font-size: 11px;
+    color: var(--muted-2);
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 1100px) {
+    .blog-shell {
+      grid-template-columns: 200px minmax(0, 1fr);
+      gap: 40px;
+    }
+    .right-rail { display: none; }
+  }
+  @media (max-width: 760px) {
+    .blog-shell {
+      grid-template-columns: 1fr;
+      gap: 32px;
+      padding: 32px 20px 64px;
+    }
+    .left-rail {
+      position: static;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 20px;
+    }
+    .post-head h1 { font-size: 32px; }
+  }
+</style>

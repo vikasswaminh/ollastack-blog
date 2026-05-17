@@ -1,347 +1,288 @@
 ---
-import Base from "../../layouts/Base.astro";
+import BlogPost from "../../layouts/BlogPost.astro";
 
 const APP = "https://login.form4dev.com";
-const title = "Form backend for AI agents: why forms break for LLMs (and what to do)";
-const description =
-  "AI agents are increasingly submitting forms on behalf of users — and most form backends flag them all as spam. Here's why traditional form backends struggle with agent traffic, and what a form backend built for the new world looks like.";
-const publishedAt = "2026-05-16";
-const updatedAt = "2026-05-16";
-
-const fmtDate = (iso: string) =>
-  new Date(iso + "T00:00:00Z").toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
 ---
 
-<Base title={`${title} — Form4Dev`} description={description} current="blog">
-  <article class="post container-wide">
-    <header class="post-head">
-      <a href="/blog" class="back mono">← Blog</a>
-      <div class="post-meta mono">
-        <time datetime={publishedAt}>{fmtDate(publishedAt)}</time>
-        <span class="dot">·</span>
-        <span>9 min read</span>
-      </div>
-      <h1 class="display">{title}</h1>
-      <p class="lede">
-        A meaningful share of form traffic in 2026 isn't coming from a
-        browser anymore. It's coming from AI agents acting on a user's
-        behalf. Most form backends weren't built for this — and they
-        treat every one of those submissions as spam. Here's the shape
-        of the problem, and what a form backend built for the new
-        traffic actually does for you.
-      </p>
-    </header>
+<BlogPost
+  slug="form-backend-for-ai-agents"
+  title="Form backend for AI agents: why forms break for LLMs (and what to do)"
+  description="AI agents are increasingly submitting forms on behalf of users — and most form backends flag them all as spam. Here's why traditional form backends struggle with agent traffic, and what a form backend built for the new world looks like."
+  publishedAt="2026-05-16"
+  updatedAt="2026-05-16"
+  readingTime="9 min read"
+  ctaLocation="agents"
+>
+  <p class="lede">
+    A meaningful share of form traffic in 2026 isn't coming from a
+    browser anymore. It's coming from AI agents acting on a user's
+    behalf. Most form backends weren't built for this — and they treat
+    every one of those submissions as spam. Here's the shape of the
+    problem, and what a form backend built for the new traffic
+    actually does for you.
+  </p>
 
-    <section class="body">
-      <h2>The short answer</h2>
-      <p>
-        A form backend designed for AI agents lets trusted automation
-        submit cleanly without weakening the spam protection that
-        guards your forms against bots. Your humans still get tight
-        filtering. Your agents get a clean path. You get a clear
-        record of which submissions came from which agent. The
-        category is shifting, and a form backend that ignores it will
-        feel increasingly like a legacy product.
-      </p>
+  <h2 id="short-answer">The short answer</h2>
+  <p>
+    A form backend designed for AI agents lets trusted automation
+    submit cleanly without weakening the spam protection that guards
+    your forms against bots. Your humans still get tight filtering.
+    Your agents get a clean path. You get a clear record of which
+    submissions came from which agent. The category is shifting, and a
+    form backend that ignores it will feel increasingly like a legacy
+    product.
+  </p>
 
-      <h2>What's actually changing</h2>
-      <p>
-        For two decades, "someone submitted your form" meant a human
-        typed into a browser. Anti-spam systems learned to lean on
-        the signals browsers give off, and the system worked.
-      </p>
-      <p>
-        In 2026, a growing share of form submissions come from
-        somewhere else:
-      </p>
-      <ul>
-        <li>
-          <strong>Research assistants</strong> filling contact forms
-          to request information on a user's behalf.
-        </li>
-        <li>
-          <strong>Scheduling agents</strong> requesting demos or
-          booking calls without the user opening the page.
-        </li>
-        <li>
-          <strong>Comparison shoppers</strong> gathering quotes from
-          ten vendors in parallel.
-        </li>
-        <li>
-          <strong>Internal automation</strong> — CRM syncs filling
-          lead forms during a migration, QA suites running submission
-          tests, scripted onboarding pre-populating customer accounts.
-        </li>
-      </ul>
-      <p>
-        These submitters don't look like browsers, and traditional
-        spam systems correctly notice that. They incorrectly
-        conclude not-a-browser means malicious. That's the bug.
-      </p>
+  <h2 id="whats-changing">What's actually changing</h2>
+  <p>
+    For two decades, "someone submitted your form" meant a human typed
+    into a browser. Anti-spam systems learned to lean on the signals
+    browsers give off, and the system worked.
+  </p>
+  <p>
+    In 2026, a growing share of form submissions come from somewhere
+    else:
+  </p>
+  <ul>
+    <li>
+      <strong>Research assistants</strong> filling contact forms to
+      request information on a user's behalf.
+    </li>
+    <li>
+      <strong>Scheduling agents</strong> requesting demos or booking
+      calls without the user opening the page.
+    </li>
+    <li>
+      <strong>Comparison shoppers</strong> gathering quotes from ten
+      vendors in parallel.
+    </li>
+    <li>
+      <strong>Internal automation</strong> — CRM syncs filling lead
+      forms during a migration, QA suites running submission tests,
+      scripted onboarding pre-populating customer accounts.
+    </li>
+  </ul>
+  <p>
+    These submitters don't look like browsers, and traditional spam
+    systems correctly notice that. They incorrectly conclude
+    not-a-browser means malicious. That's the bug.
+  </p>
 
-      <h2>Why the obvious workarounds don't work</h2>
+  <h2 id="workarounds">Why the obvious workarounds don't work</h2>
 
-      <h3>"Just whitelist the agent's IP"</h3>
-      <p>
-        Agents run in shared cloud infrastructure and rotate
-        addresses. The IP you trust today is a different tenant
-        tomorrow. You also can't tell which agent is which from the
-        IP — a whitelist trusts every agent on that range, including
-        ones you've never heard of.
-      </p>
+  <h3>"Just whitelist the agent's IP"</h3>
+  <p>
+    Agents run in shared cloud infrastructure and rotate addresses.
+    The IP you trust today is a different tenant tomorrow. You also
+    can't tell which agent is which from the IP — a whitelist trusts
+    every agent on that range, including ones you've never heard of.
+  </p>
 
-      <h3>"Disable spam filtering on that form"</h3>
-      <p>
-        Now bots find the form and you're triaging by hand. The spam
-        tax falls on the humans, the form quality drops, and your
-        inbox starts looking like a spam folder.
-      </p>
+  <h3>"Disable spam filtering on that form"</h3>
+  <p>
+    Now bots find the form and you're triaging by hand. The spam tax
+    falls on the humans, the form quality drops, and your inbox starts
+    looking like a spam folder.
+  </p>
 
-      <h3>"Have the agent solve the captcha"</h3>
-      <p>
-        Captcha vendors work hard to make this fail. When it
-        succeeds, you've trained your agent to defeat anti-spam
-        systems — including ones you don't control. Not a defensible
-        posture.
-      </p>
+  <h3>"Have the agent solve the captcha"</h3>
+  <p>
+    Captcha vendors work hard to make this fail. When it succeeds,
+    you've trained your agent to defeat anti-spam systems — including
+    ones you don't control. Not a defensible posture.
+  </p>
 
-      <h3>"Give the agent a session cookie"</h3>
-      <p>
-        Browser sessions weren't built for unattended use. You'll
-        end up babysitting refresh jobs, and the first time one fails
-        at 3am your forms go dark for the agent.
-      </p>
-      <p>
-        None of these are the right answer. The right answer is a
-        form backend that recognizes trusted automation as a
-        first-class kind of caller, not an exception to work around.
-      </p>
+  <h3>"Give the agent a session cookie"</h3>
+  <p>
+    Browser sessions weren't built for unattended use. You'll end up
+    babysitting refresh jobs, and the first time one fails at 3am your
+    forms go dark for the agent.
+  </p>
+  <p>
+    None of these are the right answer. The right answer is a form
+    backend that recognizes trusted automation as a first-class kind
+    of caller, not an exception to work around.
+  </p>
 
-      <h2>What "agent-ready" actually means for you</h2>
-      <p>
-        A form backend built with agents in mind gives you four
-        things you'll feel immediately, without you having to
-        understand any of the plumbing underneath.
-      </p>
+  <h2 id="agent-ready">What "agent-ready" actually means for you</h2>
+  <p>
+    A form backend built with agents in mind gives you four things
+    you'll feel immediately, without you having to understand any of
+    the plumbing underneath.
+  </p>
 
-      <h3>1. Trusted agents submit cleanly. Bots don't.</h3>
-      <p>
-        Submissions from agents you've authorized go through.
-        Submissions from anonymous bots get caught. You don't have
-        to choose between accepting automation and blocking spam —
-        the system distinguishes between them.
-      </p>
+  <h3>1. Trusted agents submit cleanly. Bots don't.</h3>
+  <p>
+    Submissions from agents you've authorized go through. Submissions
+    from anonymous bots get caught. You don't have to choose between
+    accepting automation and blocking spam — the system distinguishes
+    between them.
+  </p>
 
-      <h3>2. Each agent stays in its own lane</h3>
-      <p>
-        Authorization for one agent doesn't bleed into anything
-        else. If you operate multiple agents, or you're an agency
-        running forms for several clients, the lines stay clean by
-        design. You can't accidentally cross them.
-      </p>
+  <h3>2. Each agent stays in its own lane</h3>
+  <p>
+    Authorization for one agent doesn't bleed into anything else. If
+    you operate multiple agents, or you're an agency running forms for
+    several clients, the lines stay clean by design. You can't
+    accidentally cross them.
+  </p>
 
-      <h3>3. You can see which agent did what</h3>
-      <p>
-        When you open your inbox, every submission shows you where
-        it came from — a real person, a specific agent, or somewhere
-        else. If an agent starts misbehaving, you can pause that
-        agent without touching anything else. The historical record
-        stays intact for review.
-      </p>
+  <h3>3. You can see which agent did what</h3>
+  <p>
+    When you open your inbox, every submission shows you where it came
+    from — a real person, a specific agent, or somewhere else. If an
+    agent starts misbehaving, you can pause that agent without
+    touching anything else. The historical record stays intact for
+    review.
+  </p>
 
-      <h3>4. Your billing stays safe</h3>
-      <p>
-        Even authorized agents are subject to your form's overall
-        limits and your account's monthly quota. A runaway script
-        can't blow through your budget. The product protects you
-        against your own automation as well as against attackers.
-      </p>
+  <h3>4. Your billing stays safe</h3>
+  <p>
+    Even authorized agents are subject to your form's overall limits
+    and your account's monthly quota. A runaway script can't blow
+    through your budget. The product protects you against your own
+    automation as well as against attackers.
+  </p>
 
-      <h2>What this looks like for the customer</h2>
-      <p>
-        The end-to-end experience is mundane in the best way.
-      </p>
-      <ol>
-        <li>
-          You authorize an agent from your account settings, giving
-          it a label so you remember what it's for ("Claude
-          Desktop", "internal CRM sync", whatever).
-        </li>
-        <li>
-          You hand the agent its credentials however that agent
-          expects them — typically a settings panel or an
-          environment variable.
-        </li>
-        <li>
-          The agent submits forms. Submissions land in your inbox
-          marked as agent traffic, with the agent's label visible.
-        </li>
-        <li>
-          If an agent misbehaves, you revoke its access in one
-          click. Future submissions stop. Historical submissions
-          stay.
-        </li>
-      </ol>
-      <p>
-        No SDK to install. No special framework. If the agent can
-        make a web request, it can submit your form.
-      </p>
+  <h2 id="customer-experience">What this looks like for the customer</h2>
+  <p>The end-to-end experience is mundane in the best way.</p>
+  <ol>
+    <li>
+      You authorize an agent from your account settings, giving it a
+      label so you remember what it's for ("Claude Desktop",
+      "internal CRM sync", whatever).
+    </li>
+    <li>
+      You hand the agent its credentials however that agent expects
+      them — typically a settings panel or an environment variable.
+    </li>
+    <li>
+      The agent submits forms. Submissions land in your inbox marked
+      as agent traffic, with the agent's label visible.
+    </li>
+    <li>
+      If an agent misbehaves, you revoke its access in one click.
+      Future submissions stop. Historical submissions stay.
+    </li>
+  </ol>
+  <p>
+    No SDK to install. No special framework. If the agent can make a
+    web request, it can submit your form.
+  </p>
 
-      <h2>Why this matters for the business</h2>
-      <p>
-        Agents aren't a fringe channel. They're a new source of
-        real demand — buyers researching, teams automating, users
-        delegating boring work to assistants. The form backends
-        that handle this kind of traffic cleanly will become the
-        path of least resistance for a generation of products.
-        The ones that don't will keep flagging real leads as spam
-        and watching their owners route around them.
-      </p>
-      <p>
-        Treating agents as first-class isn't about chasing a
-        trend. It's about making sure your forms keep working as
-        the way people interact with the web changes.
-      </p>
+  <h2 id="business-value">Why this matters for the business</h2>
+  <p>
+    Agents aren't a fringe channel. They're a new source of real
+    demand — buyers researching, teams automating, users delegating
+    boring work to assistants. The form backends that handle this
+    kind of traffic cleanly will become the path of least resistance
+    for a generation of products. The ones that don't will keep
+    flagging real leads as spam and watching their owners route around
+    them.
+  </p>
+  <p>
+    Treating agents as first-class isn't about chasing a trend. It's
+    about making sure your forms keep working as the way people
+    interact with the web changes.
+  </p>
 
-      <h2>Common mistakes to avoid</h2>
+  <h2 id="mistakes">Common mistakes to avoid</h2>
 
-      <h3>Sharing one set of credentials across multiple agents</h3>
-      <p>
-        Revoking a misbehaving agent then means revoking
-        everything. Give each agent its own credentials — the
-        cost is one click; the upside is granular control.
-      </p>
+  <h3>Sharing one set of credentials across multiple agents</h3>
+  <p>
+    Revoking a misbehaving agent then means revoking everything. Give
+    each agent its own credentials — the cost is one click; the
+    upside is granular control.
+  </p>
 
-      <h3>Skipping the monthly quota check</h3>
-      <p>
-        A loop in an agent without backoff can burn through your
-        plan in minutes. A good form backend enforces your
-        monthly quota against agents the same way it does against
-        anyone else.
-      </p>
+  <h3>Skipping the monthly quota check</h3>
+  <p>
+    A loop in an agent without backoff can burn through your plan in
+    minutes. A good form backend enforces your monthly quota against
+    agents the same way it does against anyone else.
+  </p>
 
-      <h3>Treating agent submissions as second-class</h3>
-      <p>
-        A submission from an agent is still real signal —
-        someone, or someone's tool, wanted to reach you. Send the
-        notification, fire the webhook, run the autoresponder.
-        The agent label tells you the source; the data is just
-        as actionable.
-      </p>
+  <h3>Treating agent submissions as second-class</h3>
+  <p>
+    A submission from an agent is still real signal — someone, or
+    someone's tool, wanted to reach you. Send the notification, fire
+    the webhook, run the autoresponder. The agent label tells you
+    the source; the data is just as actionable.
+  </p>
 
-      <h3>Logging credentials in plaintext</h3>
-      <p>
-        Agent credentials are credentials. Don't print them in
-        logs. Don't embed them in client-side code. Treat them
-        like any other secret your app handles.
-      </p>
+  <h3>Logging credentials in plaintext</h3>
+  <p>
+    Agent credentials are credentials. Don't print them in logs.
+    Don't embed them in client-side code. Treat them like any other
+    secret your app handles.
+  </p>
 
-      <h2>FAQ</h2>
+  <h2 id="faq">FAQ</h2>
 
-      <h3>What is a "form backend for AI agents"?</h3>
-      <p>
-        A form backend that lets you authorize trusted agents to
-        submit forms cleanly, while still blocking anonymous bot
-        traffic with the same strength as before. You see which
-        agent did what, you can revoke any agent in a click, and
-        runaway agents can't bypass your monthly limits.
-      </p>
+  <h3>What is a "form backend for AI agents"?</h3>
+  <p>
+    A form backend that lets you authorize trusted agents to submit
+    forms cleanly, while still blocking anonymous bot traffic with
+    the same strength as before. You see which agent did what, you
+    can revoke any agent in a click, and runaway agents can't bypass
+    your monthly limits.
+  </p>
 
-      <h3>Can my AI agent use a regular form endpoint?</h3>
-      <p>
-        Technically yes — but most traditional form backends
-        will flag the submission as spam. The result is either
-        dropped messages or a manual triage burden. A backend
-        designed for agent traffic avoids both.
-      </p>
+  <h3>Can my AI agent use a regular form endpoint?</h3>
+  <p>
+    Technically yes — but most traditional form backends will flag
+    the submission as spam. The result is either dropped messages or
+    a manual triage burden. A backend designed for agent traffic
+    avoids both.
+  </p>
 
-      <h3>Is this only useful for AI agents?</h3>
-      <p>
-        No. The same model handles internal scripts, CI test
-        suites, CRM-to-form syncs, mobile apps, and any other
-        non-browser caller. AI agents are the highest-profile
-        case, but the value generalizes.
-      </p>
+  <h3>Is this only useful for AI agents?</h3>
+  <p>
+    No. The same model handles internal scripts, CI test suites,
+    CRM-to-form syncs, mobile apps, and any other non-browser
+    caller. AI agents are the highest-profile case, but the value
+    generalizes.
+  </p>
 
-      <h3>What stops an agent from doing something it shouldn't?</h3>
-      <p>
-        Authorization for one agent is scoped to your account
-        only. Even if you misplace credentials, they can't reach
-        forms you don't own. And every agent stays subject to
-        your account's limits — there's no path for an agent to
-        bypass your billing protection.
-      </p>
+  <h3>What stops an agent from doing something it shouldn't?</h3>
+  <p>
+    Authorization for one agent is scoped to your account only. Even
+    if you misplace credentials, they can't reach forms you don't
+    own. And every agent stays subject to your account's limits —
+    there's no path for an agent to bypass your billing protection.
+  </p>
 
-      <h3>How do I monitor what an agent is doing?</h3>
-      <p>
-        The submission inbox shows each agent submission with
-        its label and full content. If you want forensic detail
-        — when the agent called, how often, with what success
-        rate — there's an activity view for each agent's
-        credentials. Revoking access stops future activity
-        without losing the history.
-      </p>
+  <h3>How do I monitor what an agent is doing?</h3>
+  <p>
+    The submission inbox shows each agent submission with its label
+    and full content. If you want forensic detail, there's an
+    activity view for each agent's credentials. Revoking access
+    stops future activity without losing the history.
+  </p>
 
-      <h3>Does this work with modern agent frameworks?</h3>
-      <p>
-        Yes. The submission flow is a standard authenticated
-        web request, which every mainstream agent framework
-        already knows how to make. You don't need a special
-        adapter or plugin.
-      </p>
+  <h3>Does this work with modern agent frameworks?</h3>
+  <p>
+    Yes. The submission flow is a standard authenticated web request,
+    which every mainstream agent framework already knows how to make.
+    You don't need a special adapter or plugin.
+  </p>
 
-      <h2>The takeaway</h2>
-      <p>
-        The form-backend category was built for browsers. The
-        fastest-growing kind of form traffic in 2026 isn't
-        browsers. Backends that adapt — by recognizing trusted
-        automation as a real caller rather than treating it as
-        spam — become useful for a whole new class of work.
-        Backends that don't will keep misclassifying real
-        traffic and watching their users work around them.
-      </p>
-      <p>
-        We built <a href="https://form4dev.com">Form4Dev</a>
-        with agent submission as a primary use case, not a
-        bolt-on. If you're building something that needs an
-        agent to fill a form,
-        <a href={`${APP}/register`} class="plausible-event-name=Signup+CTA plausible-event-location=blog-agents plausible-event-plan=free">
-          start free
-        </a>
-        — agent support is in every plan, including the free
-        tier.
-      </p>
-
-      <p class="muted-note last-updated">
-        Last updated {fmtDate(updatedAt)}. Spotted something
-        out of date? Email
-        <a href="mailto:hello@form4dev.com">hello@form4dev.com</a>.
-      </p>
-    </section>
-  </article>
-</Base>
-
-<style>
-  .post { max-width: 720px; padding: 56px 28px 96px; }
-  .post-head { margin-bottom: 40px; }
-  .back { display: inline-block; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 24px; }
-  .back:hover { color: var(--ink); }
-  .post-meta { font-size: 12px; color: var(--muted-2); display: flex; align-items: center; gap: 8px; margin-bottom: 18px; }
-  .dot { opacity: 0.5; }
-  .post-head h1 { font-size: 38px; margin: 0 0 16px; letter-spacing: -0.02em; line-height: 1.15; }
-  .lede { font-size: 18px; color: var(--muted); line-height: 1.6; margin: 0; }
-  .body h2 { font-size: 24px; margin: 48px 0 14px; letter-spacing: -0.01em; line-height: 1.3; }
-  .body h3 { font-size: 17px; margin: 28px 0 10px; letter-spacing: -0.005em; color: var(--ink); }
-  .body p { line-height: 1.75; margin: 0 0 14px; font-size: 16px; color: var(--ink); }
-  .body ul, .body ol { line-height: 1.8; padding-left: 22px; margin: 0 0 16px; }
-  .body li { margin-bottom: 6px; }
-  .body code { background: var(--bg-sunken); border: 1px solid var(--line); padding: 0 5px; border-radius: 4px; font-family: var(--font-mono); font-size: 0.88em; }
-  .body a { color: var(--ink); border-bottom: 1px solid var(--muted-3); transition: border-color 0.12s ease, color 0.12s ease; }
-  .body a:hover { color: var(--accent); border-color: var(--accent); }
-  .muted-note { color: var(--muted); font-size: 14px; }
-  .last-updated { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 13px; }
-</style>
+  <h2 id="takeaway">The takeaway</h2>
+  <p>
+    The form-backend category was built for browsers. The fastest-
+    growing kind of form traffic in 2026 isn't browsers. Backends
+    that adapt — by recognizing trusted automation as a real caller
+    rather than treating it as spam — become useful for a whole new
+    class of work. Backends that don't will keep misclassifying real
+    traffic and watching their users work around them.
+  </p>
+  <p>
+    We built <a href="https://form4dev.com">Form4Dev</a> with agent
+    submission as a primary use case, not a bolt-on. If you're
+    building something that needs an agent to fill a form,
+    <a href={`${APP}/register`} class="plausible-event-name=Signup+CTA plausible-event-location=blog-agents plausible-event-plan=free">
+      start free
+    </a>
+    — agent support is in every plan, including the free tier.
+  </p>
+</BlogPost>

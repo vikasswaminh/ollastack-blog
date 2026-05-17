@@ -1,358 +1,295 @@
 ---
-import Base from "../../layouts/Base.astro";
+import BlogPost from "../../layouts/BlogPost.astro";
 
 const APP = "https://login.form4dev.com";
-const title = "Netlify Forms alternatives in 2026: a migration guide";
-const description =
-  "Netlify Forms moved to credit-based billing and the pricing got harder to predict. Here's how to move your forms off Netlify without rewriting your whole site — with the actual code changes for each alternative.";
-const publishedAt = "2026-05-16";
-const updatedAt = "2026-05-16";
-
-const fmtDate = (iso: string) =>
-  new Date(iso + "T00:00:00Z").toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
 ---
 
-<Base title={`${title} — Form4Dev`} description={description} current="blog">
-  <article class="post container-wide">
-    <header class="post-head">
-      <a href="/blog" class="back mono">← Blog</a>
-      <div class="post-meta mono">
-        <time datetime={publishedAt}>{fmtDate(publishedAt)}</time>
-        <span class="dot">·</span>
-        <span>10 min read</span>
-      </div>
-      <h1 class="display">{title}</h1>
-      <p class="lede">
-        Netlify Forms used to be the no-brainer choice if your site was
-        already on Netlify. Recent billing changes made the cost less
-        predictable, and a lot of people are quietly migrating. Here's
-        how to do it — including the actual code diff for each
-        alternative.
-      </p>
-    </header>
+<BlogPost
+  slug="netlify-forms-alternatives"
+  title="Netlify Forms alternatives in 2026: a migration guide"
+  description="Netlify Forms moved to credit-based billing and the pricing got harder to predict. Here's how to move your forms off Netlify without rewriting your whole site — with the actual code changes for each alternative."
+  publishedAt="2026-05-16"
+  updatedAt="2026-05-16"
+  readingTime="10 min read"
+  ctaLocation="netlify-alts"
+>
+  <p class="lede">
+    Netlify Forms used to be the no-brainer choice if your site was
+    already on Netlify. Recent billing changes made the cost less
+    predictable, and a lot of people are quietly migrating. Here's how to
+    do it — including the actual code diff for each alternative.
+  </p>
 
-    <section class="body">
-      <h2>Disclosure</h2>
-      <p>
-        I build <a href="https://form4dev.com">Form4Dev</a>, one of the
-        alternatives below. This is written as a practical migration
-        guide rather than a sales pitch — every alternative listed gets
-        the same code-diff treatment, including the cases where I'd
-        recommend a competitor.
-      </p>
+  <h2 id="disclosure">Disclosure</h2>
+  <p>
+    I build <a href="https://form4dev.com">Form4Dev</a>, one of the
+    alternatives below. This is written as a practical migration guide
+    rather than a sales pitch — every alternative listed gets the same
+    code-diff treatment, including the cases where I'd recommend a
+    competitor.
+  </p>
 
-      <h2>What changed and why people are leaving</h2>
-      <p>
-        Netlify Forms was built around a simple value proposition:
-        you're already on Netlify, so adding a form is one HTML
-        attribute. For years, the included quota on most plans covered
-        normal usage and nobody thought about it.
-      </p>
-      <p>
-        The shift to credit-based billing changed that. Form
-        submissions now consume credits from a shared pool that also
-        covers function invocations and bandwidth. A single afternoon
-        of bot spam against a form can drain credits your build
-        process expects, and the cost-per-submission becomes harder to
-        forecast.
-      </p>
-      <p>
-        Combined with general Netlify pricing changes, this has pushed
-        teams to look for a dedicated form backend that's priced
-        per-form-submission, not per-credit. Below is what's available
-        and how to migrate to each.
-      </p>
+  <h2 id="what-changed">What changed and why people are leaving</h2>
+  <p>
+    Netlify Forms was built around a simple value proposition: you're
+    already on Netlify, so adding a form is one HTML attribute. For
+    years, the included quota on most plans covered normal usage and
+    nobody thought about it.
+  </p>
+  <p>
+    The shift to credit-based billing changed that. Form submissions now
+    consume credits from a shared pool that also covers function
+    invocations and bandwidth. A single afternoon of bot spam against a
+    form can drain credits your build process expects, and the
+    cost-per-submission becomes harder to forecast.
+  </p>
+  <p>
+    Combined with general Netlify pricing changes, this has pushed teams
+    to look for a dedicated form backend that's priced
+    per-form-submission, not per-credit. Below is what's available and
+    how to migrate to each.
+  </p>
 
-      <h2>Before you migrate: export your data</h2>
-      <p>
-        Netlify Forms lets you export submission history as CSV from
-        the dashboard. Do this first, regardless of which alternative
-        you pick. Once you re-point your form's action URL elsewhere,
-        the new service starts collecting submissions immediately, but
-        the old ones stay in Netlify until you export.
-      </p>
-      <pre class="code"><span class="prompt">$</span> <span class="c"># Site → Forms → [select form] → Download as CSV</span>
+  <h2 id="export-first">Before you migrate: export your data</h2>
+  <p>
+    Netlify Forms lets you export submission history as CSV from the
+    dashboard. Do this first, regardless of which alternative you pick.
+    Once you re-point your form's action URL elsewhere, the new service
+    starts collecting submissions immediately, but the old ones stay in
+    Netlify until you export.
+  </p>
+  <pre class="code"><span class="prompt">$</span> <span class="c"># Site → Forms → [select form] → Download as CSV</span>
 <span class="prompt">$</span> <span class="c"># or via CLI:</span>
 <span class="prompt">$</span> netlify api listSiteForms --data <span class="s">'{`{`}"site_id":"YOUR_SITE_ID"{`}`}'</span></pre>
-      <p>
-        Save the CSVs somewhere durable. You may not need them, but
-        you don't want to need them and not have them.
-      </p>
+  <p>
+    Save the CSVs somewhere durable. You may not need them, but you
+    don't want to need them and not have them.
+  </p>
 
-      <h2>The migration: what actually changes</h2>
-      <p>
-        Netlify Forms works via a special HTML attribute pattern:
-      </p>
-      <pre class="code">&lt;form name=<span class="s">"contact"</span> method=<span class="s">"POST"</span> data-netlify=<span class="s">"true"</span>&gt;
+  <h2 id="migration-overview">The migration: what actually changes</h2>
+  <p>Netlify Forms works via a special HTML attribute pattern:</p>
+  <pre class="code">&lt;form name=<span class="s">"contact"</span> method=<span class="s">"POST"</span> data-netlify=<span class="s">"true"</span>&gt;
   &lt;input name=<span class="s">"email"</span> type=<span class="s">"email"</span> required&gt;
   &lt;textarea name=<span class="s">"message"</span> required&gt;&lt;/textarea&gt;
   &lt;button&gt;Send&lt;/button&gt;
 &lt;/form&gt;</pre>
-      <p>
-        Netlify's build process detects the <code>data-netlify="true"</code>
-        attribute, registers the form, and rewrites it to POST to its
-        own form-handling endpoint. To move off, you remove that
-        attribute and explicitly point the form at the new service's
-        endpoint URL.
-      </p>
-      <p>
-        Here's that change for each alternative.
-      </p>
+  <p>
+    Netlify's build process detects the <code>data-netlify="true"</code>
+    attribute, registers the form, and rewrites it to POST to its own
+    form-handling endpoint. To move off, you remove that attribute and
+    explicitly point the form at the new service's endpoint URL.
+  </p>
+  <p>Here's that change for each alternative.</p>
 
-      <h2>Alternative 1 — Formspree</h2>
-      <p>
-        The boring, mature choice. Most documented, most integrations,
-        $10/mo starter past 50 submissions.
-      </p>
-      <p>The diff:</p>
-      <pre class="code">- &lt;form name=<span class="s">"contact"</span> method=<span class="s">"POST"</span> data-netlify=<span class="s">"true"</span>&gt;
+  <h2 id="alt-formspree">Alternative 1 — Formspree</h2>
+  <p>
+    The boring, mature choice. Most documented, most integrations,
+    $10/mo starter past 50 submissions.
+  </p>
+  <p>The diff:</p>
+  <pre class="code">- &lt;form name=<span class="s">"contact"</span> method=<span class="s">"POST"</span> data-netlify=<span class="s">"true"</span>&gt;
 + &lt;form action=<span class="s">"https://formspree.io/f/&lt;YOUR_FORM_ID&gt;"</span> method=<span class="s">"POST"</span>&gt;
     &lt;input name=<span class="s">"email"</span> type=<span class="s">"email"</span> required&gt;
     &lt;textarea name=<span class="s">"message"</span> required&gt;&lt;/textarea&gt;
     &lt;button&gt;Send&lt;/button&gt;
   &lt;/form&gt;</pre>
-      <p>
-        <strong>Honeypot</strong>: Formspree uses <code>_gotcha</code>
-        — add <code>&lt;input type="text" name="_gotcha" style="display:none"&gt;</code>.
-        <br />
-        <strong>Redirect after submit</strong>: add a hidden
-        <code>_next</code> field with your thank-you URL, or set it in
-        the dashboard.
-      </p>
+  <p>
+    <strong>Honeypot</strong>: Formspree uses <code>_gotcha</code> — add
+    <code>&lt;input type="text" name="_gotcha" style="display:none"&gt;</code>.
+    <br />
+    <strong>Redirect after submit</strong>: add a hidden <code>_next</code>
+    field with your thank-you URL, or set it in the dashboard.
+  </p>
 
-      <h2>Alternative 2 — Basin</h2>
-      <p>
-        The dashboard-quality choice. Nicest UI in the category,
-        $8.25/mo starter, 100/mo on free.
-      </p>
-      <pre class="code">- &lt;form name=<span class="s">"contact"</span> method=<span class="s">"POST"</span> data-netlify=<span class="s">"true"</span>&gt;
+  <h2 id="alt-basin">Alternative 2 — Basin</h2>
+  <p>
+    The dashboard-quality choice. Nicest UI in the category, $8.25/mo
+    starter, 100/mo on free.
+  </p>
+  <pre class="code">- &lt;form name=<span class="s">"contact"</span> method=<span class="s">"POST"</span> data-netlify=<span class="s">"true"</span>&gt;
 + &lt;form action=<span class="s">"https://usebasin.com/f/&lt;YOUR_FORM_ID&gt;"</span> method=<span class="s">"POST"</span>&gt;
     &lt;input name=<span class="s">"email"</span> type=<span class="s">"email"</span> required&gt;
     &lt;textarea name=<span class="s">"message"</span> required&gt;&lt;/textarea&gt;
     &lt;button&gt;Send&lt;/button&gt;
   &lt;/form&gt;</pre>
-      <p>
-        Basin's spam filtering is good enough that you can usually
-        skip an explicit honeypot. Redirect URL goes in the form
-        settings.
-      </p>
+  <p>
+    Basin's spam filtering is good enough that you can usually skip an
+    explicit honeypot. Redirect URL goes in the form settings.
+  </p>
 
-      <h2>Alternative 3 — Formcarry</h2>
-      <p>
-        The price-optimized choice. $6/mo starter, lifetime archive on
-        free tier.
-      </p>
-      <pre class="code">- &lt;form name=<span class="s">"contact"</span> method=<span class="s">"POST"</span> data-netlify=<span class="s">"true"</span>&gt;
+  <h2 id="alt-formcarry">Alternative 3 — Formcarry</h2>
+  <p>
+    The price-optimized choice. $6/mo starter, lifetime archive on free
+    tier.
+  </p>
+  <pre class="code">- &lt;form name=<span class="s">"contact"</span> method=<span class="s">"POST"</span> data-netlify=<span class="s">"true"</span>&gt;
 + &lt;form action=<span class="s">"https://formcarry.com/s/&lt;YOUR_FORM_ID&gt;"</span> method=<span class="s">"POST"</span>&gt;
     &lt;input name=<span class="s">"email"</span> type=<span class="s">"email"</span> required&gt;
     &lt;textarea name=<span class="s">"message"</span> required&gt;&lt;/textarea&gt;
     &lt;button&gt;Send&lt;/button&gt;
   &lt;/form&gt;</pre>
 
-      <h2>Alternative 4 — Web3Forms</h2>
-      <p>
-        The unlimited-free-tier choice. POSTs go to a single endpoint
-        with your access key embedded in the payload.
-      </p>
-      <pre class="code">- &lt;form name=<span class="s">"contact"</span> method=<span class="s">"POST"</span> data-netlify=<span class="s">"true"</span>&gt;
+  <h2 id="alt-web3forms">Alternative 4 — Web3Forms</h2>
+  <p>
+    The unlimited-free-tier choice. POSTs go to a single endpoint with
+    your access key embedded in the payload.
+  </p>
+  <pre class="code">- &lt;form name=<span class="s">"contact"</span> method=<span class="s">"POST"</span> data-netlify=<span class="s">"true"</span>&gt;
 + &lt;form action=<span class="s">"https://api.web3forms.com/submit"</span> method=<span class="s">"POST"</span>&gt;
 +   &lt;input type=<span class="s">"hidden"</span> name=<span class="s">"access_key"</span> value=<span class="s">"YOUR_ACCESS_KEY"</span>&gt;
     &lt;input name=<span class="s">"email"</span> type=<span class="s">"email"</span> required&gt;
     &lt;textarea name=<span class="s">"message"</span> required&gt;&lt;/textarea&gt;
     &lt;button&gt;Send&lt;/button&gt;
   &lt;/form&gt;</pre>
-      <p>
-        <strong>Heads up</strong>: the access key is visible in your
-        page source. Web3Forms scopes the key to one email destination,
-        so a leaked key sends mail to your inbox — annoying but not
-        catastrophic.
-      </p>
+  <p>
+    <strong>Heads up</strong>: the access key is visible in your page
+    source. Web3Forms scopes the key to one email destination, so a
+    leaked key sends mail to your inbox — annoying but not catastrophic.
+  </p>
 
-      <h2>Alternative 5 — Form4Dev</h2>
-      <p>
-        Full disclosure — my product. The agent-and-automation-
-        first choice, with transparent flat pricing ($0 / $9 /
-        $29) and every feature on every plan.
-      </p>
-      <pre class="code">- &lt;form name=<span class="s">"contact"</span> method=<span class="s">"POST"</span> data-netlify=<span class="s">"true"</span>&gt;
+  <h2 id="alt-form4dev">Alternative 5 — Form4Dev</h2>
+  <p>
+    Full disclosure — my product. The agent-and-automation-first choice,
+    with transparent flat pricing ($0 / $9 / $29) and every feature on
+    every plan.
+  </p>
+  <pre class="code">- &lt;form name=<span class="s">"contact"</span> method=<span class="s">"POST"</span> data-netlify=<span class="s">"true"</span>&gt;
 + &lt;form action=<span class="s">"https://login.form4dev.com/api/submit/&lt;YOUR_SLUG&gt;"</span> method=<span class="s">"POST"</span>&gt;
     &lt;input name=<span class="s">"email"</span> type=<span class="s">"email"</span> required&gt;
     &lt;textarea name=<span class="s">"message"</span> required&gt;&lt;/textarea&gt;
 +   &lt;input type=<span class="s">"text"</span> name=<span class="s">"_gotcha"</span> tabindex=<span class="s">"-1"</span> style=<span class="s">"position:absolute;left:-9999px"</span>&gt;
     &lt;button&gt;Send&lt;/button&gt;
   &lt;/form&gt;</pre>
-      <p>
-        Slug is whatever you named the form when you created it.
-        Redirect URL is configured in the form settings or passed via
-        <code>_next</code> in the payload.
-      </p>
+  <p>
+    Slug is whatever you named the form when you created it. Redirect
+    URL is configured in the form settings or passed via
+    <code>_next</code> in the payload.
+  </p>
 
-      <h2>What to test after migrating</h2>
-      <p>Five things, in this order:</p>
-      <ol>
-        <li>
-          <strong>Submit each form once from a real browser.</strong>
-          Confirm the new service receives it and the notification
-          email arrives.
-        </li>
-        <li>
-          <strong>Check the Reply-To header on the notification.</strong>
-          It should be the submitter's email. If hitting "reply" emails
-          the service instead, that's a config issue.
-        </li>
-        <li>
-          <strong>Submit a deliberate spam payload</strong> (fill the
-          honeypot, or paste a known-spam URL). Confirm it gets
-          blocked or quarantined, not delivered.
-        </li>
-        <li>
-          <strong>Re-run any webhook integrations.</strong> Netlify
-          Forms' webhook payload shape is service-specific; your new
-          service's shape will differ. Update receivers.
-        </li>
-        <li>
-          <strong>Leave Netlify Forms enabled for a week</strong>
-          while DNS and CDN caches settle. Then disable.
-        </li>
-      </ol>
+  <h2 id="testing">What to test after migrating</h2>
+  <p>Five things, in this order:</p>
+  <ol>
+    <li>
+      <strong>Submit each form once from a real browser.</strong> Confirm
+      the new service receives it and the notification email arrives.
+    </li>
+    <li>
+      <strong>Check the Reply-To header on the notification.</strong> It
+      should be the submitter's email. If hitting "reply" emails the
+      service instead, that's a config issue.
+    </li>
+    <li>
+      <strong>Submit a deliberate spam payload</strong> (fill the
+      honeypot, or paste a known-spam URL). Confirm it gets blocked or
+      quarantined, not delivered.
+    </li>
+    <li>
+      <strong>Re-run any webhook integrations.</strong> Netlify Forms'
+      webhook payload shape is service-specific; your new service's
+      shape will differ. Update receivers.
+    </li>
+    <li>
+      <strong>Leave Netlify Forms enabled for a week</strong> while DNS
+      and CDN caches settle. Then disable.
+    </li>
+  </ol>
 
-      <h2>Things that quietly break</h2>
+  <h2 id="quietly-break">Things that quietly break</h2>
 
-      <h3>Your <code>netlify.toml</code> form settings</h3>
-      <p>
-        If you configured spam filtering or webhook destinations in
-        <code>netlify.toml</code>, those don't transfer. Reconfigure
-        in your new service's dashboard.
-      </p>
+  <h3>Your <code>netlify.toml</code> form settings</h3>
+  <p>
+    If you configured spam filtering or webhook destinations in
+    <code>netlify.toml</code>, those don't transfer. Reconfigure in your
+    new service's dashboard.
+  </p>
 
-      <h3>Form rendering during the Netlify build</h3>
-      <p>
-        Netlify's build inspected your HTML for
-        <code>data-netlify</code> attributes and registered forms at
-        deploy time. With that attribute gone, the build process
-        won't complain — but if you have a "form not found" message
-        cached in your generated output, clear the cache.
-      </p>
+  <h3>Form rendering during the Netlify build</h3>
+  <p>
+    Netlify's build inspected your HTML for <code>data-netlify</code>
+    attributes and registered forms at deploy time. With that attribute
+    gone, the build process won't complain — but if you have a "form not
+    found" message cached in your generated output, clear the cache.
+  </p>
 
-      <h3>JavaScript-rendered forms</h3>
-      <p>
-        Netlify Forms had a special path for client-side-rendered
-        forms (<code>netlify-honeypot</code>, <code>data-netlify-honeypot</code>).
-        Most alternatives don't need this — they detect honeypot
-        fields by name regardless of how the form was rendered.
-      </p>
+  <h3>JavaScript-rendered forms</h3>
+  <p>
+    Netlify Forms had a special path for client-side-rendered forms
+    (<code>netlify-honeypot</code>, <code>data-netlify-honeypot</code>).
+    Most alternatives don't need this — they detect honeypot fields by
+    name regardless of how the form was rendered.
+  </p>
 
-      <h3>Hidden form for static prerendering</h3>
-      <p>
-        If you used the Netlify trick of including a hidden HTML form
-        in your site so the build could detect it, you can delete that
-        hidden form. The new service registers your form when you
-        create it in the dashboard, not at build time.
-      </p>
+  <h3>Hidden form for static prerendering</h3>
+  <p>
+    If you used the Netlify trick of including a hidden HTML form in
+    your site so the build could detect it, you can delete that hidden
+    form. The new service registers your form when you create it in the
+    dashboard, not at build time.
+  </p>
 
-      <h2>FAQ</h2>
+  <h2 id="faq">FAQ</h2>
 
-      <h3>Will my Netlify Forms submissions transfer to the new service?</h3>
-      <p>
-        No. Historical submissions stay in Netlify. Export them as CSV
-        before migrating. The new service starts collecting from the
-        moment you re-point the form.
-      </p>
+  <h3>Will my Netlify Forms submissions transfer to the new service?</h3>
+  <p>
+    No. Historical submissions stay in Netlify. Export them as CSV
+    before migrating. The new service starts collecting from the moment
+    you re-point the form.
+  </p>
 
-      <h3>Can I keep using Netlify hosting and switch only the form backend?</h3>
-      <p>
-        Yes. The form-backend service is independent of where your
-        site is hosted. Many people stay on Netlify for hosting and
-        use a third-party service just for forms.
-      </p>
+  <h3>Can I keep using Netlify hosting and switch only the form backend?</h3>
+  <p>
+    Yes. The form-backend service is independent of where your site is
+    hosted. Many people stay on Netlify for hosting and use a
+    third-party service just for forms.
+  </p>
 
-      <h3>What about Netlify Functions that processed form submissions?</h3>
-      <p>
-        Most alternatives offer webhooks that fire on each submission —
-        point your Netlify Function at the webhook URL and you keep
-        your custom logic. Or move the function to a serverless
-        endpoint elsewhere.
-      </p>
+  <h3>What about Netlify Functions that processed form submissions?</h3>
+  <p>
+    Most alternatives offer webhooks that fire on each submission —
+    point your Netlify Function at the webhook URL and you keep your
+    custom logic. Or move the function to a serverless endpoint
+    elsewhere.
+  </p>
 
-      <h3>Which Netlify Forms alternative is cheapest at 10,000 submissions/month?</h3>
-      <p>
-        Web3Forms ($10/mo with dashboard), Formcarry ($15-30/mo
-        depending on plan), Form4Dev ($29/mo Team plan), Basin
-        (~$25/mo), Formspree ($35-50/mo). Verify on current pricing
-        pages — these change.
-      </p>
+  <h3>Which Netlify Forms alternative is cheapest at 10,000 submissions/month?</h3>
+  <p>
+    Web3Forms ($10/mo with dashboard), Formcarry ($15-30/mo depending on
+    plan), Form4Dev ($29/mo Team plan), Basin (~$25/mo), Formspree
+    ($35-50/mo). Verify on current pricing pages — these change.
+  </p>
 
-      <h3>Is there an open-source self-hosted Netlify Forms alternative?</h3>
-      <p>
-        FormGrid is the most active open-source form backend. You run
-        it on your own infrastructure. None of the hosted services
-        offer first-party self-hosting today.
-      </p>
+  <h3>Is there an open-source self-hosted Netlify Forms alternative?</h3>
+  <p>
+    FormGrid is the most active open-source form backend. You run it on
+    your own infrastructure. None of the hosted services offer
+    first-party self-hosting today.
+  </p>
 
-      <h3>Which alternative handles AI agents submitting forms?</h3>
-      <p>
-        Of the services here, Form4Dev is built specifically
-        for agent submission as a first-class case. Deeper
-        writeup at
-        <a href="/blog/form-backend-for-ai-agents">form
-        backends for AI agents</a>.
-      </p>
+  <h3>Which alternative handles AI agents submitting forms?</h3>
+  <p>
+    Of the services here, Form4Dev is built specifically for agent
+    submission as a first-class case. Deeper writeup at
+    <a href="/blog/form-backend-for-ai-agents">form backends for AI
+    agents</a>.
+  </p>
 
-      <h2>The takeaway</h2>
-      <p>
-        Netlify Forms was a great default while the pricing was
-        predictable. The credit-based model made it less so, and a
-        dedicated form backend is now usually the simpler answer.
-        Migration is an afternoon's work: export, swap the action URL,
-        test, ship. The alternatives above all do the job; the right
-        one depends on what you value past "it works."
-      </p>
-      <p>
-        If you want the cleanest path for forms that also accept
-        submissions from scripts and AI agents,
-        <a href="https://form4dev.com">Form4Dev</a> is built around
-        that case.
-        <a href={`${APP}/register`} class="plausible-event-name=Signup+CTA plausible-event-location=blog-netlify-alts plausible-event-plan=free">
-          Start free
-        </a>
-        — 100 submissions/month on free, all features unlocked, no
-        credit card.
-      </p>
-
-      <p class="muted-note last-updated">
-        Last updated {fmtDate(updatedAt)}. Migration patterns and
-        pricing change — spotted something out of date? Email
-        <a href="mailto:hello@form4dev.com">hello@form4dev.com</a>.
-      </p>
-    </section>
-  </article>
-</Base>
-
-<style>
-  .post { max-width: 720px; padding: 56px 28px 96px; }
-  .post-head { margin-bottom: 40px; }
-  .back { display: inline-block; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 24px; }
-  .back:hover { color: var(--ink); }
-  .post-meta { font-size: 12px; color: var(--muted-2); display: flex; align-items: center; gap: 8px; margin-bottom: 18px; }
-  .dot { opacity: 0.5; }
-  .post-head h1 { font-size: 38px; margin: 0 0 16px; letter-spacing: -0.02em; line-height: 1.15; }
-  .lede { font-size: 18px; color: var(--muted); line-height: 1.6; margin: 0; }
-  .body h2 { font-size: 24px; margin: 48px 0 14px; letter-spacing: -0.01em; line-height: 1.3; }
-  .body h3 { font-size: 18px; margin: 32px 0 10px; letter-spacing: -0.005em; color: var(--ink); }
-  .body p { line-height: 1.75; margin: 0 0 14px; font-size: 16px; color: var(--ink); }
-  .body ul, .body ol { line-height: 1.8; padding-left: 22px; margin: 0 0 16px; }
-  .body li { margin-bottom: 6px; }
-  .body code { background: var(--bg-sunken); border: 1px solid var(--line); padding: 0 5px; border-radius: 4px; font-family: var(--font-mono); font-size: 0.88em; }
-  .body a { color: var(--ink); border-bottom: 1px solid var(--muted-3); transition: border-color 0.12s ease, color 0.12s ease; }
-  .body a:hover { color: var(--accent); border-color: var(--accent); }
-  .muted-note { color: var(--muted); font-size: 14px; }
-  .last-updated { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 13px; }
-  .code { background: var(--code-bg); color: var(--code-fg); border-radius: 12px; padding: 18px 22px; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.7; overflow-x: auto; white-space: pre; margin: 8px 0 18px; }
-  .code .s { color: var(--code-str); }
-  .code .c { color: var(--muted); font-style: italic; }
-  .code .prompt { color: var(--muted-2); user-select: none; }
-</style>
+  <h2 id="takeaway">The takeaway</h2>
+  <p>
+    Netlify Forms was a great default while the pricing was predictable.
+    The credit-based model made it less so, and a dedicated form backend
+    is now usually the simpler answer. Migration is an afternoon's work:
+    export, swap the action URL, test, ship. The alternatives above all
+    do the job; the right one depends on what you value past "it works."
+  </p>
+  <p>
+    If you want the cleanest path for forms that also accept submissions
+    from scripts and AI agents,
+    <a href="https://form4dev.com">Form4Dev</a> is built around that
+    case.
+    <a href={`${APP}/register`} class="plausible-event-name=Signup+CTA plausible-event-location=blog-netlify-alts plausible-event-plan=free">
+      Start free
+    </a>
+    — 100 submissions/month on free, all features unlocked, no credit
+    card.
+  </p>
+</BlogPost>
