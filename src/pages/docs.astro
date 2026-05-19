@@ -120,7 +120,7 @@ const sections = [
       <p>Per-form, toggle <code>captchaRequired</code> in the dashboard. The submit endpoint accepts the token via the <code>X-Captcha-Token</code> header or the <code>_captcha</code> field. Supported providers: Cloudflare Turnstile, reCAPTCHA v2, reCAPTCHA v3, hCaptcha. The provider is configured once by the platform admin.</p>
 
       <h2 id="origins">Allowed origins</h2>
-      <p>Set <code>allowedOrigins</code> on the form (comma-separated list, e.g. <code>https://example.com,https://www.example.com</code>) to lock the endpoint to those origins. Requests from anywhere else get <code>403 ORIGIN_NOT_ALLOWED</code>. Bearer-authed agent requests bypass this check (agents don't have a browser Origin).</p>
+      <p>Set <code>allowedOrigins</code> on the form (comma-separated list, e.g. <code>https://example.com,https://www.example.com</code>) to lock the endpoint to those origins. Browser requests from other origins get <code>403 ORIGIN_NOT_ALLOWED</code>. Authorized agent requests follow a different origin model — see <a href="/docs/agents">/docs/agents</a>.</p>
 
       <h2 id="validation">Schema validation</h2>
       <p>Every field you add in the form builder has a type and required/optional flag. The submit endpoint validates the payload before saving — missing required fields, wrong types, or out-of-range values come back as <code>400 VALIDATION_ERROR</code> with <code>error.fieldErrors</code> mapping each field id to a list of messages.</p>
@@ -199,17 +199,15 @@ const sections = [
         <code>429 RATE_LIMIT_EXCEEDED</code> with <code>retryAfter</code>.
       </p>
 
-      <h2 id="agents">AI agents (Bearer)</h2>
+      <h2 id="agents">AI agents</h2>
       <p>
-        Form4Dev is built for AI agents as a first-class client. Issue an
-        agent-type Bearer token (tick the agent checkbox on token create),
-        and Bearer-authed submissions are stamped with
-        <code>submitted_via='agent:&lt;tokenId&gt;'</code>, bypass captcha + per-IP
-        rate limit + honeypot + spam-pattern checks, and show as 🤖 in the inbox.
-      </p>
-      <p>
-        Cross-tenant guard: tokens can only submit to forms their owner owns.
-        Full walkthrough at <a href="/docs/agents">/docs/agents</a>.
+        Form4Dev treats AI agents as first-class clients. Authorize an
+        agent in Dashboard → Settings → API tokens, give it a label,
+        and your agent can submit cleanly while bots stay blocked.
+        Submissions are tagged in the inbox with the agent's label.
+        Each agent is scoped to your account — there's no path to use
+        it against another account's forms. Full walkthrough at
+        <a href="/docs/agents">/docs/agents</a>.
       </p>
 
       <h2 id="smtp">Custom SMTP</h2>
@@ -217,8 +215,9 @@ const sections = [
         Per organization, configure your own SMTP server in
         <a href={`${APP}/dashboard/orgs`}>Dashboard → Orgs</a>. Submission
         notifications, autoresponders, and digests route through your SMTP —
-        emails arrive from your domain. Passwords are encrypted at rest with
-        AES-256-GCM; failures fall back to the platform sender transparently.
+        emails arrive from your domain. Credentials are encrypted at rest;
+        if your SMTP server fails, we transparently fall back to the
+        platform sender so notifications never silently drop.
         Full walkthrough at <a href="/docs/smtp">/docs/smtp</a>.
       </p>
 
@@ -236,10 +235,10 @@ const sections = [
       <p>
         The full machine-readable contract lives at
         <a href={`${APP}/api/openapi.json`}>{APP.replace('https://','')}/api/openapi.json</a>
-        — public, CORS-open, cached 1h + SWR 24h. 23 paths, 13 reusable schemas,
-        9 tags. Both <code>bearerAuth</code> and <code>sessionCookie</code> security
-        schemes are documented. The submit endpoint is tagged <code>agent</code>
-        and documents the Bearer-bypasses-spam contract explicitly.
+        — public and CORS-open so agent frameworks can consume it
+        directly. Both API token and session authentication schemes are
+        documented, and every endpoint declares its error shape and
+        required scopes.
       </p>
 
       <h2 id="errors">Error envelope</h2>

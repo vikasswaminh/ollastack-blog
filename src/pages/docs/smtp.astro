@@ -27,7 +27,7 @@ const sections = [
     </aside>
 
     <article class="content">
-      <span class="chip mono"><span class="dot"></span>tenant SMTP</span>
+      <span class="chip mono"><span class="dot"></span>custom SMTP</span>
       <h1 class="display">Send notifications from your own domain.</h1>
       <p class="lede">
         Hook up your SMTP server in <a href={`${APP}/dashboard/orgs`}>Dashboard → Orgs → Settings</a>.
@@ -52,7 +52,7 @@ const sections = [
           <tr><td><code>host</code></td><td><code>smtp.sendgrid.net</code>, <code>smtp.mailgun.org</code>, <code>smtp.postmarkapp.com</code>, etc.</td></tr>
           <tr><td><code>port</code></td><td><code>587</code> (STARTTLS) or <code>465</code> (TLS)</td></tr>
           <tr><td><code>username</code></td><td>Provider-issued SMTP user (often <code>apikey</code>).</td></tr>
-          <tr><td><code>password</code></td><td>SMTP password or API key. Encrypted with AES-256-GCM at rest.</td></tr>
+          <tr><td><code>password</code></td><td>SMTP password or API key. Encrypted at rest.</td></tr>
           <tr><td><code>fromEmail</code></td><td>The <code>From:</code> address. Must be on a domain you've authorized in the provider.</td></tr>
           <tr><td><code>fromName</code></td><td>Optional display name.</td></tr>
         </tbody>
@@ -70,24 +70,20 @@ const sections = [
 <span class="ok">{`{"success": true, "data": {"ok": true}}`}</span></pre>
 
       <h2 id="fallback">Fallback behavior</h2>
-      <p>If a tenant send fails for any reason, the dispatcher transparently retries through the platform default (Resend or platform SMTP). You don't lose a notification because your SMTP provider had a blip. The email_logs row records which provider actually delivered:</p>
-      <ul>
-        <li><code>provider = 'tenant'</code> — sent via your SMTP</li>
-        <li><code>provider = 'resend'</code> or <code>'smtp'</code> — sent via platform default (likely a tenant fallback or your org has no SMTP configured)</li>
-      </ul>
-      <p>When the daily health check marks the config as unhealthy, the dispatcher stops attempting tenant SMTP until it recovers — saving the latency cost of a failing TCP per send.</p>
+      <p>If a send through your SMTP fails for any reason, we transparently retry through our platform sender so the notification still reaches you. A delivery record on every message tells you which provider actually delivered it — your SMTP, or the platform fallback.</p>
+      <p>When a daily health check marks your SMTP config as unhealthy, we stop attempting it until it recovers — saving the latency cost of a failing connection per send.</p>
 
-      <h2 id="encryption">Encryption at rest</h2>
+      <h2 id="encryption">Credential handling</h2>
       <p>
-        Passwords are encrypted with AES-256-GCM. The master key (<code>SMTP_ENC_KEY</code>)
-        lives in env, not the database — leaking a DB backup alone won't reveal
-        any tenant credentials. Ciphertext format is <code>iv.tag.ct</code>
-        (base64 triple) so we can rotate IV per record without rotating the key.
+        SMTP passwords are encrypted at rest. The encryption key is
+        managed separately from the encrypted credentials, so a
+        database backup alone is not enough to recover any tenant's
+        SMTP password.
       </p>
 
-      <h2 id="audit">Audit per-send</h2>
+      <h2 id="audit">Per-send visibility</h2>
       <p>
-        Every send writes a row to <code>email_logs</code> with the <code>provider</code> column populated. From <a href={`${APP}/admin/email-logs`}>admin → email logs</a> you can filter by provider to see which messages went through tenant SMTP vs. fallback.
+        Every notification is logged with the provider that delivered it. You can filter the inbox by delivery provider to see which messages went through your SMTP vs. the platform fallback.
       </p>
 
       <div class="cta-row">

@@ -74,19 +74,19 @@ const faqs = [
   },
   {
     q: "Can AI agents submit to my forms?",
-    a: "Yes. Issue a Bearer token in Dashboard → Settings → API tokens, tick \"this token is for an AI agent\", give it a label. Agent-authed submissions are stamped in the inbox (🤖 chip) and skip captcha + per-IP rate limit (per-form rate limit and your monthly quota still apply). See /docs/agents.",
+    a: "Yes. Authorize an agent in Dashboard → Settings → API tokens, give it a label, and your agent can submit cleanly while bots stay blocked. Submissions are tagged in the inbox with the agent's label, and your per-form and monthly limits still apply. See /docs/agents.",
   },
   {
     q: "Can I bring my own SMTP?",
-    a: "Yes, on every paid tier (and Free too). Configure host/port/credentials per organization; passwords are encrypted with AES-256-GCM at rest. If your SMTP server fails, we transparently fall back to the platform sender so notifications never silently drop. See /docs/smtp.",
+    a: "Yes, on every paid tier (and Free too). Configure your SMTP server per organization; credentials are encrypted at rest. If your SMTP server fails, we transparently fall back to the platform sender so notifications never silently drop. See /docs/smtp.",
   },
   {
     q: "Is the API stable? Can I script against it?",
-    a: "Yes. The full OpenAPI 3.1 spec is public at /api/openapi.json — agents can fetch it before they have a token. Every endpoint documents its error envelope and required scopes.",
+    a: "Yes. The full OpenAPI 3.1 spec is published at /api/openapi.json — agent frameworks can consume it directly. Every endpoint documents its error shape and required scopes.",
   },
   {
     q: "Where do my submissions live?",
-    a: "Today: a single Postgres instance behind login.form4dev.com. We're transparent about not yet offering multi-region or guaranteed data residency — talk to us if that's a blocker.",
+    a: "On a hosted database under our control. We're transparent about not yet offering multi-region or guaranteed data residency — talk to us if that's a blocker.",
   },
   {
     q: "How do refunds work?",

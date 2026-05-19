@@ -77,14 +77,14 @@ const APP = "https://login.form4dev.com";
   );
 {`}`}</pre>
 
-        <pre class="code-pane hidden" data-lang="bearer"><span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.form4dev.com/api/submit/<span class="hl">contact</span> \
-    -H <span class="str">"Authorization: Bearer fmd_…"</span> \
+        <pre class="code-pane hidden" data-lang="bearer"><span class="prompt">$</span> <span class="cmd">curl</span> -X POST &lt;your-form-endpoint&gt; \
+    -H <span class="str">"Authorization: Bearer &lt;your-agent-token&gt;"</span> \
     -H <span class="str">"Content-Type: application/json"</span> \
     -d <span class="str">{`'{"name":"Ada","message":"hi"}'`}</span>
 
 <span class="ok">{`{"success": true, "id": "sub_8f2…"}`}</span>
-<span class="muted"># submission stamped 🤖 agent — skips captcha + spam pipeline
-# token must belong to the form's owner (cross-tenant guard)</span></pre>
+<span class="muted"># tagged in the inbox with the agent's label
+# agents are scoped to your account only</span></pre>
       </div>
 
       <p class="hero-note mono">
