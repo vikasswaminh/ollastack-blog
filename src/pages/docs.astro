@@ -9,6 +9,7 @@ const sections = [
   { id: "fetch", title: "fetch / curl" },
   { id: "hosted", title: "Hosted form page" },
   { id: "magic-fields", title: "Magic fields" },
+  { id: "recipients", title: "Notification recipients" },
   { id: "captcha", title: "CAPTCHA" },
   { id: "origins", title: "Allowed origins" },
   { id: "validation", title: "Schema validation" },
@@ -114,6 +115,30 @@ const sections = [
       </table>
       <p class="muted-note">
         <code>_cc</code> / <code>_bcc</code> are <strong>not</strong> read from public payloads — that would let anonymous senders use your form as an email relay. Configure default CC/BCC in the form settings instead.
+      </p>
+
+      <h2 id="recipients">Notification recipients</h2>
+      <p>
+        Each form sends its submission notifications to a set of recipient
+        addresses — a primary <code>notifyEmail</code> plus optional CC and
+        BCC, configured in the form's settings. Two rules apply:
+      </p>
+      <table>
+        <thead><tr><th>plan</th><th>max recipients (To + CC + BCC combined)</th></tr></thead>
+        <tbody>
+          <tr><td>Free</td><td>2</td></tr>
+          <tr><td>Paid</td><td>4</td></tr>
+        </tbody>
+      </table>
+      <p>
+        <strong>Verified-email requirement.</strong> A form may only send
+        notifications to an address that is verified on the account that owns
+        the form. You must verify your own account email before you can set
+        any notification recipient, and every recipient must be that verified
+        address. This prevents a form from being pointed at a stranger's
+        inbox (a mail-bomb vector) and protects sender deliverability.
+        Setting an unverified or third-party address returns
+        <code>400 VALIDATION_ERROR</code>.
       </p>
 
       <h2 id="captcha">CAPTCHA</h2>
