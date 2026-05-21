@@ -18,6 +18,8 @@ const staticPages: Entry[] = [
   { url: "/docs/agents", lastmod: TODAY, changefreq: "monthly", priority: "0.7" },
   { url: "/docs/smtp",   lastmod: TODAY, changefreq: "monthly", priority: "0.7" },
   { url: "/blog",     lastmod: TODAY, changefreq: "weekly",  priority: "0.8" },
+  { url: "/contact",  lastmod: TODAY, changefreq: "monthly", priority: "0.6" },
+  { url: "/careers",  lastmod: TODAY, changefreq: "weekly",  priority: "0.6" },
 ];
 
 const blogEntries: Entry[] = posts.map((p) => ({

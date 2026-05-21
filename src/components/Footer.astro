@@ -25,12 +25,12 @@ const groups: { title: string; items: FooterLink[] }[] = [
     ],
   },
   {
-    title: "Tenant",
+    title: "Company",
     items: [
+      { label: "Contact", href: "/contact" },
+      { label: "Careers", href: "/careers" },
       { label: "Custom SMTP", href: "/docs/smtp" },
-      { label: "API tokens + audit", href: "/docs#tokens" },
-      { label: "Rate limits", href: "/docs#limits" },
-      { label: "Error envelope", href: "/docs#errors" },
+      { label: "Blog", href: "/blog" },
     ],
   },
   {
@@ -39,7 +39,7 @@ const groups: { title: string; items: FooterLink[] }[] = [
       { label: "Sign in", href: `${APP}/login` },
       { label: "Start free", href: `${APP}/register` },
       { label: "Dashboard", href: `${APP}/dashboard` },
-      { label: "Contact", href: "mailto:hello@form4dev.com" },
+      { label: "Contact us", href: "/contact" },
     ],
   },
 ];
