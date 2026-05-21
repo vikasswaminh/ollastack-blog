@@ -117,7 +117,37 @@ const sections = [
       </p>
 
       <h2 id="captcha">CAPTCHA</h2>
-      <p>Per-form, toggle <code>captchaRequired</code> in the dashboard. The submit endpoint accepts the token via the <code>X-Captcha-Token</code> header or the <code>_captcha</code> field. Supported providers: Cloudflare Turnstile, reCAPTCHA v2, reCAPTCHA v3, hCaptcha. The provider is configured once by the platform admin.</p>
+      <p>
+        CAPTCHA protection has two layers. The <strong>provider</strong> is set
+        once for the whole platform (Cloudflare Turnstile is the active
+        provider). The <strong>per-form switch</strong> — <code>captchaRequired</code>,
+        toggled in the dashboard — decides whether a given form actually
+        enforces it. With the switch off, a form skips CAPTCHA entirely even
+        though a provider is configured.
+      </p>
+      <p>
+        When <code>captchaRequired</code> is on, every browser submission must
+        carry a valid CAPTCHA token or it's rejected with
+        <code>403 AUTHORIZATION_ERROR</code>. Add the Turnstile widget to your
+        form and pass its token via the <code>X-Captcha-Token</code> header or a
+        <code>_captcha</code> field in the payload.
+      </p>
+      <pre class="code"><span class="t">&lt;form</span> <span class="a">action</span>=<span class="s">"https://login.form4dev.com/api/submit/contact"</span> <span class="a">method</span>=<span class="s">"POST"</span><span class="t">&gt;</span>
+  <span class="t">&lt;input</span> <span class="a">name</span>=<span class="s">"email"</span> <span class="a">type</span>=<span class="s">"email"</span> <span class="a">required</span><span class="t">&gt;</span>
+  <span class="t">&lt;textarea</span> <span class="a">name</span>=<span class="s">"message"</span> <span class="a">required</span><span class="t">&gt;&lt;/textarea&gt;</span>
+  <span class="p">&lt;!-- Turnstile renders a hidden input named cf-turnstile-response --&gt;</span>
+  <span class="t">&lt;div</span> <span class="a">class</span>=<span class="s">"cf-turnstile"</span> <span class="a">data-sitekey</span>=<span class="s">"0x4AAAAAADT1xrK0ChtVDEbe"</span><span class="t">&gt;&lt;/div&gt;</span>
+  <span class="t">&lt;button&gt;</span>Send<span class="t">&lt;/button&gt;</span>
+<span class="t">&lt;/form&gt;</span>
+<span class="t">&lt;script</span> <span class="a">src</span>=<span class="s">"https://challenges.cloudflare.com/turnstile/v0/api.js"</span> <span class="a">async</span> <span class="a">defer</span><span class="t">&gt;&lt;/script&gt;</span></pre>
+      <p class="muted-note">
+        Turnstile writes a hidden <code>cf-turnstile-response</code> input into
+        the form; on a normal <code>POST</code> it's submitted automatically and
+        read as the <code>_captcha</code> token — no extra wiring needed. For
+        <code>fetch</code>/JSON submits, read the token yourself and send it in
+        the <code>X-Captcha-Token</code> header. The site key above is the
+        public Form4Dev Turnstile key; the secret key never leaves the server.
+      </p>
 
       <h2 id="origins">Allowed origins</h2>
       <p>Set <code>allowedOrigins</code> on the form (comma-separated list, e.g. <code>https://example.com,https://www.example.com</code>) to lock the endpoint to those origins. Browser requests from other origins get <code>403 ORIGIN_NOT_ALLOWED</code>. Authorized agent requests follow a different origin model — see <a href="/docs/agents">/docs/agents</a>.</p>
