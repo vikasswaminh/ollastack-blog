@@ -4,6 +4,7 @@ const APP = "https://login.form4dev.com";
 
 const sections = [
   { id: "why", title: "Why agents?" },
+  { id: "ownership", title: "Ownership model" },
   { id: "create-token", title: "Create an agent token" },
   { id: "submit", title: "Submit on a user's behalf" },
   { id: "behaviors", title: "How agent traffic is handled" },
@@ -49,6 +50,33 @@ const sections = [
         Form4Dev recognises authorised agents as trusted callers, so
         real automation goes through cleanly while anonymous bots stay
         blocked.
+      </p>
+
+      <h2 id="ownership">Ownership model — a human owns, an agent operates</h2>
+      <p>
+        Form4Dev is deliberate about this: <strong>an agent never owns an
+        account.</strong> A human signs up, owns the account, and is
+        responsible for billing. That human then mints a scoped API token
+        and hands it to the agent. The agent operates <em>within</em> the
+        account the human owns — it cannot create one.
+      </p>
+      <p>
+        This is enforced, not just convention. Account registration is
+        protected by a human-verification challenge, so an autonomous
+        agent cannot self-onboard, open an account, or start a
+        subscription. The signup, the plan, and the bill are always a
+        human's. If you are building an agent, plan for this: a person
+        completes signup once, then provisions the token your agent uses.
+      </p>
+      <ul>
+        <li><strong>Human:</strong> registers, owns the account, pays, sets the plan, creates and revokes tokens.</li>
+        <li><strong>Agent:</strong> receives a token and acts within that account — create forms, submit, read, export — nothing account-level.</li>
+      </ul>
+      <p class="muted-note">
+        Tokens are also <strong>scoped</strong>. Give an agent only what
+        it needs: a <code>submissions:read</code> token can read and
+        export but cannot create or delete forms. See
+        <a href="/docs#tokens">API tokens</a>.
       </p>
 
       <h2 id="create-token">1. Authorize an agent</h2>
