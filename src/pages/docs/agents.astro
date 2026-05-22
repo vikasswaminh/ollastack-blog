@@ -7,6 +7,7 @@ const sections = [
   { id: "ownership", title: "Ownership model" },
   { id: "create-token", title: "Create an agent token" },
   { id: "submit", title: "Submit on a user's behalf" },
+  { id: "configure", title: "Configure forms via API" },
   { id: "behaviors", title: "How agent traffic is handled" },
   { id: "guards", title: "Account scoping" },
   { id: "audit", title: "Audit trail" },
@@ -99,6 +100,59 @@ const sections = [
      -H <span class="s">"Authorization: Bearer &lt;your-agent-token&gt;"</span> \
      -H <span class="s">"Content-Type: application/json"</span> \
      -d <span class="s">'{`{"name":"Ada","message":"hi from the agent"}`}'</span></pre>
+
+      <h2 id="configure">Configure forms via API</h2>
+      <p>
+        An agent can do everything the dashboard does — create a form,
+        define its fields, and set every option (recipients, subject
+        template, autoresponder, CAPTCHA, allowed origins, file uploads,
+        payments). A complete form is three calls.
+      </p>
+
+      <p><strong>1. Create the form</strong> — returns its <code>id</code> and <code>endpointSlug</code>.</p>
+      <pre class="code"><span class="prompt">$</span> <span class="k">curl</span> -X POST &lt;app&gt;/api/forms \
+     -H <span class="s">"Authorization: Bearer &lt;token&gt;"</span> -H <span class="s">"Content-Type: application/json"</span> \
+     -d <span class="s">'{`{"name":"Internship Enquiry"}`}'</span></pre>
+
+      <p><strong>2. Define the fields</strong> — <code>PATCH /api/forms/&#123;id&#125;/builder</code>. This is the ONLY endpoint that sets form fields; sending <code>schemaJson</code> to the settings endpoint is rejected.</p>
+      <pre class="code"><span class="k">curl</span> -X PATCH &lt;app&gt;/api/forms/&lt;id&gt;/builder \
+     -H <span class="s">"Authorization: Bearer &lt;token&gt;"</span> -H <span class="s">"Content-Type: application/json"</span> \
+     -d <span class="s">'{`{"schema":[
+       {"id":"name","type":"text","label":"Name","required":true},
+       {"id":"email","type":"email","label":"Email","required":true}
+     ]}`}'</span></pre>
+
+      <p><strong>3. Set every other option</strong> — <code>PATCH /api/forms/&#123;id&#125;</code>. All fields optional; one call can set any combination.</p>
+      <pre class="code"><span class="k">curl</span> -X PATCH &lt;app&gt;/api/forms/&lt;id&gt; \
+     -H <span class="s">"Authorization: Bearer &lt;token&gt;"</span> -H <span class="s">"Content-Type: application/json"</span> \
+     -d <span class="s">'{`{
+       "notifyEmails":["owner@acme.com"],
+       "ccEmails":["team@acme.com"],
+       "emailSubjectTemplate":"New lead: {{name}}",
+       "autoresponderEnabled":true,
+       "autoresponderSubject":"Thanks, {{name}}!",
+       "autoresponderBodyHtml":"<p>We got your enquiry.</p>",
+       "captchaRequired":true,
+       "allowedOrigins":["https://acme.com"],
+       "successRedirectUrl":"https://acme.com/thanks"
+     }`}'</span></pre>
+
+      <p>
+        Every dashboard control maps to one field on
+        <code>PATCH /api/forms/&#123;id&#125;</code> — recipients, retention,
+        file-upload limits, the full autoresponder, CAPTCHA, allowed
+        origins, and the Razorpay payment block. The
+        <a href={`${APP}/api/openapi.json`}>OpenAPI spec</a>'s
+        <code>UpdateForm</code> schema lists all of them with types and
+        limits. Integrations (Slack, Discord, Telegram, Mailchimp) and
+        webhooks each have their own <code>POST</code> endpoint under
+        <code>/api/forms/&#123;id&#125;</code>.
+      </p>
+      <p class="muted-note">
+        Token scopes apply: configuring forms needs a
+        <code>forms:write</code> token. A <code>forms:read</code> token
+        can read settings but not change them.
+      </p>
 
       <h2 id="behaviors">How agent traffic is handled</h2>
       <p>
