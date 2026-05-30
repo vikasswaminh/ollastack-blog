@@ -10,8 +10,8 @@ interface Props {
   current?: string;
 }
 const {
-  title = "Form4Dev — forms as endpoints, for developers",
-  description = "Form4Dev turns any HTML form into a real backend in 30 seconds. Webhooks, spam filtering, exports, payments — all on one endpoint.",
+  title = "Form4Dev — AI-first headless forms for developers and agents",
+  description = "AI-first headless forms. One API endpoint, an OpenAPI spec your agent reads itself, scoped tokens with per-call audit. From sign-up to first agent submission in two minutes.",
   current,
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://form4dev.com").toString();
@@ -35,7 +35,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://form4dev.co
   <meta name="twitter:description" content={description} />
   <meta name="theme-color" content="#fafaf7" />
   <title>{title}</title>
-  <!-- Plausible Analytics — self-hosted at analytics.networkershome.com.
+  <!-- Plausible Analytics endpoint at analytics.networkershome.com.
        data-domain MUST match the site in Plausible (keying field).
        Using the tagged-events + outbound-links variant because:
        - register CTAs are outbound (login.form4dev.com) — outbound-links

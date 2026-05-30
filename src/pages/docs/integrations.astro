@@ -100,7 +100,7 @@ const sections = [
       <p>
         Most no-code workflow tools (Zapier, Make, Activepieces) don't
         check signatures — they trust the URL is hard to guess. Fine for
-        most cases. If you're running n8n self-hosted or a custom
+        most cases. If you're running n8n on your own server or a custom
         endpoint and want HMAC verification, set a secret on the webhook
         in Form4Dev and verify it like this:
       </p>
@@ -167,7 +167,7 @@ const sections = [
         <li>Add an action node — <strong>Gmail</strong>, <strong>Notion</strong>, <strong>Airtable</strong>, <strong>HubSpot</strong>, anything in n8n's catalogue. Reference fields as <code>{`{{$json.data.email}}`}</code> etc.</li>
         <li>Save and activate.</li>
       </ol>
-      <p class="muted-note">n8n self-hosted is the right pick if you want signature verification, full payload control, and no per-execution metering. Cloud-hosted n8n works identically.</p>
+      <p class="muted-note">n8n on your own server is the right pick if you want signature verification, full payload control, and no per-execution metering. Cloud-hosted n8n works identically.</p>
 
       <h2 id="activepieces">Recipe: Form4Dev → Activepieces → anything</h2>
       <ol>
@@ -178,7 +178,7 @@ const sections = [
         <li>Add the next step — <strong>Gmail</strong>, <strong>Google Sheets</strong>, <strong>Slack</strong>, <strong>HubSpot</strong>, etc. Map fields from <code>trigger.body.data.&lt;field&gt;</code>.</li>
         <li>Publish.</li>
       </ol>
-      <p class="muted-note">Activepieces is MIT-licensed and self-hostable — useful if you want everything (including the workflow engine) inside your own infrastructure.</p>
+      <p class="muted-note">Activepieces can also run inside your own infrastructure — useful if you want the workflow engine on your servers.</p>
 
       <h2 id="test">Test before you wire it</h2>
       <p>

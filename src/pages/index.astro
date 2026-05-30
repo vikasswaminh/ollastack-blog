@@ -13,18 +13,18 @@ const APP = "https://login.form4dev.com";
     <div class="container hero-inner">
       <span class="chip mono">
         <span class="dot"></span>
-        forms · for developers · and AI agents
+        AI-FIRST · HEADLESS FORMS
       </span>
 
       <h1 class="display headline">
-        The <span class="brand-red-text">form backend</span><br/>
-        for humans and agents.
+        Headless forms,<br/>
+        built for your <span class="brand-red-text">AI agent</span>.
       </h1>
 
       <p class="subhead">
-        Point your HTML at our API or hit it from a script. We receive,
-        validate, filter spam, fire webhooks, and notify you by email.
-        No backend code on your side.
+        One API endpoint. An OpenAPI spec your agent reads itself.
+        Scoped tokens with per-call audit. Your agent submits, reads,
+        and exports — without fighting a spam pipeline built for humans.
       </p>
 
       <div class="hero-ctas">
@@ -40,16 +40,25 @@ const APP = "https://login.form4dev.com";
       <!-- Tabbed code sample — Daytona pattern -->
       <div class="code-tabs">
         <div class="tabs-bar">
-          <button class="tab active" data-lang="curl">cURL</button>
+          <button class="tab active" data-lang="bearer">Agent (Bearer) 🤖</button>
+          <button class="tab" data-lang="curl">cURL</button>
           <button class="tab" data-lang="js">fetch</button>
           <button class="tab" data-lang="html">HTML</button>
           <button class="tab" data-lang="react">React</button>
-          <button class="tab" data-lang="bearer">Agent (Bearer) 🤖</button>
           <span class="tabs-spacer"></span>
-          <span class="tabs-meta mono">$ ship a form in 30 seconds</span>
+          <span class="tabs-meta mono">$ ship an agent in 2 minutes</span>
         </div>
 
-        <pre class="code-pane" data-lang="curl"><span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.form4dev.com/api/submit/<span class="hl">contact</span> \
+        <pre class="code-pane" data-lang="bearer"><span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.form4dev.com/api/submit/<span class="hl">contact</span> \
+    -H <span class="str">"Authorization: Bearer fmd_&lt;your-agent-token&gt;"</span> \
+    -H <span class="str">"Content-Type: application/json"</span> \
+    -d <span class="str">{`'{"name":"Ada","message":"hi"}'`}</span>
+
+<span class="ok">{`{"success": true, "id": "sub_8f2…"}`}</span>
+<span class="muted"># tagged in the inbox with the agent's label
+# every call recorded in the audit log</span></pre>
+
+        <pre class="code-pane hidden" data-lang="curl"><span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.form4dev.com/api/submit/<span class="hl">contact</span> \
     -H <span class="str">"Content-Type: application/json"</span> \
     -d <span class="str">{`'{"name":"Ada","message":"hi"}'`}</span>
 
@@ -76,19 +85,10 @@ const APP = "https://login.form4dev.com";
     <span class="str">{`<form onSubmit={handleSubmit}>...</form>`}</span>
   );
 {`}`}</pre>
-
-        <pre class="code-pane hidden" data-lang="bearer"><span class="prompt">$</span> <span class="cmd">curl</span> -X POST &lt;your-form-endpoint&gt; \
-    -H <span class="str">"Authorization: Bearer &lt;your-agent-token&gt;"</span> \
-    -H <span class="str">"Content-Type: application/json"</span> \
-    -d <span class="str">{`'{"name":"Ada","message":"hi"}'`}</span>
-
-<span class="ok">{`{"success": true, "id": "sub_8f2…"}`}</span>
-<span class="muted"># tagged in the inbox with the agent's label
-# agents are scoped to your account only</span></pre>
       </div>
 
       <p class="hero-note mono">
-        Or use a Bearer token and submit as an agent — <a href="/docs/agents">/docs/agents</a>.
+        Start with the <a href="/docs/agents">agent quickstart</a> — token mint, first submission, audit log, all under two minutes.
       </p>
       <p class="hero-note mono">
         Connects to Gmail, Sheets, Notion, Slack, HubSpot — and 1,000+ more via Zapier, Make, n8n, Activepieces — <a href="/docs/integrations">/docs/integrations</a>.
@@ -97,53 +97,51 @@ const APP = "https://login.form4dev.com";
   </section>
 
   <!-- =============================================================
-       § 1 — three paths in, one inbox out
+       § 1 — Two-minute onboarding for your agent
        ============================================================= -->
   <section class="paths">
     <div class="container">
       <div class="section-head">
-        <span class="eyebrow">/ how it works</span>
+        <span class="eyebrow">/ two-minute onboarding</span>
         <h2 class="display section-title">
-          Built for the two ways forms get submitted.
+          From API key to your first agent submission in two minutes.
         </h2>
         <p class="section-sub">
-          Humans submit through a browser. Bots submit through a browser too —
-          they get filtered. Agents bring a token and skip the filter.
-          All three land in the same inbox.
+          Three small steps. One curl block. Your agent is sending real
+          submissions before your coffee cools.
         </p>
       </div>
 
       <div class="paths-grid">
         <article class="path-card">
-          <div class="path-eyebrow mono">from a browser</div>
-          <h3 class="path-name">HTML or React</h3>
+          <div class="path-eyebrow mono">step 1 · 30 seconds</div>
+          <h3 class="path-name">Create a form</h3>
           <p class="path-body">
-            Point an HTML <code class="inline-code">action=</code> at our endpoint,
-            or use the React SDK. Honeypot, per-IP rate limit, and CAPTCHA run
-            automatically — off by default, on by a toggle.
+            Sign up, click <strong>Create form</strong>, name it. Your endpoint
+            URL is yours immediately — no review, no approval queue.
           </p>
-          <a class="path-link mono" href="/docs#html">→ /docs#html</a>
+          <a class="path-link mono" href={`${APP}/register`}>→ create your first form</a>
         </article>
 
         <article class="path-card">
-          <div class="path-eyebrow mono">from a script</div>
-          <h3 class="path-name">curl, fetch, anywhere</h3>
+          <div class="path-eyebrow mono">step 2 · 60 seconds</div>
+          <h3 class="path-name">Mint an agent token</h3>
           <p class="path-body">
-            POST JSON from a script, a CI runner, Postman — anything that
-            speaks HTTP. Same endpoint, same validation, same inbox.
+            Dashboard → Settings → API tokens → <strong>New agent token</strong>.
+            Scoped, labelled, audited. Hand it to your agent.
           </p>
-          <a class="path-link mono" href="/docs#fetch">→ /docs#fetch</a>
+          <a class="path-link mono" href="/docs/agents">→ /docs/agents</a>
         </article>
 
         <article class="path-card path-card-accent">
-          <div class="path-eyebrow mono">from an AI agent 🤖</div>
-          <h3 class="path-name">Authorize, audit, revoke</h3>
+          <div class="path-eyebrow mono">step 3 · 30 seconds 🤖</div>
+          <h3 class="path-name">Your agent POSTs</h3>
           <p class="path-body">
-            Authorize an agent in your settings. Submissions are tagged
-            in the inbox with the agent's label, every call is logged,
-            and each agent is scoped to your account only.
+            One Bearer-authed POST and the submission lands in your inbox,
+            tagged with the agent's label, with every call written to the
+            audit log.
           </p>
-          <a class="path-link mono" href="/docs/agents">→ /docs/agents</a>
+          <a class="path-link mono" href="/docs#fetch">→ /docs#fetch</a>
         </article>
       </div>
     </div>
@@ -155,71 +153,86 @@ const APP = "https://login.form4dev.com";
   <section class="capabilities">
     <div class="container">
       <div class="section-head">
-        <span class="eyebrow">/ what's in the box</span>
+        <span class="eyebrow">/ why agents pick this</span>
         <h2 class="display section-title">
-          Everything an endpoint should do.
+          Every feature, on every plan.
         </h2>
         <p class="section-sub">
-          One endpoint per form. We do the rest.
+          Designed for AI-agent traffic from the ground up. The whole
+          surface is yours from your first token.
         </p>
       </div>
 
       <dl class="cap-list">
         <div class="cap-row">
-          <dt>Spam filtering</dt>
+          <dt>Bearer tokens built for agents</dt>
           <dd>
-            Honeypot, per-IP rate limit, and your choice of CAPTCHA
-            (Turnstile, hCaptcha, reCAPTCHA). Off by default; on by a toggle.
+            Agent-typed tokens with a label, an audit log of every call,
+            and a 🤖 stamp on the submissions they create. Scoped to your
+            account. Revocable in one click.
           </dd>
         </div>
         <div class="cap-row">
-          <dt>Email notifications</dt>
+          <dt>Spam pipeline that respects authorisation</dt>
           <dd>
-            Sent the moment a submission lands. Reply-To set from the
-            submitter. Send through our SMTP or yours.
+            Honeypot, rate limits, and CAPTCHA apply to anonymous browser
+            traffic. Bearer-authed agent submissions skip them — the token
+            is the trust boundary.
           </dd>
         </div>
         <div class="cap-row">
-          <dt>Webhooks</dt>
+          <dt>Self-describing API</dt>
           <dd>
-            HMAC-signed. Auto-retried up to 5 times with exponential
-            backoff. Full delivery history in the dashboard. Toggle a
-            webhook on or off without losing its config.
+            Public
+            <a class="mono inline-link" href="https://login.form4dev.com/api/openapi.json">/api/openapi.json</a>
+            — CORS-open, machine-readable. Agent frameworks consume it
+            directly to discover endpoints, scopes, and response shapes.
           </dd>
         </div>
         <div class="cap-row">
-          <dt>1,000+ integrations</dt>
+          <dt>Idempotency + signed webhooks</dt>
           <dd>
-            Pipe submissions into Gmail, Google Sheets, Notion, Slack,
-            HubSpot, Airtable — anything reachable via
-            <strong>Zapier, Make, n8n, or Activepieces</strong>. The signed
-            webhook above is the connector — no extra setup.
+            Idempotency keys on every submit. HMAC-signed webhooks with
+            full delivery history. Build retry-safe automations without
+            double-posting downstream.
+          </dd>
+        </div>
+        <div class="cap-row">
+          <dt>Inbox, analytics, exports</dt>
+          <dd>
+            Tag, archive, filter by date. CSV, JSON, and Excel exports.
+            Per-form analytics with geo and spam-rate breakdown.
+          </dd>
+        </div>
+        <div class="cap-row">
+          <dt>Email + 1,000+ integrations</dt>
+          <dd>
+            Email notifications from your own domain. Slack, Discord,
+            Telegram, Mailchimp native. Anything else via Zapier, Make,
+            n8n, Activepieces —
             <a class="inline-link" href="/docs/integrations">/docs/integrations</a>.
           </dd>
         </div>
-        <div class="cap-row">
-          <dt>Inbox + export</dt>
-          <dd>
-            Search, tag, archive. Export as CSV, JSON, or Excel — by date range.
-          </dd>
-        </div>
-        <div class="cap-row">
-          <dt>API tokens</dt>
-          <dd>
-            Personal tokens for scripts. Agent-typed tokens for AI clients.
-            Every call is recorded — method, path, status, hashed IP, user-agent.
-          </dd>
-        </div>
-        <div class="cap-row">
-          <dt>Public API spec</dt>
-          <dd>
-            <a class="mono inline-link" href="https://login.form4dev.com/api/openapi.json">
-              /api/openapi.json
-            </a>
-            — read it before you sign up.
-          </dd>
-        </div>
       </dl>
+    </div>
+  </section>
+
+  <!-- =============================================================
+       § 2.5 — Headless. By design.
+       ============================================================= -->
+  <section class="headless">
+    <div class="container">
+      <div class="headless-panel">
+        <span class="eyebrow">/ by design</span>
+        <h2 class="display headless-title">Headless. By design.</h2>
+        <p class="headless-body">
+          form4dev is a developer surface, not a SaaS dashboard your customers
+          log into. You hand your agent the API key and the OpenAPI spec, and
+          it handles every form action — submit, read, tag, export, configure
+          — through one endpoint. The dashboard is a thin console for token
+          management and inbox triage. That's the entire product, on purpose.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -260,7 +273,7 @@ const APP = "https://login.form4dev.com";
           <header class="price-head">
             <h3 class="price-name">Solo</h3>
             <p class="price-amount"><strong>$9</strong> <span class="muted">/ month</span></p>
-            <p class="price-blurb">For indie devs and freelancers shipping real forms.</p>
+            <p class="price-blurb">For developers shipping their first agent-backed form.</p>
           </header>
           <ul class="price-feats">
             <li><strong>1,000</strong> submissions / month</li>
@@ -274,7 +287,7 @@ const APP = "https://login.form4dev.com";
           <header class="price-head">
             <h3 class="price-name">Team</h3>
             <p class="price-amount"><strong>$29</strong> <span class="muted">/ month</span></p>
-            <p class="price-blurb">For teams collecting submissions at real volume.</p>
+            <p class="price-blurb">For teams running multiple agent integrations at volume.</p>
           </header>
           <ul class="price-feats">
             <li><strong>10,000</strong> submissions / month</li>
@@ -284,15 +297,30 @@ const APP = "https://login.form4dev.com";
           <a class="btn btn-ghost btn-lg price-cta plausible-event-name=Signup+CTA plausible-event-location=pricing-team plausible-event-plan=team" href={`${APP}/register?plan=team`}>Get Team</a>
         </article>
       </div>
+    </div>
+  </section>
 
-      <p class="price-honest">
-        No fake reviews. No "trusted by" logos. We're early. If you ship a form
-        with us, write to <a class="mono inline-link" href="mailto:hello@form4dev.com">hello@form4dev.com</a>
-        and we'll write back from a real founder.
-      </p>
-      <p class="price-foot mono">
-        High-volume or custom needs? <a href="mailto:hello@form4dev.com?subject=Custom%20plan">Talk to us →</a>
-      </p>
+  <!-- =============================================================
+       § 4 — Closing CTA
+       ============================================================= -->
+  <section class="closing">
+    <div class="container">
+      <div class="closing-band">
+        <h2 class="closing-title">Stop fighting your form backend.</h2>
+        <p class="closing-sub">
+          Mint a token, drop in a fetch call, ship. High-volume or custom
+          needs? <a href="mailto:hello@form4dev.com?subject=Custom%20plan">Talk to us</a>.
+        </p>
+        <div class="closing-ctas">
+          <a class="btn btn-primary btn-lg plausible-event-name=Signup+CTA plausible-event-location=closing" href={`${APP}/register`}>
+            Start free
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+              <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a class="btn btn-ghost btn-lg" href="/docs">Read the docs</a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -658,10 +686,76 @@ const APP = "https://login.form4dev.com";
   }
   .cap-row dd a { color: var(--ink); }
 
+  /* ---- § Headless. By design. ---- */
+  .headless { padding: 88px 0; }
+  .headless-panel {
+    max-width: 760px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .headless-panel .eyebrow { display: inline-block; margin-bottom: 12px; }
+  .headless-title {
+    font-size: 44px;
+    margin: 0 0 18px;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    color: var(--ink);
+  }
+  .headless-body {
+    font-size: 17px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin: 0;
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* ---- § Closing CTA ---- */
+  .closing {
+    padding: 96px 0 112px;
+    background: var(--bg-elev);
+    border-top: 1px solid var(--line);
+  }
+  .closing-band {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .closing-title {
+    font-size: 40px;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    margin: 0 0 16px;
+    color: var(--ink);
+  }
+  .closing-sub {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.65;
+    margin: 0 0 28px;
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .closing-sub a {
+    color: var(--ink);
+    border-bottom: 1px dashed var(--muted-3);
+  }
+  .closing-ctas {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
   /* ---- Responsive ---- */
   @media (max-width: 960px) {
     .headline { font-size: 56px; }
     .section-title { font-size: 32px; }
+    .headless-title { font-size: 34px; }
+    .closing-title { font-size: 30px; }
     .price-grid { grid-template-columns: 1fr; }
     .paths-grid { grid-template-columns: 1fr; }
     .cap-row { grid-template-columns: 1fr; gap: 6px; }
@@ -669,5 +763,7 @@ const APP = "https://login.form4dev.com";
   }
   @media (max-width: 600px) {
     .headline { font-size: 40px; }
+    .headless-title { font-size: 26px; }
+    .closing-title { font-size: 24px; }
   }
 </style>
