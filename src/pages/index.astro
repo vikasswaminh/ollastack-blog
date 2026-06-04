@@ -5,39 +5,136 @@ const APP = "https://login.form4dev.com";
 
 <Base current="home">
   <!-- =============================================================
-       HERO — left-aligned headline + subhead + CTA + tabbed code
-       (Announcement banner is rendered site-wide by Base.astro,
-       above the nav.)
+       HERO — two-column: copy on the left, live geo-capture demo
+       form on the right. The right panel is the unique
+       differentiator — no other form backend captures the
+       submitter's country/city/region/postal/lat-long/timezone
+       automatically. The form's geo readout is populated from
+       ipapi.co so a visitor sees their REAL location before they
+       even submit; that's what they'd see in the inbox.
        ============================================================= -->
   <section class="hero dot-grid">
-    <div class="container hero-inner">
-      <span class="chip mono">
-        <span class="dot"></span>
-        AI-FIRST · HEADLESS FORMS
-      </span>
+    <div class="container hero-grid">
 
-      <h1 class="display headline">
-        Headless forms,<br/>
-        built for your <span class="brand-red-text">AI agent</span>.
-      </h1>
+      <!-- ---- LEFT: copy ---- -->
+      <div class="hero-copy">
+        <span class="chip mono">
+          <span class="dot"></span>
+          AI-FIRST · HEADLESS FORMS
+        </span>
 
-      <p class="subhead">
-        One API endpoint. An OpenAPI spec your agent reads itself.
-        Scoped tokens with per-call audit. Your agent submits, reads,
-        and exports — without fighting a spam pipeline built for humans.
-      </p>
+        <h1 class="display headline">
+          Headless forms,<br/>
+          built for your <span class="brand-red-text">AI agent</span>.
+        </h1>
 
-      <div class="hero-ctas">
-        <a class="btn btn-primary btn-lg plausible-event-name=Signup+CTA plausible-event-location=hero" href={`${APP}/register`}>
-          Start free
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
-            <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-        <a class="btn btn-ghost btn-lg" href="/docs">Read the docs</a>
+        <p class="hero-geo-tagline">
+          <span class="geo-marker" aria-hidden="true">📍</span>
+          <strong>GEO Smart intelligence</strong> for your leads.
+        </p>
+
+        <p class="subhead">
+          Every submission stamped with country, city, region, postal code,
+          lat/long, and timezone — auto-captured, no SDK, no setup.
+          One API endpoint for your agent, OpenAPI it reads itself,
+          a spam pipeline that respects auth.
+        </p>
+
+        <div class="hero-ctas">
+          <a class="btn btn-primary btn-lg plausible-event-name=Signup+CTA plausible-event-location=hero" href={`${APP}/register`}>
+            Start free
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+              <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a class="btn btn-ghost btn-lg" href="/docs">Read the docs</a>
+        </div>
+
+        <p class="hero-note mono">
+          Try the live demo on the right → submit, watch the geo light up.
+        </p>
+        <p class="hero-note mono">
+          Then read the <a href="/docs/agents">agent quickstart</a> or
+          jump to <a href="/use-cases">/use-cases</a> for copy-paste curl.
+        </p>
       </div>
 
-      <!-- Tabbed code sample — Daytona pattern -->
+      <!-- ---- RIGHT: live geo-capture demo ---- -->
+      <aside class="hero-demo" aria-label="Live geo-capture demo">
+        <div class="demo-eyebrow mono">
+          <span class="dot dot-live" aria-hidden="true"></span>
+          LIVE DEMO · GEO CAPTURE
+        </div>
+
+        <h3 class="demo-title">Submit and watch the magic.</h3>
+        <p class="demo-sub">
+          A real form4dev submission shape. Your location gets stamped on
+          the row automatically — same as every form you'd ship.
+        </p>
+
+        <form class="demo-form" id="geo-demo-form">
+          <label class="demo-field">
+            <span class="demo-field-label">Name</span>
+            <input name="name" type="text" required autocomplete="name" placeholder="Ada Lovelace" />
+          </label>
+          <label class="demo-field">
+            <span class="demo-field-label">Email</span>
+            <input name="email" type="email" required autocomplete="email" placeholder="ada@example.com" />
+          </label>
+          <label class="demo-field">
+            <span class="demo-field-label">Message</span>
+            <textarea name="message" required rows="3" placeholder="What would form4dev help you with?"></textarea>
+          </label>
+
+          <div class="demo-geo-preview" id="geo-preview">
+            <span class="geo-spinner" aria-hidden="true"></span>
+            <span class="geo-preview-text">Detecting your location…</span>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-lg demo-submit">
+            Submit demo
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+              <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </form>
+
+        <!-- Success card — hidden until form submits -->
+        <div class="demo-success" id="demo-success" hidden>
+          <div class="success-head">
+            <span class="success-check" aria-hidden="true">✓</span>
+            <strong>Submission captured.</strong>
+          </div>
+          <p class="success-sub">
+            Here's the row your inbox would see — geo auto-attached.
+          </p>
+          <dl class="success-table" id="success-table">
+            <!-- populated by JS on submit -->
+          </dl>
+          <button type="button" class="demo-reset" id="demo-reset">← Try again</button>
+        </div>
+      </aside>
+
+    </div>
+  </section>
+
+  <!-- =============================================================
+       § 1 — Show me the code (the tabbed code sample, relocated
+       out of the hero so the hero can lead with the geo demo).
+       ============================================================= -->
+  <section class="dropin">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">/ drop-in code</span>
+        <h2 class="display section-title">
+          One endpoint. Five ways to call it.
+        </h2>
+        <p class="section-sub">
+          Same URL serves your AI agent, your static HTML form, your React app,
+          your mobile client. Pick a tab.
+        </p>
+      </div>
+
       <div class="code-tabs">
         <div class="tabs-bar">
           <button class="tab active" data-lang="bearer">Agent (Bearer) 🤖</button>
@@ -52,45 +149,43 @@ const APP = "https://login.form4dev.com";
         <pre class="code-pane" data-lang="bearer"><span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.form4dev.com/api/submit/<span class="hl">contact</span> \
     -H <span class="str">"Authorization: Bearer fmd_&lt;your-agent-token&gt;"</span> \
     -H <span class="str">"Content-Type: application/json"</span> \
-    -d <span class="str">{`'{"name":"Ada","message":"hi"}'`}</span>
+    -d <span class="str">'&#123;"name":"Ada","message":"hi"&#125;'</span>
 
-<span class="ok">{`{"success": true, "id": "sub_8f2…"}`}</span>
+<span class="ok">&#123;"success": true, "id": "sub_8f2…", "country": "IN", "city": "Mumbai"&#125;</span>
 <span class="muted"># tagged in the inbox with the agent's label
-# every call recorded in the audit log</span></pre>
+# every call recorded in the audit log
+# geo auto-attached — country / city / region / lat-long / timezone</span></pre>
 
         <pre class="code-pane hidden" data-lang="curl"><span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.form4dev.com/api/submit/<span class="hl">contact</span> \
     -H <span class="str">"Content-Type: application/json"</span> \
-    -d <span class="str">{`'{"name":"Ada","message":"hi"}'`}</span>
+    -d <span class="str">'&#123;"name":"Ada","message":"hi"&#125;'</span>
 
-<span class="ok">{`{"success": true, "id": "sub_8f2…"}`}</span></pre>
+<span class="ok">&#123;"success": true, "id": "sub_8f2…"&#125;</span></pre>
 
-        <pre class="code-pane hidden" data-lang="js"><span class="key">await</span> fetch(<span class="str">"https://login.form4dev.com/api/submit/contact"</span>, {`{`}
+        <pre class="code-pane hidden" data-lang="js"><span class="key">await</span> fetch(<span class="str">"https://login.form4dev.com/api/submit/contact"</span>, &#123;
   method: <span class="str">"POST"</span>,
-  headers: {`{`} <span class="str">"Content-Type"</span>: <span class="str">"application/json"</span> {`}`},
-  body: JSON.stringify({`{`} name, email, message {`}`}),
-{`}`});</pre>
+  headers: &#123; <span class="str">"Content-Type"</span>: <span class="str">"application/json"</span> &#125;,
+  body: JSON.stringify(&#123; name, email, message &#125;),
+&#125;);</pre>
 
-        <pre class="code-pane hidden" data-lang="html"><span class="pun">{`<form action=`}</span><span class="str">"https://login.form4dev.com/api/submit/contact"</span> method=<span class="str">"POST"</span><span class="pun">{`>`}</span>
-  <span class="pun">{`<input name=`}</span><span class="str">"email"</span> type=<span class="str">"email"</span> required<span class="pun">{`/>`}</span>
-  <span class="pun">{`<textarea name=`}</span><span class="str">"message"</span> required<span class="pun">{`/>`}</span>
-  <span class="pun">{`<button>`}</span>Send<span class="pun">{`</button>`}</span>
-<span class="pun">{`</form>`}</span></pre>
+        <pre class="code-pane hidden" data-lang="html"><span class="pun">&lt;form action=</span><span class="str">"https://login.form4dev.com/api/submit/contact"</span> method=<span class="str">"POST"</span><span class="pun">&gt;</span>
+  <span class="pun">&lt;input name=</span><span class="str">"email"</span> type=<span class="str">"email"</span> required<span class="pun">/&gt;</span>
+  <span class="pun">&lt;textarea name=</span><span class="str">"message"</span> required<span class="pun">&gt;&lt;/textarea&gt;</span>
+  <span class="pun">&lt;button&gt;</span>Send<span class="pun">&lt;/button&gt;</span>
+<span class="pun">&lt;/form&gt;</span></pre>
 
-        <pre class="code-pane hidden" data-lang="react"><span class="key">import</span> {`{`} useForm {`}`} <span class="key">from</span> <span class="str">"@form4dev/react"</span>;
+        <pre class="code-pane hidden" data-lang="react"><span class="key">import</span> &#123; useForm &#125; <span class="key">from</span> <span class="str">"@form4dev/react"</span>;
 
-<span class="key">export function</span> <span class="fn">Contact</span>() {`{`}
+<span class="key">export function</span> <span class="fn">Contact</span>() &#123;
   <span class="key">const</span> [state, handleSubmit] = <span class="fn">useForm</span>(<span class="str">"contact"</span>);
-  <span class="key">if</span> (state.succeeded) <span class="key">return</span> <span class="str">{`<p>Thanks!</p>`}</span>;
+  <span class="key">if</span> (state.succeeded) <span class="key">return</span> <span class="str">&lt;p&gt;Thanks!&lt;/p&gt;</span>;
   <span class="key">return</span> (
-    <span class="str">{`<form onSubmit={handleSubmit}>...</form>`}</span>
+    <span class="str">&lt;form onSubmit=&#123;handleSubmit&#125;&gt;...&lt;/form&gt;</span>
   );
-{`}`}</pre>
+&#125;</pre>
       </div>
 
-      <p class="hero-note mono">
-        Start with the <a href="/docs/agents">agent quickstart</a> — token mint, first submission, audit log, all under two minutes.
-      </p>
-      <p class="hero-note mono">
+      <p class="hero-note mono dropin-note">
         Connects to Gmail, Sheets, Notion, Slack, HubSpot — and 1,000+ more via Zapier, Make, n8n, Activepieces — <a href="/docs/integrations">/docs/integrations</a>.
       </p>
     </div>
@@ -327,7 +422,7 @@ const APP = "https://login.form4dev.com";
 </Base>
 
 <script>
-  // Tab switching for the hero code sample
+  // ---- Tab switching for the relocated code sample ----
   const tabs = document.querySelectorAll<HTMLButtonElement>(".tabs-bar .tab");
   const panes = document.querySelectorAll<HTMLPreElement>(".code-pane");
   tabs.forEach((tab) => {
@@ -337,17 +432,122 @@ const APP = "https://login.form4dev.com";
       panes.forEach((p) => p.classList.toggle("hidden", p.dataset.lang !== lang));
     });
   });
+
+  // ---- Geo demo: detect visitor location via ipapi.co, then on
+  //      form submit show a success card with the captured geo.
+  //      ipapi.co is free for low volume and CORS-open; same shape
+  //      of data form4dev attaches from Cloudflare visitor-location
+  //      headers on the server side. ----
+  type GeoData = {
+    city?: string;
+    region?: string;
+    country_name?: string;
+    country_code?: string;
+    postal?: string;
+    latitude?: number;
+    longitude?: number;
+    timezone?: string;
+  };
+
+  let detectedGeo: GeoData | null = null;
+  const previewEl = document.getElementById("geo-preview");
+  const previewText = previewEl?.querySelector<HTMLElement>(".geo-preview-text");
+  const previewSpinner = previewEl?.querySelector<HTMLElement>(".geo-spinner");
+  const form = document.getElementById("geo-demo-form") as HTMLFormElement | null;
+  const successEl = document.getElementById("demo-success");
+  const successTable = document.getElementById("success-table");
+  const resetBtn = document.getElementById("demo-reset");
+
+  async function detectGeo() {
+    try {
+      const res = await fetch("https://ipapi.co/json/");
+      if (!res.ok) throw new Error("geo http " + res.status);
+      const data = (await res.json()) as GeoData;
+      detectedGeo = data;
+      if (previewText && data.city) {
+        previewText.innerHTML = `Your location: <strong>${escapeHtml(data.city)}${
+          data.region ? ", " + escapeHtml(data.region) : ""
+        }, ${escapeHtml(data.country_name ?? data.country_code ?? "—")}</strong> — this is what your inbox will see.`;
+      } else if (previewText) {
+        previewText.textContent = "Your location will be captured on submit.";
+      }
+      if (previewSpinner) previewSpinner.classList.add("ready");
+    } catch (err) {
+      if (previewText) previewText.textContent = "Geo detection unavailable — form4dev still captures it server-side via Cloudflare headers.";
+      if (previewSpinner) previewSpinner.classList.add("ready");
+    }
+  }
+
+  function escapeHtml(s: string): string {
+    return s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]!));
+  }
+
+  function row(label: string, value: string | undefined | null): string {
+    if (!value) return "";
+    return `<dt>${escapeHtml(label)}</dt><dd>${escapeHtml(String(value))}</dd>`;
+  }
+
+  function showSuccess(payload: Record<string, string>) {
+    if (!successTable) return;
+    const g = detectedGeo ?? {};
+    successTable.innerHTML = [
+      row("name", payload.name),
+      row("email", payload.email),
+      row("message", payload.message),
+      row("country", g.country_name ?? g.country_code),
+      row("city", g.city),
+      row("region", g.region),
+      row("postal", g.postal),
+      row("lat / long", g.latitude && g.longitude ? `${g.latitude}, ${g.longitude}` : null),
+      row("timezone", g.timezone),
+    ].join("");
+    form?.setAttribute("hidden", "");
+    previewEl?.setAttribute("hidden", "");
+    successEl?.removeAttribute("hidden");
+  }
+
+  function reset() {
+    successEl?.setAttribute("hidden", "");
+    form?.removeAttribute("hidden");
+    previewEl?.removeAttribute("hidden");
+    form?.reset();
+  }
+
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const fd = new FormData(form);
+    const payload: Record<string, string> = {};
+    fd.forEach((v, k) => (payload[k] = String(v)));
+    showSuccess(payload);
+  });
+
+  resetBtn?.addEventListener("click", reset);
+
+  detectGeo();
 </script>
 
 <style>
   /* (Announcement banner styles now live in components/AnnouncementBar.astro) */
 
-  /* ---- Hero ---- */
+  /* ---- Hero — two-column on desktop, stacked on mobile ---- */
   .hero {
-    padding: 88px 0 64px;
+    padding: 72px 0 56px;
     border-bottom: 1px solid var(--line);
   }
-  .hero-inner { display: flex; flex-direction: column; align-items: flex-start; }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  @media (min-width: 1000px) {
+    .hero-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(420px, 520px);
+      gap: 64px;
+      align-items: center;
+    }
+  }
+  .hero-copy { display: flex; flex-direction: column; align-items: flex-start; }
   .chip .dot {
     width: 7px;
     height: 7px;
@@ -357,8 +557,8 @@ const APP = "https://login.form4dev.com";
   }
 
   .headline {
-    font-size: 80px;
-    margin: 22px 0 22px;
+    font-size: 72px;
+    margin: 22px 0 20px;
     letter-spacing: -0.04em;
     line-height: 0.97;
     max-width: 14ch;
@@ -367,10 +567,29 @@ const APP = "https://login.form4dev.com";
   .headline .muted { color: var(--muted-2); font-weight: 500; }
   .headline .brand-red-text { color: var(--brand-red); }
 
+  /* GEO tagline — accent line right under the headline, makes the
+     differentiator scannable in 1 second. */
+  .hero-geo-tagline {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 18px;
+    padding: 8px 14px;
+    background: var(--accent-soft);
+    border: 1px solid #cfdcff;
+    border-radius: 999px;
+    font-size: 14px;
+    color: var(--accent-2);
+    font-weight: 500;
+    letter-spacing: -0.005em;
+  }
+  .hero-geo-tagline strong { color: var(--accent-2); font-weight: 600; }
+  .hero-geo-tagline .geo-marker { font-size: 15px; }
+
   .subhead {
-    font-size: 18px;
+    font-size: 17.5px;
     color: var(--muted);
-    line-height: 1.55;
+    line-height: 1.6;
     max-width: 620px;
     margin: 0 0 28px;
   }
@@ -386,12 +605,12 @@ const APP = "https://login.form4dev.com";
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 48px;
+    margin-bottom: 24px;
     flex-wrap: wrap;
   }
 
   .hero-note {
-    margin-top: 20px;
+    margin-top: 8px;
     color: var(--muted-2);
     font-size: 12.5px;
   }
@@ -399,6 +618,186 @@ const APP = "https://login.form4dev.com";
     color: var(--ink);
     border-bottom: 1px dashed var(--muted-3);
   }
+
+  /* ---- Hero demo panel (right side) ---- */
+  .hero-demo {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: var(--r-4);
+    padding: 24px 26px 22px;
+    box-shadow: var(--shadow-deep);
+    width: 100%;
+    max-width: 520px;
+    justify-self: end;
+  }
+  @media (max-width: 999px) {
+    .hero-demo { justify-self: stretch; max-width: 100%; }
+  }
+
+  .demo-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: var(--muted-2);
+    letter-spacing: 0.06em;
+    margin-bottom: 14px;
+  }
+  .demo-eyebrow .dot-live {
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: #16a34a;
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.22);
+    animation: livePulse 1.8s ease-in-out infinite;
+  }
+  @keyframes livePulse {
+    0%, 100% { box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.22); }
+    50%      { box-shadow: 0 0 0 6px rgba(22, 163, 74, 0.10); }
+  }
+  .demo-title {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 0 0 6px;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .demo-sub {
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.5;
+    margin: 0 0 18px;
+  }
+
+  .demo-form { display: flex; flex-direction: column; gap: 12px; }
+  .demo-field { display: flex; flex-direction: column; gap: 4px; }
+  .demo-field-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-2);
+    letter-spacing: -0.005em;
+  }
+  .demo-field input,
+  .demo-field textarea {
+    font: inherit;
+    color: var(--ink);
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: var(--r-2);
+    padding: 9px 12px;
+    font-size: 14px;
+    line-height: 1.45;
+    transition: border-color 0.12s ease, box-shadow 0.12s ease;
+    width: 100%;
+  }
+  .demo-field input:focus,
+  .demo-field textarea:focus {
+    outline: none;
+    border-color: var(--ink);
+    box-shadow: 0 0 0 3px rgba(10, 10, 10, 0.06);
+  }
+  .demo-field textarea { resize: vertical; min-height: 70px; }
+
+  .demo-geo-preview {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: var(--accent-soft);
+    border: 1px solid #cfdcff;
+    border-radius: var(--r-2);
+    color: var(--accent-2);
+    font-size: 12.5px;
+    line-height: 1.45;
+    margin-top: 4px;
+  }
+  .demo-geo-preview strong { font-weight: 600; }
+  .geo-spinner {
+    flex-shrink: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: 999px;
+    border: 2px solid #cfdcff;
+    border-top-color: var(--accent);
+    animation: geoSpin 0.8s linear infinite;
+  }
+  .geo-spinner.ready {
+    animation: none;
+    border-color: var(--accent);
+    background: var(--accent);
+    box-shadow: inset 0 0 0 2px var(--accent-soft);
+  }
+  @keyframes geoSpin { to { transform: rotate(360deg); } }
+
+  .demo-submit { width: 100%; justify-content: center; margin-top: 4px; }
+
+  /* Success state shown after submit */
+  .demo-success { display: flex; flex-direction: column; gap: 14px; }
+  .success-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    color: var(--ink);
+  }
+  .success-check {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    background: #16a34a;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .success-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin: -8px 0 0;
+    line-height: 1.5;
+  }
+  .success-table {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 8px 14px;
+    margin: 0;
+    padding: 14px 16px;
+    background: var(--bg-sunken);
+    border-radius: var(--r-2);
+    border: 1px solid var(--line-2);
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+  }
+  .success-table dt {
+    color: var(--muted-2);
+    text-transform: lowercase;
+  }
+  .success-table dd {
+    margin: 0;
+    color: var(--ink);
+    word-break: break-word;
+  }
+  .demo-reset {
+    align-self: flex-start;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--ink);
+    border-bottom: 1px dashed var(--muted-3);
+    padding: 0;
+  }
+  .demo-reset:hover { border-bottom-color: var(--ink); }
+
+  /* ---- Drop-in code section (relocated from the hero) ---- */
+  .dropin {
+    padding: 72px 0;
+    border-bottom: 1px solid var(--line);
+    background: var(--bg-elev);
+  }
+  .dropin .code-tabs { max-width: 1000px; margin: 0 auto; }
+  .dropin-note { text-align: center; margin: 24px 0 0; }
 
   /* ---- Code tabs ---- */
   .code-tabs {

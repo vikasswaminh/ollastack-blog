@@ -56,9 +56,13 @@
   --font-sans: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
-  /* Container widths */
+  /* Container widths — legacy vars kept for any inline usage, but
+     `.container` / `.container-wide` are now full-width. Sections
+     bleed edge-to-edge, content inside each section keeps its own
+     max-widths on headlines / paragraphs for readability. */
   --container: 1180px;
   --container-wide: 1260px;
+  --gutter: 32px;
 
   /* Radii — Daytona uses tight 6-8px rather than soft 14px */
   --r-1: 4px;
@@ -110,16 +114,24 @@ button {
    the announce bar / hero "form backend" treatment. */
 .brand-red { color: var(--brand-red); }
 
-.container {
-  max-width: var(--container);
-  margin: 0 auto;
+/* Full-width container — no max-width cap. Edge padding scales:
+   28px on phones, 32px on tablet/laptop, 5vw on large desktops so
+   content doesn't slam into the screen edges on 4K. Inner text
+   blocks (.headline, .subhead, .section-sub, etc.) keep their own
+   max-widths for readability. */
+.container,
+.container-wide {
+  max-width: none;
+  margin: 0;
   padding: 0 28px;
 }
-
-.container-wide {
-  max-width: var(--container-wide);
-  margin: 0 auto;
-  padding: 0 28px;
+@media (min-width: 768px) {
+  .container,
+  .container-wide { padding: 0 var(--gutter); }
+}
+@media (min-width: 1400px) {
+  .container,
+  .container-wide { padding: 0 5vw; }
 }
 
 /* Buttons — Daytona-style: tight 6-8px radius, bold weight, mono-ish letter spacing */
