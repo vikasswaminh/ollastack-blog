@@ -97,6 +97,8 @@ const APP = "https://login.form4dev.com";
               <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
+
+          <div class="demo-error" id="demo-error" hidden role="alert"></div>
         </form>
 
         <!-- Success card — hidden until form submits -->
@@ -487,10 +489,11 @@ const APP = "https://login.form4dev.com";
     return `<dt>${escapeHtml(label)}</dt><dd>${escapeHtml(String(value))}</dd>`;
   }
 
-  function showSuccess(payload: Record<string, string>) {
+  function showSuccess(payload: Record<string, string>, submissionId: string) {
     if (!successTable) return;
     const g = detectedGeo ?? {};
     successTable.innerHTML = [
+      row("submission id", submissionId),
       row("name", payload.name),
       row("email", payload.email),
       row("message", payload.message),
@@ -503,22 +506,67 @@ const APP = "https://login.form4dev.com";
     ].join("");
     form?.setAttribute("hidden", "");
     previewEl?.setAttribute("hidden", "");
+    errorEl?.setAttribute("hidden", "");
     successEl?.removeAttribute("hidden");
+  }
+
+  function showError(msg: string) {
+    if (!errorEl) return;
+    errorEl.textContent = msg;
+    errorEl.removeAttribute("hidden");
   }
 
   function reset() {
     successEl?.setAttribute("hidden", "");
+    errorEl?.setAttribute("hidden", "");
     form?.removeAttribute("hidden");
     previewEl?.removeAttribute("hidden");
     form?.reset();
   }
 
-  form?.addEventListener("submit", (e) => {
+  const errorEl = document.getElementById("demo-error");
+  // The real form4dev endpoint this page POSTs to. Form id
+  // msJu9W4AcmTop0H34mlt1, locked to https://form4dev.com origin,
+  // notify_email vikas@networkershome.com. captchaRequired=false
+  // so the demo isn't blocked by a security check; per-IP rate
+  // limit + ML quarantine still apply.
+  const SUBMIT_ENDPOINT = "https://login.form4dev.com/api/submit/uiwaivrpteebnhtt";
+
+  form?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const fd = new FormData(form);
     const payload: Record<string, string> = {};
     fd.forEach((v, k) => (payload[k] = String(v)));
-    showSuccess(payload);
+
+    errorEl?.setAttribute("hidden", "");
+    const btn = form.querySelector<HTMLButtonElement>(".demo-submit");
+    const originalHtml = btn?.innerHTML;
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = "Submitting…";
+    }
+
+    try {
+      const res = await fetch(SUBMIT_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json().catch(() => ({} as { id?: string; error?: { message?: string } }));
+      if (!res.ok) {
+        const msg = data?.error?.message ?? `Submit failed (HTTP ${res.status}). Please try again.`;
+        showError(msg);
+        return;
+      }
+      showSuccess(payload, data?.id ?? "sub_demo");
+    } catch (err) {
+      showError("Network error — please try again.");
+    } finally {
+      if (btn && originalHtml) {
+        btn.disabled = false;
+        btn.innerHTML = originalHtml;
+      }
+    }
   });
 
   resetBtn?.addEventListener("click", reset);
@@ -731,6 +779,18 @@ const APP = "https://login.form4dev.com";
   @keyframes geoSpin { to { transform: rotate(360deg); } }
 
   .demo-submit { width: 100%; justify-content: center; margin-top: 4px; }
+  .demo-submit:disabled { opacity: 0.65; cursor: wait; }
+
+  .demo-error {
+    margin-top: 8px;
+    padding: 9px 12px;
+    border-radius: var(--r-2);
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+    font-size: 12.5px;
+    line-height: 1.45;
+  }
 
   /* Success state shown after submit */
   .demo-success { display: flex; flex-direction: column; gap: 14px; }
