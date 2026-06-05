@@ -1,8 +1,10 @@
 ---
-// form4dev mark — a single ~62° slash with a small accent-blue dot above it.
-// The slash is the literal `/` from a URL path; the dot is the request landing
-// on the endpoint. The mark visually substitutes for the `/` in the wordmark
-// when locked up: [mark] form4dev → reads as a path.
+// form4dev mark — a form-card icon in McDonald's red (PMS 485, #DA291C).
+// A rounded red square with three white horizontal lines representing
+// form fields. Reads as "form" at every size — favicon-tiny up to
+// hero-large — without depending on stroke weight at small px.
+// The wordmark ("form4dev") sits next to it in ink, matching the
+// brand-red treatment used on the marketing site's announce bar.
 interface Props {
   size?: number;
   withWordmark?: boolean;
@@ -19,15 +21,10 @@ const { size = 24, withWordmark = true } = Astro.props;
     aria-hidden="true"
     class="logo-mark"
   >
-    <!-- request dot -->
-    <circle cx="20" cy="4" r="2" fill="#0066ff" />
-    <!-- the slash itself: bottom-left to top-right, ~62° -->
-    <path
-      d="M7 22 L17 4"
-      stroke="#0a0a0a"
-      stroke-width="3"
-      stroke-linecap="square"
-    />
+    <rect x="2" y="2" width="20" height="20" rx="4" fill="#DA291C" />
+    <rect x="6" y="8"  width="7"  height="2" rx="1" fill="#ffffff" />
+    <rect x="6" y="12" width="12" height="2" rx="1" fill="#ffffff" />
+    <rect x="6" y="16" width="9"  height="2" rx="1" fill="#ffffff" />
   </svg>
   {withWordmark && (
     <span class="wordmark">form4dev</span>
@@ -50,10 +47,5 @@ const { size = 24, withWordmark = true } = Astro.props;
     font-size: 16px;
     color: var(--ink);
     line-height: 1;
-  }
-  /* Dark-mode swap: stroke becomes white, dot stays accent.
-     We don't have a global dark theme yet, but the SVG is ready for it. */
-  @media (prefers-color-scheme: dark) {
-    .logo-mark path { stroke: #ffffff; }
   }
 </style>

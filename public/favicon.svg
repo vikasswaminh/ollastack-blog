@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="form4dev">
   <title>form4dev</title>
-  <!-- request dot -->
-  <circle cx="26" cy="6" r="3" fill="#0066ff"/>
-  <!-- the slash: tuned for 32×32 readability — stroke 4.5, square caps -->
-  <path d="M8 27 L22 5" stroke="#0a0a0a" stroke-width="4.5" stroke-linecap="square"/>
+  <rect x="3" y="3" width="26" height="26" rx="5" fill="#DA291C"/>
+  <rect x="8"  y="11" width="10" height="2.5" rx="1.25" fill="#ffffff"/>
+  <rect x="8"  y="16" width="16" height="2.5" rx="1.25" fill="#ffffff"/>
+  <rect x="8"  y="21" width="12" height="2.5" rx="1.25" fill="#ffffff"/>
 </svg>
