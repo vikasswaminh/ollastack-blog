@@ -3,6 +3,7 @@ import Base from "../layouts/Base.astro";
 const APP = "https://login.form4dev.com";
 
 const sections = [
+  { id: "apis", title: "All APIs by purpose" },
   { id: "quickstart", title: "Quickstart" },
   { id: "html", title: "HTML form" },
   { id: "react", title: "React" },
@@ -42,6 +43,7 @@ const sections = [
       </nav>
       <div class="side-bottom mono">
         <a href="/docs/agents">→ /docs/agents</a>
+        <a href="/docs/agent-mail">→ /docs/agent-mail</a>
         <a href="/docs/integrations">→ /docs/integrations</a>
         <a href="/docs/smtp">→ /docs/smtp</a>
       </div>
@@ -54,6 +56,58 @@ const sections = [
         <code>action=</code> at it. That's the whole quickstart. Everything below
         is the long tail of things you'll want once that works.
       </p>
+
+      <h2 id="apis" style="margin-top:36px">All APIs, by what you're trying to do</h2>
+      <p class="muted-note" style="margin-bottom:14px">
+        One account, one token system. Every surface is published in the
+        <a href={`${APP}/api/openapi.json`}>OpenAPI spec</a> so agents can
+        discover it. Pick your purpose:
+      </p>
+      <table>
+        <thead><tr><th>I want to…</th><th>API / endpoints</th><th>Guide</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Collect form submissions</td>
+            <td><code>POST /api/submit/&lt;slug&gt;</code></td>
+            <td><a href="#quickstart">Quickstart ↓</a></td>
+          </tr>
+          <tr>
+            <td>Create &amp; configure forms via API</td>
+            <td><code>/api/forms</code>, <code>/api/forms/&#123;id&#125;/builder</code></td>
+            <td><a href="/docs/agents#configure">Forms API</a></td>
+          </tr>
+          <tr>
+            <td>Read / export submissions</td>
+            <td><code>/api/submissions</code>, <code>/api/forms/&#123;id&#125;/export</code></td>
+            <td><a href="#exports">Exports ↓</a></td>
+          </tr>
+          <tr>
+            <td>Let an AI agent submit forms</td>
+            <td>Bearer token, agent-tagged</td>
+            <td><a href="/docs/agents">For agents →</a></td>
+          </tr>
+          <tr>
+            <td><strong>Give an agent an email inbox</strong> (send / receive / reply)</td>
+            <td><code>/api/mailboxes</code>, <code>…/send</code>, <code>…/wait</code></td>
+            <td><a href="/docs/agent-mail">Agent Mail →</a></td>
+          </tr>
+          <tr>
+            <td>Test emails / OTPs in CI</td>
+            <td><code>/api/mailboxes/&#123;id&#125;/wait</code></td>
+            <td><a href="/docs/agent-mail#wait">Agent Mail →</a></td>
+          </tr>
+          <tr>
+            <td>Manage tokens &amp; scopes</td>
+            <td><code>/api/user/tokens</code></td>
+            <td><a href="#tokens">API tokens ↓</a></td>
+          </tr>
+          <tr>
+            <td>Auto-discover the whole API (MCP / tool-use)</td>
+            <td><code>GET /api/openapi.json</code></td>
+            <td><a href="#openapi">OpenAPI ↓</a></td>
+          </tr>
+        </tbody>
+      </table>
 
       <h2 id="quickstart">Quickstart</h2>
       <ol>
