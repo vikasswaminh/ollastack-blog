@@ -1,10 +1,10 @@
 ---
-// form4dev mark — a form-card icon in McDonald's red (PMS 485, #DA291C).
-// A rounded red square with three white horizontal lines representing
-// form fields. Reads as "form" at every size — favicon-tiny up to
-// hero-large — without depending on stroke weight at small px.
-// The wordmark ("form4dev") sits next to it in ink, matching the
-// brand-red treatment used on the marketing site's announce bar.
+// form4dev mark — a "stack" icon in brand red (PMS 485, #DA291C).
+// A rounded red square with three EQUAL white bars: a stack of
+// communication channels (forms + agent mail + more), not just a form.
+// Fill-based, so it stays crisp from favicon-tiny to hero-large without
+// depending on stroke weight at small px. The wordmark ("form4dev")
+// sits next to it in ink, matching the brand-red announce-bar treatment.
 interface Props {
   size?: number;
   withWordmark?: boolean;
@@ -22,9 +22,9 @@ const { size = 24, withWordmark = true } = Astro.props;
     class="logo-mark"
   >
     <rect x="2" y="2" width="20" height="20" rx="4" fill="#DA291C" />
-    <rect x="6" y="8"  width="7"  height="2" rx="1" fill="#ffffff" />
-    <rect x="6" y="12" width="12" height="2" rx="1" fill="#ffffff" />
-    <rect x="6" y="16" width="9"  height="2" rx="1" fill="#ffffff" />
+    <rect x="6" y="7"  width="12" height="2" rx="1" fill="#ffffff" />
+    <rect x="6" y="11" width="12" height="2" rx="1" fill="#ffffff" />
+    <rect x="6" y="15" width="12" height="2" rx="1" fill="#ffffff" />
   </svg>
   {withWordmark && (
     <span class="wordmark">form4dev</span>

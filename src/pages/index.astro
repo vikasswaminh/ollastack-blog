@@ -20,12 +20,12 @@ const APP = "https://login.form4dev.com";
       <div class="hero-copy">
         <span class="chip mono">
           <span class="dot"></span>
-          AI-FIRST · HEADLESS FORMS
+          AI-FIRST · FORMS + AGENT MAIL
         </span>
 
         <h1 class="display headline">
-          Headless forms,<br/>
-          built for your <span class="brand-red-text">AI agent</span>.
+          Headless forms and mail,<br/>
+          built for your <span class="brand-red-text">AI agents</span>.
         </h1>
 
         <p class="hero-geo-tagline">
@@ -37,7 +37,9 @@ const APP = "https://login.form4dev.com";
           Every submission stamped with country, city, region, postal code,
           lat/long, and timezone — auto-captured, no SDK, no setup.
           One API endpoint for your agent, OpenAPI it reads itself,
-          a spam pipeline that respects auth.
+          a spam pipeline that respects auth. Plus agent email inboxes —
+          your agents send, receive, reply, and read OTP codes from a real
+          address.
         </p>
 
         <div class="hero-ctas">
@@ -117,6 +119,58 @@ const APP = "https://login.form4dev.com";
         </div>
       </aside>
 
+    </div>
+  </section>
+
+  <!-- =============================================================
+       § 0 — Capabilities (feature-visibility add-on; reuses the
+       existing .paths-grid / .path-card markup — no new styles).
+       ============================================================= -->
+  <section class="paths">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">/ one platform</span>
+        <h2 class="display section-title">
+          Everything your agents can do.
+        </h2>
+        <p class="section-sub">
+          Forms in, mail out — one backend, one token system, one console.
+          Each surface is in the OpenAPI spec your agent reads itself.
+        </p>
+      </div>
+
+      <div class="paths-grid">
+        <article class="path-card">
+          <div class="path-eyebrow mono">forms</div>
+          <h3 class="path-name">Headless forms</h3>
+          <p class="path-body">
+            One endpoint. Every submission GEO-stamped, spam-filtered, and
+            agent-aware — no SDK, no setup.
+          </p>
+          <a class="path-link mono" href="/docs">→ /docs</a>
+        </article>
+
+        <article class="path-card">
+          <div class="path-eyebrow mono">agents 🤖</div>
+          <h3 class="path-name">Agent submissions</h3>
+          <p class="path-body">
+            Authorized agents POST clean past the bot defenses, tagged in
+            your inbox and written to the audit log.
+          </p>
+          <a class="path-link mono" href="/docs/agents">→ /docs/agents</a>
+        </article>
+
+        <article class="path-card path-card-accent">
+          <div class="path-eyebrow mono">agent mail · new</div>
+          <h3 class="path-name">Agent Mail</h3>
+          <p class="path-body">
+            Real email inboxes for agents: send, receive, reply, and pull
+            OTP codes from a live <code>@ollastack.com</code> address — plus
+            a <code>/wait</code> long-poll for testing emails in CI.
+          </p>
+          <a class="path-link mono" href="/docs/agent-mail">→ /docs/agent-mail</a>
+        </article>
+      </div>
     </div>
   </section>
 
