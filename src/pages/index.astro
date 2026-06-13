@@ -20,7 +20,7 @@ const APP = "https://login.form4dev.com";
       <div class="hero-copy">
         <span class="chip mono">
           <span class="dot"></span>
-          AI-FIRST · FORMS + AGENT MAIL
+          API-FIRST · FORMS · AGENT MAIL · TEST INBOXES
         </span>
 
         <h1 class="display headline">
@@ -56,8 +56,8 @@ const APP = "https://login.form4dev.com";
           Try the live demo on the right → submit, watch the geo light up.
         </p>
         <p class="hero-note mono">
-          Then read the <a href="/docs/agents">agent quickstart</a> or
-          jump to <a href="/use-cases">/use-cases</a> for copy-paste curl.
+          Or <a href="#api-console">call the API live ↓</a> — all three
+          capabilities, real endpoints.
         </p>
       </div>
 
@@ -145,32 +145,133 @@ const APP = "https://login.form4dev.com";
           <h3 class="path-name">Headless forms</h3>
           <p class="path-body">
             One endpoint. Every submission GEO-stamped, spam-filtered, and
-            agent-aware — no SDK, no setup.
+            agent-aware — your AI agent POSTs clean past the bot defenses,
+            tagged in your inbox and written to the audit log.
           </p>
-          <a class="path-link mono" href="/docs">→ /docs</a>
-        </article>
-
-        <article class="path-card">
-          <div class="path-eyebrow mono">agents 🤖</div>
-          <h3 class="path-name">Agent submissions</h3>
-          <p class="path-body">
-            Authorized agents POST clean past the bot defenses, tagged in
-            your inbox and written to the audit log.
-          </p>
-          <a class="path-link mono" href="/docs/agents">→ /docs/agents</a>
+          <a class="path-link mono" href="#api-console">→ call it live</a>
         </article>
 
         <article class="path-card path-card-accent">
-          <div class="path-eyebrow mono">agent mail · new</div>
+          <div class="path-eyebrow mono">agent mail · 🤖</div>
           <h3 class="path-name">Agent Mail</h3>
           <p class="path-body">
-            Real email inboxes for agents: send, receive, reply, and pull
-            OTP codes from a live <code>@ollastack.com</code> address — plus
-            a <code>/wait</code> long-poll for testing emails in CI.
+            Real email inboxes your agents own: pick an identity
+            (<code>support@agent.ollastack.com</code>), then send, receive,
+            and reply over the API — inbound is spam-filtered, so the inbox
+            stays clean.
           </p>
           <a class="path-link mono" href="/docs/agent-mail">→ /docs/agent-mail</a>
         </article>
+
+        <article class="path-card">
+          <div class="path-eyebrow mono">test inboxes</div>
+          <h3 class="path-name">Mail testing for CI</h3>
+          <p class="path-body">
+            Disposable inboxes on <code>@test.ollastack.com</code>:
+            <code>/wait</code> for the email, read <code>codes[0]</code> (the
+            OTP), assert. Unfiltered — a test sees every message.
+          </p>
+          <a class="path-link mono" href="/docs/agent-mail#modes">→ /docs/agent-mail</a>
+        </article>
       </div>
+    </div>
+  </section>
+
+  <!-- =============================================================
+       § 0.5 — LIVE API CONSOLE. The api-first centerpiece: three
+       capabilities, real endpoints. The Forms call runs for real
+       in the browser (anonymous sandbox form, CORS-open); the mail
+       calls are real curl you copy into your terminal. Reuses the
+       .code-pane highlight classes + design tokens — no new tokens.
+       ============================================================= -->
+  <section class="api-console" id="api-console">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">/ api-first · call it now</span>
+        <h2 class="display section-title">
+          Three capabilities. One API. Call them live.
+        </h2>
+        <p class="section-sub">
+          Forms in, mail out, inboxes your agents own. The Forms request below
+          <strong>runs for real, right here</strong> — no key, no signup. The mail
+          calls are the exact endpoints; copy them into your terminal with a token.
+        </p>
+      </div>
+
+      <div class="console">
+        <div class="console-tabs" role="tablist" aria-label="Capabilities">
+          <button class="ctab active" data-cap="forms" role="tab" aria-selected="true">📨&nbsp;Forms</button>
+          <button class="ctab" data-cap="mail" role="tab" aria-selected="false">🤖&nbsp;Agent&nbsp;Mail</button>
+          <button class="ctab" data-cap="test" role="tab" aria-selected="false">✅&nbsp;Test&nbsp;inboxes</button>
+          <span class="tabs-spacer"></span>
+          <a class="tabs-meta mono" href="https://login.form4dev.com/api/openapi.json" target="_blank" rel="noopener">self-describing · openapi.json ↗</a>
+        </div>
+
+        <!-- ============ FORMS (live) ============ -->
+        <div class="console-panel" data-cap="forms">
+          <div class="console-req">
+            <pre class="code-pane console-curl"><span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.form4dev.com/api/submit/<span class="hl">contact</span> \
+    -H <span class="str">"Content-Type: application/json"</span> \
+    -d <span class="str">'&#123;"name":"Ada","email":"ada@example.com","message":"Tell me more"&#125;'</span></pre>
+            <div class="console-actions">
+              <button type="button" class="btn btn-accent btn-sm console-run" data-run="forms">▶ Run it live</button>
+              <button type="button" class="btn btn-ghost btn-sm console-copy">Copy</button>
+              <span class="console-hint mono">live sandbox · no token needed</span>
+            </div>
+          </div>
+          <pre class="code-pane console-res" data-res="forms"><span class="muted"># the response shows here — geo (country / city / lat-long) is
+# auto-stamped server-side from Cloudflare visitor headers</span></pre>
+        </div>
+
+        <!-- ============ AGENT MAIL ============ -->
+        <div class="console-panel hidden" data-cap="mail">
+          <div class="console-req">
+            <pre class="code-pane console-curl"><span class="muted"># claim your agent's identity, then send as it</span>
+<span class="prompt">$</span> <span class="cmd">curl</span> https://login.form4dev.com/api/mailboxes/<span class="hl">check-handle</span>?handle=support \
+    -H <span class="str">"Authorization: Bearer fmd_&lt;token&gt;"</span>
+<span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.form4dev.com/api/mailboxes \
+    -H <span class="str">"Authorization: Bearer fmd_&lt;token&gt;"</span> \
+    -d <span class="str">'&#123;"name":"Support","mode":"agent","handle":"support"&#125;'</span>
+<span class="prompt">$</span> <span class="cmd">curl</span> -X POST .../mailboxes/$ID/<span class="hl">send</span> \
+    -d <span class="str">'&#123;"to":"lead@acme.com","subject":"Re: your demo","text":"…"&#125;'</span></pre>
+            <div class="console-actions">
+              <button type="button" class="btn btn-ghost btn-sm console-copy">Copy</button>
+              <span class="console-hint mono">needs a mail token · runs in your terminal</span>
+            </div>
+          </div>
+          <pre class="code-pane console-res"><span class="ok">&#123;"success": true, "data": &#123;
+  "address": "support@agent.ollastack.com",
+  "direction": "outbound", "deliveryStatus": "sent"&#125;&#125;</span>
+<span class="muted"># sends AS your chosen identity · inbound is spam-filtered
+# poll GET .../wait for replies — it never returns spam</span></pre>
+        </div>
+
+        <!-- ============ TEST INBOXES ============ -->
+        <div class="console-panel hidden" data-cap="test">
+          <div class="console-req">
+            <pre class="code-pane console-curl"><span class="muted"># disposable inbox → wait for the email → read the OTP</span>
+<span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.form4dev.com/api/mailboxes \
+    -H <span class="str">"Authorization: Bearer fmd_&lt;token&gt;"</span> \
+    -d <span class="str">'&#123;"name":"signup-ci","mode":"test"&#125;'</span>
+<span class="prompt">$</span> <span class="cmd">curl</span> <span class="str">".../mailboxes/$ID/<span class="hl">wait</span>?timeout=55"</span> \
+    -H <span class="str">"Authorization: Bearer fmd_&lt;token&gt;"</span></pre>
+            <div class="console-actions">
+              <button type="button" class="btn btn-ghost btn-sm console-copy">Copy</button>
+              <span class="console-hint mono">needs a mail token · runs in your terminal</span>
+            </div>
+          </div>
+          <pre class="code-pane console-res"><span class="ok">&#123;"success": true, "data": &#123;"message": &#123;
+  "subject": "Verify your email",
+  "from": "no-reply@yourapp.com",
+  "codes": ["246810"], "links": ["https://…/verify?t=…"]&#125;&#125;&#125;</span>
+<span class="muted"># codes[0] is your OTP · /wait long-polls, returns the instant it lands</span></pre>
+        </div>
+      </div>
+
+      <p class="hero-note mono dropin-note">
+        Full reference + 3 SDKs in the <a href="/docs">docs</a> — the whole surface is in
+        <a href="https://login.form4dev.com/api/openapi.json">/api/openapi.json</a>, CORS-open so your agent reads it itself.
+      </p>
     </div>
   </section>
 
@@ -487,6 +588,72 @@ const APP = "https://login.form4dev.com";
       tabs.forEach((t) => t.classList.toggle("active", t === tab));
       panes.forEach((p) => p.classList.toggle("hidden", p.dataset.lang !== lang));
     });
+  });
+
+  // ---- API console: capability tabs + LIVE Forms run + copy-curl ----
+  const ctabs = document.querySelectorAll<HTMLButtonElement>(".console-tabs .ctab");
+  const cpanels = document.querySelectorAll<HTMLElement>(".console-panel");
+  ctabs.forEach((t) => {
+    t.addEventListener("click", () => {
+      const cap = t.dataset.cap;
+      ctabs.forEach((x) => {
+        const on = x === t;
+        x.classList.toggle("active", on);
+        x.setAttribute("aria-selected", on ? "true" : "false");
+      });
+      cpanels.forEach((p) => p.classList.toggle("hidden", p.dataset.cap !== cap));
+    });
+  });
+
+  document.querySelectorAll<HTMLButtonElement>(".console-copy").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const panel = btn.closest(".console-panel");
+      const code = panel?.querySelector(".console-curl")?.textContent ?? "";
+      navigator.clipboard
+        .writeText(code.trim())
+        .then(() => {
+          const o = btn.textContent;
+          btn.textContent = "Copied ✓";
+          setTimeout(() => { btn.textContent = o; }, 1200);
+        })
+        .catch(() => {});
+    });
+  });
+
+  // The Forms tab runs a REAL anonymous submission against a CORS-open
+  // sandbox form (captcha off) and renders the live response shape.
+  const consoleRun = document.querySelector<HTMLButtonElement>('.console-run[data-run="forms"]');
+  const consoleRes = document.querySelector<HTMLElement>('.console-res[data-res="forms"]');
+  const CONSOLE_SANDBOX = "https://login.form4dev.com/api/submit/uiwaivrpteebnhtt";
+  consoleRun?.addEventListener("click", async () => {
+    if (!consoleRes) return;
+    const original = consoleRun.innerHTML;
+    consoleRun.disabled = true;
+    consoleRun.innerHTML = "Running…";
+    consoleRes.innerHTML = '<span class="muted"># POST /api/submit/contact …</span>';
+    try {
+      const res = await fetch(CONSOLE_SANDBOX, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: "Ada", email: "ada@example.com", message: "Tell me more" }),
+      });
+      const data = (await res.json().catch(() => ({}))) as { success?: boolean; id?: string };
+      const g = detectedGeo ?? {};
+      const shaped = {
+        success: data?.success ?? res.ok,
+        id: data?.id ?? "sub_…",
+        country: g.country_code ?? g.country_name ?? "—",
+        city: g.city ?? "—",
+      };
+      consoleRes.innerHTML =
+        `<span class="muted"># HTTP ${res.status} · real response</span>\n` +
+        '<span class="ok">' + escapeHtml(JSON.stringify(shaped, null, 2)) + "</span>";
+    } catch (err) {
+      consoleRes.innerHTML = '<span class="muted"># network error — please try again</span>';
+    } finally {
+      consoleRun.disabled = false;
+      consoleRun.innerHTML = original;
+    }
   });
 
   // ---- Geo demo: detect visitor location via ipapi.co, then on
@@ -977,6 +1144,54 @@ const APP = "https://login.form4dev.com";
   .code-pane .hl     { color: var(--accent); }
   .code-pane .ok     { color: var(--code-ok); display: inline-block; margin-top: 8px; }
   .code-pane .muted  { color: var(--code-muted, #6b7280); display: inline-block; margin-top: 8px; }
+
+  /* ---- § 0.5 Live API console (reuses .code-pane + tokens) ---- */
+  .api-console { padding: 8px 0 44px; }
+  .console {
+    max-width: 980px;
+    margin: 0 auto;
+    border: 1px solid var(--line);
+    border-radius: var(--r-4);
+    overflow: hidden;
+    background: var(--bg-elev);
+    box-shadow: var(--shadow-card);
+  }
+  .console-tabs {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--line);
+    background: var(--bg-sunken);
+    flex-wrap: wrap;
+  }
+  .ctab {
+    appearance: none;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--muted);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    padding: 6px 12px;
+    border-radius: var(--r-2);
+    cursor: pointer;
+    transition: background 0.12s, color 0.12s, border-color 0.12s;
+  }
+  .ctab:hover { color: var(--ink); background: var(--bg); }
+  .ctab.active { color: var(--ink); background: var(--bg); border-color: var(--line); font-weight: 500; }
+  .console-tabs .tabs-spacer { flex: 1 1 auto; }
+  .console-tabs .tabs-meta { font-size: 12px; color: var(--muted-2); white-space: nowrap; }
+  .console-panel { padding: 16px; display: grid; gap: 12px; }
+  .console-panel.hidden { display: none; }
+  .console-req { display: grid; gap: 10px; align-content: start; }
+  .console-curl, .console-res { margin: 0; }
+  .console-res { min-height: 76px; }
+  .console-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .console-hint { font-size: 12px; color: var(--muted-2); }
+  @media (min-width: 860px) {
+    .console-panel { grid-template-columns: 1fr 1fr; align-items: stretch; }
+    .console-panel .console-res { height: 100%; }
+  }
 
   /* ---- Section heads ---- */
   .section-head {
