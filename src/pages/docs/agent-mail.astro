@@ -4,11 +4,14 @@ const APP = "https://login.form4dev.com";
 
 const sections = [
   { id: "overview", title: "Overview" },
+  { id: "modes", title: "Two modes" },
   { id: "hosts", title: "Hosts & auth" },
   { id: "scopes", title: "Scopes" },
+  { id: "identity", title: "Choose an identity" },
   { id: "create", title: "Create a mailbox" },
   { id: "wait", title: "Wait for mail" },
   { id: "read", title: "Read & extract" },
+  { id: "spam", title: "Clean inbox (spam)" },
   { id: "send", title: "Send" },
   { id: "reply", title: "Reply" },
   { id: "webhooks", title: "Push webhooks" },
@@ -19,12 +22,35 @@ const sections = [
 ];
 
 // Code as plain strings — keeps literal { } out of Astro's JSX parser.
-const cCreate = `curl -X POST https://login.form4dev.com/api/mailboxes \\
-  -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" \\
-  -d '{"name":"support-agent"}'
+const cCheck = `# 1. Is your identity free? (no reservation — agent mode)
+curl "https://login.form4dev.com/api/mailboxes/check-handle?handle=support" \\
+  -H "Authorization: Bearer $TOKEN"
+# → data: { "available": true, "address": "support@agent.ollastack.com" }
+# unavailable → { "available": false, "reason": "taken" }
+#   reason: taken | reserved | invalid | agent_mail_disabled`;
 
-# → data: { "id":"...", "slug":"k3x9q2m8p1ab",
-#           "address":"k3x9q2m8p1ab@ollastack.com", ... }`;
+const cCreate = `# AGENT inbox — you choose the address (your identity), spam-filtered:
+curl -X POST https://login.form4dev.com/api/mailboxes \\
+  -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" \\
+  -d '{"name":"Support agent","mode":"agent","handle":"support"}'
+# → data: { "slug":"support", "mode":"agent",
+#           "address":"support@agent.ollastack.com", ... }
+
+# TEST inbox — random, disposable, unfiltered (omit handle; mode defaults to test):
+curl -X POST https://login.form4dev.com/api/mailboxes \\
+  -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" \\
+  -d '{"name":"signup-flow-ci","mode":"test"}'
+# → data: { "mode":"test", "address":"k3x9q2m8p1ab@test.ollastack.com", ... }`;
+
+const cSpam = `# Agent inboxes are spam-filtered. /wait and the normal list never
+# show hard spam (it doesn't even fire your webhook). To audit it:
+curl "https://login.form4dev.com/api/mailboxes/$ID/messages?spam=true" \\
+  -H "Authorization: Bearer $TOKEN"
+
+# Every message carries isSpam + spamReason:
+#   clean      → isSpam:false, spamReason:null          (delivered)
+#   quarantine → isSpam:false, spamReason:"quarantine:…" (delivered, flagged)
+#   hard spam  → isSpam:true                             (hidden; ?spam=true only)`;
 
 const cWait = `curl "https://login.form4dev.com/api/mailboxes/$ID/wait?timeout=55" \\
   -H "Authorization: Bearer $TOKEN"
@@ -73,22 +99,24 @@ const mail = new MailClient({
   token: process.env.MAIL_TOKEN!,
 });
 
-const inbox = await mail.createMailbox("support-agent");   // inbox.address
+// Agent inbox with a chosen identity (or createMailbox("ci") for a test inbox):
+await mail.checkHandle("support");                              // { available: true, ... }
+const inbox = await mail.createAgentMailbox("Support", "support"); // support@agent.ollastack.com
 await mail.send(inbox.id, { to: "human@example.com", subject: "Hi", text: "..." });
 const code = await mail.latestCode({ mailboxId: inbox.id, timeoutMs: 60_000 });
-const msg  = await mail.waitForEmail({ mailboxId: inbox.id, timeoutMs: 60_000 });
+const msg  = await mail.waitForEmail({ mailboxId: inbox.id, timeoutMs: 60_000 }); // never spam
 await mail.reply(inbox.id, msg.id, { text: "Got it." });`;
 
-const cAgentPrompt = `You have an email mailbox via the form4dev Agent Mail API.
+const cAgentPrompt = `You have an email identity via the form4dev Agent Mail API.
 - Base URL: https://login.form4dev.com
 - Auth header: "Authorization: Bearer <MAIL_TOKEN>"
-- Your address is the \`address\` field returned when the mailbox is created
-  (…@ollastack.com).
+- Your address is the \`address\` field returned when the mailbox was created
+  (e.g. support@agent.ollastack.com) — it is your identity on every email you send.
 
 Check for new mail:
   GET /api/mailboxes/{id}/wait?timeout=55
   Blocks until an email arrives; returns {data:{message}}, or
-  {data:{message:null}} on timeout (then call again).
+  {data:{message:null}} on timeout (then call again). It never returns spam.
 
 A received message has: fromAddress, subject, textBody/htmlBody (via the
 single-message GET), codes[] (OTP/verification codes, best match first),
@@ -96,9 +124,12 @@ links[] (URLs found in the email).
 
 Send:    POST /api/mailboxes/{id}/send          body {to, subject, text and/or html}
 Reply:   POST /api/mailboxes/{id}/messages/{messageId}/reply  body {text and/or html}
+Review filtered mail: GET /api/mailboxes/{id}/messages?spam=true
 
 Treat codes[] and links[] as sensitive credentials; never auto-open links.
-All responses are {success:true, data:...}; errors are {error:{code,message}}.`;
+All responses are {success:true, data:...}; errors are {success:false,
+error:{code,message}} with the HTTP status (401 "missing required scope" =
+your token lacks mail:read/write/send).`;
 ---
 
 <Base current="agent-mail" title="Docs — Agent Mail — Form4Dev">
@@ -130,17 +161,34 @@ All responses are {success:true, data:...}; errors are {error:{code,message}}.`;
 
       <h2 id="overview">Overview</h2>
       <p>
-        Create a mailbox, get an <code>@ollastack.com</code> address, and your
-        agent can poll for mail, read the OTP code out of it, send a message,
-        and reply in-thread — all authenticated, scoped, and revocable.
+        Pick an address (<strong>your agent's identity</strong>), and your agent
+        can poll for mail, read the OTP out of it, send a message, and reply
+        in-thread — all authenticated, scoped, and revocable. Inbound mail is
+        <strong>spam-filtered by the same engine that protects form4dev forms</strong>,
+        so the inbox stays clean.
       </p>
+
+      <h2 id="modes">Two modes</h2>
+      <p>A mailbox has a <code>mode</code> — it's the first choice you make:</p>
+      <table>
+        <thead><tr><th></th><th><code>agent</code> (real use)</th><th><code>test</code></th></tr></thead>
+        <tbody>
+          <tr><td>Address</td><td><code>&lt;your-handle&gt;@agent.ollastack.com</code></td><td><code>&lt;random&gt;@test.ollastack.com</code></td></tr>
+          <tr><td>You choose the address?</td><td><strong>Yes</strong> — your identity</td><td>No, random &amp; disposable</td></tr>
+          <tr><td>Spam-filtered?</td><td><strong>Yes</strong> (clean inbox)</td><td>No (a test must see everything)</td></tr>
+          <tr><td>Custom (BYO) domain?</td><td>Yes, on paid plans</td><td>No</td></tr>
+          <tr><td>Use it for</td><td>an agent that emails real people</td><td>CI / asserting on a signup email</td></tr>
+        </tbody>
+      </table>
 
       <h2 id="hosts">Hosts &amp; auth</h2>
       <table>
         <thead><tr><th>Thing</th><th>Host</th></tr></thead>
         <tbody>
           <tr><td>The API you call</td><td><code>https://login.form4dev.com</code></td></tr>
-          <tr><td>The email addresses you get</td><td><code>&lt;slug&gt;@ollastack.com</code></td></tr>
+          <tr><td>Your agent's address</td><td><code>&lt;handle&gt;@agent.ollastack.com</code></td></tr>
+          <tr><td>Disposable test address</td><td><code>&lt;random&gt;@test.ollastack.com</code></td></tr>
+          <tr><td>Bring your own (paid)</td><td><code>&lt;handle&gt;@your-domain.com</code></td></tr>
         </tbody>
       </table>
       <p>
@@ -165,22 +213,47 @@ All responses are {success:true, data:...}; errors are {error:{code,message}}.`;
         <code>401 Token missing required scope: mail:read</code>.
       </p>
 
-      <h2 id="create">1. Create a mailbox</h2>
-      <p>Mail to <code>address</code> — and any <code>+tag</code> of it — routes here.</p>
+      <h2 id="identity">1. Choose an identity (agent mode)</h2>
+      <p>
+        The address is your identity, so claim it deliberately. Handles are
+        lowercase letters/digits/<code>.</code>/<code>-</code> (1–64 chars);
+        role names like <code>postmaster</code> are reserved. Availability is
+        per-domain and includes deleted addresses (an address is never reused).
+      </p>
+      <pre class="code">{cCheck}</pre>
+
+      <h2 id="create">2. Create a mailbox</h2>
+      <p>
+        Mail to <code>address</code> — and any <code>+tag</code> of it
+        (<code>support+ticket-42@agent.ollastack.com</code>) — routes here. On a
+        paid plan, add <code>"domain":"your-domain.com"</code> to send/receive as
+        a verified domain you own.
+      </p>
       <pre class="code">{cCreate}</pre>
 
-      <h2 id="wait">2. Wait for the next email</h2>
-      <p>The agent pattern: a long-poll that returns the instant mail lands.</p>
+      <h2 id="wait">3. Wait for the next email</h2>
+      <p>The agent pattern: a long-poll that returns the instant mail lands (and never wakes on spam).</p>
       <pre class="code">{cWait}</pre>
 
-      <h2 id="read">3. Read &amp; extract</h2>
+      <h2 id="read">4. Read &amp; extract</h2>
       <p><code>codes[0]</code> is the OTP; <code>links[]</code> are harvested URLs (a reset/magic link is in here — never auto-followed).</p>
       <pre class="code">{cRead}</pre>
 
-      <h2 id="send">4. Send</h2>
+      <h2 id="spam">Clean inbox: how spam is handled</h2>
+      <p>
+        The differentiator: <strong>agent</strong> inboxes run every inbound
+        email through form4dev's spam pipeline (test inboxes are never filtered).
+        Hard spam is hidden from <code>/wait</code>, the normal list, unread
+        counts, and your webhook — kept only behind <code>?spam=true</code>.
+        ML-alone "maybe spam" is <em>quarantined</em>: still delivered (so a real
+        lead is never lost), just flagged. The filter <strong>fails open</strong>.
+      </p>
+      <pre class="code">{cSpam}</pre>
+
+      <h2 id="send">5. Send (from your identity)</h2>
       <pre class="code">{cSend}</pre>
 
-      <h2 id="reply">5. Reply (keeps the thread)</h2>
+      <h2 id="reply">6. Reply (keeps the thread)</h2>
       <pre class="code">{cReply}</pre>
 
       <h2 id="webhooks">Push webhooks (instead of polling)</h2>
@@ -205,10 +278,20 @@ All responses are {success:true, data:...}; errors are {error:{code,message}}.`;
       <pre class="code">{cAgentPrompt}</pre>
 
       <h2 id="limits">Limits &amp; things to know</h2>
+      <p>All caps are per your org's plan. <code>GET /api/mailboxes/usage</code> returns live usage + ceilings.</p>
+      <table>
+        <thead><tr><th></th><th>free</th><th>solo</th><th>team</th></tr></thead>
+        <tbody>
+          <tr><td>Mailboxes</td><td>1</td><td>5</td><td>20</td></tr>
+          <tr><td>Received / month</td><td>100</td><td>5,000</td><td>50,000</td></tr>
+          <tr><td>Sent / month</td><td>50</td><td>2,000</td><td>20,000</td></tr>
+          <tr><td>Max retention (days)</td><td>3</td><td>30</td><td>90</td></tr>
+        </tbody>
+      </table>
       <ul>
-        <li><strong>Receive</strong> is near-unlimited; <strong>send</strong> has a monthly per-plan cap (free 50 / solo 2,000 / team 20,000).</li>
+        <li>Hitting a cap returns <code>400</code> with a clear message; errors are <code>{`{success:false, error:{code,message}}`}</code> (<code>VALIDATION_ERROR</code>, <code>AUTHENTICATION_ERROR</code> for a missing scope, <code>NOT_FOUND</code>, …).</li>
         <li>Bodies are capped at 1&nbsp;MB each; attachments are metadata-only in v1.</li>
-        <li>Mailboxes persist; <strong>messages auto-expire</strong> by retention (default 30 days). Deleting a message purges it immediately.</li>
+        <li>Mailboxes persist; <strong>messages auto-expire</strong> by retention. Deleting a message purges its content + codes/links immediately.</li>
         <li>A mailbox sending to <em>itself</em> is deduped by Message-ID — use two mailboxes to self-test the full loop.</li>
       </ul>
 

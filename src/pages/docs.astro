@@ -87,14 +87,14 @@ const sections = [
             <td><a href="/docs/agents">For agents →</a></td>
           </tr>
           <tr>
-            <td><strong>Give an agent an email inbox</strong> (send / receive / reply)</td>
-            <td><code>/api/mailboxes</code>, <code>…/send</code>, <code>…/wait</code></td>
-            <td><a href="/docs/agent-mail">Agent Mail →</a></td>
+            <td><strong>Give an agent an email identity</strong> (chosen address, spam-filtered, send / receive / reply)</td>
+            <td><code>/api/mailboxes/check-handle</code>, <code>/api/mailboxes</code>, <code>…/send</code>, <code>…/wait</code></td>
+            <td><a href="/docs/agent-mail#identity">Agent Mail →</a></td>
           </tr>
           <tr>
-            <td>Test emails / OTPs in CI</td>
+            <td>Test emails / OTPs in CI (disposable inbox)</td>
             <td><code>/api/mailboxes/&#123;id&#125;/wait</code></td>
-            <td><a href="/docs/agent-mail#wait">Agent Mail →</a></td>
+            <td><a href="/docs/agent-mail#modes">Agent Mail →</a></td>
           </tr>
           <tr>
             <td>Manage tokens &amp; scopes</td>
