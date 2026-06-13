@@ -192,9 +192,10 @@ const APP = "https://login.form4dev.com";
           Three capabilities. One API. Call them live.
         </h2>
         <p class="section-sub">
-          Forms in, mail out, inboxes your agents own. The Forms request below
-          <strong>runs for real, right here</strong> — no key, no signup. The mail
-          calls are the exact endpoints; copy them into your terminal with a token.
+          Forms in, mail out, inboxes your agents own. The <strong>Forms</strong> and
+          <strong>Test-inbox</strong> demos <strong>run for real, right here</strong> —
+          no key, no signup. The Agent&nbsp;Mail send is the exact endpoint; copy it
+          into your terminal with a token.
         </p>
       </div>
 
@@ -256,15 +257,13 @@ const APP = "https://login.form4dev.com";
 <span class="prompt">$</span> <span class="cmd">curl</span> <span class="str">".../mailboxes/$ID/<span class="hl">wait</span>?timeout=55"</span> \
     -H <span class="str">"Authorization: Bearer fmd_&lt;token&gt;"</span></pre>
             <div class="console-actions">
+              <button type="button" class="btn btn-accent btn-sm console-run" data-run="test">▶ Run it live</button>
               <button type="button" class="btn btn-ghost btn-sm console-copy">Copy</button>
-              <span class="console-hint mono">needs a mail token · runs in your terminal</span>
+              <span class="console-hint mono">live · no token needed</span>
             </div>
           </div>
-          <pre class="code-pane console-res"><span class="ok">&#123;"success": true, "data": &#123;"message": &#123;
-  "subject": "Verify your email",
-  "from": "no-reply@yourapp.com",
-  "codes": ["246810"], "links": ["https://…/verify?t=…"]&#125;&#125;&#125;</span>
-<span class="muted"># codes[0] is your OTP · /wait long-polls, returns the instant it lands</span></pre>
+          <pre class="code-pane console-res" data-res="test"><span class="muted"># click Run — the live engine generates a verification email,
+# parses it, and extracts the OTP, exactly like /wait + codes[0] in CI</span></pre>
         </div>
       </div>
 
@@ -653,6 +652,48 @@ const APP = "https://login.form4dev.com";
     } finally {
       consoleRun.disabled = false;
       consoleRun.innerHTML = original;
+    }
+  });
+
+  // The Test-inboxes tab runs the REAL parse/extract engine via a public,
+  // no-auth, rate-limited demo endpoint (no token in the browser). Staged
+  // reveal so the OTP feels like it's arriving live.
+  const testRun = document.querySelector<HTMLButtonElement>('.console-run[data-run="test"]');
+  const testRes = document.querySelector<HTMLElement>('.console-res[data-res="test"]');
+  const DEMO_MAIL = "https://login.form4dev.com/api/demo/mail";
+  const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+  testRun?.addEventListener("click", async () => {
+    if (!testRes) return;
+    const original = testRun.innerHTML;
+    testRun.disabled = true;
+    testRun.innerHTML = "Running…";
+    testRes.innerHTML = '<span class="muted"># 📤 a verification email is on its way…</span>';
+    try {
+      const [res] = await Promise.all([
+        fetch(DEMO_MAIL, { method: "POST", headers: { "Content-Type": "application/json" }, body: "{}" }),
+        sleep(900),
+      ]);
+      const body = (await res.json().catch(() => ({}))) as {
+        data?: { to?: string; subject?: string; fromAddress?: string; codes?: string[]; links?: string[]; otp?: string | null };
+        error?: { message?: string };
+      };
+      const d = body?.data;
+      if (!res.ok || !d) {
+        testRes.innerHTML = '<span class="muted"># ' + escapeHtml(body?.error?.message ?? "please try again") + "</span>";
+        return;
+      }
+      testRes.innerHTML = '<span class="muted"># 📨 delivering to ' + escapeHtml(d.to ?? "") + "…</span>";
+      await sleep(650);
+      const shaped = { to: d.to, subject: d.subject, from: d.fromAddress, codes: d.codes, links: d.links };
+      testRes.innerHTML =
+        '<span class="ok"># ✓ arrived — parsed by the live engine</span>\n' +
+        '<span class="ok">' + escapeHtml(JSON.stringify(shaped, null, 2)) + "</span>\n" +
+        '<span class="muted"># codes[0] = </span><span class="ok">' + escapeHtml(d.otp ?? "—") + '</span><span class="muted"> ← your OTP</span>';
+    } catch (err) {
+      testRes.innerHTML = '<span class="muted"># network error — please try again</span>';
+    } finally {
+      testRun.disabled = false;
+      testRun.innerHTML = original;
     }
   });
 
