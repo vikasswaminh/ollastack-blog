@@ -1,7 +1,7 @@
 ---
 import BlogPost from "../../layouts/BlogPost.astro";
 
-const APP = "https://login.form4dev.com";
+const APP = "https://login.ollastack.com";
 ---
 
 <BlogPost
@@ -64,7 +64,7 @@ const APP = "https://login.form4dev.com";
     of email-deliverability land.
   </p>
   <p>The minimum-viable version is six lines of HTML:</p>
-  <pre class="code">&lt;form action=<span class="s">"https://login.form4dev.com/api/submit/contact"</span> method=<span class="s">"POST"</span>&gt;
+  <pre class="code">&lt;form action=<span class="s">"https://login.ollastack.com/api/submit/contact"</span> method=<span class="s">"POST"</span>&gt;
   &lt;input name=<span class="s">"email"</span> type=<span class="s">"email"</span> required&gt;
   &lt;textarea name=<span class="s">"message"</span> required&gt;&lt;/textarea&gt;
   &lt;input type=<span class="s">"text"</span> name=<span class="s">"_gotcha"</span> style=<span class="s">"display:none"</span>&gt;
@@ -144,7 +144,7 @@ const APP = "https://login.form4dev.com";
   <h2 id="setup">The setup, end to end</h2>
   <p>
     Here's the actual flow, using
-    <a href="https://form4dev.com">Form4Dev</a> as the example.
+    <a href="https://ollastack.com">Ollastack</a> as the example.
     Other form backends work similarly — the principles transfer.
   </p>
 
@@ -162,7 +162,7 @@ const APP = "https://login.form4dev.com";
     <code>email</code> field — that's what the service uses to
     route replies automatically.
   </p>
-  <pre class="code">&lt;form action=<span class="s">"https://login.form4dev.com/api/submit/contact"</span> method=<span class="s">"POST"</span>&gt;
+  <pre class="code">&lt;form action=<span class="s">"https://login.ollastack.com/api/submit/contact"</span> method=<span class="s">"POST"</span>&gt;
   &lt;label&gt;Your email
     &lt;input name=<span class="s">"email"</span> type=<span class="s">"email"</span> required&gt;
   &lt;/label&gt;
@@ -331,7 +331,7 @@ const APP = "https://login.form4dev.com";
     because the unsexy parts are someone else's full-time job.
   </p>
   <p>
-    We built <a href="https://form4dev.com">Form4Dev</a> because
+    We built <a href="https://ollastack.com">Ollastack</a> because
     we wanted a form backend that treated developers — and the AI
     agents increasingly submitting on their behalf — as
     first-class users. If that sounds like what you're after,

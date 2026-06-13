@@ -12,7 +12,7 @@ export const posts: PostMeta[] = [
     title:
       "Formspree alternatives in 2026: an honest comparison from someone building one",
     description:
-      "If you're shopping for a Formspree alternative, here's the landscape — Basin, Formcarry, Forminit, Web3Forms, Netlify Forms, Formspark, Form4Dev — with the tradeoffs each one carries. Including cases where Formspree is still the right call.",
+      "If you're shopping for a Formspree alternative, here's the landscape — Basin, Formcarry, Forminit, Web3Forms, Netlify Forms, Formspark, Ollastack — with the tradeoffs each one carries. Including cases where Formspree is still the right call.",
     date: "2026-05-16",
     readingTime: "13 min read",
   },
@@ -45,7 +45,7 @@ export const posts: PostMeta[] = [
     title:
       "Forminit alternatives in 2026 (formerly Getform): an honest comparison",
     description:
-      "Getform rebranded to Forminit in early 2026. A straight comparison of the form backends worth considering — Formspree, Basin, Formcarry, Web3Forms, Netlify Forms, Formspark, Form4Dev — with the tradeoffs each carries.",
+      "Getform rebranded to Forminit in early 2026. A straight comparison of the form backends worth considering — Formspree, Basin, Formcarry, Web3Forms, Netlify Forms, Formspark, Ollastack — with the tradeoffs each carries.",
     date: "2026-05-16",
     readingTime: "11 min read",
   },

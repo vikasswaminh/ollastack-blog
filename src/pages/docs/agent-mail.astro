@@ -1,6 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
-const APP = "https://login.form4dev.com";
+const APP = "https://login.ollastack.com";
 
 const sections = [
   { id: "overview", title: "Overview" },
@@ -23,28 +23,28 @@ const sections = [
 
 // Code as plain strings — keeps literal { } out of Astro's JSX parser.
 const cCheck = `# 1. Is your identity free? (no reservation — agent mode)
-curl "https://login.form4dev.com/api/mailboxes/check-handle?handle=support" \\
+curl "https://login.ollastack.com/api/mailboxes/check-handle?handle=support" \\
   -H "Authorization: Bearer $TOKEN"
 # → data: { "available": true, "address": "support@agent.ollastack.com" }
 # unavailable → { "available": false, "reason": "taken" }
 #   reason: taken | reserved | invalid | agent_mail_disabled`;
 
 const cCreate = `# AGENT inbox — you choose the address (your identity), spam-filtered:
-curl -X POST https://login.form4dev.com/api/mailboxes \\
+curl -X POST https://login.ollastack.com/api/mailboxes \\
   -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" \\
   -d '{"name":"Support agent","mode":"agent","handle":"support"}'
 # → data: { "slug":"support", "mode":"agent",
 #           "address":"support@agent.ollastack.com", ... }
 
 # TEST inbox — random, disposable, unfiltered (omit handle; mode defaults to test):
-curl -X POST https://login.form4dev.com/api/mailboxes \\
+curl -X POST https://login.ollastack.com/api/mailboxes \\
   -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" \\
   -d '{"name":"signup-flow-ci","mode":"test"}'
 # → data: { "mode":"test", "address":"k3x9q2m8p1ab@test.ollastack.com", ... }`;
 
 const cSpam = `# Agent inboxes are spam-filtered. /wait and the normal list never
 # show hard spam (it doesn't even fire your webhook). To audit it:
-curl "https://login.form4dev.com/api/mailboxes/$ID/messages?spam=true" \\
+curl "https://login.ollastack.com/api/mailboxes/$ID/messages?spam=true" \\
   -H "Authorization: Bearer $TOKEN"
 
 # Every message carries isSpam + spamReason:
@@ -52,7 +52,7 @@ curl "https://login.form4dev.com/api/mailboxes/$ID/messages?spam=true" \\
 #   quarantine → isSpam:false, spamReason:"quarantine:…" (delivered, flagged)
 #   hard spam  → isSpam:true                             (hidden; ?spam=true only)`;
 
-const cWait = `curl "https://login.form4dev.com/api/mailboxes/$ID/wait?timeout=55" \\
+const cWait = `curl "https://login.ollastack.com/api/mailboxes/$ID/wait?timeout=55" \\
   -H "Authorization: Bearer $TOKEN"
 
 # blocks until mail arrives, then →
@@ -63,14 +63,14 @@ const cWait = `curl "https://login.form4dev.com/api/mailboxes/$ID/wait?timeout=5
 
 const cRead = `# list (newest first; bodies omitted)
 #   ?direction=inbound|outbound  ?q=<search>  ?unread=true
-curl "https://login.form4dev.com/api/mailboxes/$ID/messages" \\
+curl "https://login.ollastack.com/api/mailboxes/$ID/messages" \\
   -H "Authorization: Bearer $TOKEN"
 
 # full message incl. textBody, htmlBody, codes[], links[]  (marks read)
-curl "https://login.form4dev.com/api/mailboxes/$ID/messages/$MSG_ID" \\
+curl "https://login.ollastack.com/api/mailboxes/$ID/messages/$MSG_ID" \\
   -H "Authorization: Bearer $TOKEN"`;
 
-const cSend = `curl -X POST https://login.form4dev.com/api/mailboxes/$ID/send \\
+const cSend = `curl -X POST https://login.ollastack.com/api/mailboxes/$ID/send \\
   -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" \\
   -d '{"to":"human@example.com","subject":"Your report","text":"All nominal."}'
 
@@ -78,7 +78,7 @@ const cSend = `curl -X POST https://login.form4dev.com/api/mailboxes/$ID/send \\
 # → data: { ..., "direction":"outbound", "deliveryStatus":"sent" }`;
 
 const cReply = `curl -X POST \\
-  https://login.form4dev.com/api/mailboxes/$ID/messages/$MSG_ID/reply \\
+  https://login.ollastack.com/api/mailboxes/$ID/messages/$MSG_ID/reply \\
   -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" \\
   -d '{"text":"Thanks — handled."}'
 
@@ -95,7 +95,7 @@ const cWebhook = `X-Mail-Signature: v1=<hex HMAC-SHA256 of the raw body,
 const cSdk = `import { MailClient } from "@form4dev/client";
 
 const mail = new MailClient({
-  baseUrl: "https://login.form4dev.com",
+  baseUrl: "https://login.ollastack.com",
   token: process.env.MAIL_TOKEN!,
 });
 
@@ -107,8 +107,8 @@ const code = await mail.latestCode({ mailboxId: inbox.id, timeoutMs: 60_000 });
 const msg  = await mail.waitForEmail({ mailboxId: inbox.id, timeoutMs: 60_000 }); // never spam
 await mail.reply(inbox.id, msg.id, { text: "Got it." });`;
 
-const cAgentPrompt = `You have an email identity via the form4dev Agent Mail API.
-- Base URL: https://login.form4dev.com
+const cAgentPrompt = `You have an email identity via the ollastack Agent Mail API.
+- Base URL: https://login.ollastack.com
 - Auth header: "Authorization: Bearer <MAIL_TOKEN>"
 - Your address is the \`address\` field returned when the mailbox was created
   (e.g. support@agent.ollastack.com) — it is your identity on every email you send.
@@ -132,7 +132,7 @@ error:{code,message}} with the HTTP status (401 "missing required scope" =
 your token lacks mail:read/write/send).`;
 ---
 
-<Base current="agent-mail" title="Docs — Agent Mail — Form4Dev">
+<Base current="agent-mail" title="Docs — Agent Mail — Ollastack">
   <div class="docs-shell container-wide">
     <aside class="sidebar">
       <div class="side-eyebrow mono">/ docs / agent-mail</div>
@@ -164,7 +164,7 @@ your token lacks mail:read/write/send).`;
         Pick an address (<strong>your agent's identity</strong>), and your agent
         can poll for mail, read the OTP out of it, send a message, and reply
         in-thread — all authenticated, scoped, and revocable. Inbound mail is
-        <strong>spam-filtered by the same engine that protects form4dev forms</strong>,
+        <strong>spam-filtered by the same engine that protects ollastack forms</strong>,
         so the inbox stays clean.
       </p>
 
@@ -185,7 +185,7 @@ your token lacks mail:read/write/send).`;
       <table>
         <thead><tr><th>Thing</th><th>Host</th></tr></thead>
         <tbody>
-          <tr><td>The API you call</td><td><code>https://login.form4dev.com</code></td></tr>
+          <tr><td>The API you call</td><td><code>https://login.ollastack.com</code></td></tr>
           <tr><td>Your agent's address</td><td><code>&lt;handle&gt;@agent.ollastack.com</code></td></tr>
           <tr><td>Disposable test address</td><td><code>&lt;random&gt;@test.ollastack.com</code></td></tr>
           <tr><td>Bring your own (paid)</td><td><code>&lt;handle&gt;@your-domain.com</code></td></tr>
@@ -242,7 +242,7 @@ your token lacks mail:read/write/send).`;
       <h2 id="spam">Clean inbox: how spam is handled</h2>
       <p>
         The differentiator: <strong>agent</strong> inboxes run every inbound
-        email through form4dev's spam pipeline (test inboxes are never filtered).
+        email through ollastack's spam pipeline (test inboxes are never filtered).
         Hard spam is hidden from <code>/wait</code>, the normal list, unread
         counts, and your webhook — kept only behind <code>?spam=true</code>.
         ML-alone "maybe spam" is <em>quarantined</em>: still delivered (so a real

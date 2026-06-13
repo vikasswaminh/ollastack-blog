@@ -12,13 +12,13 @@ interface Props {
   ctaLocation: string;
 }
 
-const APP = "https://login.form4dev.com";
+const APP = "https://login.ollastack.com";
 const { slug, title, description, publishedAt, updatedAt, readingTime, ctaLocation } = Astro.props;
 
 const related: PostMeta[] = posts.filter((p) => p.slug !== slug).slice(0, 3);
 ---
 
-<Base title={`${title} — Form4Dev`} description={description} current="blog">
+<Base title={`${title} — Ollastack`} description={description} current="blog">
   <div class="blog-shell container-wide">
     <aside class="left-rail">
       <a href="/blog" class="back mono">← All posts</a>
@@ -44,14 +44,14 @@ const related: PostMeta[] = posts.filter((p) => p.slug !== slug).slice(0, 3);
         <p class="muted-note last-updated">
           Last updated {fmtDate(updatedAt)}. Spotted something out of
           date? Email
-          <a href="mailto:hello@form4dev.com">hello@form4dev.com</a>.
+          <a href="mailto:hello@ollastack.com">hello@ollastack.com</a>.
         </p>
       </section>
     </article>
 
     <aside class="right-rail">
       <div class="cta-card">
-        <div class="cta-eyebrow mono">Form4Dev</div>
+        <div class="cta-eyebrow mono">Ollastack</div>
         <p class="cta-line">
           A form backend built for developers — and the agents
           increasingly submitting on their behalf.

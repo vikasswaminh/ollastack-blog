@@ -1,6 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
-const APP = "https://login.form4dev.com";
+const APP = "https://login.ollastack.com";
 
 const sections = [
   { id: "why", title: "Why custom SMTP?" },
@@ -12,7 +12,7 @@ const sections = [
 ];
 ---
 
-<Base current="docs" title="Docs — Custom SMTP — Form4Dev">
+<Base current="docs" title="Docs — Custom SMTP — Ollastack">
   <div class="docs-shell container-wide">
     <aside class="sidebar">
       <div class="side-eyebrow mono">/ docs / smtp</div>
@@ -38,7 +38,7 @@ const sections = [
 
       <h2 id="why">Why custom SMTP?</h2>
       <ul>
-        <li><strong>Brand</strong> — emails come from <code>you@yourdomain.com</code>, not <code>noreply@form4dev.com</code>.</li>
+        <li><strong>Brand</strong> — emails come from <code>you@yourdomain.com</code>, not <code>noreply@ollastack.com</code>.</li>
         <li><strong>Deliverability</strong> — your own SPF/DKIM/DMARC reputation, not ours.</li>
         <li><strong>Compliance</strong> — useful when your privacy policy promises mail never leaves your infrastructure.</li>
         <li><strong>Cost</strong> — you're already paying for SMTP somewhere; reuse it.</li>
@@ -66,7 +66,7 @@ const sections = [
         a daily cron re-checks all configured tenants.
       </p>
       <pre class="code"><span class="prompt">$</span> <span class="k">curl</span> -X POST {APP}/api/orgs/<span class="hl">&lt;orgId&gt;</span>/smtp/test \
-     -H <span class="s">"Cookie: form4dev_session=…"</span>
+     -H <span class="s">"Cookie: ollastack_session=…"</span>
 <span class="ok">{`{"success": true, "data": {"ok": true}}`}</span></pre>
 
       <h2 id="fallback">Fallback behavior</h2>

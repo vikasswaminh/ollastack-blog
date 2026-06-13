@@ -1,6 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
-const APP = "https://login.form4dev.com";
+const APP = "https://login.ollastack.com";
 
 const sections = [
   { id: "overview", title: "How it works" },
@@ -17,7 +17,7 @@ const sections = [
 ];
 ---
 
-<Base current="docs" title="Docs — Connect to 1,000+ apps — Form4Dev">
+<Base current="docs" title="Docs — Connect to 1,000+ apps — Ollastack">
   <div class="docs-shell container-wide">
     <aside class="sidebar">
       <div class="side-eyebrow mono">/ docs / integrations</div>
@@ -37,18 +37,18 @@ const sections = [
       <span class="chip mono"><span class="dot"></span>integrations</span>
       <h1 class="display">Connect to 1,000+ apps via Zapier, Make, n8n, or Activepieces.</h1>
       <p class="lede">
-        Every form on Form4Dev can push to a signed webhook on every
+        Every form on Ollastack can push to a signed webhook on every
         submission. That single webhook is all Zapier, Make, n8n, and
         Activepieces need to wire your form to Gmail, Google Sheets,
         Notion, HubSpot, Slack, Airtable, Pipedrive, Trello — anything
-        any of them supports. You don't need a separate Form4Dev
+        any of them supports. You don't need a separate Ollastack
         connector. The webhook is the connector.
       </p>
 
       <h2 id="overview">How it works — 60 seconds</h2>
       <ol>
         <li>In your workflow tool (Zapier / Make / n8n / Activepieces), create a new flow with a <strong>Webhook</strong> trigger. The tool gives you a unique webhook URL.</li>
-        <li>Open your form in <a href={`${APP}/dashboard`}>Form4Dev → Webhooks</a>, click <strong>Add webhook</strong>, paste that URL, save.</li>
+        <li>Open your form in <a href={`${APP}/dashboard`}>Ollastack → Webhooks</a>, click <strong>Add webhook</strong>, paste that URL, save.</li>
         <li>Submit a test entry to your form. The webhook fires within a second; your workflow tool now sees a sample payload and you can map the fields to a destination — Gmail, Sheets, Notion, whatever your tool supports.</li>
       </ol>
       <p>That's the whole pattern. The four recipes below are just the same three steps with each tool's UI labels.</p>
@@ -88,11 +88,11 @@ const sections = [
         <thead><tr><th>header</th><th>value</th></tr></thead>
         <tbody>
           <tr><td><code>Content-Type</code></td><td><code>application/json</code></td></tr>
-          <tr><td><code>User-Agent</code></td><td><code>Form4Dev-Webhook/1.0</code> — allowlist this if your edge proxies block unknown UAs.</td></tr>
-          <tr><td><code>X-Form4Dev-Event</code></td><td>e.g. <code>submission.created</code> — useful when one endpoint handles multiple event types.</td></tr>
-          <tr><td><code>X-Form4Dev-Delivery</code></td><td>Unique delivery ID. If you retry a downstream action, dedupe on this so a retried delivery doesn't double-post.</td></tr>
-          <tr><td><code>X-Form4Dev-Attempt</code></td><td>1 on the first try, 2..5 on retries.</td></tr>
-          <tr><td><code>X-Form4Dev-Signature</code></td><td><code>sha256=&lt;hex&gt;</code> HMAC-SHA256 over the raw request body, using your webhook's secret. Only sent when a secret is configured.</td></tr>
+          <tr><td><code>User-Agent</code></td><td><code>Ollastack-Webhook/1.0</code> — allowlist this if your edge proxies block unknown UAs.</td></tr>
+          <tr><td><code>X-Ollastack-Event</code></td><td>e.g. <code>submission.created</code> — useful when one endpoint handles multiple event types.</td></tr>
+          <tr><td><code>X-Ollastack-Delivery</code></td><td>Unique delivery ID. If you retry a downstream action, dedupe on this so a retried delivery doesn't double-post.</td></tr>
+          <tr><td><code>X-Ollastack-Attempt</code></td><td>1 on the first try, 2..5 on retries.</td></tr>
+          <tr><td><code>X-Ollastack-Signature</code></td><td><code>sha256=&lt;hex&gt;</code> HMAC-SHA256 over the raw request body, using your webhook's secret. Only sent when a secret is configured.</td></tr>
         </tbody>
       </table>
 
@@ -102,13 +102,13 @@ const sections = [
         check signatures — they trust the URL is hard to guess. Fine for
         most cases. If you're running n8n on your own server or a custom
         endpoint and want HMAC verification, set a secret on the webhook
-        in Form4Dev and verify it like this:
+        in Ollastack and verify it like this:
       </p>
       <pre class="code"><span class="k">import</span> <span class="p">{`{`}</span> createHmac, timingSafeEqual <span class="p">{`}`}</span> <span class="k">from</span> <span class="s">"node:crypto"</span><span class="p">;</span>
 
 <span class="k">const</span> raw <span class="p">=</span> <span class="k">await</span> request.text<span class="p">();</span>
 <span class="k">const</span> expected <span class="p">=</span> <span class="s">"sha256="</span> <span class="p">+</span> <span class="fn">createHmac</span><span class="p">(</span><span class="s">"sha256"</span><span class="p">, </span>secret<span class="p">).</span><span class="fn">update</span><span class="p">(</span>raw<span class="p">).</span><span class="fn">digest</span><span class="p">(</span><span class="s">"hex"</span><span class="p">);</span>
-<span class="k">const</span> sent <span class="p">=</span> request.headers.<span class="fn">get</span><span class="p">(</span><span class="s">"x-form4dev-signature"</span><span class="p">) ?? </span><span class="s">""</span><span class="p">;</span>
+<span class="k">const</span> sent <span class="p">=</span> request.headers.<span class="fn">get</span><span class="p">(</span><span class="s">"x-ollastack-signature"</span><span class="p">) ?? </span><span class="s">""</span><span class="p">;</span>
 <span class="k">if</span> <span class="p">(</span>sent.length <span class="p">!==</span> expected.length <span class="p">||</span>
     <span class="p">!</span><span class="fn">timingSafeEqual</span><span class="p">(</span><span class="fn">Buffer.from</span><span class="p">(</span>sent<span class="p">), </span><span class="fn">Buffer.from</span><span class="p">(</span>expected<span class="p">))) {`{`}</span>
   <span class="k">return</span> <span class="k">new</span> <span class="fn">Response</span><span class="p">(</span><span class="s">"bad signature"</span><span class="p">, {`{`} </span>status<span class="p">: </span><span class="k">401</span> <span class="p">{`}`});</span>
@@ -138,42 +138,42 @@ const sections = [
         replaying or debugging starts there.
       </p>
 
-      <h2 id="zapier">Recipe: Form4Dev → Zapier → anything</h2>
+      <h2 id="zapier">Recipe: Ollastack → Zapier → anything</h2>
       <ol>
         <li>In Zapier, click <strong>Create Zap</strong>. For the trigger, pick <strong>Webhooks by Zapier</strong> → <strong>Catch Hook</strong>.</li>
         <li>Zapier shows you a unique URL like <code>https://hooks.zapier.com/hooks/catch/12345/abcdef/</code>. Copy it.</li>
-        <li>Open your form in Form4Dev → <strong>Webhooks</strong> → <strong>Add webhook</strong>. Paste the URL, save.</li>
-        <li>In Zapier, click <strong>Test trigger</strong>. Submit a real entry to your Form4Dev form (or use the dashboard's <strong>Send test</strong> button). Zapier picks up the payload.</li>
+        <li>Open your form in Ollastack → <strong>Webhooks</strong> → <strong>Add webhook</strong>. Paste the URL, save.</li>
+        <li>In Zapier, click <strong>Test trigger</strong>. Submit a real entry to your Ollastack form (or use the dashboard's <strong>Send test</strong> button). Zapier picks up the payload.</li>
         <li>Add an <strong>Action</strong>. Examples: <strong>Gmail → Send Email</strong> (map <code>data.email</code> to <em>To</em>, <code>data.message</code> to <em>Body</em>), <strong>Google Sheets → Create Spreadsheet Row</strong> (one column per <code>data.*</code> field), <strong>Slack → Send Channel Message</strong>, etc.</li>
         <li>Publish. From now on every submission flows through.</li>
       </ol>
-      <p class="muted-note">Zapier's free plan gives you ~100 tasks/month — enough to wire one or two forms. The webhook itself is free on every Form4Dev plan including Free.</p>
+      <p class="muted-note">Zapier's free plan gives you ~100 tasks/month — enough to wire one or two forms. The webhook itself is free on every Ollastack plan including Free.</p>
 
-      <h2 id="make">Recipe: Form4Dev → Make → anything</h2>
+      <h2 id="make">Recipe: Ollastack → Make → anything</h2>
       <ol>
         <li>In Make (formerly Integromat), create a new <strong>Scenario</strong>. Pick <strong>Webhooks</strong> → <strong>Custom webhook</strong> as the first module.</li>
         <li>Click <strong>Add</strong>, give it a name, then <strong>Save</strong>. Make shows the webhook URL — copy it.</li>
-        <li>Paste into Form4Dev → Webhooks. Save.</li>
+        <li>Paste into Ollastack → Webhooks. Save.</li>
         <li>Back in Make, click <strong>Run once</strong>. Submit a test entry. Make captures the payload structure.</li>
         <li>Add the next module — <strong>Gmail → Send an email</strong>, <strong>Google Sheets → Add a row</strong>, <strong>Notion → Create a database item</strong>, etc. Map fields from <code>1.data.&lt;field&gt;</code>.</li>
         <li>Activate the scenario.</li>
       </ol>
 
-      <h2 id="n8n">Recipe: Form4Dev → n8n → anything</h2>
+      <h2 id="n8n">Recipe: Ollastack → n8n → anything</h2>
       <ol>
         <li>In n8n, create a new workflow. Add a <strong>Webhook</strong> node as the trigger. Set the HTTP method to <strong>POST</strong>.</li>
-        <li>Copy the <strong>Test URL</strong> (during development) or <strong>Production URL</strong> (when live). Paste into Form4Dev → Webhooks.</li>
-        <li>If you want HMAC verification, set a secret on the Form4Dev webhook and add a <strong>Function</strong> node right after the webhook to verify <code>X-Form4Dev-Signature</code> against the raw body — snippet under <a href="#verify">Verifying the signature</a>.</li>
+        <li>Copy the <strong>Test URL</strong> (during development) or <strong>Production URL</strong> (when live). Paste into Ollastack → Webhooks.</li>
+        <li>If you want HMAC verification, set a secret on the Ollastack webhook and add a <strong>Function</strong> node right after the webhook to verify <code>X-Ollastack-Signature</code> against the raw body — snippet under <a href="#verify">Verifying the signature</a>.</li>
         <li>Add an action node — <strong>Gmail</strong>, <strong>Notion</strong>, <strong>Airtable</strong>, <strong>HubSpot</strong>, anything in n8n's catalogue. Reference fields as <code>{`{{$json.data.email}}`}</code> etc.</li>
         <li>Save and activate.</li>
       </ol>
       <p class="muted-note">n8n on your own server is the right pick if you want signature verification, full payload control, and no per-execution metering. Cloud-hosted n8n works identically.</p>
 
-      <h2 id="activepieces">Recipe: Form4Dev → Activepieces → anything</h2>
+      <h2 id="activepieces">Recipe: Ollastack → Activepieces → anything</h2>
       <ol>
         <li>In Activepieces, create a new <strong>Flow</strong>. Pick <strong>Webhook</strong> as the trigger.</li>
         <li>Activepieces gives you a webhook URL — copy it.</li>
-        <li>Paste into Form4Dev → Webhooks. Save.</li>
+        <li>Paste into Ollastack → Webhooks. Save.</li>
         <li>Submit a test entry; Activepieces captures the sample.</li>
         <li>Add the next step — <strong>Gmail</strong>, <strong>Google Sheets</strong>, <strong>Slack</strong>, <strong>HubSpot</strong>, etc. Map fields from <code>trigger.body.data.&lt;field&gt;</code>.</li>
         <li>Publish.</li>
@@ -182,7 +182,7 @@ const sections = [
 
       <h2 id="test">Test before you wire it</h2>
       <p>
-        If you want to see the exact bytes Form4Dev sends before you
+        If you want to see the exact bytes Ollastack sends before you
         commit to a workflow tool, point a webhook at
         <a href="https://webhook.site">webhook.site</a> for five minutes.
         Submit a test entry. You'll see the full request — method, URL,
@@ -193,14 +193,14 @@ const sections = [
       <h2 id="faq">FAQ</h2>
       <p><strong>Do I need a paid plan?</strong> No. Webhooks work on every plan including Free.</p>
       <p><strong>How many webhooks per form?</strong> No hard limit — add one for each destination. They all fire in parallel after the submission lands.</p>
-      <p><strong>What if my workflow tool is slow?</strong> We wait up to 10 seconds for a response. After that the delivery is logged as a timeout and retried per the schedule above. Your tool sees the same delivery ID — dedupe on <code>X-Form4Dev-Delivery</code> if you're doing something non-idempotent downstream.</p>
+      <p><strong>What if my workflow tool is slow?</strong> We wait up to 10 seconds for a response. After that the delivery is logged as a timeout and retried per the schedule above. Your tool sees the same delivery ID — dedupe on <code>X-Ollastack-Delivery</code> if you're doing something non-idempotent downstream.</p>
       <p><strong>Can I use this to call my own backend?</strong> Yes — that's the original use case. Set a secret, verify the HMAC, you're done. See the snippet under <a href="#verify">Verifying the signature</a>.</p>
       <p><strong>Does this replace the built-in Slack / Discord / Telegram / Mailchimp integrations?</strong> No, those still exist for one-click setup. Webhooks are for everything else — anything outside that short list. You can use both on the same form.</p>
-      <p><strong>What about Gmail OAuth, Notion OAuth, HubSpot OAuth?</strong> Your workflow tool handles all of that — you authorize Zapier / Make / n8n / Activepieces against those services once in their UI, and Form4Dev never sees those credentials. We just push the submission payload to the URL you gave us.</p>
+      <p><strong>What about Gmail OAuth, Notion OAuth, HubSpot OAuth?</strong> Your workflow tool handles all of that — you authorize Zapier / Make / n8n / Activepieces against those services once in their UI, and Ollastack never sees those credentials. We just push the submission payload to the URL you gave us.</p>
 
       <p class="muted-note" style="margin-top: 48px;">
         Need help wiring a specific destination? Email
-        <a href="mailto:hello@form4dev.com">hello@form4dev.com</a> with
+        <a href="mailto:hello@ollastack.com">hello@ollastack.com</a> with
         the tool you're using and the destination you want, we'll send
         you a screenshot walkthrough.
       </p>

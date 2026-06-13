@@ -1,6 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
-const APP = "https://login.form4dev.com";
+const APP = "https://login.ollastack.com";
 ---
 
 <Base current="home">
@@ -70,7 +70,7 @@ const APP = "https://login.form4dev.com";
 
         <h3 class="demo-title">Submit and watch the magic.</h3>
         <p class="demo-sub">
-          A real form4dev submission shape. Your location gets stamped on
+          A real ollastack submission shape. Your location gets stamped on
           the row automatically — same as every form you'd ship.
         </p>
 
@@ -85,7 +85,7 @@ const APP = "https://login.form4dev.com";
           </label>
           <label class="demo-field">
             <span class="demo-field-label">Message</span>
-            <textarea name="message" required rows="3" placeholder="What would form4dev help you with?"></textarea>
+            <textarea name="message" required rows="3" placeholder="What would ollastack help you with?"></textarea>
           </label>
 
           <div class="demo-geo-preview" id="geo-preview">
@@ -205,13 +205,13 @@ const APP = "https://login.form4dev.com";
           <button class="ctab" data-cap="mail" role="tab" aria-selected="false">🤖&nbsp;Agent&nbsp;Mail</button>
           <button class="ctab" data-cap="test" role="tab" aria-selected="false">✅&nbsp;Test&nbsp;inboxes</button>
           <span class="tabs-spacer"></span>
-          <a class="tabs-meta mono" href="https://login.form4dev.com/api/openapi.json" target="_blank" rel="noopener">self-describing · openapi.json ↗</a>
+          <a class="tabs-meta mono" href="https://login.ollastack.com/api/openapi.json" target="_blank" rel="noopener">self-describing · openapi.json ↗</a>
         </div>
 
         <!-- ============ FORMS (live) ============ -->
         <div class="console-panel" data-cap="forms">
           <div class="console-req">
-            <pre class="code-pane console-curl"><span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.form4dev.com/api/submit/<span class="hl">contact</span> \
+            <pre class="code-pane console-curl"><span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.ollastack.com/api/submit/<span class="hl">contact</span> \
     -H <span class="str">"Content-Type: application/json"</span> \
     -d <span class="str">'&#123;"name":"Ada","email":"ada@example.com","message":"Tell me more"&#125;'</span></pre>
             <div class="console-actions">
@@ -228,9 +228,9 @@ const APP = "https://login.form4dev.com";
         <div class="console-panel hidden" data-cap="mail">
           <div class="console-req">
             <pre class="code-pane console-curl"><span class="muted"># claim your agent's identity, then send as it</span>
-<span class="prompt">$</span> <span class="cmd">curl</span> https://login.form4dev.com/api/mailboxes/<span class="hl">check-handle</span>?handle=support \
+<span class="prompt">$</span> <span class="cmd">curl</span> https://login.ollastack.com/api/mailboxes/<span class="hl">check-handle</span>?handle=support \
     -H <span class="str">"Authorization: Bearer fmd_&lt;token&gt;"</span>
-<span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.form4dev.com/api/mailboxes \
+<span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.ollastack.com/api/mailboxes \
     -H <span class="str">"Authorization: Bearer fmd_&lt;token&gt;"</span> \
     -d <span class="str">'&#123;"name":"Support","mode":"agent","handle":"support"&#125;'</span>
 <span class="prompt">$</span> <span class="cmd">curl</span> -X POST .../mailboxes/$ID/<span class="hl">send</span> \
@@ -251,7 +251,7 @@ const APP = "https://login.form4dev.com";
         <div class="console-panel hidden" data-cap="test">
           <div class="console-req">
             <pre class="code-pane console-curl"><span class="muted"># disposable inbox → wait for the email → read the OTP</span>
-<span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.form4dev.com/api/mailboxes \
+<span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.ollastack.com/api/mailboxes \
     -H <span class="str">"Authorization: Bearer fmd_&lt;token&gt;"</span> \
     -d <span class="str">'&#123;"name":"signup-ci","mode":"test"&#125;'</span>
 <span class="prompt">$</span> <span class="cmd">curl</span> <span class="str">".../mailboxes/$ID/<span class="hl">wait</span>?timeout=55"</span> \
@@ -269,7 +269,7 @@ const APP = "https://login.form4dev.com";
 
       <p class="hero-note mono dropin-note">
         Full reference + 3 SDKs in the <a href="/docs">docs</a> — the whole surface is in
-        <a href="https://login.form4dev.com/api/openapi.json">/api/openapi.json</a>, CORS-open so your agent reads it itself.
+        <a href="https://login.ollastack.com/api/openapi.json">/api/openapi.json</a>, CORS-open so your agent reads it itself.
       </p>
     </div>
   </section>
@@ -302,7 +302,7 @@ const APP = "https://login.form4dev.com";
           <span class="tabs-meta mono">$ ship an agent in 2 minutes</span>
         </div>
 
-        <pre class="code-pane" data-lang="bearer"><span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.form4dev.com/api/submit/<span class="hl">contact</span> \
+        <pre class="code-pane" data-lang="bearer"><span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.ollastack.com/api/submit/<span class="hl">contact</span> \
     -H <span class="str">"Authorization: Bearer fmd_&lt;your-agent-token&gt;"</span> \
     -H <span class="str">"Content-Type: application/json"</span> \
     -d <span class="str">'&#123;"name":"Ada","message":"hi"&#125;'</span>
@@ -312,19 +312,19 @@ const APP = "https://login.form4dev.com";
 # every call recorded in the audit log
 # geo auto-attached — country / city / region / lat-long / timezone</span></pre>
 
-        <pre class="code-pane hidden" data-lang="curl"><span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.form4dev.com/api/submit/<span class="hl">contact</span> \
+        <pre class="code-pane hidden" data-lang="curl"><span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.ollastack.com/api/submit/<span class="hl">contact</span> \
     -H <span class="str">"Content-Type: application/json"</span> \
     -d <span class="str">'&#123;"name":"Ada","message":"hi"&#125;'</span>
 
 <span class="ok">&#123;"success": true, "id": "sub_8f2…"&#125;</span></pre>
 
-        <pre class="code-pane hidden" data-lang="js"><span class="key">await</span> fetch(<span class="str">"https://login.form4dev.com/api/submit/contact"</span>, &#123;
+        <pre class="code-pane hidden" data-lang="js"><span class="key">await</span> fetch(<span class="str">"https://login.ollastack.com/api/submit/contact"</span>, &#123;
   method: <span class="str">"POST"</span>,
   headers: &#123; <span class="str">"Content-Type"</span>: <span class="str">"application/json"</span> &#125;,
   body: JSON.stringify(&#123; name, email, message &#125;),
 &#125;);</pre>
 
-        <pre class="code-pane hidden" data-lang="html"><span class="pun">&lt;form action=</span><span class="str">"https://login.form4dev.com/api/submit/contact"</span> method=<span class="str">"POST"</span><span class="pun">&gt;</span>
+        <pre class="code-pane hidden" data-lang="html"><span class="pun">&lt;form action=</span><span class="str">"https://login.ollastack.com/api/submit/contact"</span> method=<span class="str">"POST"</span><span class="pun">&gt;</span>
   <span class="pun">&lt;input name=</span><span class="str">"email"</span> type=<span class="str">"email"</span> required<span class="pun">/&gt;</span>
   <span class="pun">&lt;textarea name=</span><span class="str">"message"</span> required<span class="pun">&gt;&lt;/textarea&gt;</span>
   <span class="pun">&lt;button&gt;</span>Send<span class="pun">&lt;/button&gt;</span>
@@ -435,7 +435,7 @@ const APP = "https://login.form4dev.com";
           <dt>Self-describing API</dt>
           <dd>
             Public
-            <a class="mono inline-link" href="https://login.form4dev.com/api/openapi.json">/api/openapi.json</a>
+            <a class="mono inline-link" href="https://login.ollastack.com/api/openapi.json">/api/openapi.json</a>
             — CORS-open, machine-readable. Agent frameworks consume it
             directly to discover endpoints, scopes, and response shapes.
           </dd>
@@ -477,7 +477,7 @@ const APP = "https://login.form4dev.com";
         <span class="eyebrow">/ by design</span>
         <h2 class="display headless-title">Headless. By design.</h2>
         <p class="headless-body">
-          form4dev is a developer surface, not a SaaS dashboard your customers
+          ollastack is a developer surface, not a SaaS dashboard your customers
           log into. You hand your agent the API key and the OpenAPI spec, and
           it handles every form action — submit, read, tag, export, configure
           — through one endpoint. The dashboard is a thin console for token
@@ -560,7 +560,7 @@ const APP = "https://login.form4dev.com";
         <h2 class="closing-title">Stop fighting your form backend.</h2>
         <p class="closing-sub">
           Mint a token, drop in a fetch call, ship. High-volume or custom
-          needs? <a href="mailto:hello@form4dev.com?subject=Custom%20plan">Talk to us</a>.
+          needs? <a href="mailto:hello@ollastack.com?subject=Custom%20plan">Talk to us</a>.
         </p>
         <div class="closing-ctas">
           <a class="btn btn-primary btn-lg plausible-event-name=Signup+CTA plausible-event-location=closing" href={`${APP}/register`}>
@@ -623,7 +623,7 @@ const APP = "https://login.form4dev.com";
   // sandbox form (captcha off) and renders the live response shape.
   const consoleRun = document.querySelector<HTMLButtonElement>('.console-run[data-run="forms"]');
   const consoleRes = document.querySelector<HTMLElement>('.console-res[data-res="forms"]');
-  const CONSOLE_SANDBOX = "https://login.form4dev.com/api/submit/uiwaivrpteebnhtt";
+  const CONSOLE_SANDBOX = "https://login.ollastack.com/api/submit/uiwaivrpteebnhtt";
   consoleRun?.addEventListener("click", async () => {
     if (!consoleRes) return;
     const original = consoleRun.innerHTML;
@@ -660,7 +660,7 @@ const APP = "https://login.form4dev.com";
   // reveal so the OTP feels like it's arriving live.
   const testRun = document.querySelector<HTMLButtonElement>('.console-run[data-run="test"]');
   const testRes = document.querySelector<HTMLElement>('.console-res[data-res="test"]');
-  const DEMO_MAIL = "https://login.form4dev.com/api/demo/mail";
+  const DEMO_MAIL = "https://login.ollastack.com/api/demo/mail";
   const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
   testRun?.addEventListener("click", async () => {
     if (!testRes) return;
@@ -700,7 +700,7 @@ const APP = "https://login.form4dev.com";
   // ---- Geo demo: detect visitor location via ipapi.co, then on
   //      form submit show a success card with the captured geo.
   //      ipapi.co is free for low volume and CORS-open; same shape
-  //      of data form4dev attaches from Cloudflare visitor-location
+  //      of data ollastack attaches from Cloudflare visitor-location
   //      headers on the server side. ----
   type GeoData = {
     city?: string;
@@ -737,7 +737,7 @@ const APP = "https://login.form4dev.com";
       }
       if (previewSpinner) previewSpinner.classList.add("ready");
     } catch (err) {
-      if (previewText) previewText.textContent = "Geo detection unavailable — form4dev still captures it server-side via Cloudflare headers.";
+      if (previewText) previewText.textContent = "Geo detection unavailable — ollastack still captures it server-side via Cloudflare headers.";
       if (previewSpinner) previewSpinner.classList.add("ready");
     }
   }
@@ -787,12 +787,12 @@ const APP = "https://login.form4dev.com";
   }
 
   const errorEl = document.getElementById("demo-error");
-  // The real form4dev endpoint this page POSTs to. Form id
-  // msJu9W4AcmTop0H34mlt1, locked to https://form4dev.com origin,
+  // The real ollastack endpoint this page POSTs to. Form id
+  // msJu9W4AcmTop0H34mlt1, locked to https://ollastack.com origin,
   // notify_email vikas@networkershome.com. captchaRequired=false
   // so the demo isn't blocked by a security check; per-IP rate
   // limit + ML quarantine still apply.
-  const SUBMIT_ENDPOINT = "https://login.form4dev.com/api/submit/uiwaivrpteebnhtt";
+  const SUBMIT_ENDPOINT = "https://login.ollastack.com/api/submit/uiwaivrpteebnhtt";
 
   form?.addEventListener("submit", async (e) => {
     e.preventDefault();

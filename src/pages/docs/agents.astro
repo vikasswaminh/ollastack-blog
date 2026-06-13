@@ -1,6 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
-const APP = "https://login.form4dev.com";
+const APP = "https://login.ollastack.com";
 
 const sections = [
   { id: "why", title: "Why agents?" },
@@ -15,7 +15,7 @@ const sections = [
 ];
 ---
 
-<Base current="docs" title="Docs — AI agents — Form4Dev">
+<Base current="docs" title="Docs — AI agents — Ollastack">
   <div class="docs-shell container-wide">
     <aside class="sidebar">
       <div class="side-eyebrow mono">/ docs / agents</div>
@@ -35,7 +35,7 @@ const sections = [
       <span class="chip mono"><span class="dot"></span>agent-first</span>
       <h1 class="display">Build agents that submit forms.</h1>
       <p class="lede">
-        Form4Dev treats AI agents as first-class clients. Authorize an
+        Ollastack treats AI agents as first-class clients. Authorize an
         agent, and its submissions land in your inbox cleanly, tagged
         with the agent's label, ready for review or automation.
       </p>
@@ -48,14 +48,14 @@ const sections = [
         a manual triage burden.
       </p>
       <p>
-        Form4Dev recognises authorised agents as trusted callers, so
+        Ollastack recognises authorised agents as trusted callers, so
         real automation goes through cleanly while anonymous bots stay
         blocked.
       </p>
 
       <h2 id="ownership">Ownership model — a human owns, an agent operates</h2>
       <p>
-        Form4Dev is deliberate about this: <strong>an agent never owns an
+        Ollastack is deliberate about this: <strong>an agent never owns an
         account.</strong> A human signs up, owns the account, and is
         responsible for billing. That human then mints a scoped API token
         and hands it to the agent. The agent operates <em>within</em> the
@@ -188,7 +188,7 @@ const sections = [
       <h2 id="openapi">Public API spec</h2>
       <p>
         Modern agent frameworks (tool-use APIs, MCP servers, function
-        calling) can consume an OpenAPI spec directly. Form4Dev
+        calling) can consume an OpenAPI spec directly. Ollastack
         publishes one at
         <a href={`${APP}/api/openapi.json`}>{APP.replace('https://','')}/api/openapi.json</a>
         so an agent pointed at the spec can discover the endpoint,

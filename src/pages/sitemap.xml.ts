@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
 import { posts } from "../data/posts";
 
-const SITE = "https://form4dev.com";
+const SITE = "https://ollastack.com";
 const TODAY = new Date().toISOString().slice(0, 10);
 
 interface Entry {

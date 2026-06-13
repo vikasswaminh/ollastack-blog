@@ -1,12 +1,12 @@
 ---
 import Base from "../layouts/Base.astro";
-const APP = "https://login.form4dev.com";
+const APP = "https://login.ollastack.com";
 ---
 
 <Base
   current="use-cases"
-  title="Use cases — Form4Dev"
-  description="Concrete curl examples for every kind of form you'd hook up to Form4Dev: marketing contact, newsletter, job applications, agent-driven submissions, OpenAPI discovery, voice-to-form, webhook receivers, and more."
+  title="Use cases — Ollastack"
+  description="Concrete curl examples for every kind of form you'd hook up to Ollastack: marketing contact, newsletter, job applications, agent-driven submissions, OpenAPI discovery, voice-to-form, webhook receivers, and more."
 >
   <!-- =============================================================
        HERO
@@ -70,7 +70,7 @@ const APP = "https://login.form4dev.com";
             — so when sales hits <strong>Reply</strong>, the message goes to the lead, not to us.
           </p>
         </div>
-        <pre class="code-pane"><span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.form4dev.com/api/submit/<span class="hl">contact</span> \
+        <pre class="code-pane"><span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.ollastack.com/api/submit/<span class="hl">contact</span> \
     -H <span class="str">"Content-Type: application/json"</span> \
     -d <span class="str">'&#123;
       "name": "Ada Lovelace",
@@ -95,7 +95,7 @@ const APP = "https://login.form4dev.com";
             common case.
           </p>
         </div>
-        <pre class="code-pane"><span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.form4dev.com/api/submit/<span class="hl">newsletter</span> \
+        <pre class="code-pane"><span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.ollastack.com/api/submit/<span class="hl">newsletter</span> \
     -H <span class="str">"Content-Type: application/json"</span> \
     -d <span class="str">'&#123;
       "email": "reader@example.com",
@@ -118,7 +118,7 @@ const APP = "https://login.form4dev.com";
             ML quarantine keeps the inbox clean without ever silently dropping a real applicant.
           </p>
         </div>
-        <pre class="code-pane"><span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.form4dev.com/api/submit/<span class="hl">careers-backend</span> \
+        <pre class="code-pane"><span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.ollastack.com/api/submit/<span class="hl">careers-backend</span> \
     -F <span class="str">"name=Grace Hopper"</span> \
     -F <span class="str">"email=grace@example.com"</span> \
     -F <span class="str">"role=Senior backend engineer"</span> \
@@ -141,7 +141,7 @@ const APP = "https://login.form4dev.com";
             running a triage script.
           </p>
         </div>
-        <pre class="code-pane"><span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.form4dev.com/api/submit/<span class="hl">bug-report</span> \
+        <pre class="code-pane"><span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.ollastack.com/api/submit/<span class="hl">bug-report</span> \
     -H <span class="str">"Content-Type: application/json"</span> \
     -d <span class="str">'&#123;
       "title": "Dashboard crashes on Safari 17",
@@ -187,7 +187,7 @@ const APP = "https://login.form4dev.com";
             attributed in the audit log, no captcha to break.
           </p>
         </div>
-        <pre class="code-pane"><span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.form4dev.com/api/submit/<span class="hl">demo-request</span> \
+        <pre class="code-pane"><span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.ollastack.com/api/submit/<span class="hl">demo-request</span> \
     -H <span class="str">"Authorization: Bearer fmd_a8c91b2e7d…"</span> \
     -H <span class="str">"Content-Type: application/json"</span> \
     -d <span class="str">'&#123;
@@ -222,7 +222,7 @@ const APP = "https://login.form4dev.com";
           </p>
         </div>
         <pre class="code-pane"><span class="prompt">$</span> <span class="cmd">cat</span> leads.jsonl <span class="pun">|</span> <span class="cmd">while</span> read line; <span class="cmd">do</span>
-    <span class="cmd">curl</span> -X POST https://login.form4dev.com/api/submit/<span class="hl">crm-intake</span> \
+    <span class="cmd">curl</span> -X POST https://login.ollastack.com/api/submit/<span class="hl">crm-intake</span> \
       -H <span class="str">"Authorization: Bearer fmd_a8c91b2e7d…"</span> \
       -H <span class="str">"Content-Type: application/json"</span> \
       -H <span class="str">"Idempotency-Key: $(echo -n "$line" | sha256sum | cut -c1-32)"</span> \
@@ -245,7 +245,7 @@ const APP = "https://login.form4dev.com";
             learns the endpoints, parameter types, and response shapes without a docs site.
           </p>
         </div>
-        <pre class="code-pane"><span class="prompt">$</span> <span class="cmd">curl</span> -s https://login.form4dev.com/api/openapi.json <span class="pun">|</span> <span class="cmd">jq</span> <span class="str">'.paths | keys'</span>
+        <pre class="code-pane"><span class="prompt">$</span> <span class="cmd">curl</span> -s https://login.ollastack.com/api/openapi.json <span class="pun">|</span> <span class="cmd">jq</span> <span class="str">'.paths | keys'</span>
 
 <span class="ok">[
   "/api/forms",
@@ -273,7 +273,7 @@ const APP = "https://login.form4dev.com";
             before they pollute the inbox — bad voice agents fail loudly, not silently.
           </p>
         </div>
-        <pre class="code-pane"><span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.form4dev.com/api/submit/<span class="hl">clinic-intake</span> \
+        <pre class="code-pane"><span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.ollastack.com/api/submit/<span class="hl">clinic-intake</span> \
     -H <span class="str">"Authorization: Bearer fmd_voice_agent_…"</span> \
     -H <span class="str">"Content-Type: application/json"</span> \
     -d <span class="str">'&#123;
@@ -303,7 +303,7 @@ const APP = "https://login.form4dev.com";
             pipeline doesn't lose the event if its receiver is briefly down.
           </p>
         </div>
-        <pre class="code-pane"><span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.form4dev.com/api/submit/<span class="hl">build-events</span> \
+        <pre class="code-pane"><span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.ollastack.com/api/submit/<span class="hl">build-events</span> \
     -H <span class="str">"Authorization: Bearer fmd_ci_agent_…"</span> \
     -H <span class="str">"Content-Type: application/json"</span> \
     -d <span class="str">'&#123;
@@ -350,7 +350,7 @@ const APP = "https://login.form4dev.com";
             you. Zero server code on your side.
           </p>
         </div>
-        <pre class="code-pane"><span class="pun">&lt;form action=</span><span class="str">"https://login.form4dev.com/api/submit/contact"</span> method=<span class="str">"POST"</span><span class="pun">&gt;</span>
+        <pre class="code-pane"><span class="pun">&lt;form action=</span><span class="str">"https://login.ollastack.com/api/submit/contact"</span> method=<span class="str">"POST"</span><span class="pun">&gt;</span>
   <span class="pun">&lt;input name=</span><span class="str">"name"</span> required<span class="pun">/&gt;</span>
   <span class="pun">&lt;input name=</span><span class="str">"email"</span> type=<span class="str">"email"</span> required<span class="pun">/&gt;</span>
   <span class="pun">&lt;textarea name=</span><span class="str">"message"</span> required<span class="pun">&gt;&lt;/textarea&gt;</span>
@@ -374,8 +374,8 @@ const APP = "https://login.form4dev.com";
         </div>
         <pre class="code-pane"><span class="key">import</span> &#123; createHmac, timingSafeEqual &#125; <span class="key">from</span> <span class="str">"node:crypto"</span>;
 
-<span class="key">export function</span> <span class="fn">verifyForm4DevWebhook</span>(headers, rawBody) &#123;
-  <span class="key">const</span> sig = headers[<span class="str">"x-form4dev-signature"</span>];
+<span class="key">export function</span> <span class="fn">verifyOllastackWebhook</span>(headers, rawBody) &#123;
+  <span class="key">const</span> sig = headers[<span class="str">"x-ollastack-signature"</span>];
   <span class="key">const</span> expected = <span class="fn">createHmac</span>(<span class="str">"sha256"</span>, process.env.FORM4DEV_WEBHOOK_SECRET)
     .<span class="fn">update</span>(rawBody)
     .<span class="fn">digest</span>(<span class="str">"hex"</span>);
@@ -385,7 +385,7 @@ const APP = "https://login.form4dev.com";
 
 <span class="key">export async function</span> <span class="fn">POST</span>(req) &#123;
   <span class="key">const</span> raw = <span class="key">await</span> req.<span class="fn">text</span>();
-  <span class="key">if</span> (!<span class="fn">verifyForm4DevWebhook</span>(req.headers, raw)) <span class="key">return</span> <span class="key">new</span> <span class="fn">Response</span>(<span class="str">"bad sig"</span>, &#123; status: 401 &#125;);
+  <span class="key">if</span> (!<span class="fn">verifyOllastackWebhook</span>(req.headers, raw)) <span class="key">return</span> <span class="key">new</span> <span class="fn">Response</span>(<span class="str">"bad sig"</span>, &#123; status: 401 &#125;);
   <span class="key">const</span> payload = JSON.<span class="fn">parse</span>(raw);
   <span class="key">await</span> <span class="fn">enqueueForProcessing</span>(payload);
   <span class="key">return</span> <span class="key">new</span> <span class="fn">Response</span>(<span class="str">"ok"</span>);
@@ -403,7 +403,7 @@ const APP = "https://login.form4dev.com";
             CRM, your nightly job.
           </p>
         </div>
-        <pre class="code-pane"><span class="prompt">$</span> <span class="cmd">curl</span> -s <span class="str">"https://login.form4dev.com/api/forms/frm_8f2a/submissions?since=2026-06-01&amp;limit=200"</span> \
+        <pre class="code-pane"><span class="prompt">$</span> <span class="cmd">curl</span> -s <span class="str">"https://login.ollastack.com/api/forms/frm_8f2a/submissions?since=2026-06-01&amp;limit=200"</span> \
     -H <span class="str">"Authorization: Bearer fmd_read_only_…"</span> \
   <span class="pun">|</span> <span class="cmd">jq</span> <span class="str">'.data[] | &#123;id, email: .data.email, created_at&#125;'</span>
 

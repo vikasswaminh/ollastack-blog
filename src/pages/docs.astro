@@ -1,6 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
-const APP = "https://login.form4dev.com";
+const APP = "https://login.ollastack.com";
 
 const sections = [
   { id: "apis", title: "All APIs by purpose" },
@@ -30,7 +30,7 @@ const sections = [
 ];
 ---
 
-<Base current="docs" title="Docs — Form4Dev">
+<Base current="docs" title="Docs — Ollastack">
   <div class="docs-shell container-wide">
     <aside class="sidebar">
       <div class="side-eyebrow mono">/ docs</div>
@@ -112,12 +112,12 @@ const sections = [
       <h2 id="quickstart">Quickstart</h2>
       <ol>
         <li>Sign up at <a href={`${APP}/register`}>{APP.replace('https://','')}/register</a> and verify your email.</li>
-        <li>Click <strong>Create form</strong>, name it, copy the endpoint URL — it looks like <code>https://login.form4dev.com/api/submit/&lt;slug&gt;</code>.</li>
+        <li>Click <strong>Create form</strong>, name it, copy the endpoint URL — it looks like <code>https://login.ollastack.com/api/submit/&lt;slug&gt;</code>.</li>
         <li>Submit to it from anywhere. That's it.</li>
       </ol>
 
       <h2 id="html">HTML form</h2>
-      <pre class="code"><span class="t">&lt;form</span> <span class="a">action</span>=<span class="s">"https://login.form4dev.com/api/submit/contact"</span> <span class="a">method</span>=<span class="s">"POST"</span><span class="t">&gt;</span>
+      <pre class="code"><span class="t">&lt;form</span> <span class="a">action</span>=<span class="s">"https://login.ollastack.com/api/submit/contact"</span> <span class="a">method</span>=<span class="s">"POST"</span><span class="t">&gt;</span>
   <span class="t">&lt;input</span> <span class="a">name</span>=<span class="s">"email"</span> <span class="a">type</span>=<span class="s">"email"</span> <span class="a">required</span><span class="t">&gt;</span>
   <span class="t">&lt;textarea</span> <span class="a">name</span>=<span class="s">"message"</span> <span class="a">required</span><span class="t">&gt;&lt;/textarea&gt;</span>
   <span class="t">&lt;input</span> <span class="a">type</span>=<span class="s">"text"</span> <span class="a">name</span>=<span class="s">"_gotcha"</span> <span class="a">style</span>=<span class="s">"display:none"</span><span class="t">&gt;</span>
@@ -144,14 +144,14 @@ const sections = [
       <p class="muted-note">Field errors come back as <code>state.errors.fieldErrors</code> — keyed by your form's field IDs.</p>
 
       <h2 id="fetch">fetch / curl</h2>
-      <pre class="code"><span class="k">curl</span> -X POST https://login.form4dev.com/api/submit/contact \
+      <pre class="code"><span class="k">curl</span> -X POST https://login.ollastack.com/api/submit/contact \
      -H <span class="s">"Content-Type: application/json"</span> \
      -d <span class="s">'{`{`}"email":"ada@example.com","message":"hi"{`}`}'</span></pre>
       <p>JSON and <code>application/x-www-form-urlencoded</code> are both accepted. Success returns <code>201 Created</code> with <code>{`{"success":true,"id":"sub_…","next":<url|null>}`}</code>.</p>
 
       <h2 id="hosted">Hosted form page</h2>
       <p>
-        Don't want to build your own UI? Every form gets a Form4Dev-hosted page at
+        Don't want to build your own UI? Every form gets a Ollastack-hosted page at
         <code>{APP.replace('https://','')}/f/&lt;slug&gt;</code> — rendered server-side,
         with your form's title, fields, and (on Starter+) your custom CSS. Successful
         submits route to <code>/thanks/&lt;slug&gt;</code> or a redirect you configure.
@@ -212,7 +212,7 @@ const sections = [
         form and pass its token via the <code>X-Captcha-Token</code> header or a
         <code>_captcha</code> field in the payload.
       </p>
-      <pre class="code"><span class="t">&lt;form</span> <span class="a">action</span>=<span class="s">"https://login.form4dev.com/api/submit/contact"</span> <span class="a">method</span>=<span class="s">"POST"</span><span class="t">&gt;</span>
+      <pre class="code"><span class="t">&lt;form</span> <span class="a">action</span>=<span class="s">"https://login.ollastack.com/api/submit/contact"</span> <span class="a">method</span>=<span class="s">"POST"</span><span class="t">&gt;</span>
   <span class="t">&lt;input</span> <span class="a">name</span>=<span class="s">"email"</span> <span class="a">type</span>=<span class="s">"email"</span> <span class="a">required</span><span class="t">&gt;</span>
   <span class="t">&lt;textarea</span> <span class="a">name</span>=<span class="s">"message"</span> <span class="a">required</span><span class="t">&gt;&lt;/textarea&gt;</span>
   <span class="p">&lt;!-- Turnstile renders a hidden input named cf-turnstile-response --&gt;</span>
@@ -226,7 +226,7 @@ const sections = [
         read as the <code>_captcha</code> token — no extra wiring needed. For
         <code>fetch</code>/JSON submits, read the token yourself and send it in
         the <code>X-Captcha-Token</code> header. The site key above is the
-        public Form4Dev Turnstile key; the secret key never leaves the server.
+        public Ollastack Turnstile key; the secret key never leaves the server.
       </p>
 
       <h2 id="origins">Allowed origins</h2>
@@ -256,7 +256,7 @@ const sections = [
       <p>
         Add one or more webhook URLs on the form's settings page. Every successful,
         non-spam submission POSTs the payload with an
-        <code>X-Form4Dev-Signature</code> header (HMAC-SHA256 of the raw body, hex).
+        <code>X-Ollastack-Signature</code> header (HMAC-SHA256 of the raw body, hex).
         Failed deliveries retry with exponential backoff up to 5 attempts; the
         dashboard shows full delivery history per webhook. Toggle a webhook on/off
         without losing its config.
@@ -265,7 +265,7 @@ const sections = [
   .createHmac(<span class="s">"sha256"</span>, secret)
   .update(rawBody)
   .digest(<span class="s">"hex"</span>);
-<span class="p">// === request.headers["x-form4dev-signature"]</span></pre>
+<span class="p">// === request.headers["x-ollastack-signature"]</span></pre>
 
       <h2 id="integrations">Third-party integrations</h2>
       <p>Per-form, attach one or more of these. Each runs alongside webhooks (not instead of them).</p>
@@ -318,7 +318,7 @@ const sections = [
 
       <h2 id="agents">AI agents</h2>
       <p>
-        Form4Dev treats AI agents as first-class clients. Authorize an
+        Ollastack treats AI agents as first-class clients. Authorize an
         agent in Dashboard → Settings → API tokens, give it a label,
         and your agent can submit cleanly while bots stay blocked.
         Submissions are tagged in the inbox with the agent's label.
@@ -382,7 +382,7 @@ const sections = [
       </table>
 
       <h2 id="limits">Rate limits</h2>
-      <p>Form4Dev has four independent rate limits. Each emits <code>429 RATE_LIMIT_EXCEEDED</code> with a <code>retryAfter</code> seconds field.</p>
+      <p>Ollastack has four independent rate limits. Each emits <code>429 RATE_LIMIT_EXCEEDED</code> with a <code>retryAfter</code> seconds field.</p>
       <table>
         <thead><tr><th>scope</th><th>applies to</th><th>typical</th></tr></thead>
         <tbody>
@@ -397,7 +397,7 @@ const sections = [
       </p>
 
       <p class="muted-note" style="margin-top: 48px;">
-        Need something not documented? Email <a href="mailto:hello@form4dev.com">hello@form4dev.com</a> or check the <a href={`${APP}/api/openapi.json`}>OpenAPI spec</a>.
+        Need something not documented? Email <a href="mailto:hello@ollastack.com">hello@ollastack.com</a> or check the <a href={`${APP}/api/openapi.json`}>OpenAPI spec</a>.
       </p>
     </article>
   </div>

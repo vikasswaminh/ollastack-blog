@@ -1,7 +1,7 @@
 ---
 import BlogPost from "../../layouts/BlogPost.astro";
 
-const APP = "https://login.form4dev.com";
+const APP = "https://login.ollastack.com";
 ---
 
 <BlogPost
@@ -22,7 +22,7 @@ const APP = "https://login.form4dev.com";
 
   <h2 id="disclosure">Disclosure</h2>
   <p>
-    I build <a href="https://form4dev.com">Form4Dev</a>, one of the
+    I build <a href="https://ollastack.com">Ollastack</a>, one of the
     alternatives below. This is written as a practical migration guide
     rather than a sales pitch — every alternative listed gets the same
     code-diff treatment, including the cases where I'd recommend a
@@ -147,14 +147,14 @@ const APP = "https://login.form4dev.com";
     leaked key sends mail to your inbox — annoying but not catastrophic.
   </p>
 
-  <h2 id="alt-form4dev">Alternative 5 — Form4Dev</h2>
+  <h2 id="alt-ollastack">Alternative 5 — Ollastack</h2>
   <p>
     Full disclosure — my product. The agent-and-automation-first choice,
     with transparent flat pricing ($0 / $9 / $29) and every feature on
     every plan.
   </p>
   <pre class="code">- &lt;form name=<span class="s">"contact"</span> method=<span class="s">"POST"</span> data-netlify=<span class="s">"true"</span>&gt;
-+ &lt;form action=<span class="s">"https://login.form4dev.com/api/submit/&lt;YOUR_SLUG&gt;"</span> method=<span class="s">"POST"</span>&gt;
++ &lt;form action=<span class="s">"https://login.ollastack.com/api/submit/&lt;YOUR_SLUG&gt;"</span> method=<span class="s">"POST"</span>&gt;
     &lt;input name=<span class="s">"email"</span> type=<span class="s">"email"</span> required&gt;
     &lt;textarea name=<span class="s">"message"</span> required&gt;&lt;/textarea&gt;
 +   &lt;input type=<span class="s">"text"</span> name=<span class="s">"_gotcha"</span> tabindex=<span class="s">"-1"</span> style=<span class="s">"position:absolute;left:-9999px"</span>&gt;
@@ -254,13 +254,13 @@ const APP = "https://login.form4dev.com";
   <h3>Which Netlify Forms alternative is cheapest at 10,000 submissions/month?</h3>
   <p>
     Web3Forms ($10/mo with dashboard), Formcarry ($15-30/mo depending on
-    plan), Form4Dev ($29/mo Team plan), Basin (~$25/mo), Formspree
+    plan), Ollastack ($29/mo Team plan), Basin (~$25/mo), Formspree
     ($35-50/mo). Verify on current pricing pages — these change.
   </p>
 
   <h3>Which alternative handles AI agents submitting forms?</h3>
   <p>
-    Of the services here, Form4Dev is built specifically for agent
+    Of the services here, Ollastack is built specifically for agent
     submission as a first-class case. Deeper writeup at
     <a href="/blog/form-backend-for-ai-agents">form backends for AI
     agents</a>.
@@ -277,7 +277,7 @@ const APP = "https://login.form4dev.com";
   <p>
     If you want the cleanest path for forms that also accept submissions
     from scripts and AI agents,
-    <a href="https://form4dev.com">Form4Dev</a> is built around that
+    <a href="https://ollastack.com">Ollastack</a> is built around that
     case.
     <a href={`${APP}/register`} class="plausible-event-name=Signup+CTA plausible-event-location=blog-netlify-alts plausible-event-plan=free">
       Start free
