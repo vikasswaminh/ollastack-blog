@@ -35,14 +35,6 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://ollastack.c
   <meta name="twitter:description" content={description} />
   <meta name="theme-color" content="#fafaf7" />
   <title>{title}</title>
-  <!-- Plausible Analytics endpoint at analytics.networkershome.com.
-       data-domain MUST match the site in Plausible (keying field).
-       Using the tagged-events + outbound-links variant because:
-       - register CTAs are outbound (login.ollastack.com) — outbound-links
-         ensures the click is recorded before the browser navigates
-       - tagged-events reads `plausible-event-name=...` classes on links
-         (Signup CTA goal funnels by location + plan). -->
-  <script defer data-domain="form4dev.com" src="https://analytics.networkershome.com/js/script.tagged-events.outbound-links.js"></script>
 </head>
 <body>
   <AnnouncementBar />
