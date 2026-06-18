@@ -1,0 +1,12 @@
+# Cloudflare Pages redirects for the marketing apexes (form4dev.com, ollastack.com).
+#
+# Why: the apex domains serve THIS static marketing site. Without this rule,
+# /api/* falls through to the marketing 404/index and returns HTML with a 200 —
+# which makes integrators (and AI agents) think they found the API when they
+# actually hit marketing. The real API lives on login.ollastack.com (and the
+# legacy login.form4dev.com); the OpenAPI doc's servers[] block points there.
+#
+# This 302-redirects any /api/* guess to the canonical API host, preserving the
+# path and query string, so `GET ollastack.com/api/openapi.json` auto-discovers.
+# Specific rule only — does not touch normal marketing page serving.
+/api/*  https://login.ollastack.com/api/:splat  302
