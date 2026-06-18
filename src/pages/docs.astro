@@ -23,7 +23,6 @@ const sections = [
   { id: "tokens", title: "API tokens + audit" },
   { id: "agents", title: "AI agents" },
   { id: "smtp", title: "Custom SMTP" },
-  { id: "payments", title: "Razorpay payments" },
   { id: "openapi", title: "OpenAPI spec" },
   { id: "errors", title: "Error envelope" },
   { id: "limits", title: "Rate limits" },
@@ -56,6 +55,31 @@ const sections = [
         <code>action=</code> at it. That's the whole quickstart. Everything below
         is the long tail of things you'll want once that works.
       </p>
+
+      <div class="starthere">
+        <div class="starthere-title mono">Start here — the 3 things every API integration needs</div>
+        <dl>
+          <dt>Base URL</dt>
+          <dd>
+            <code>https://login.ollastack.com</code> — every <code>/api/…</code> path on this page is
+            relative to it. Note: the bare <code>ollastack.com</code> is the marketing site; the API
+            lives on <strong>login.ollastack.com</strong>.
+          </dd>
+          <dt>Authentication</dt>
+          <dd>
+            <code>Authorization: Bearer &lt;your-api-key&gt;</code> — create a key in
+            <a href={`${APP}/dashboard/settings`}>Dashboard → Settings → API tokens</a>
+            (shown once at creation). Anonymous form submits to <code>/api/submit/&lt;slug&gt;</code>
+            need no key.
+          </dd>
+          <dt>Discover every endpoint</dt>
+          <dd>
+            <code>GET https://login.ollastack.com/api/openapi.json</code> — the full machine-readable
+            contract (OpenAPI 3.1, public + CORS-open). Its <code>servers[]</code> block names the
+            canonical host, so an agent or MCP tool can self-configure from it.
+          </dd>
+        </dl>
+      </div>
 
       <h2 id="apis" style="margin-top:36px">All APIs, by what you're trying to do</h2>
       <p class="muted-note" style="margin-bottom:14px">
@@ -126,8 +150,8 @@ const sections = [
       <p class="muted-note"><code>_gotcha</code> is the honeypot — leave it empty in your real form, bots will fill it.</p>
 
       <h2 id="react">React</h2>
-      <p>Install <code>@form4dev/react</code> from npm. The <code>useForm</code> hook handles state and serialization for you.</p>
-      <pre class="code"><span class="k">import</span> <span class="p">{`{`}</span> useForm, ValidationError <span class="p">{`}`}</span> <span class="k">from</span> <span class="s">"@form4dev/react"</span><span class="p">;</span>
+      <p>A typed <code>@ollastack/react</code> hook (<code>useForm</code>) is publishing to npm soon. Until then the HTML and <a href="#fetch">fetch/curl</a> approaches need no install and work everywhere. Preview of the hook:</p>
+      <pre class="code"><span class="k">import</span> <span class="p">{`{`}</span> useForm, ValidationError <span class="p">{`}`}</span> <span class="k">from</span> <span class="s">"@ollastack/react"</span><span class="p">;</span>
 
 <span class="k">export function</span> <span class="fn">Contact</span><span class="p">() {`{`}</span>
   <span class="k">const</span> <span class="p">[</span>state, handleSubmit<span class="p">]</span> <span class="p">=</span> <span class="fn">useForm</span><span class="p">(</span><span class="s">"contact"</span><span class="p">);</span>
@@ -338,16 +362,6 @@ const sections = [
         Full walkthrough at <a href="/docs/smtp">/docs/smtp</a>.
       </p>
 
-      <h2 id="payments">Razorpay payment-required forms</h2>
-      <p>
-        Toggle <code>paymentEnabled</code> + <code>paymentProvider=razorpay</code>
-        on a form and configure the order amount. The submit endpoint then returns
-        <code>202 Accepted</code> with a Razorpay order config; pass it to the
-        Razorpay checkout SDK, and the submission is held until
-        <code>POST /api/submit/&lt;slug&gt;/verify</code> confirms payment. Webhooks
-        + notifications fire only after successful payment verification.
-      </p>
-
       <h2 id="openapi">OpenAPI 3.1 spec</h2>
       <p>
         The full machine-readable contract lives at
@@ -493,6 +507,28 @@ const sections = [
   .muted-note {
     color: var(--muted);
     font-size: 14px;
+  }
+  .starthere {
+    margin: 22px 0 8px;
+    padding: 18px 22px;
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent, #DA291C);
+    border-radius: 12px;
+    background: var(--bg-sunken);
+  }
+  .starthere-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .starthere dl { margin: 0; display: grid; grid-template-columns: 150px 1fr; gap: 10px 18px; }
+  .starthere dt { font-weight: 600; color: var(--ink); font-size: 14px; }
+  .starthere dd { margin: 0; font-size: 14px; line-height: 1.6; color: var(--muted); }
+  @media (max-width: 640px) {
+    .starthere dl { grid-template-columns: 1fr; gap: 4px 0; }
+    .starthere dd { margin-bottom: 8px; }
   }
   .code {
     background: var(--code-bg);

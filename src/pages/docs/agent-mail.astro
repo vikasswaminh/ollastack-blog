@@ -92,7 +92,7 @@ const cWebhook = `X-Mail-Signature: v1=<hex HMAC-SHA256 of the raw body,
   "message": { "id":"...", "fromAddress":"...", "subject":"...",
                "codes":[...], "links":[...] } }`;
 
-const cSdk = `import { MailClient } from "@form4dev/client";
+const cSdk = `import { MailClient } from "@ollastack/client";
 
 const mail = new MailClient({
   baseUrl: "https://login.ollastack.com",
@@ -269,8 +269,8 @@ your token lacks mail:read/write/send).`;
       <h2 id="sdk">JavaScript / TypeScript SDK</h2>
       <pre class="code">{cSdk}</pre>
       <p class="muted-note">
-        <code>@form4dev/client</code> — git/workspace install today; npm publish
-        pending. Any language works over plain HTTP (the curl above).
+        <code>@ollastack/client</code> — publishing to npm soon. Any language
+        works today over plain HTTP (the curl above) — no SDK required.
       </p>
 
       <h2 id="agent-prompt">Drop-in agent instructions</h2>

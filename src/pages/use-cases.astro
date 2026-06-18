@@ -376,7 +376,7 @@ const APP = "https://login.ollastack.com";
 
 <span class="key">export function</span> <span class="fn">verifyOllastackWebhook</span>(headers, rawBody) &#123;
   <span class="key">const</span> sig = headers[<span class="str">"x-ollastack-signature"</span>];
-  <span class="key">const</span> expected = <span class="fn">createHmac</span>(<span class="str">"sha256"</span>, process.env.FORM4DEV_WEBHOOK_SECRET)
+  <span class="key">const</span> expected = <span class="fn">createHmac</span>(<span class="str">"sha256"</span>, process.env.OLLASTACK_WEBHOOK_SECRET)
     .<span class="fn">update</span>(rawBody)
     .<span class="fn">digest</span>(<span class="str">"hex"</span>);
   <span class="key">return</span> sig.length === expected.length

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://form4dev.com/sitemap.xml
+Sitemap: https://ollastack.com/sitemap.xml
