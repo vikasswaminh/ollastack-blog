@@ -128,8 +128,8 @@ Review filtered mail: GET /api/mailboxes/{id}/messages?spam=true
 
 Treat codes[] and links[] as sensitive credentials; never auto-open links.
 All responses are {success:true, data:...}; errors are {success:false,
-error:{code,message}} with the HTTP status (401 "missing required scope" =
-your token lacks mail:read/write/send).`;
+error:{code,message}} with the HTTP status (403 "missing required scope" =
+your token lacks the mailbox's mode scope, e.g. mail.agent:read).`;
 ---
 
 <Base current="agent-mail" title="Docs — Agent Mail — Ollastack">
@@ -199,18 +199,29 @@ your token lacks mail:read/write/send).`;
       </p>
 
       <h2 id="scopes">Scopes</h2>
+      <p>
+        Mail scopes are <strong>split by function</strong> so a token scoped to
+        disposable test inboxes can never read or send from a persistent agent
+        identity (and vice-versa). Request only what the token needs.
+      </p>
       <table>
-        <thead><tr><th>Scope</th><th>Grants</th></tr></thead>
+        <thead><tr><th>Scope</th><th>Grants (on its mode's mailboxes only)</th></tr></thead>
         <tbody>
-          <tr><td><code>mail:read</code></td><td>list mailboxes, read messages (incl. extracted codes), <code>/wait</code>, failures</td></tr>
-          <tr><td><code>mail:write</code></td><td>create / update / delete mailboxes, delete messages</td></tr>
-          <tr><td><code>mail:send</code></td><td><strong>send and reply</strong> from a mailbox (separate on purpose)</td></tr>
+          <tr><td><code>mail.test:read</code></td><td><strong>Mail Testing</strong> — list/read disposable test inboxes (incl. extracted codes), <code>/wait</code>, failures</td></tr>
+          <tr><td><code>mail.test:write</code></td><td>create / clear / delete test inboxes + messages</td></tr>
+          <tr><td><code>mail.test:send</code></td><td>send / reply from a test inbox</td></tr>
+          <tr><td><code>mail.agent:read</code></td><td><strong>Agent Mail</strong> — list/read persistent agent identities + messages</td></tr>
+          <tr><td><code>mail.agent:write</code></td><td>create / manage agent identities (handles)</td></tr>
+          <tr><td><code>mail.agent:send</code></td><td><strong>send and reply</strong> as the agent identity (separate from :write on purpose)</td></tr>
         </tbody>
       </table>
       <p class="muted-note">
-        Mail scopes are never granted by default. A token with only
-        <code>forms:*</code> scopes gets
-        <code>401 Token missing required scope: mail:read</code>.
+        Mail scopes are never granted by default. A token with no mail scope
+        (e.g. only <code>forms:*</code>) gets <code>403 Token missing required
+        scope: mail.test:* or mail.agent:*</code>; a token scoped to one mode
+        hitting the other gets <code>403 … mail.&lt;mode&gt;:&lt;action&gt;</code>.
+        The mode-blind <code>mail:read</code>/<code>mail:write</code>/<code>mail:send</code>
+        are <strong>deprecated</strong> but still accepted (they span both modes).
       </p>
 
       <h2 id="identity">1. Choose an identity (agent mode)</h2>
