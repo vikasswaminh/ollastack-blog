@@ -1,4 +1,5 @@
 import type { APIRoute } from "astro";
+import { getCollection } from "astro:content";
 import { posts } from "../data/posts";
 
 const SITE = "https://ollastack.com";
@@ -22,14 +23,24 @@ const staticPages: Entry[] = [
   { url: "/careers",  lastmod: TODAY, changefreq: "weekly",  priority: "0.6" },
 ];
 
-const blogEntries: Entry[] = posts.map((p) => ({
+// Legacy .astro posts (from data/posts) + the markdown content collection.
+const legacyBlog: Entry[] = posts.map((p) => ({
   url: `/blog/${p.slug}`,
   lastmod: p.date,
   changefreq: "monthly",
   priority: "0.7",
 }));
 
-const all: Entry[] = [...staticPages, ...blogEntries];
+const collectionBlog: Entry[] = (
+  await getCollection("blog", ({ data }) => data.draft !== true)
+).map((p) => ({
+  url: `/blog/${p.slug}`,
+  lastmod: (p.data.updated ?? p.data.date).toISOString().slice(0, 10),
+  changefreq: "monthly",
+  priority: "0.7",
+}));
+
+const all: Entry[] = [...staticPages, ...legacyBlog, ...collectionBlog];
 
 const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

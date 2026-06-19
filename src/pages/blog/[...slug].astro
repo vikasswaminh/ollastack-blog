@@ -1,0 +1,33 @@
+---
+// Renders every markdown post in the `blog` content collection through the
+// shared BlogPost layout. Named .astro post pages in this directory take
+// precedence over this catch-all, so the two systems coexist.
+import { getCollection } from "astro:content";
+import BlogPost from "../../layouts/BlogPost.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => data.draft !== true);
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+const d = post.data;
+const iso = (date: Date) => date.toISOString().slice(0, 10);
+---
+
+<BlogPost
+  slug={post.slug}
+  title={d.title}
+  description={d.description}
+  publishedAt={iso(d.date)}
+  updatedAt={iso(d.updated ?? d.date)}
+  readingTime={`${d.readingTime} min read`}
+  ctaLocation="blog"
+>
+  <p class="lede">{d.description}</p>
+  <Content />
+</BlogPost>

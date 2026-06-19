@@ -1,7 +1,9 @@
 ---
 import Base from "../../layouts/Base.astro";
+import { getCollection } from "astro:content";
 
-const posts = [
+// Hand-built .astro posts (legacy) — listed alongside the markdown collection.
+const legacyPosts = [
   {
     slug: "formspree-alternatives",
     title: "Formspree alternatives in 2026: an honest comparison from someone building one",
@@ -66,6 +68,22 @@ const fmtDate = (iso: string) =>
     month: "short",
     day: "numeric",
   });
+
+// Markdown collection posts, mapped to the same shape and merged with the
+// legacy .astro posts, newest first.
+const collectionPosts = (
+  await getCollection("blog", ({ data }) => data.draft !== true)
+).map((p) => ({
+  slug: p.slug,
+  title: p.data.title,
+  description: p.data.description,
+  date: p.data.date.toISOString().slice(0, 10),
+  readingTime: `${p.data.readingTime} min read`,
+}));
+
+const posts = [...legacyPosts, ...collectionPosts].sort((a, b) =>
+  b.date.localeCompare(a.date)
+);
 ---
 
 <Base
