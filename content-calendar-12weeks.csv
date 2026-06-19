@@ -39,3 +39,9 @@ publish_date,title,slug,author,cta,status
 2026-09-03,Developer hub (pillar page),/resources/developer-hub,Content Lead,Explore SDKs,scheduled
 2026-09-07,Deliverability hub (pillar page),/resources/deliverability-hub,Content Lead,Run deliverability check,scheduled
 2026-09-10,Advanced use-cases hub (pillar page),/resources/advanced-hub,Content Lead,Contact sales,scheduled
+2026-06-29,Migrate from Netlify Forms to Ollastack (without rewriting your site),/blog/migrate-from-netlify-forms,Dev Advocate,Start migration,published
+2026-07-01,Basin alternative: migrating to Ollastack step-by-step,/blog/migrate-from-basin,Product,Compare features,published
+2026-07-03,Add a contact form to an Astro site (no server),/blog/astro-form-quickstart,Frontend Eng,Try the quickstart,published
+2026-07-05,SvelteKit form handling with a hosted backend,/blog/sveltekit-form-quickstart,Frontend Eng,Try the quickstart,published
+2026-07-07,React Hook Form + a hosted backend,/blog/react-hook-form-backend,Frontend Eng,View example,published
+2026-07-09,How to test OTP and verification emails in CI,/blog/test-otp-email-in-ci,QA Lead,Try inbox testing,published
