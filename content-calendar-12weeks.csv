@@ -35,9 +35,9 @@ publish_date,title,slug,author,cta,status
 2026-08-20,Pre-migration audit checklist: ensure a smooth move to Ollastack,/blog/pre-migration-audit-checklist,Dev Advocate,Audit checklist PDF,scheduled
 2026-08-24,Security & privacy — how we redact PII and enforce retention policies,/blog/security-privacy-pii-redaction,Security/Compliance,Data handling whitepaper,scheduled
 2026-08-27,Migration checklist lead magnet landing page,/resources/migration-checklist,Growth,Download & signup,scheduled
-2026-08-31,Migration hub (pillar page),/resources/migration-hub,Content Lead,Start migration,scheduled
-2026-09-03,Developer hub (pillar page),/resources/developer-hub,Content Lead,Explore SDKs,scheduled
-2026-09-07,Deliverability hub (pillar page),/resources/deliverability-hub,Content Lead,Run deliverability check,scheduled
+2026-08-31,Migration hub (pillar page),/resources/migration-hub,Content Lead,Start migration,published
+2026-09-03,Developer hub (pillar page),/resources/developer-hub,Content Lead,Explore SDKs,published
+2026-09-07,Deliverability hub (pillar page),/resources/deliverability-hub,Content Lead,Run deliverability check,published
 2026-09-10,Advanced use-cases hub (pillar page),/resources/advanced-hub,Content Lead,Contact sales,scheduled
 2026-06-29,Migrate from Netlify Forms to Ollastack (without rewriting your site),/blog/migrate-from-netlify-forms,Dev Advocate,Start migration,published
 2026-07-01,Basin alternative: migrating to Ollastack step-by-step,/blog/migrate-from-basin,Product,Compare features,published

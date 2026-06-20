@@ -1,0 +1,151 @@
+---
+import ResourceHub from "../../layouts/ResourceHub.astro";
+import type { HubSection, HubLink } from "../../layouts/ResourceHub.astro";
+
+const APP = "https://login.ollastack.com";
+
+const sections: HubSection[] = [
+  {
+    heading: "Framework quickstarts",
+    blurb:
+      "Wire a form to a real backend in your stack — no server code, no SMTP setup. Each quickstart is copy-paste and framework-accurate.",
+    links: [
+      {
+        href: "/blog/nextjs-quickstart-hosted-form",
+        title: "Next.js",
+        desc: "App Router and server actions — point a form at one endpoint and get email + webhooks.",
+      },
+      {
+        href: "/blog/astro-form-quickstart",
+        title: "Astro",
+        desc: "A static Astro site with a working contact form and zero serverless functions.",
+      },
+      {
+        href: "/blog/sveltekit-form-quickstart",
+        title: "SvelteKit",
+        desc: "Progressive-enhancement form actions backed by a hosted endpoint.",
+      },
+      {
+        href: "/blog/vue-nuxt-form-quickstart",
+        title: "Vue & Nuxt",
+        desc: "A composable submit handler with validation and the magic fields.",
+      },
+      {
+        href: "/blog/remix-form-quickstart",
+        title: "Remix",
+        desc: "Remix actions forwarding to a form backend, with the gotchas handled.",
+      },
+      {
+        href: "/blog/react-hook-form-backend",
+        title: "React Hook Form",
+        desc: "Keep your client-side validation; add a backend that emails you and fires webhooks.",
+      },
+    ],
+  },
+  {
+    heading: "Production infrastructure",
+    blurb:
+      "The parts that turn a prototype form into something you can run a business on — without re-platforming.",
+    links: [
+      {
+        href: "/blog/form-webhooks-guide",
+        title: "Signed webhooks, retries & replay",
+        desc: "Verify HMAC signatures, handle the 5× backoff retry, and replay a delivery from the dashboard.",
+      },
+      {
+        href: "/blog/file-uploads-forms-multipart",
+        title: "File uploads (multipart)",
+        desc: "Accept résumés and screenshots without standing up S3, signed URLs, or an upload server.",
+      },
+      {
+        href: "/blog/secure-forms-honeypot-captcha",
+        title: "Securing a form endpoint",
+        desc: "A layered defense — honeypot, origin allowlist, CAPTCHA, rate limits, anti-relay — that stops bots without taxing real users.",
+      },
+      {
+        href: "/blog/self-host-vs-hosted-form-backend",
+        title: "Self-host vs hosted",
+        desc: "When to run your own instance, when not to, and how to keep the choice reversible.",
+      },
+    ],
+  },
+  {
+    heading: "For AI agents",
+    blurb:
+      "Ollastack treats agents as first-class clients: Bearer-authed submits skip the bot defenses, and the OpenAPI spec is readable so an agent discovers the surface itself.",
+    links: [
+      {
+        href: "/blog/form-backend-for-ai-agents",
+        title: "Why form endpoints break for LLMs",
+        desc: "Traditional backends flag every agent as spam. Here's the endpoint design that doesn't.",
+      },
+      {
+        href: "/blog/agent-email-identity",
+        title: "Agent mail & chosen identity",
+        desc: "Give an agent its own persistent, spam-filtered inbox on a handle you choose — full-duplex.",
+      },
+      {
+        href: "/blog/test-otp-email-in-ci",
+        title: "Test OTP / verification email in CI",
+        desc: "Disposable inboxes that let an end-to-end test assert on the email it triggered.",
+      },
+      {
+        href: "/docs/agents",
+        title: "Agent docs",
+        desc: "Scoped tokens, the audit trail, and the Bearer submit path — the full reference.",
+      },
+    ],
+  },
+  {
+    heading: "Reference",
+    links: [
+      {
+        href: "/docs",
+        title: "Documentation",
+        desc: "Quickstart, magic fields, integrations, and settings in one place.",
+      },
+      {
+        href: `${APP}/api/openapi.json`,
+        title: "OpenAPI spec",
+        desc: "The whole API as JSON, CORS-open — drop it into an agent's tool loop.",
+        external: true,
+      },
+      {
+        href: "/docs/smtp",
+        title: "Custom SMTP",
+        desc: "Send notifications through your own or each tenant's SMTP server.",
+      },
+      {
+        href: "/blog/html-form-to-email-without-backend",
+        title: "HTML form → email, no backend",
+        desc: "The simplest possible setup, with the gotchas nobody warns you about.",
+      },
+    ],
+  },
+];
+
+const related: HubLink[] = [
+  {
+    href: "/resources/migration-hub",
+    title: "Migration hub",
+    desc: "Move off Formspree, Netlify Forms, Basin, or Getform — with code diffs.",
+  },
+  {
+    href: "/resources/deliverability-hub",
+    title: "Deliverability hub",
+    desc: "Get notifications into the inbox: SPF/DKIM/DMARC, custom senders, spam handling.",
+  },
+];
+---
+
+<ResourceHub
+  title="Ollastack developer hub — quickstarts, webhooks, API & agents"
+  description="Everything a developer needs to ship forms on Ollastack: framework quickstarts for Next.js, Astro, SvelteKit, Vue/Nuxt, Remix and React Hook Form, signed webhooks, file uploads, the agent path, and the OpenAPI spec."
+  eyebrow="/ developer hub"
+  h1="Ship forms in your stack, on real infra."
+  lede="Framework quickstarts, signed webhooks with replay, multipart uploads, the agent submit path, and a CORS-open OpenAPI spec — everything to take a form from prototype to production without re-platforming."
+  ctaHref={`${APP}/register`}
+  ctaLabel="Get an API key"
+  sections={sections}
+  related={related}
+/>

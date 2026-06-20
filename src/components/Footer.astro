@@ -16,6 +16,15 @@ const groups: { title: string; items: FooterLink[] }[] = [
     ],
   },
   {
+    title: "Resources",
+    items: [
+      { label: "All guides", href: "/resources" },
+      { label: "Migration hub", href: "/resources/migration-hub" },
+      { label: "Developer hub", href: "/resources/developer-hub" },
+      { label: "Deliverability hub", href: "/resources/deliverability-hub" },
+    ],
+  },
+  {
     title: "Developers",
     items: [
       { label: "Docs", href: "/docs" },
@@ -80,8 +89,8 @@ const groups: { title: string; items: FooterLink[] }[] = [
   }
   .foot-grid {
     display: grid;
-    grid-template-columns: 1.6fr 1fr 1fr 1fr 1fr;
-    gap: 48px;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 40px;
   }
   .tagline {
     color: var(--muted);

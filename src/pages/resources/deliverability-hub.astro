@@ -1,0 +1,95 @@
+---
+import ResourceHub from "../../layouts/ResourceHub.astro";
+import type { HubSection, HubLink } from "../../layouts/ResourceHub.astro";
+
+const APP = "https://login.ollastack.com";
+
+const sections: HubSection[] = [
+  {
+    heading: "Get notifications into the inbox",
+    blurb:
+      "A form notification is worthless in the spam folder. These cover the authentication and sender setup that decides inbox vs spam.",
+    links: [
+      {
+        href: "/blog/dkim-spf-dmarc-custom-sender",
+        title: "DKIM, SPF & DMARC explained",
+        desc: "What each record does, the exact DNS you need, how to verify it, and the misconfigurations that send your own mail to spam.",
+      },
+      {
+        href: "/blog/per-tenant-smtp-guide",
+        title: "Per-tenant SMTP",
+        desc: "Send each customer's notifications from their own domain and reputation — with a fallback so an outage never loses mail.",
+      },
+      {
+        href: "/docs/smtp",
+        title: "Custom SMTP setup",
+        desc: "The reference for custom sender domains and bring-your-own SMTP servers.",
+      },
+    ],
+  },
+  {
+    heading: "Spam handling that never loses a lead",
+    blurb:
+      "The hard part of a spam filter isn't catching spam — it's not throwing away a real enquiry. This is the invariant Ollastack is built around.",
+    links: [
+      {
+        href: "/blog/ml-quarantine-explained",
+        title: "Why a form backend should fail open",
+        desc: "The ML-quarantine model: an uncertain message is delivered and labeled, never silently dropped. A real lead can't be lost to the filter.",
+      },
+      {
+        href: "/blog/secure-forms-honeypot-captcha",
+        title: "Layered form security",
+        desc: "Honeypot, origin allowlist, CAPTCHA, rate limits, and anti-relay recipient guards — in the order to add them.",
+      },
+    ],
+  },
+  {
+    heading: "Test the email path before you ship",
+    blurb:
+      "Prove your notifications and autoresponders actually send — in CI, not in production after a customer complains.",
+    links: [
+      {
+        href: "/blog/test-otp-email-in-ci",
+        title: "Test OTP / verification email in CI",
+        desc: "Disposable inboxes so an end-to-end test can assert on the exact email it triggered.",
+      },
+      {
+        href: "/blog/mailosaur-alternative",
+        title: "A Mailosaur alternative",
+        desc: "Email-testing inboxes for CI without a separate vendor — the same round-trip Mailosaur gave you.",
+      },
+      {
+        href: "/blog/agent-email-identity",
+        title: "Agent mail (full-duplex)",
+        desc: "Persistent, spam-filtered inboxes on a handle you choose — send and receive, verified end-to-end.",
+      },
+    ],
+  },
+];
+
+const related: HubLink[] = [
+  {
+    href: "/resources/developer-hub",
+    title: "Developer hub",
+    desc: "Framework quickstarts, webhooks, file uploads, the agent path, and the API.",
+  },
+  {
+    href: "/resources/migration-hub",
+    title: "Migration hub",
+    desc: "Move off Formspree, Netlify Forms, Basin, or Getform — with code diffs.",
+  },
+];
+---
+
+<ResourceHub
+  title="Ollastack deliverability hub — SPF, DKIM, DMARC, spam & email testing"
+  description="Get form notifications into the inbox and keep real leads out of the spam folder: SPF/DKIM/DMARC setup, custom sender domains, per-tenant SMTP, the fail-open spam model, and testing the email path in CI."
+  eyebrow="/ deliverability hub"
+  h1="From submission to the inbox, reliably."
+  lede="Email deliverability for form notifications — SPF, DKIM and DMARC done right, custom sender domains and per-tenant SMTP, a spam model that never silently drops a real lead, and ways to test the whole email path in CI."
+  ctaHref={`${APP}/register`}
+  ctaLabel="Set up your sender domain"
+  sections={sections}
+  related={related}
+/>

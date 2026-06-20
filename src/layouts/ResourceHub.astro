@@ -1,0 +1,307 @@
+---
+import Base from "./Base.astro";
+
+export interface HubLink {
+  href: string;
+  title: string;
+  desc: string;
+  external?: boolean;
+}
+export interface HubSection {
+  heading: string;
+  blurb?: string;
+  links: HubLink[];
+}
+export interface Props {
+  title: string;        // <title> / og
+  description: string;  // meta description
+  eyebrow: string;      // mono kicker
+  h1: string;
+  lede: string;
+  ctaHref: string;
+  ctaLabel: string;
+  sections: HubSection[];
+  related?: HubLink[];  // sibling hubs
+}
+
+const {
+  title,
+  description,
+  eyebrow,
+  h1,
+  lede,
+  ctaHref,
+  ctaLabel,
+  sections,
+  related = [],
+} = Astro.props;
+
+const SITE = "https://ollastack.com";
+const APP = "https://login.ollastack.com";
+const pageUrl = new URL(Astro.url.pathname, SITE).toString();
+
+// ItemList JSON-LD — every linked resource on the hub, ordered. Gives search
+// engines an explicit map of the cluster this page anchors.
+const itemListLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: h1,
+  description,
+  url: pageUrl,
+  itemListElement: sections
+    .flatMap((s) => s.links)
+    .map((l, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      url: l.href.startsWith("http") ? l.href : `${SITE}${l.href}`,
+      name: l.title,
+    })),
+};
+
+const breadcrumbLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: `${SITE}/` },
+    { "@type": "ListItem", position: 2, name: "Resources", item: `${SITE}/resources/` },
+    { "@type": "ListItem", position: 3, name: h1, item: pageUrl },
+  ],
+};
+---
+
+<Base title={title} description={description}>
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(itemListLd)}
+    is:inline
+  />
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(breadcrumbLd)}
+    is:inline
+  />
+
+  <section class="hub-hero">
+    <div class="container hub-hero-inner">
+      <nav class="crumbs mono" aria-label="Breadcrumb">
+        <a href="/">Home</a> <span>/</span> <a href="/resources/">Resources</a>
+        <span>/</span> <span class="crumb-here">{eyebrow}</span>
+      </nav>
+      <span class="eyebrow mono">{eyebrow}</span>
+      <h1 class="display hub-title">{h1}</h1>
+      <p class="hub-lede">{lede}</p>
+      <div class="hub-ctas">
+        <a class="btn btn-primary btn-lg" href={ctaHref}>
+          {ctaLabel}
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a class="btn btn-ghost btn-lg" href="/blog">All articles</a>
+      </div>
+    </div>
+  </section>
+
+  {sections.map((sec) => (
+    <section class="hub-section">
+      <div class="container">
+        <div class="hub-section-head">
+          <h2 class="hub-section-title display">{sec.heading}</h2>
+          {sec.blurb && <p class="hub-section-blurb">{sec.blurb}</p>}
+        </div>
+        <ul class="hub-link-grid">
+          {sec.links.map((l) => (
+            <li>
+              <a
+                href={l.href}
+                class="hub-card"
+                {...(l.external ? { target: "_blank", rel: "noopener" } : {})}
+              >
+                <h3>{l.title}</h3>
+                <p>{l.desc}</p>
+                <span class="hub-read mono">{l.external ? "Open ↗" : "Read →"}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  ))}
+
+  {related.length > 0 && (
+    <section class="hub-related">
+      <div class="container">
+        <div class="hub-section-head">
+          <h2 class="hub-section-title display">Other resource hubs</h2>
+        </div>
+        <ul class="hub-link-grid hub-related-grid">
+          {related.map((l) => (
+            <li>
+              <a href={l.href} class="hub-card hub-card-related">
+                <h3>{l.title}</h3>
+                <p>{l.desc}</p>
+                <span class="hub-read mono">Browse →</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <section class="hub-closing">
+    <div class="container">
+      <div class="hub-closing-band">
+        <h2 class="hub-closing-title">{ctaLabel} — free to start.</h2>
+        <p class="hub-closing-sub">
+          100 submissions / month on the free tier, every feature, no credit card.
+          <a href="/pricing">See pricing</a> for higher volume.
+        </p>
+        <a class="btn btn-primary btn-lg" href={`${APP}/register`}>
+          Start free
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hub-hero {
+    padding: 56px 0 44px;
+    border-bottom: 1px solid var(--line);
+  }
+  .hub-hero-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 760px;
+  }
+  .crumbs {
+    font-size: 12px;
+    color: var(--muted-2);
+    margin-bottom: 18px;
+    display: flex;
+    gap: 7px;
+    flex-wrap: wrap;
+  }
+  .crumbs a { color: var(--muted); border-bottom: 1px solid transparent; }
+  .crumbs a:hover { color: var(--ink); border-bottom-color: var(--muted-3); }
+  .crumbs .crumb-here { color: var(--ink-2); }
+  .eyebrow {
+    font-size: 12px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 14px;
+  }
+  .hub-title {
+    font-size: 48px;
+    margin: 0 0 16px;
+    letter-spacing: -0.03em;
+    line-height: 1.02;
+  }
+  .hub-lede {
+    font-size: 18px;
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 620px;
+    margin: 0 0 26px;
+  }
+  .hub-ctas { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+  .hub-section { padding: 56px 0; border-top: 1px solid var(--line); }
+  .hub-section:first-of-type { border-top: none; }
+  .hub-section-head { max-width: 720px; margin-bottom: 30px; }
+  .hub-section-title {
+    font-size: 28px;
+    letter-spacing: -0.02em;
+    margin: 0 0 10px;
+  }
+  .hub-section-blurb {
+    font-size: 15.5px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin: 0;
+    max-width: 600px;
+  }
+
+  .hub-link-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .hub-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 22px 22px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-4);
+    background: var(--bg);
+    color: var(--ink);
+    transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .hub-card:hover {
+    border-color: var(--ink);
+    transform: translateY(-1px);
+    box-shadow: 0 18px 36px -18px rgba(10, 10, 10, 0.12);
+  }
+  .hub-card h3 {
+    font-size: 17px;
+    margin: 0 0 8px;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+  .hub-card p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.55;
+    margin: 0 0 16px;
+    flex: 1;
+  }
+  .hub-read {
+    font-size: 11.5px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .hub-related {
+    padding: 56px 0;
+    border-top: 1px solid var(--line);
+    background: var(--bg-elev);
+  }
+  .hub-card-related { background: var(--bg); }
+
+  .hub-closing {
+    padding: 80px 0 96px;
+    border-top: 1px solid var(--line);
+    background: var(--bg-elev);
+  }
+  .hub-closing-band { max-width: 640px; margin: 0 auto; text-align: center; }
+  .hub-closing-title {
+    font-size: 30px;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    margin: 0 0 12px;
+  }
+  .hub-closing-sub {
+    font-size: 15.5px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin: 0 0 22px;
+  }
+  .hub-closing-sub a { color: var(--ink); border-bottom: 1px dashed var(--muted-3); }
+
+  @media (max-width: 760px) {
+    .hub-title { font-size: 36px; }
+    .hub-link-grid { grid-template-columns: 1fr; }
+    .hub-section-title { font-size: 24px; }
+  }
+</style>
