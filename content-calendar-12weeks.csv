@@ -3,21 +3,21 @@ publish_date,title,slug,author,cta,status
 2026-06-24,Formspree alternative: why developers switch to Ollastack,/blog/formspree-alternative,Product,Compare features,published
 2026-06-26,Mailosaur alternative: modern inbox testing with Ollastack,/blog/mailosaur-alternative,QA Lead,Try inbox testing,published
 2026-06-28,Quickstart — add a hosted form to a Next.js 14 app in 10 minutes,/blog/nextjs-quickstart-hosted-form,Frontend Eng,Try the quickstart,published
-2026-06-29,React Hook Form + Ollastack — production-ready example,/blog/react-hook-form-ollastack,Frontend Eng,View repo,scheduled
-2026-07-01,ML quarantine explained — and why we fail-open,/blog/ml-quarantine-explained,ML Engineer,Read quarantine docs,scheduled
-2026-07-03,DKIM, SPF and DMARC for custom sender domains,/blog/dkim-spf-dmarc-custom-sender,Email Ops,DNS checklist PDF,scheduled
-2026-07-05,Testing forms in CI: agent mail + deterministic inbox webhooks,/blog/testing-forms-in-ci-agent-mail,QA Lead,CI example repo,scheduled
-2026-07-06,Formspree vs Ollastack — pricing, deliverability & limits,/blog/formspree-vs-ollastack,Product,Pricing & compare table,scheduled
-2026-07-08,Migrating webhooks & submissions from Formspree (Node example),/blog/formspree-webhook-migration-node,Backend Eng,Migration scripts,scheduled
-2026-07-10,Secure your forms: honeypots, origin allowlists and captcha,/blog/secure-forms-honeypot-captcha,Security Eng,Security checklist,scheduled
-2026-07-12,File uploads in forms (multipart) with Ollastack,/blog/file-uploads-forms-multipart,Backend Eng,Upload example repo,scheduled
-2026-07-13,Mailosaur → Ollastack: practical walkthrough,/blog/migrate-mailosaur-to-ollastack,QA Lead,Migration guide,scheduled
-2026-07-15,Webhooks best practices — retries, idempotency and delivery verification,/blog/webhooks-retries-idempotency,Backend Eng,Best-practice boilerplate,scheduled
-2026-07-17,Self-host vs hosted form backend — what to pick after Formspree,/blog/self-host-vs-hosted-form-backend,CTO,Decision matrix download,scheduled
+2026-06-29,React Hook Form + Ollastack — production-ready example,/blog/react-hook-form-ollastack,Frontend Eng,View repo,covered
+2026-07-01,ML quarantine explained — and why we fail-open,/blog/ml-quarantine-explained,ML Engineer,Read quarantine docs,published
+2026-07-03,DKIM, SPF and DMARC for custom sender domains,/blog/dkim-spf-dmarc-custom-sender,Email Ops,DNS checklist PDF,published
+2026-07-05,Testing forms in CI: agent mail + deterministic inbox webhooks,/blog/testing-forms-in-ci-agent-mail,QA Lead,CI example repo,covered
+2026-07-06,Formspree vs Ollastack — pricing, deliverability & limits,/blog/formspree-vs-ollastack,Product,Pricing & compare table,covered
+2026-07-08,Migrating webhooks & submissions from Formspree (Node example),/blog/formspree-webhook-migration-node,Backend Eng,Migration scripts,covered
+2026-07-10,Secure your forms: honeypots, origin allowlists and captcha,/blog/secure-forms-honeypot-captcha,Security Eng,Security checklist,published
+2026-07-12,File uploads in forms (multipart) with Ollastack,/blog/file-uploads-forms-multipart,Backend Eng,Upload example repo,published
+2026-07-13,Mailosaur → Ollastack: practical walkthrough,/blog/migrate-mailosaur-to-ollastack,QA Lead,Migration guide,covered
+2026-07-15,Webhooks best practices — retries, idempotency and delivery verification,/blog/webhooks-retries-idempotency,Backend Eng,Best-practice boilerplate,covered
+2026-07-17,Self-host vs hosted form backend — what to pick after Formspree,/blog/self-host-vs-hosted-form-backend,CTO,Decision matrix download,published
 2026-07-19,Create a test inbox with Ollastack for automated tests (Docker),/blog/create-test-inbox-docker,DevOps,Docker repo,scheduled
 2026-07-20,Using the Ollastack SDK — Node, Python, and Ruby quickstart,/blog/ollastack-sdk-quickstart,SDK Lead,SDK install badges,scheduled
 2026-07-22,Debugging email deliverability — bounces, reputation and webhooks,/blog/debug-email-deliverability,Email Ops,Troubleshooting playbook,scheduled
-2026-07-24,Per-tenant SMTP: when to use it, and how to configure it,/blog/per-tenant-smtp-guide,Platform Eng,Tenant SMTP guide,scheduled
+2026-07-24,Per-tenant SMTP: when to use it, and how to configure it,/blog/per-tenant-smtp-guide,Platform Eng,Tenant SMTP guide,published
 2026-07-26,Safe email scaling — quotas, backoff and retry policies,/blog/email-scaling-quotas-retries,SRE,Scaling checklist,scheduled
 2026-07-27,Why email testing in CI matters — benchmarks & case studies,/blog/email-testing-in-ci-case-studies,QA Lead,Case study download,scheduled
 2026-07-29,Handling bounces and complaints — webhook consumer guide,/blog/handling-bounces-complaints,Backend Eng,Example webhook handlers,scheduled
@@ -25,7 +25,7 @@ publish_date,title,slug,author,cta,status
 2026-08-02,Secrets & security: protecting API keys and mailbox credentials,/blog/email-api-security-guide,Security,Secret management guide,scheduled
 2026-08-03,Monitoring mail ingest & webhook health — alerts and runbooks,/blog/monitor-mail-ingest-webhooks,SRE,Alert rules repo,scheduled
 2026-08-05,Tenant SMTP for agencies — configuration and use-cases,/blog/tenant-smtp-for-agencies,Partnerships,Agency onboarding doc,scheduled
-2026-08-07,Custom sender domain onboarding — DNS, verification and common errors,/blog/custom-sender-domain-onboarding,Email Ops,DNS troubleshooting steps,scheduled
+2026-08-07,Custom sender domain onboarding — DNS, verification and common errors,/blog/custom-sender-domain-onboarding,Email Ops,DNS troubleshooting steps,covered
 2026-08-09,Integrating Ollastack with Resend & platform SMTP,/blog/resend-integration-ollastack,Integrations Eng,Integration code snippets,scheduled
 2026-08-10,Billing & subscriptions: how Ollastack uses DodoPayments,/blog/dodopayments-billing-integration,Ops,Billing flow diagram,scheduled
 2026-08-12,Case study — reducing false-positive quarantine rates by tuning thresholds,/blog/quarantine-tuning-case-study,ML Eng,Case study PDF,scheduled
