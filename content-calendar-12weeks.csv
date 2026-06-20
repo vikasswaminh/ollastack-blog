@@ -45,3 +45,8 @@ publish_date,title,slug,author,cta,status
 2026-07-05,SvelteKit form handling with a hosted backend,/blog/sveltekit-form-quickstart,Frontend Eng,Try the quickstart,published
 2026-07-07,React Hook Form + a hosted backend,/blog/react-hook-form-backend,Frontend Eng,View example,published
 2026-07-09,How to test OTP and verification emails in CI,/blog/test-otp-email-in-ci,QA Lead,Try inbox testing,published
+2026-07-11,Getform (Forminit) alternative: migrating to Ollastack,/blog/migrate-from-getform,Product,Compare features,published
+2026-07-13,Vue & Nuxt form handling with a hosted backend,/blog/vue-nuxt-form-quickstart,Frontend Eng,Try the quickstart,published
+2026-07-15,Remix form handling with a hosted backend,/blog/remix-form-quickstart,Frontend Eng,Try the quickstart,published
+2026-07-17,Give your AI agent an email identity,/blog/agent-email-identity,Product,Create an identity,published
+2026-07-19,Form submission webhooks done right,/blog/form-webhooks-guide,Backend Eng,Best-practice boilerplate,published

@@ -13,12 +13,33 @@ interface Props {
 }
 
 const APP = "https://login.ollastack.com";
+const SITE = "https://ollastack.com";
 const { slug, title, description, publishedAt, updatedAt, readingTime, ctaLocation } = Astro.props;
 
 const related: PostMeta[] = posts.filter((p) => p.slug !== slug).slice(0, 3);
+
+// Article structured data — gives every post (legacy .astro + markdown
+// collection) rich-result eligibility and clean author/publisher/date signals.
+const articleLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: title,
+  description,
+  datePublished: publishedAt,
+  dateModified: updatedAt,
+  author: { "@type": "Organization", name: "Ollastack", url: SITE },
+  publisher: {
+    "@type": "Organization",
+    name: "Ollastack",
+    logo: { "@type": "ImageObject", url: `${SITE}/logo.svg` },
+  },
+  mainEntityOfPage: { "@type": "WebPage", "@id": `${SITE}/blog/${slug}/` },
+  image: `${SITE}/og.png`,
+};
 ---
 
 <Base title={`${title} — Ollastack`} description={description} current="blog">
+  <script type="application/ld+json" set:html={JSON.stringify(articleLd)} is:inline />
   <div class="blog-shell container-wide">
     <aside class="left-rail">
       <a href="/blog" class="back mono">← All posts</a>
