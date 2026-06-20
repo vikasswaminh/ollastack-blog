@@ -1,9 +1,34 @@
 ---
 import Base from "../layouts/Base.astro";
 const APP = "https://login.ollastack.com";
+
+const SITE = "https://ollastack.com";
+const HOME_TITLE = "Ollastack — AI agent forms, mailboxes & email testing";
+const HOME_DESC =
+  "One platform for AI agents: forms they can submit, agent mailboxes that send and receive email, and disposable inboxes for email testing in CI.";
+
+// Brand-level structured data for the root domain. Only fields we can stand
+// behind — no invented social profiles or search action.
+const orgLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Ollastack",
+  url: `${SITE}/`,
+  logo: `${SITE}/og.png`,
+  description: HOME_DESC,
+};
+const siteLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Ollastack",
+  url: `${SITE}/`,
+  description: HOME_DESC,
+};
 ---
 
-<Base current="home">
+<Base current="home" title={HOME_TITLE} description={HOME_DESC}>
+  <script type="application/ld+json" set:html={JSON.stringify(orgLd)} is:inline />
+  <script type="application/ld+json" set:html={JSON.stringify(siteLd)} is:inline />
   <!-- =============================================================
        HERO — two-column: copy on the left, live geo-capture demo
        form on the right. The right panel is the unique

@@ -10,8 +10,8 @@ interface Props {
   current?: string;
 }
 const {
-  title = "Ollastack — AI-first headless forms for developers and agents",
-  description = "AI-first headless forms. One API endpoint, an OpenAPI spec your agent reads itself, scoped tokens with per-call audit. From sign-up to first agent submission in two minutes.",
+  title = "Ollastack — AI agent forms, mailboxes & email testing",
+  description = "One platform for AI agents: forms they can submit, agent mailboxes that send and receive email, and disposable inboxes for email testing in CI.",
   current,
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://ollastack.com").toString();
