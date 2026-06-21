@@ -1,6 +1,6 @@
 ---
-title: "SendGrid free alternative for sending and receiving email"
-description: "Looking for a SendGrid free alternative? SendGrid is a strong transactional sender, but it doesn't give you an inbox. Here's a free alternative that sends AND receives — read replies and OTP codes over HTTP — and when SendGrid is still the right call."
+title: "SendGrid free alternative (send and receive)"
+description: "A SendGrid free alternative that sends and receives — read replies and OTP codes over HTTP. How it compares, and when SendGrid is still the right call."
 date: 2026-06-21
 updated: 2026-06-21
 tags: ["email-api", "comparison", "sendgrid", "free"]

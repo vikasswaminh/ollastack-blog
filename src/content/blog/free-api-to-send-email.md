@@ -1,6 +1,6 @@
 ---
-title: "A free API to send email in one call (no SMTP setup)"
-description: "Send email with a single HTTP POST — no SMTP server, no credentials to wrangle. Here's a free API to send email in one call, the deliverability basics that keep it out of spam, the honest free-tier limits, and how to receive the reply too."
+title: "A free API to send email in one call"
+description: "Send email with one HTTP POST — no SMTP, no mail server. A free API to send email, the deliverability basics, and how to receive the reply too."
 date: 2026-06-21
 updated: 2026-06-21
 tags: ["email-api", "send", "free", "tutorial"]

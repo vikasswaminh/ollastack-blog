@@ -1,6 +1,6 @@
 ---
-title: "Send email in Python via API, free (send and receive)"
-description: "Send email from Python with a free HTTP API — no smtplib, no Gmail app password. Here's the send call with httpx/requests, how to receive the reply, and why an API beats SMTP from Python."
+title: "Send email in Python via API, free"
+description: "Send email from Python with a free HTTP API — no smtplib, no Gmail app password. The send call, how to receive the reply, and why it beats SMTP."
 date: 2026-06-21
 updated: 2026-06-21
 tags: ["email-api", "python", "send", "tutorial"]

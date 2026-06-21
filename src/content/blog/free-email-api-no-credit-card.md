@@ -1,6 +1,6 @@
 ---
-title: "Free email API for developers — no credit card required"
-description: "A free email API you can start using without a credit card: get a token, send and receive email over HTTP, and read OTP codes — with the honest limits spelled out and no card-on-file surprise when you cross a threshold."
+title: "Free email API — no credit card required"
+description: "A free email API you can start with no credit card — send and receive over HTTP, read OTP codes, and no surprise charge when you cross the free limit."
 date: 2026-06-21
 updated: 2026-06-21
 tags: ["email-api", "free", "developers"]

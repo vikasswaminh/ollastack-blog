@@ -1,6 +1,6 @@
 ---
-title: "Node.js email API: send and receive email (free, no SMTP)"
-description: "Send and receive email in Node.js with a free HTTP API — no Nodemailer, no SMTP. Here's the send call with fetch, how to receive and read replies, and why an API beats SMTP from Node."
+title: "Node.js email API: send and receive (free)"
+description: "Send and receive email in Node.js with a free HTTP API — no Nodemailer, no SMTP. The send call with fetch, how to receive replies, and why it beats SMTP."
 date: 2026-06-21
 updated: 2026-06-21
 tags: ["email-api", "nodejs", "javascript", "tutorial"]

@@ -54,7 +54,7 @@ const articleLd = {
 };
 ---
 
-<Base title={`${title} — Ollastack`} description={description} current="blog">
+<Base title={title} description={description} current="blog">
   <script type="application/ld+json" set:html={JSON.stringify(articleLd)} is:inline />
   {faqLd && <script type="application/ld+json" set:html={JSON.stringify(faqLd)} is:inline />}
   <div class="blog-shell container-wide">

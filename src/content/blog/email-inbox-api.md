@@ -1,6 +1,6 @@
 ---
-title: "Email inbox API: a real inbox your code controls over HTTP"
-description: "An email inbox API gives your app or agent a real inbox — create it, send from it, receive into it, and read messages as JSON. Here's how it works, how it differs from a send-only email API, and when to use a persistent vs disposable inbox."
+title: "Email inbox API: a real inbox over HTTP"
+description: "Give your app or agent a real inbox over HTTP — create it, send, receive, and read messages as JSON. How it differs from a send-only email API."
 date: 2026-06-21
 updated: 2026-06-21
 tags: ["email-api", "inbox", "tutorial"]

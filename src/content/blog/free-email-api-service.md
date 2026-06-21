@@ -1,6 +1,6 @@
 ---
-title: "Free email API service that sends AND receives (no credit card)"
-description: "Most free email API services only send. Here's a free email API service that also receives — create an inbox, send, receive replies, read OTP codes — over HTTP with no credit card, plus the honest free-tier limits and when to use a bulk sender instead."
+title: "Free email API service (send and receive)"
+description: "A free email API service that also receives — create an inbox, send, read replies and OTP codes over HTTP, no credit card. With the honest free-tier limits."
 date: 2026-06-21
 updated: 2026-06-21
 tags: ["email-api", "free", "guide"]

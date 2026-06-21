@@ -1,6 +1,6 @@
 ---
-title: "Free email API for developers (private, disposable addresses)"
-description: "Looking for a free 'anonymous' email API? Here's the honest version: free, disposable inboxes you create and read over HTTP without exposing a personal address — what that does and doesn't mean for privacy, and how to use it."
+title: "Free email API with disposable addresses"
+description: "A free email API with disposable addresses that keep a personal inbox private from the recipient — the honest take on 'anonymous', and how to use it."
 date: 2026-06-21
 updated: 2026-06-21
 tags: ["email-api", "free", "disposable", "developers"]

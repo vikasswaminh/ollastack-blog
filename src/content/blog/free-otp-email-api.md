@@ -1,6 +1,6 @@
 ---
-title: "Free OTP email API: send and verify one-time codes"
-description: "A free OTP email API to send one-time codes and verify them by reading the email back. Here's the send call, the round-trip test pattern, and how the inbox extracts the code so you never scrape HTML."
+title: "Free OTP email API: send and verify codes"
+description: "A free OTP email API to send one-time codes and verify them by reading the email back — with the code extracted for you, so you never scrape HTML."
 date: 2026-06-21
 updated: 2026-06-21
 tags: ["email-api", "otp", "free", "tutorial"]

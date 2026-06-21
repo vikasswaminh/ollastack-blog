@@ -1,6 +1,6 @@
 ---
-title: "Python email API: send and receive email (no smtplib)"
-description: "A Python email API that sends AND receives over HTTP — no smtplib, no SMTP server. Here's the send and receive code with httpx or requests, OTP extraction, and why an API beats SMTP from Python."
+title: "Python email API: send and receive (no smtplib)"
+description: "A Python email API that sends and receives over HTTP — no smtplib. Send and receive with httpx or requests, OTP extraction, and why it beats SMTP."
 date: 2026-06-21
 updated: 2026-06-21
 tags: ["email-api", "python", "tutorial"]

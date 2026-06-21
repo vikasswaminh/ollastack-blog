@@ -1,6 +1,6 @@
 ---
 title: "Send email with curl, free (and read the reply)"
-description: "How to send email with a single curl command, free — no SMTP, no mail server. Plus the honest truth about 'no API key' email senders, and how to receive the reply with the same one-liner."
+description: "Send email with one curl command, free — no SMTP. Plus the honest truth about 'no API key' senders and how to receive the reply from the shell."
 date: 2026-06-21
 updated: 2026-06-21
 tags: ["email-api", "curl", "send", "tutorial"]

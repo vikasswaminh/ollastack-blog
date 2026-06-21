@@ -1,6 +1,6 @@
 ---
-title: "Inbound email API: receive mail over HTTP (with code)"
-description: "An inbound email API hands you incoming mail as structured JSON over HTTP — no IMAP, no mail server. Here's how to receive email in one call, read parsed fields plus extracted codes and links, and fire a webhook on every message."
+title: "Inbound email API: receive email over HTTP"
+description: "Receive incoming email as structured JSON over HTTP — no IMAP, no mail server. Parse fields, extract codes and links, and fire a webhook on every message."
 date: 2026-06-21
 updated: 2026-06-21
 tags: ["email-api", "inbound", "tutorial"]

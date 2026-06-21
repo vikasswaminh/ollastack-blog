@@ -1,6 +1,6 @@
 ---
-title: "Resend free tier alternative that also receives email"
-description: "Resend is a great free tier for sending email. But it doesn't receive. If you need to read replies, OTP codes, or inbound mail, here's a full-duplex alternative — send and receive on a free tier — and an honest take on when to just use Resend."
+title: "Resend free tier alternative that receives email"
+description: "Resend is a great free tier for sending. But it can't receive. Here's a full-duplex alternative — send and receive free — and when to just use Resend."
 date: 2026-06-21
 updated: 2026-06-21
 tags: ["email-api", "comparison", "resend", "free"]

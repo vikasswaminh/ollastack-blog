@@ -1,6 +1,6 @@
 ---
-title: "Best email API in 2026: send-only vs full-duplex (send + receive)"
-description: "The 'best email API' depends on whether you only need to send or also need to receive. Here are the criteria that matter, the send-only vs full-duplex split, an honest shortlist, and which to pick for your use case."
+title: "Best email API 2026: send-only vs full-duplex"
+description: "The best email API depends on whether you only send or also receive. The criteria, the send-only vs full-duplex split, an honest shortlist, and picks."
 date: 2026-06-21
 updated: 2026-06-21
 tags: ["email-api", "comparison", "roundup"]
