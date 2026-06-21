@@ -50,24 +50,37 @@ The gap now is **distribution + the agent-mail content cluster**, not technical 
 
 ---
 
-## 3. What drives competitor traffic  **[Ahrefs ▢]**
+## 3. What drives competitor traffic — **Ahrefs data, 2026-06-21 (US)**
 
-### Formspree (hypothesis)
-- **Branded**: "formspree", "formspree pricing/login" — large.
-- **Category non-brand**: "html form to email", "form backend", "contact form
-  without backend", "static site form", "ajax form endpoint".
-- **Framework long-tail**: "react/next.js contact form", "form endpoint".
-- **Moat = referring domains**: a decade of tutorials, Stack Overflow, GitHub
-  (their React lib). This is their real defense, not on-page cleverness.
+| Metric | Formspree.io | AgentMail.to | Ollastack.com |
+|---|---|---|---|
+| Domain Rating | **86** | **63** | **10** |
+| Organic keywords | 542 | **39** | 0 |
+| Kw in top 1–3 | 194 | 16 | 0 |
+| Organic traffic /mo | 4,796 | 5,776 | 0 |
+| Organic traffic value /mo | $12,196 | $948 | $0 |
+| Referring domains (live) | **208,478** | 814 | 162 |
+| Backlinks (live) | 8.99M | 6,549 | 251 |
 
-### AgentMail (hypothesis)
-- **Branded + referral/PR**: YC directory, Launch HN, X, Product Hunt, angel
-  networks (Paul Graham, Dharmesh Shah) — likely their **dominant** channel.
-- **Thin organic** on "email for AI agents", "agent inbox API" — new domain.
-- Winning on **buzz + funding**, almost certainly **not** an SEO content moat yet.
+**The data confirms the thesis and sharpens it:**
 
-> **Fill once authed:** DR, organic traffic, traffic value, # organic keywords,
-> referring domains, top 10 pages, top 20 keywords by traffic — for both domains.
+- **AgentMail's organic is ~95% one branded term.** Their #1 keyword `agentmail`
+  alone = 5,486 of 5,776 traffic. Every non-brand term is tiny and often
+  poorly ranked: `agent email` (80 vol), `agent inbox` (60), `email for ai
+  agents` (40), `free email api` (1,900 vol but pos **16**), `email api` (600,
+  pos **11**). **They have NO organic content moat — just 39 keywords.** This is
+  the wide-open flank, exactly as hypothesized.
+- **Formspree is a backlink fortress** — 208K referring domains. Confirmed: do
+  not fight category head terms. Its own traffic is 71% branded (`formspree`);
+  non-brand wins are mid-tail (`form library` 350, `html contact form` 300,
+  `application form` 2,600, `simple contact form` 200). It does **not** dominate
+  head terms (`free forms` 14k → pos 10).
+- **Brand is the dominant channel for BOTH** (Formspree 71%, AgentMail 95%
+  branded). The biggest traffic lever is therefore **building Ollastack brand
+  search** (launches, PR, MCP directories) — not another blog post.
+- **Ollastack: DR 10, 0 organic keywords, 162 refdomains.** Pure upside, but
+  DR 10 means content won't rank without backlinks + brand. The constraint is
+  authority, not content volume (we already have 32 posts).
 
 ---
 
@@ -94,7 +107,30 @@ email in CI`, `assert on email Playwright/Cypress`, `disposable inbox API`.
 `forms and email for AI agents`, `agent communication API`, `MCP forms and
 email`, `give your agent a form endpoint and an inbox`.
 
-> **Fill once authed:** volume + KD for each seed; sort by (volume × winnability).
+### Prioritized targets — **Ahrefs volume + KD (US, 2026-06-21)**
+
+Everything in this space is **low-volume, high-intent, low-difficulty, emerging**.
+Don't expect big traffic today; expect a few high-value visitors per term,
+compounding as the category grows. Prioritized by (volume × intent × winnability):
+
+| Keyword | Vol | KD | CPC | Status |
+|---|---|---|---|---|
+| email testing api | 100 | low | $4.50 | **Wave B** — highest volume here |
+| agent email | 80 | 5 | $4.50 | Wave A ✅ (covered) |
+| agent inbox | 60 | 14 | — | Wave A ✅ |
+| form backend | 60 | 37 | $2.50 | done — but KD 37 (Formspree owns it) |
+| email for ai agents | 40 | 4 | — | Wave A ✅ (pillar) |
+| formspree alternative | 40 | **0** | $3.50 | done ✅ — easy, commercial |
+| mcp email | 30 | 1 | — | Wave C target |
+| mailosaur alternative | 30 | low | — | done ✅ — Wave B extend |
+| html form to email | 30 | 12 | $2.00 | done ✅ (legacy post) |
+| test otp email | 10 | low | — | done ✅ |
+| email api for ai agents | 10 | low | — | Wave A ✅ |
+| agentmail alternative | 0* | — | — | Wave A ✅ (*0 today, grows with their brand) |
+
+*Takeaway:* the long-tail is mostly **already covered** (Waves A + prior). The
+unmet high-value gap is **`email testing api` (100/$4.50)** → Wave B. Beyond that,
+content is not the bottleneck — **authority and brand are**.
 
 ---
 
@@ -168,20 +204,21 @@ backlinks:
 
 ---
 
-## 8. Metrics & 90-day targets  **[Ahrefs ▢ baseline]**
+## 8. Metrics & 90-day targets — **baselines from Ahrefs 2026-06-21**
 
 | Metric | Baseline | 90-day target |
 |---|---|---|
-| Organic keywords ranked (ollastack.com) | ▢ | ▢ +200 |
-| Referring domains | ▢ | ▢ +30 |
-| Top-10 for "AgentMail alternative" | — | yes |
-| Top-10 for "form backend for AI agents" | — | yes |
-| Top-20 for "email for AI agents" | — | yes |
+| Domain Rating | 10 | 18–20 |
+| Organic keywords ranked (ollastack.com) | 0 | 80–120 |
+| Referring domains (live) | 162 | 220+ |
+| Top-10 for "formspree alternative" (KD 0) | no | yes |
+| Top-10 for "email for ai agents" / "agent email" | no | yes |
 | MCP installs / GitHub stars | 0 | first 100 |
-| Signups | ▢ | ▢ |
-| Time-to-first-submission | ▢ | hold < 2 min |
+| Branded "ollastack" search volume | ~0 | measurable (post-launch) |
+| Time-to-first-submission | — | hold < 2 min |
 
-North-star activation metric: **time-to-first-submission**.
+North-star activation metric: **time-to-first-submission**. Leading SEO
+indicator: **referring domains** (the DR-10 → must-build-authority constraint).
 
 ---
 
@@ -229,8 +266,12 @@ North-star activation metric: **time-to-first-submission**.
 
 ---
 
-**Do this first:** authorize Ahrefs, pull the §10 baselines, then execute Phase 1
-— the MCP launch + the agent-mailboxes content wave. Reason: AgentMail is the one
-competitor whose moat (SEO) isn't built yet, and it directly contests our
-differentiator pillar — winning that organic layer now, while we have the MCP as
-a launch hook, is the single highest-leverage move on the board.
+**Do this first (data-confirmed):** the **MCP launch** (PyPI + Show HN/PH +
+directories). The Ahrefs data shows brand drives 71–95% of both competitors'
+traffic, and Ollastack is DR 10 with 0 organic keywords — so the binding
+constraints are **brand search + backlinks/authority, not content** (we already
+cover the long-tail). A launch generates branded search *and* high-authority
+backlinks (MCP directories) at once. The only remaining content gap worth filling
+is **Wave B's `email testing api` (100 vol, $4.50 CPC)** — the highest-value
+keyword we don't yet own. Everything else is: ship the launch, build links, wait
+for the emerging category's volume to grow into the moat we've already built.
