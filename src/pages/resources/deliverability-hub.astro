@@ -50,9 +50,19 @@ const sections: HubSection[] = [
       "Prove your notifications and autoresponders actually send — in CI, not in production after a customer complains.",
     links: [
       {
+        href: "/blog/email-testing-api-for-ci",
+        title: "Email testing API for CI",
+        desc: "What an email testing API is and how to assert on real emails over HTTP — no mail server.",
+      },
+      {
+        href: "/blog/assert-on-email-in-playwright-cypress",
+        title: "Assert on email in Playwright / Cypress",
+        desc: "Read the verification code or magic link inside an E2E test — disposable inbox, long-poll, no flaky sleeps.",
+      },
+      {
         href: "/blog/test-otp-email-in-ci",
         title: "Test OTP / verification email in CI",
-        desc: "Disposable inboxes so an end-to-end test can assert on the exact email it triggered.",
+        desc: "The reliable OTP pattern: long-poll, assert on the extracted code, isolate parallel runs.",
       },
       {
         href: "/blog/mailosaur-alternative",
