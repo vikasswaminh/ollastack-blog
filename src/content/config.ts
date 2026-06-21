@@ -17,6 +17,11 @@ const blog = defineCollection({
     draft: z.boolean().default(false),
     canonical: z.string().optional(),
     ogImage: z.string().optional(),
+    // Optional FAQ — rendered as a section AND emitted as FAQPage JSON-LD
+    // (rich-result eligibility + People-Also-Ask coverage).
+    faq: z
+      .array(z.object({ q: z.string(), a: z.string() }))
+      .optional(),
   }),
 });
 
