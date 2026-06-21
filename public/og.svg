@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" font-family="Arial, 'Segoe UI', Helvetica, sans-serif">
+  <!-- Card background -->
+  <rect width="1200" height="630" fill="#ffffff"/>
+  <!-- Brand accent strip -->
+  <rect width="1200" height="10" fill="#DA291C"/>
+
+  <!-- Subtle dot grid (top-right corner) -->
+  <g fill="#e5e5e7">
+    <circle cx="1040" cy="120" r="3"/><circle cx="1080" cy="120" r="3"/><circle cx="1120" cy="120" r="3"/>
+    <circle cx="1040" cy="160" r="3"/><circle cx="1080" cy="160" r="3"/><circle cx="1120" cy="160" r="3"/>
+    <circle cx="1040" cy="200" r="3"/><circle cx="1080" cy="200" r="3"/><circle cx="1120" cy="200" r="3"/>
+  </g>
+
+  <!-- Logo: red stack mark + wordmark -->
+  <rect x="72" y="66" width="56" height="56" rx="12" fill="#DA291C"/>
+  <rect x="86" y="82"  width="30" height="6" rx="3" fill="#ffffff"/>
+  <rect x="86" y="95"  width="30" height="6" rx="3" fill="#ffffff"/>
+  <rect x="86" y="108" width="30" height="6" rx="3" fill="#ffffff"/>
+  <text x="146" y="105" font-size="34" font-weight="700" fill="#0a0a0a" letter-spacing="-0.5">ollastack</text>
+
+  <!-- Headline (mirrors the homepage H1) -->
+  <text x="72" y="296" font-size="62" font-weight="700" fill="#0a0a0a" letter-spacing="-1.5">Forms, mailboxes &amp; email testing,</text>
+  <text x="72" y="374" font-size="62" font-weight="700" letter-spacing="-1.5"><tspan fill="#0a0a0a">built for your</tspan><tspan fill="#DA291C" dx="20">AI agents</tspan><tspan fill="#0a0a0a">.</tspan></text>
+
+  <!-- Three-pillar pills -->
+  <g font-size="24" font-weight="600">
+    <rect x="72"  y="446" width="232" height="58" rx="29" fill="#f4f4f5" stroke="#e5e5e7"/>
+    <circle cx="106" cy="475" r="6" fill="#0066ff"/>
+    <text x="124" y="483" fill="#18181b">Agent Forms</text>
+
+    <rect x="320" y="446" width="296" height="58" rx="29" fill="#f4f4f5" stroke="#e5e5e7"/>
+    <circle cx="354" cy="475" r="6" fill="#DA291C"/>
+    <text x="372" y="483" fill="#18181b">Agent Mailboxes</text>
+
+    <rect x="632" y="446" width="252" height="58" rx="29" fill="#f4f4f5" stroke="#e5e5e7"/>
+    <circle cx="666" cy="475" r="6" fill="#16a34a"/>
+    <text x="684" y="483" fill="#18181b">Email Testing</text>
+  </g>
+
+  <!-- Footer -->
+  <text x="72" y="576" font-size="24" font-weight="500" fill="#52525b">ollastack.com</text>
+  <text x="1128" y="576" font-size="22" font-weight="500" fill="#8a8a93" text-anchor="end">API-first · one token system · self-hostable</text>
+</svg>
