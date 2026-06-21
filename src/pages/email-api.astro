@@ -1,0 +1,243 @@
+---
+import Base from "../layouts/Base.astro";
+
+const APP = "https://login.ollastack.com";
+const SITE = "https://ollastack.com";
+
+const faqs = [
+  {
+    q: "Is there really a free email API?",
+    a: "Yes. The free tier gives you a real email API with no credit card — create mailboxes, send, receive, and read messages over HTTP, plus disposable test inboxes for CI. It's metered (a modest monthly send quota); for high-volume one-way blasts a dedicated transactional sender is a better fit, but for send-and-receive, agents, and testing the free tier covers real work.",
+  },
+  {
+    q: "Can the API receive email, not just send it?",
+    a: "Yes — that's the point. Most 'email APIs' only send. Ollastack gives each mailbox a real receiving address, so your app or agent can receive replies, read verification codes and links (pre-extracted), and reply in-thread — full-duplex over one API.",
+  },
+  {
+    q: "How is this different from Resend, SendGrid, or Mailgun?",
+    a: "Those are excellent one-way transactional senders. Ollastack is a full-duplex inbox API: send + receive + reply + test, built for two-way conversations and AI agents. For pure high-volume sending, use a transactional provider; for inboxes your code or agent operates, use this.",
+  },
+  {
+    q: "Can I use it for testing email in CI?",
+    a: "Yes. Create a disposable test inbox, point your app at its address, long-poll for the message, and assert on the extracted code or link — no mail server, same token. It's a drop-in for email-testing tools like Mailosaur.",
+  },
+  {
+    q: "Is it an email API for AI agents?",
+    a: "Yes. An agent can create a mailbox on a chosen handle, send from it, wait for replies, and read OTP codes — and the same endpoints are exposed as MCP tools so Claude Desktop or Cursor use them natively.",
+  },
+];
+
+const faqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
+const pageLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "Free email API — send and receive email over HTTP",
+  url: `${SITE}/email-api/`,
+  description:
+    "A free email API that sends AND receives — real inboxes over HTTP for developers, AI agents, and CI testing. Not just one-way sending.",
+};
+
+// Code panes are raw HTML (set:html) so literal { } in the samples don't get
+// parsed as JSX expressions.
+const sendCode = `<span class="c">$</span> <span class="k">curl</span> -X POST ${APP}/api/mailboxes/<span class="h">{id}</span>/send \\
+    -H <span class="s">"Authorization: Bearer fmd_…"</span> \\
+    -H <span class="s">"Content-Type: application/json"</span> \\
+    -d <span class="s">'{"to":"user@example.com","subject":"Hi","text":"Hello from the API"}'</span>
+
+<span class="ok">{ "id": "msg_…", "status": "sent" }</span>`;
+
+const receiveCode = `<span class="c">$</span> <span class="k">curl</span> <span class="s">"${APP}/api/mailboxes/<span class="h">{id}</span>/wait?timeout=60"</span> \\
+    -H <span class="s">"Authorization: Bearer fmd_…"</span>
+
+<span class="ok">{
+  "from": "noreply@service.com",
+  "subject": "Your verification code",
+  "codes": ["920184"],          <span class="m"># OTP, extracted for you</span>
+  "links": ["https://service.com/verify?token=…"]
+}</span>`;
+---
+
+<Base
+  title="Free email API — send AND receive email over HTTP | Ollastack"
+  description="A free email API that sends and receives. Real inboxes over HTTP — receive replies, read OTP codes, reply in-thread, and test email in CI. Built for developers and AI agents, not just one-way sending."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(pageLd)} is:inline />
+  <script type="application/ld+json" set:html={JSON.stringify(faqLd)} is:inline />
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <span class="chip mono"><span class="dot"></span> FREE EMAIL API · SEND + RECEIVE</span>
+      <h1 class="display headline">
+        The free email API that<br />
+        <span class="brand-red-text">sends and receives</span>.
+      </h1>
+      <p class="subhead">
+        Most email APIs only send. Ollastack gives your code — and your AI agents —
+        a real inbox over HTTP: send, receive replies, read verification codes,
+        reply in-thread, and spin up disposable inboxes to test email in CI.
+        One API, free to start, no credit card.
+      </p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary btn-lg" href={`${APP}/register`}>
+          Get a free API key
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a class="btn btn-ghost btn-lg" href={`${APP}/api/openapi.json`}>Read the API spec</a>
+      </div>
+      <p class="hero-note mono">Free tier · send + receive + test inboxes · OpenAPI + MCP</p>
+    </div>
+  </section>
+
+  <!-- SEND -->
+  <section class="band">
+    <div class="container">
+      <div class="sh"><span class="eyebrow">/ send</span><h2 class="display st">Send an email in one call</h2>
+      <p class="ss">Create a mailbox, send from its own identity. Plain HTTP — any language.</p></div>
+      <pre class="code" set:html={sendCode}></pre>
+    </div>
+  </section>
+
+  <!-- RECEIVE (the differentiator) -->
+  <section class="band band-accent">
+    <div class="container">
+      <div class="sh"><span class="eyebrow">/ receive · the difference</span><h2 class="display st">Receive email — the part other APIs skip</h2>
+      <p class="ss">Every mailbox has a real receiving address. Long-poll for the next message and read the bodies plus <strong>pre-extracted codes and links</strong> — no IMAP, no HTML scraping.</p></div>
+      <pre class="code" set:html={receiveCode}></pre>
+      <p class="ss" style="margin-top:18px">Then reply in-thread (<code>POST …/messages/&#123;id&#125;/reply</code>) — threading preserved. That's a real two-way conversation over an API.</p>
+    </div>
+  </section>
+
+  <!-- USE CASES -->
+  <section class="band">
+    <div class="container">
+      <div class="sh"><span class="eyebrow">/ what it's for</span><h2 class="display st">One API, three jobs</h2></div>
+      <div class="grid3">
+        <article class="card">
+          <h3>AI agents</h3>
+          <p>Give an agent its own inbox on a handle you choose — send, receive, reply, read OTPs. Exposed as <a href="/blog/build-ai-agent-that-sends-and-receives-email">MCP tools</a> for Claude Desktop &amp; Cursor.</p>
+          <a class="lnk mono" href="/blog/email-for-ai-agents">→ email for AI agents</a>
+        </article>
+        <article class="card">
+          <h3>CI email testing</h3>
+          <p>Disposable inboxes that let a test assert the welcome email, receipt, or reset link actually arrived — over HTTP, no mail server.</p>
+          <a class="lnk mono" href="/blog/email-testing-api-for-ci">→ email testing API</a>
+        </article>
+        <article class="card">
+          <h3>App email</h3>
+          <p>Transactional send plus a real inbox for inbound — support replies, parsed inbound mail, two-way flows your app actually reads.</p>
+          <a class="lnk mono" href="/blog/agent-email-identity">→ agent mail identity</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- HONEST COMPARISON -->
+  <section class="band band-elev">
+    <div class="container">
+      <div class="sh"><span class="eyebrow">/ honest comparison</span><h2 class="display st">When to use this — and when not to</h2>
+      <p class="ss">We're not a high-volume one-way blaster. We're the full-duplex one. Here's the honest split.</p></div>
+      <div class="cmp">
+        <table>
+          <thead><tr><th>Need</th><th>Ollastack</th><th>Send-only API (Resend/SendGrid/Mailgun)</th></tr></thead>
+          <tbody>
+            <tr><td>Send transactional email</td><td>✅</td><td>✅</td></tr>
+            <tr><td>Receive email / real inbox</td><td>✅</td><td>—</td></tr>
+            <tr><td>Read OTP codes &amp; links (extracted)</td><td>✅</td><td>—</td></tr>
+            <tr><td>Reply in-thread</td><td>✅</td><td>—</td></tr>
+            <tr><td>Disposable inboxes for CI testing</td><td>✅</td><td>—</td></tr>
+            <tr><td>MCP tools for AI agents</td><td>✅</td><td>—</td></tr>
+            <tr><td>High-volume one-way blasts</td><td>use a transactional sender</td><td>✅</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="ss" style="margin-top:16px">If you only need to <em>send</em> a lot of mail, a dedicated transactional provider is the right tool. If you need to <strong>receive</strong>, test, or hold two-way conversations — especially for AI agents — that's this.</p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="band">
+    <div class="container">
+      <div class="sh"><span class="eyebrow">/ faq</span><h2 class="display st">Free email API — common questions</h2></div>
+      <div class="faq">
+        {faqs.map((f) => (
+          <details>
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section class="closing">
+    <div class="container">
+      <div class="closing-band">
+        <h2 class="closing-title">A free email API that actually receives.</h2>
+        <p class="closing-sub">Send, receive, reply, and test — one API, free to start, no credit card.</p>
+        <a class="btn btn-primary btn-lg" href={`${APP}/register`}>Get a free API key
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero { padding: 64px 0 52px; border-bottom: 1px solid var(--line); }
+  .hero-inner { display:flex; flex-direction:column; align-items:flex-start; max-width: 760px; }
+  .chip .dot { width:7px;height:7px;border-radius:999px;background:var(--accent);box-shadow:0 0 0 3px rgba(0,102,255,.18); }
+  .headline { font-size:60px; margin:20px 0 18px; letter-spacing:-.035em; line-height:1.0; }
+  .headline .brand-red-text { color: var(--brand-red); }
+  .subhead { font-size:17px; color:var(--muted); line-height:1.6; max-width:620px; margin:0 0 24px; }
+  .hero-ctas { display:flex; gap:10px; flex-wrap:wrap; }
+  .hero-note { margin-top:18px; color:var(--muted-2); font-size:12.5px; }
+
+  .band { padding:60px 0; border-top:1px solid var(--line); }
+  .band-accent { background: var(--bg-elev); }
+  .band-elev { background: var(--bg-elev); }
+  .sh { max-width:720px; margin-bottom:26px; }
+  .eyebrow { display:inline-block; font-size:12px; color:var(--accent); text-transform:uppercase; letter-spacing:.08em; margin-bottom:10px; }
+  .st { font-size:32px; letter-spacing:-.02em; margin:0 0 10px; }
+  .ss { font-size:15.5px; color:var(--muted); line-height:1.6; margin:0; max-width:640px; }
+  .ss strong { color: var(--ink-2); }
+  .ss code { background:var(--bg-sunken); border:1px solid var(--line); padding:1px 6px; border-radius:6px; font-family:var(--font-mono); font-size:.9em; }
+
+  .code { background:#0d0d0f; color:#e6e6e6; font-family:var(--font-mono); font-size:13px; line-height:1.7; margin:0; padding:22px 24px; border-radius:12px; white-space:pre-wrap; word-break:break-word; overflow-x:auto; }
+  .code .c { color:#7c7c85; } .code .k { color:#7aa2f7; font-weight:600; } .code .s { color:#9ece6a; }
+  .code .h { color:#e0af68; } .code .ok { color:#73daca; display:inline-block; margin-top:8px; } .code .m { color:#6b7280; }
+
+  .grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .card { border:1px solid var(--line); border-radius:14px; background:var(--bg); padding:22px; }
+  .card h3 { font-size:18px; margin:0 0 8px; letter-spacing:-.01em; }
+  .card p { font-size:14px; color:var(--muted); line-height:1.55; margin:0 0 14px; }
+  .card a, .lnk { color:var(--accent); }
+  .lnk { font-size:11.5px; text-transform:uppercase; letter-spacing:.06em; }
+
+  .cmp { overflow-x:auto; }
+  .cmp table { width:100%; border-collapse:collapse; font-size:14.5px; }
+  .cmp th, .cmp td { text-align:left; padding:12px 14px; border-bottom:1px solid var(--line); }
+  .cmp thead th { color:var(--muted-2); font-weight:600; font-size:13px; }
+  .cmp td:first-child { color:var(--ink-2); }
+
+  .faq { max-width:760px; }
+  .faq details { border:1px solid var(--line); border-radius:12px; background:var(--bg); padding:4px 18px; margin-bottom:10px; }
+  .faq summary { cursor:pointer; font-weight:600; padding:14px 0; font-size:15.5px; color:var(--ink); }
+  .faq p { color:var(--muted); line-height:1.6; margin:0 0 14px; font-size:14.5px; }
+
+  .closing { padding:80px 0 96px; background:var(--bg-elev); border-top:1px solid var(--line); }
+  .closing-band { max-width:600px; margin:0 auto; text-align:center; }
+  .closing-title { font-size:32px; letter-spacing:-.025em; margin:0 0 12px; }
+  .closing-sub { font-size:16px; color:var(--muted); margin:0 0 22px; }
+
+  @media (max-width:860px){ .headline{font-size:42px;} .grid3{grid-template-columns:1fr;} .st{font-size:26px;} }
+</style>

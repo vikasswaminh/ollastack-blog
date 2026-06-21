@@ -14,6 +14,7 @@ interface Entry {
 
 const staticPages: Entry[] = [
   { url: "/",         lastmod: TODAY, changefreq: "weekly",  priority: "1.0" },
+  { url: "/email-api", lastmod: TODAY, changefreq: "weekly",  priority: "0.9" },
   { url: "/pricing",  lastmod: TODAY, changefreq: "monthly", priority: "0.9" },
   { url: "/docs",     lastmod: TODAY, changefreq: "weekly",  priority: "0.8" },
   { url: "/docs/agents", lastmod: TODAY, changefreq: "monthly", priority: "0.7" },

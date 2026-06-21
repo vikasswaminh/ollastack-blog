@@ -157,6 +157,43 @@ content is not the bottleneck — **authority and brand are**.
 
 ---
 
+## 5b. Flagship pillar — "free email API" (highest-value bet)
+
+**The data says this is the #1 content opportunity** — far bigger than the agent
+long-tail, and low difficulty:
+
+| Keyword | Vol | KD | CPC |
+|---|---|---|---|
+| free email api | **1,500** | **13** | $6.00 |
+| email api | 700 | 18 | $4.50 |
+| transactional email api | 250 | 17 | $7.00 |
+| inbound email api | 150 | **11** | $3.50 |
+| email sending api | 150 | 13 | $5.00 |
+| free email sending api | 100 | 12 | $9.00 |
+| email api for developers | 150 | **9** | — |
+| email inbox api | 60 | **9** | $2.00 |
+
+**The honest, winnable wedge: receiving.** Send-only incumbents (Resend, SendGrid,
+Mailgun, Brevo) own "send"; nobody owns the *receive* side. `inbound email api`
+(KD 11), `email inbox api` (KD 9), `receive email api` are low-competition and
+exactly what Ollastack is (full-duplex). So the pillar ranks honestly for "free
+email api" / "email api" by leading with **send AND receive**, not by pretending
+to be a free bulk sender. SERP note: Reddit threads rank top for "free email api"
+— a community-seeding opportunity.
+
+**SHIPPED: `/email-api`** — large pillar page (hero, send/receive code, use-cases,
+honest comparison vs send-only APIs, FAQ with FAQPage schema), linked from nav +
+footer + sitemap (priority 0.9).
+
+**Supporting cluster to write next** (each a low-KD head term above):
+`inbound-email-api`, `email-inbox-api`, `transactional-vs-inbox-email-api`,
+`email-api-for-developers`, `receive-email-with-an-api`.
+
+> Reality check: Ollastack is DR 10; ranking for "free email api" (vs DR 90+
+> incumbents on page 1) is a multi-quarter, backlink-dependent fight. This is a
+> plant-the-flag-for-growth bet — correct, but not a quick win. Authority
+> (backlinks) is the gate, per §7.
+
 ## 6. Content roadmap (next waves)
 
 **Wave A — Agent Mailboxes cluster (vs AgentMail) — DO FIRST**
