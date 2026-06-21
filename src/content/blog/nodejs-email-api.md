@@ -59,6 +59,30 @@ That's the part Nodemailer can't do — read inbound mail and pull the code with
 
 Nodemailer owns the transport: host, port, auth, pooling, and every connection error. The API is one `fetch` that returns a `msg_…` id or a structured error — and it also receives. Less to configure, more it can do.
 
+## Poll an inbox in a loop
+
+Because `wait` long-polls and returns as soon as a message lands, you can drain an inbox in a simple loop — each call blocks until the next message or the timeout, so there's no manual back-off:
+
+```js
+async function drain(mbxId, onMessage) {
+  while (true) {
+    const res = await fetch(
+      `${API}/api/mailboxes/${mbxId}/wait?timeout=60`,
+      { headers: { Authorization: `Bearer ${TOKEN}` } },
+    );
+    if (res.status === 204) continue;        // nothing within the window — poll again
+    if (!res.ok) throw new Error(`wait failed: ${res.status}`);
+    onMessage(await res.json());             // { from, subject, codes, links }
+  }
+}
+```
+
+For production, give the mailbox a `webhook_url` instead and let inbound mail POST to your endpoint (HMAC-signed, retried) — push beats polling once you're past a quick script.
+
+## Error handling
+
+Check `res.ok` and read the structured error body on failure rather than assuming the send went through — the API returns a `code` and `message` you can log and act on, unlike a thrown SMTP socket error.
+
 See the [email API overview](/email-api), [free API to send email](/blog/free-api-to-send-email), and the [Python version](/blog/python-email-api).
 
 [Get a free token](https://login.ollastack.com/register) — send and receive from Node, no card.

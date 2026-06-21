@@ -53,6 +53,19 @@ A test inbox is **unfiltered** — it sees every message it was sent, even spam-
 
 Bulk-clear an inbox and set a retention window so test mail purges itself.
 
+## Isolate parallel test runs
+
+When several tests run at once, each needs its own mail so they don't read each other's. Two ways:
+
+- **One inbox per test** — create a fresh disposable mailbox at the start of each test and tear it down after. Cleanest isolation.
+- **Sub-addressing one inbox** — append a `+tag` to a shared address (`a1b2c3+test42@test.ollastack.com`) and filter received mail by the tag. Fewer inboxes, still isolated.
+
+Either way, **bulk-clear** an inbox between runs and set a **retention window** so old test mail purges itself instead of piling up.
+
+## When NOT to use a temporary inbox
+
+A disposable inbox is the wrong tool for a persistent identity — anything a real person will reply to over time, or an address that must survive across sessions. For that, use a persistent **agent** inbox (spam-filtered, a chosen handle). Temporary inboxes are for throwaway, single-use, and CI flows.
+
 ## Where it fits
 
 Disposable inboxes power [OTP testing](/blog/free-otp-email-api), [CI email testing](/blog/email-testing-api-for-ci), and agent verifications. They're part of the same [email API](/email-api) — free, no credit card.

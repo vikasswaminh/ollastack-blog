@@ -49,6 +49,34 @@ print(msg["subject"], msg["codes"])   # OTP extracted for you
 
 `smtplib` makes you own the SMTP transport — host, port 587, `starttls()`, credentials, timeouts — and only sends. The API is one call that returns a `msg_…` id or a clear error, and it receives too. For OTP flows you read `codes[0]` instead of scraping HTML — see [read an OTP code in an agent](/blog/read-otp-verification-code-in-ai-agent).
 
+## Async and robust error handling
+
+For concurrent work, `httpx.AsyncClient` gives the same API with `await`, and you should branch on the response status rather than assume success:
+
+```python
+import httpx, asyncio
+
+async def send(api, mbx_id, to, subject, text):
+    r = await api.post(f"/api/mailboxes/{mbx_id}/send",
+                       json={"to": to, "subject": subject, "text": text})
+    if r.status_code == 429:        # rate limited — back off and retry
+        await asyncio.sleep(2)
+        return await send(api, mbx_id, to, subject, text)
+    r.raise_for_status()            # 4xx/5xx -> exception you can log
+    return r.json()                 # { "id": "msg_…", "status": "sent" }
+
+async def main():
+    async with httpx.AsyncClient(
+        base_url="https://login.ollastack.com",
+        headers={"Authorization": "Bearer fmd_…"},
+    ) as api:
+        await send(api, "mbx_…", "user@example.com", "Hi", "Async send.")
+
+asyncio.run(main())
+```
+
+The send endpoint returns a structured error body (a `code` and `message`) on failure, so you log a real reason instead of catching an opaque SMTP exception. The same pattern wraps `wait` for receiving.
+
 ## Where it fits
 
 This is the Python view of the [email API](/email-api). See also [send email in Python (free)](/blog/python-send-email-api-free) and the [Node.js version](/blog/nodejs-email-api).

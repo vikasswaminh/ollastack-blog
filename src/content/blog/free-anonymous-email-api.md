@@ -46,6 +46,34 @@ curl "https://login.ollastack.com/api/mailboxes/mbx_x/wait?timeout=60" \
 
 Replies come back as JSON with extracted `codes` and `links` — see [free temporary email API](/blog/free-temporary-email-api).
 
+## A worked example
+
+Say an agent needs to sign up for a third-party service without using a personal inbox:
+
+```bash
+# 1. a disposable, private-from-recipient address
+addr=$(curl -s -X POST https://login.ollastack.com/api/mailboxes \
+  -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" \
+  -d '{"name":"signup","mode":"test"}' | jq -r .address)
+
+# 2. use $addr in the signup form, then read the verification email
+curl "https://login.ollastack.com/api/mailboxes/$MBX_ID/wait?timeout=60" \
+  -H "Authorization: Bearer $TOKEN"
+# → { "subject":"Verify your email", "codes":["920184"], "links":["..."] }
+```
+
+The recipient service only ever sees the disposable address — your real inbox never enters the flow.
+
+## What a disposable address can't do
+
+Be realistic about the boundaries:
+
+- **It's not untraceable** — the platform authenticates and logs your traffic for abuse prevention.
+- **It's not for evading bans or spam** — abuse gets the address (and account) shut down.
+- **It's not a persistent identity** — for an address people reply to over time, use a spam-filtered [agent inbox](/blog/agent-email-identity) instead.
+
+Used as intended — keeping a personal inbox out of automated and one-off flows — disposable addresses are genuinely useful and honest.
+
 ## Free, no card
 
 The free tier covers disposable inboxes with no credit card. See the [email API overview](/email-api) and [free email API service](/blog/free-email-api-service).
