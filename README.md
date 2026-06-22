@@ -1,6 +1,6 @@
-# Form4Dev marketing site
+# Ollastack marketing site
 
-Static Astro site for **form4dev.com**. Deployed to Cloudflare Pages.
+Static Astro site for **ollastack.com**. Deployed to Cloudflare Pages.
 
 ## Local dev
 
@@ -19,7 +19,8 @@ npm run build
 
 ## Deploy
 
-Cloudflare Pages connects to `vikasswaminh/form4dev`. Build config:
+Cloudflare Pages connects to the `vikasswaminh/form4dev` repo, CF Pages project
+name `form4dev` (the public site serves `ollastack.com`). Build config:
 
 | Setting | Value |
 |---|---|
@@ -30,5 +31,5 @@ Cloudflare Pages connects to `vikasswaminh/form4dev`. Build config:
 | Node version | `20` |
 
 DNS:
-- `form4dev.com` and `www.form4dev.com` → CF Pages project (CNAME or "Pages > Custom domains")
-- `login.form4dev.com` → existing VM origin nginx (already configured)
+- `ollastack.com` and `www.ollastack.com` → CF Pages project (CNAME or "Pages > Custom domains")
+- `login.ollastack.com` → existing VM origin nginx (already configured)

@@ -48,4 +48,4 @@ CLOUDFLARE_ACCOUNT_ID="$ACCOUNT_ID" \
     --commit-hash="$REV" \
     --commit-dirty="$([[ -n "$DIRTY" ]] && echo true || echo false)"
 
-echo "✓ deployed rev $REV to https://$PROJECT.pages.dev (canonical: https://form4dev.com)"
+echo "✓ deployed rev $REV to https://$PROJECT.pages.dev (canonical: https://ollastack.com)"
