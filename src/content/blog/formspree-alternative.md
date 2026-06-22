@@ -1,12 +1,21 @@
 ---
-title: "Formspree alternative for developers and AI agents: why teams pick Ollastack"
-description: "An honest look at Ollastack as a Formspree alternative: agent-first API, scoped tokens, visible-and-reversible spam handling, webhooks with replay, and built-in mail testing. Plus where Formspree still wins."
+title: "Formspree alternative for developers and AI agents"
+description: "Ollastack as a Formspree alternative — agent-first API, reversible spam handling, webhooks with replay, and built-in mail testing. Plus where Formspree wins."
 date: 2026-06-24
 updated: 2026-06-19
 tags: ["comparison", "formspree", "product"]
 author: "Ollastack"
-readingTime: 8
+readingTime: 9
 draft: false
+faq:
+  - q: "Is Ollastack a drop-in Formspree replacement?"
+    a: "For the common case, yes — you point your form at a new endpoint URL and keep your existing HTML; the submission shape is compatible. You only touch field names if a webhook or serverless handler depends on them. See the step-by-step migration guide."
+  - q: "What does Ollastack do that Formspree doesn't?"
+    a: "It treats AI-agent and API submissions as first-class (scoped tokens, OpenAPI discovery), makes spam decisions visible and reversible (quarantine, one-click recover, and a failures log), gives webhooks a delivery history and replay, and bundles email/OTP testing inboxes — all on one platform."
+  - q: "When should I stay on Formspree?"
+    a: "If you have a single static contact form, never submit it programmatically, don't need inspectable webhooks or mail testing, and the free volume covers you, Formspree is mature and simple — there's no reason to move."
+  - q: "Does Ollastack have a free tier?"
+    a: "Yes — 100 submissions per month with no credit card."
 ---
 
 There are a lot of form backends, and most of them do the same core thing well: take a POST, store it, email you. If that's all you need, almost any of them — including Formspree — is fine. This post is about the cases where it *isn't* all you need, and why teams in those cases end up on Ollastack.
@@ -45,6 +54,17 @@ Most form backends stop at "we emailed you." Ollastack ships an agent-mail modul
 | Built-in mail/OTP testing | — | ✅ test inboxes + `/wait` |
 | Custom sender domain / per-tenant SMTP | paid | ✅ |
 | Free tier | small | 100 submissions/mo |
+
+## How to evaluate the switch
+
+You don't have to cut over blind. A low-risk pilot:
+
+1. **Create a form** in Ollastack and point one low-traffic page at the new endpoint — keep your existing HTML.
+2. **Add a CI smoke test** with a disposable [test inbox](/blog/email-testing-api-for-ci): submit the form, long-poll for the notification, assert it arrived. That alone catches the regressions a form backend usually hides.
+3. **Run both in parallel** briefly — forward Formspree submissions to Ollastack too — to confirm parity on real traffic before you commit.
+4. **Cut over in batches**, highest-value forms last.
+
+The endpoint contract and API are the same whether you stay hosted or later self-host, so the decision is reversible. The mechanics are in the [step-by-step migration guide](/blog/migrate-from-formspree).
 
 ## Where Formspree still wins
 

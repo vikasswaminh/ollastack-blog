@@ -1,12 +1,23 @@
 ---
 title: "Migrate from Formspree to Ollastack: a step-by-step guide"
-description: "Move your forms off Formspree without rewriting your site. Swap one endpoint, map your fields, keep your notifications and webhooks — with the exact diff and the gotchas to watch for."
+description: "Move your forms off Formspree without rewriting your site — swap one endpoint, keep your fields, notifications and webhooks. With the exact diff and gotchas."
 date: 2026-06-22
 updated: 2026-06-19
 tags: ["migration", "formspree", "guide"]
 author: "Ollastack"
 readingTime: 9
 draft: false
+faq:
+  - q: "How hard is it to migrate from Formspree?"
+    a: "For most forms it's a one-line change — swap the form's action URL to your Ollastack endpoint and keep the existing field names. The remaining work is wiring notifications, webhooks, and optionally a custom sender domain, all in the form settings."
+  - q: "Do I need to change my form field names?"
+    a: "No. Field names carry over unchanged, and Formspree's magic fields like _replyto and _subject are supported by the same names. The one difference: _cc/_bcc aren't read from public payloads (set recipients in settings instead) to prevent your form becoming an email relay."
+  - q: "Can I import my historical Formspree submissions?"
+    a: "The cutover itself doesn't move history. Export your past submissions from Formspree for your records; a one-click bulk import isn't a feature today, so most teams keep the export as an archive and start the new endpoint fresh."
+  - q: "Will my webhooks keep working?"
+    a: "Yes — add the URL in the form settings. Deliveries are HMAC-signed, retried up to 5 times on a backoff, and you get a full delivery history with a Replay button — more than a fire-and-forget POST."
+  - q: "Is there downtime during migration?"
+    a: "No. Run both endpoints in parallel for a few days, confirm submissions, notifications and webhooks all land, then remove the Formspree form. The change is reversible until you delete the old one."
 ---
 
 Migrating a form backend sounds scary and usually isn't. A form endpoint is one URL your HTML posts to — change the URL, keep the field names, and you're 90% done. The other 10% is notifications, webhooks, spam handling, and making sure nothing silently breaks. This guide walks the whole thing, end to end.

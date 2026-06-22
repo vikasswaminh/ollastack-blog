@@ -1,12 +1,21 @@
 ---
-title: "Mailosaur alternative: inbox + OTP testing in CI with Ollastack"
-description: "Testing that your app actually sends the OTP, magic link, or welcome email? Here's how Ollastack's disposable test inboxes work — create an inbox, long-poll for the message, assert on the extracted code — and how it compares to Mailosaur, MailSlurp and Mailsac."
+title: "Mailosaur alternative: inbox + OTP testing in CI"
+description: "Disposable test inboxes that prove your OTP or magic link arrived — create, long-poll, assert on the extracted code. vs Mailosaur, MailSlurp & Mailsac."
 date: 2026-06-26
 updated: 2026-06-19
 tags: ["testing", "ci", "email", "comparison"]
 author: "Ollastack"
 readingTime: 9
 draft: false
+faq:
+  - q: "What's a good Mailosaur alternative for CI email testing?"
+    a: "Ollastack provides disposable test inboxes with the same core flow — create an inbox, long-poll /wait for the message, assert on the auto-extracted code or link — and it's also a form backend and can host persistent agent identities. For pure email testing, Mailosaur, MailSlurp and Mailsac are also strong; evaluate on fit."
+  - q: "How do I assert a verification email arrived in a test?"
+    a: "Create a test inbox, use its address in your signup flow, then call the /wait endpoint to long-poll for the message and assert on codes[0] (the OTP) or links[0] (the verification URL) — no HTML scraping and no sleep-and-retry."
+  - q: "Are test inboxes spam-filtered?"
+    a: "No — test inboxes are deliberately never spam-filtered, so a test sees every message it triggered, even a strict-looking transactional email. Persistent agent inboxes are filtered; that's a separate mode."
+  - q: "Can I isolate parallel test runs?"
+    a: "Yes — spin a fresh disposable inbox per test, or use a subaddress tag (+run123@…) on a shared inbox and filter by it. Bulk-clear between runs and set a retention window."
 ---
 
 If your signup flow sends a verification code, your password reset sends a link, or your billing sends a receipt, you eventually want a test that proves the email *actually arrived* — not just that your code called `sendEmail()`. That's what email-testing services are for, and Mailosaur is the best known. Ollastack does the same job as part of a broader platform, with an API designed for agents and CI.
