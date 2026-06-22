@@ -1,6 +1,6 @@
 ---
 title: "ML spam quarantine, and why a form backend should fail open"
-description: "Most spam filters fail closed — when unsure, they drop. For a form backend that means losing real leads silently. Here's the quarantine model: ML-flagged-but-uncertain submissions are delivered and labeled, never deleted, and a classifier error fails open."
+description: "Most spam filters drop when unsure, so a form backend loses real leads silently. The quarantine model: ML-uncertain mail is delivered and labeled, not deleted."
 date: 2026-07-21
 updated: 2026-06-19
 tags: ["spam", "ml", "deliverability", "architecture"]

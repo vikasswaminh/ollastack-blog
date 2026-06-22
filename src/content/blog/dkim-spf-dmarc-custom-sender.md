@@ -1,6 +1,6 @@
 ---
-title: "DKIM, SPF & DMARC for form notifications (so they don't land in spam)"
-description: "Form notifications from your own domain only reach the inbox if SPF, DKIM, and DMARC line up. Here's what each one does, the DNS records you need, how to verify them, and the common mistakes that send your own emails to spam."
+title: "DKIM, SPF & DMARC for form notifications"
+description: "Form notifications from your domain reach the inbox only if SPF, DKIM and DMARC align. What each does, the DNS you need, and the mistakes that cause spam."
 date: 2026-07-23
 updated: 2026-06-19
 tags: ["deliverability", "dkim", "spf", "dmarc", "guide"]

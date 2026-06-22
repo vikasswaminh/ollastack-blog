@@ -1,6 +1,6 @@
 ---
-title: "React Hook Form + a hosted backend: a production-ready contact form"
-description: "React Hook Form handles validation and state beautifully but it doesn't receive submissions. Pair it with a hosted form endpoint for a complete, production-ready form — validation, submit state, error handling, and spam protection."
+title: "React Hook Form + a hosted backend (contact form)"
+description: "React Hook Form does validation and state but doesn't receive submissions. Pair it with a hosted endpoint for a complete form — validation, errors, and spam."
 date: 2026-07-07
 updated: 2026-06-19
 tags: ["react", "react-hook-form", "quickstart", "guide"]

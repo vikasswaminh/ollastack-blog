@@ -1,6 +1,6 @@
 ---
-title: "Per-tenant SMTP: send form notifications from each customer's own server"
-description: "If you build forms for clients or run a white-label product, notifications should come from each customer's domain — not yours. Here's what per-tenant SMTP is, when to use it, how it's configured, and the fallback that keeps mail flowing if a tenant's server fails."
+title: "Per-tenant SMTP: send from each customer's own server"
+description: "Building forms for clients? Send notifications from each customer's domain. What per-tenant SMTP is, when to use it, and the fallback that prevents lost mail."
 date: 2026-07-31
 updated: 2026-06-19
 tags: ["smtp", "deliverability", "agencies", "guide"]

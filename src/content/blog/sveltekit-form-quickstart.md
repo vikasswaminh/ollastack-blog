@@ -1,6 +1,6 @@
 ---
-title: "SvelteKit form handling with a hosted backend (form actions + enhance)"
-description: "Use SvelteKit's form actions the idiomatic way, but skip writing the email/spam backend. A +page.server.ts action posts to one endpoint; use:enhance gives you progressive enhancement for free."
+title: "SvelteKit form handling with a hosted backend"
+description: "Use SvelteKit form actions idiomatically but skip the email/spam backend. A +page.server.ts action posts to one endpoint; use:enhance adds enhancement."
 date: 2026-07-05
 updated: 2026-06-19
 tags: ["sveltekit", "svelte", "quickstart", "guide"]

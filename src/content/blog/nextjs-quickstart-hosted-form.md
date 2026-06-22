@@ -1,6 +1,6 @@
 ---
 title: "Add a working form to a Next.js 14 app in 10 minutes"
-description: "A real Next.js 14 App Router form: client component, a Server Action that posts to a hosted form backend, success + error states, and spam protection — no API route, no email plumbing of your own."
+description: "A real Next.js 14 App Router form: a client component, a Server Action to a hosted backend, success/error states, and spam protection — no API route."
 date: 2026-06-28
 updated: 2026-06-19
 tags: ["nextjs", "react", "quickstart", "guide"]

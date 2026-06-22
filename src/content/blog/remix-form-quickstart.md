@@ -1,6 +1,6 @@
 ---
 title: "Remix form handling with a hosted backend (action + Form)"
-description: "Remix's <Form> and route actions are made for this. Post to a hosted form endpoint from your action and you get a complete contact form — progressive enhancement, no API to build, spam handled."
+description: "Remix's Form and route actions are made for this. Post to a hosted endpoint from your action for a complete contact form — progressive enhancement, no API."
 date: 2026-07-15
 updated: 2026-06-19
 tags: ["remix", "react-router", "quickstart", "guide"]

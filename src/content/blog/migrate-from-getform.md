@@ -1,6 +1,6 @@
 ---
 title: "Getform (Forminit) alternative: migrating to Ollastack"
-description: "Getform rebranded to Forminit in 2026. Whether you're on the old or new endpoint, moving to Ollastack is a one-line change — here's the migration, plus the agent-first API, inspectable webhooks, and reversible spam handling you gain."
+description: "Getform became Forminit in 2026. Old or new endpoint, moving to Ollastack is a one-line change — plus an agent API, inspectable webhooks, and reversible spam."
 date: 2026-07-11
 updated: 2026-06-19
 tags: ["migration", "getform", "forminit", "guide"]

@@ -1,6 +1,6 @@
 ---
-title: "Self-host vs hosted form backend: how to choose (and not regret it)"
-description: "Should you run your own form backend or use a hosted one? A clear decision framework — control, compliance, and cost vs. operational burden — and why you don't always have to pick just one."
+title: "Self-host vs hosted form backend: how to choose"
+description: "Run your own form backend or use a hosted one? A clear framework — control, compliance, cost vs operational burden — and why you may not have to pick one."
 date: 2026-07-29
 updated: 2026-06-19
 tags: ["self-host", "architecture", "decision", "guide"]

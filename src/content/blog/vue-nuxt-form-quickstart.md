@@ -1,6 +1,6 @@
 ---
-title: "Vue & Nuxt form handling with a hosted backend (10-minute setup)"
-description: "Build a contact form in Vue 3 or Nuxt without standing up an API or email server. A reactive form, a single POST to one endpoint, success and error states, and spam protection — with the Nuxt server-route variant too."
+title: "Vue & Nuxt form handling with a hosted backend"
+description: "Build a contact form in Vue 3 or Nuxt without an API or email server: a reactive form, one POST to a single endpoint, success/error states, and spam protection."
 date: 2026-07-13
 updated: 2026-06-19
 tags: ["vue", "nuxt", "quickstart", "guide"]

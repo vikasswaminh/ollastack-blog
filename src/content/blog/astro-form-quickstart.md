@@ -1,6 +1,6 @@
 ---
-title: "Add a contact form to an Astro site (no server, no API route)"
-description: "Astro is static-first, so a form 'backend' feels like a detour. It isn't: point an HTML form at one endpoint and you're done. Here's the plain-HTML version and a progressively-enhanced fetch version, with spam handling included."
+title: "Add a contact form to an Astro site (no server)"
+description: "Point an HTML form on your static Astro site at one endpoint — done. The plain-HTML and progressively-enhanced fetch versions, with spam handling included."
 date: 2026-07-03
 updated: 2026-06-19
 tags: ["astro", "quickstart", "guide"]

@@ -1,6 +1,6 @@
 ---
-title: "Form submission webhooks done right: signing, retries, idempotency, replay"
-description: "A webhook that fires once and disappears is hard to operate. Here's how to consume form submission webhooks properly — verify the signature, handle retries idempotently, and replay a delivery after fixing a bug."
+title: "Form webhooks done right: signing, retries, replay"
+description: "How to consume form submission webhooks properly — verify the signature, handle retries idempotently, and replay a delivery after fixing a bug."
 date: 2026-07-19
 updated: 2026-06-19
 tags: ["webhooks", "guide", "backend"]

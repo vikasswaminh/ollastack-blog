@@ -1,6 +1,6 @@
 ---
-title: "Assert on email in Playwright and Cypress (verification codes, magic links)"
-description: "Your end-to-end test fills the signup form — then needs the verification email to continue. Here's how to read and assert on that email inside Playwright or Cypress: a disposable inbox, a long-poll, and the extracted code or link, no flaky sleeps."
+title: "Assert on email in Playwright and Cypress"
+description: "Read and assert on a verification email inside Playwright or Cypress — a disposable inbox, a long-poll, and the extracted code or link, with no flaky sleeps."
 date: 2026-08-15
 updated: 2026-06-21
 tags: ["testing", "playwright", "cypress", "email", "tutorial"]

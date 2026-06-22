@@ -1,6 +1,6 @@
 ---
-title: "Give your AI agent an email identity it can send, receive, and reply from"
-description: "LLM agents increasingly need a real email address — to receive a verification code, follow up on a thread, or act as a support persona. Here's how agent mail identities work: a chosen address, spam-filtered, full-duplex, with an API an agent reads itself."
+title: "Give your AI agent an email identity (send & receive)"
+description: "Give an AI agent a real email identity — a chosen, spam-filtered, full-duplex address it can send from, receive into, and reply through over an API."
 date: 2026-07-17
 updated: 2026-06-19
 tags: ["ai-agents", "email", "agent-mail", "guide"]

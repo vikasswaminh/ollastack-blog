@@ -1,6 +1,6 @@
 ---
-title: "How to secure a form endpoint: honeypots, origin allowlists, CAPTCHA, rate limits"
-description: "A public form endpoint is an open door — spam, abuse, and email-relay attempts all show up. Here's a layered defense that stops bots without punishing real users: honeypot, origin allowlist, CAPTCHA, rate limits, and recipient guards."
+title: "How to secure a form endpoint (honeypot, CAPTCHA, limits)"
+description: "A public form endpoint invites spam, abuse and relay attempts. A layered defense that stops bots without punishing users: honeypot, allowlist, CAPTCHA, limits."
 date: 2026-07-25
 updated: 2026-06-19
 tags: ["security", "spam", "forms", "guide"]

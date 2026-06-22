@@ -1,6 +1,6 @@
 ---
 title: "Basin alternative: migrating to Ollastack step-by-step"
-description: "A practical guide to moving from Basin to Ollastack: swap the endpoint, keep your fields, and gain an agent-first API, inspectable webhooks with replay, and spam handling you can see and reverse."
+description: "Move from Basin to Ollastack: swap the endpoint, keep your fields, and gain an agent-first API, inspectable webhooks with replay, and reversible spam."
 date: 2026-07-01
 updated: 2026-06-19
 tags: ["migration", "basin", "guide", "comparison"]

@@ -1,6 +1,6 @@
 ---
-title: "Accepting file uploads in a form (multipart) without building storage"
-description: "Add file uploads to a form without standing up S3, signed URLs, or an upload server. Point a multipart form at one endpoint, set size and type limits, and the files arrive with the submission."
+title: "Accept file uploads in a form (multipart), no storage"
+description: "Add file uploads to a form without S3, signed URLs, or an upload server — point a multipart form at one endpoint, set size and type limits, and files arrive."
 date: 2026-07-27
 updated: 2026-06-19
 tags: ["file-uploads", "forms", "quickstart", "guide"]

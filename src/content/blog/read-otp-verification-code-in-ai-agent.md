@@ -1,6 +1,6 @@
 ---
 title: "How to read an OTP / verification code in an AI agent"
-description: "When an AI agent signs up for a service or verifies an account, it has to read the one-time code from an email. Here's how to do it reliably: give the agent an inbox, long-poll for the message, and read the pre-extracted code — no HTML scraping."
+description: "An AI agent verifying an account must read the OTP from an email. The reliable way: give it an inbox, long-poll for the message, and read the extracted code."
 date: 2026-08-11
 updated: 2026-06-21
 tags: ["ai-agents", "email", "otp", "tutorial"]

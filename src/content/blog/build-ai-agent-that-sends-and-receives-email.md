@@ -1,6 +1,6 @@
 ---
 title: "Build an AI agent that sends and receives email (with MCP)"
-description: "A hands-on guide to giving an AI agent a real inbox it can send from, receive into, and reply through — using the Ollastack MCP server so Claude Desktop or Cursor get email as native tools, plus the raw API if you're not on MCP."
+description: "Give an AI agent a real inbox — send, receive, and reply via the Ollastack MCP server (Claude Desktop, Cursor) or the raw API, with code for both."
 date: 2026-08-08
 updated: 2026-06-21
 tags: ["ai-agents", "email", "mcp", "tutorial"]

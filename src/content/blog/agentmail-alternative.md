@@ -1,6 +1,6 @@
 ---
-title: "AgentMail alternative: when you want agent email + forms + testing in one API"
-description: "AgentMail is a dedicated email-inbox API for AI agents. Ollastack overlaps on agent mail but bundles it with form endpoints and CI test inboxes on one API, token system, and MCP — and is self-hostable. An honest comparison, including when AgentMail is the better fit."
+title: "AgentMail alternative: agent email + forms + testing"
+description: "AgentMail is a dedicated agent email API. Ollastack bundles agent mail with forms and CI test inboxes on one API, and is self-hostable. An honest comparison."
 date: 2026-08-06
 updated: 2026-06-21
 tags: ["ai-agents", "email", "comparison", "agent-mail"]

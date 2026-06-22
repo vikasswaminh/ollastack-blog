@@ -1,6 +1,6 @@
 ---
-title: "Email for AI agents: how to give an agent its own inbox (send, receive, reply)"
-description: "AI agents increasingly need real email — to receive a verification code, reply in a thread, or act as a persona. Here's what 'email for AI agents' actually means, how an agent inbox differs from a notification API, and how to give an agent an address it can send and receive from over one API."
+title: "Email for AI agents: give an agent its own inbox"
+description: "What email for AI agents means, how an agent inbox differs from a send-only API, and how to give an agent an address it can send from and receive into."
 date: 2026-08-04
 updated: 2026-06-21
 tags: ["ai-agents", "email", "agent-mail", "guide"]

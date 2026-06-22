@@ -1,6 +1,6 @@
 ---
-title: "Email testing API: assert on real emails in CI (without a mail server)"
-description: "An email testing API gives your tests a real inbox they can read over HTTP — so a CI run can prove the welcome email, receipt, or reset link actually arrived and contained the right thing. Here's what an email testing API is, how it works, and how to wire one into a pipeline."
+title: "Email testing API: assert on real emails in CI"
+description: "An email testing API gives your tests a real inbox over HTTP, so CI can prove the welcome, receipt, or reset email arrived. What it is and how to wire it in."
 date: 2026-08-13
 updated: 2026-06-21
 tags: ["testing", "ci", "email", "email-testing-api", "guide"]

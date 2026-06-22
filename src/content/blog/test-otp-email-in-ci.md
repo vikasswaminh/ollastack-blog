@@ -1,6 +1,6 @@
 ---
-title: "How to test OTP and verification emails in CI (the reliable way)"
-description: "Testing that your app actually delivers the OTP, magic link, or reset email is where suites get flaky. Here's a reliable pattern with disposable inboxes: long-poll for the message, assert on the extracted code, isolate parallel runs, and clean up."
+title: "How to test OTP and verification emails in CI"
+description: "Testing that the OTP or reset email actually arrived is where suites flake. The reliable pattern: a disposable inbox, long-poll, assert the code, clean up."
 date: 2026-07-09
 updated: 2026-06-19
 tags: ["testing", "ci", "otp", "email", "guide"]

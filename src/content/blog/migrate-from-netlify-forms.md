@@ -1,6 +1,6 @@
 ---
-title: "Migrate from Netlify Forms to Ollastack (without rewriting your site)"
-description: "Netlify Forms moved to credit-based billing. Here's how to move your forms off Netlify in one diff — drop the data-netlify attributes, point at one endpoint — and keep notifications, webhooks, and spam handling."
+title: "Migrate from Netlify Forms to Ollastack"
+description: "Netlify Forms went credit-based. Move off in one diff — drop the data-netlify attributes, point at one endpoint — keep notifications, webhooks and spam."
 date: 2026-06-29
 updated: 2026-06-19
 tags: ["migration", "netlify", "guide"]
