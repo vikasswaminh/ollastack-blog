@@ -7,6 +7,13 @@ tags: ["testing", "ci", "email", "email-testing-api", "guide"]
 author: "Ollastack"
 readingTime: 8
 draft: false
+faq:
+  - q: "What is an email testing API?"
+    a: "An API that gives your tests a real inbox they read over HTTP, so CI can prove an email actually arrived and contained the right code, link or copy — without running a mail server."
+  - q: "How is it different from mocking the mailer?"
+    a: "Mocking proves your code called send(). An email testing API does a real round-trip, catching broken templates, bad links, and emails that silently fail to send."
+  - q: "Does it work in any CI?"
+    a: "Yes — it's plain HTTP, so it drops into GitHub Actions, GitLab or CircleCI with just an API token, no service container."
 ---
 
 Most test suites stop at "we called `sendEmail()`." But the thing that actually breaks in production is everything *after* that call — a bad template variable, a broken link, a deliverability misconfig, an email that never sends at all. An **email testing API** closes that gap: it gives your tests a real inbox they can read over HTTP, so a CI run can assert that the email arrived and contained the right code, link, or copy. No mail server to run, no manual checking.

@@ -7,6 +7,13 @@ tags: ["security", "spam", "forms", "guide"]
 author: "Ollastack"
 readingTime: 8
 draft: false
+faq:
+  - q: "How do I stop form spam without CAPTCHA on everything?"
+    a: "Layer cheap invisible defenses first — a honeypot field, an origin allowlist, and per-IP-per-form rate limits — and turn CAPTCHA on only for the forms that actually attract abuse."
+  - q: "What's a honeypot field?"
+    a: "A hidden input real users never see; bots fill it and get filtered. It adds zero friction and catches a lot of low-effort spam."
+  - q: "How do I stop my form being used as an email relay?"
+    a: "Never read CC/BCC from the public payload — set recipients in the form settings and require they be verified on the owning account."
 ---
 
 The moment a form endpoint is public, it's a target: spam bots, abuse, and attempts to turn your form into an email relay. No single control stops all of it, and the heavy-handed ones (CAPTCHA on everything) hurt real users. The right approach is layered — cheap, invisible defenses first, friction only where needed. Here's the stack.

@@ -7,6 +7,13 @@ tags: ["testing", "ci", "otp", "email", "guide"]
 author: "Ollastack"
 readingTime: 9
 draft: false
+faq:
+  - q: "How do I test OTP emails in CI?"
+    a: "Create a disposable test inbox, drive your signup with its address, long-poll the wait endpoint for the email, and assert on the extracted code — reliable, no sleeps."
+  - q: "How do I keep the test from flaking?"
+    a: "Use the long-poll wait endpoint instead of fixed sleeps, isolate parallel runs with a fresh inbox or a +tag subaddress, and bulk-clear between runs."
+  - q: "Are test inboxes spam-filtered?"
+    a: "No — they're never filtered, so a strict transactional email is never dropped from under your assertion."
 ---
 
 "Did the email actually arrive?" is one of the most valuable things to test and one of the most commonly skipped — because doing it badly produces a flaky suite everyone learns to ignore. This is the pattern that doesn't flake. (For a tool-by-tool comparison, see [the Mailosaur alternative post](/blog/mailosaur-alternative); this one is the how-to.)

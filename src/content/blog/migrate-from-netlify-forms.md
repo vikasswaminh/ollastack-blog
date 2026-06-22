@@ -7,6 +7,13 @@ tags: ["migration", "netlify", "guide"]
 author: "Ollastack"
 readingTime: 8
 draft: false
+faq:
+  - q: "How do I move off Netlify Forms?"
+    a: "Drop the data-netlify attributes, point the form's action at the Ollastack endpoint, and keep your field names — one diff. Notifications and webhooks move to settings."
+  - q: "Why migrate from Netlify Forms?"
+    a: "Netlify moved to credit-based billing; teams move for predictable pricing plus an agent-first API, inspectable webhooks, and reversible spam handling."
+  - q: "Do I have to leave Netlify hosting?"
+    a: "No — you keep hosting your site on Netlify; only the form backend changes."
 ---
 
 Netlify Forms is convenient right up until billing. The move to credit-based pricing pushed a lot of teams to look elsewhere — and because Netlify Forms is tied to where your site is hosted, "elsewhere" means decoupling the form from the host. Good news: that decoupling is a one-line change, and it makes your forms portable forever.

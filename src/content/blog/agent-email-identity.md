@@ -7,6 +7,13 @@ tags: ["ai-agents", "email", "agent-mail", "guide"]
 author: "Ollastack"
 readingTime: 8
 draft: false
+faq:
+  - q: "What is an agent email identity?"
+    a: "A persistent, chosen email address an AI agent owns — on agent.ollastack.com or your own verified domain — that it sends from, receives into, and replies through over an API. It's spam-filtered, unlike a disposable test inbox."
+  - q: "How is it different from a test inbox?"
+    a: "A test inbox is disposable and never spam-filtered, for CI. An agent identity is persistent and spam-filtered — for an agent that corresponds with real people over time."
+  - q: "Can the agent reply in-thread?"
+    a: "Yes — replies preserve the In-Reply-To and References headers so they thread into the same conversation."
 ---
 
 As soon as you put an AI agent to work on real tasks, it runs into email. It needs to receive a confirmation link to finish a signup. It needs to reply in a thread it started. It needs a stable, professional address to act as a support or sales persona. A throwaway inbox won't do — the agent needs an *identity*. That's what agent mail is.

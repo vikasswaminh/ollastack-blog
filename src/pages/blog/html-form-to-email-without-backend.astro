@@ -8,6 +8,7 @@ const APP = "https://login.ollastack.com";
   slug="html-form-to-email-without-backend"
   title="Send an HTML form to email without writing a backend"
   description="Point an HTML form at an endpoint and get an email when someone submits — no server, no SDK. With the gotchas — spam, replies, redirects — most tutorials skip."
+  faq={[{"q":"Can I send an HTML form to email without a backend?","a":"Yes — point the form's action at a hosted endpoint and you get an email on each submission, with no server, SDK, or SMTP setup."},{"q":"What are the gotchas?","a":"Set Reply-To so replies reach the submitter, configure a success redirect, and rely on the built-in spam filtering plus an optional honeypot."},{"q":"Does it work on static hosts?","a":"Yes — it works on any static host (GitHub Pages, S3, Netlify, Vercel, Cloudflare Pages) since it's just a form POST."}]}
   publishedAt="2026-05-15"
   updatedAt="2026-05-16"
   readingTime="7 min read"

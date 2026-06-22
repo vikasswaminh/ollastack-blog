@@ -7,6 +7,13 @@ tags: ["deliverability", "dkim", "spf", "dmarc", "guide"]
 author: "Ollastack"
 readingTime: 9
 draft: false
+faq:
+  - q: "Why do my form notifications land in spam?"
+    a: "Usually because SPF, DKIM and DMARC for your sending domain aren't aligned. Publish the records the post lists and verify all three pass before moving DMARC to reject."
+  - q: "Do I need all three of SPF, DKIM and DMARC?"
+    a: "Pass SPF and DKIM with alignment and DMARC is satisfied. DMARC sets the policy and reporting; start at p=none, confirm alignment, then tighten."
+  - q: "What if my domain isn't verified yet?"
+    a: "Delivery falls back to the platform's authenticated sender, so mail still arrives — just not from your brand — until your DNS verifies."
 ---
 
 You set up a custom sender domain so form notifications arrive from `you@yourcompany.com` instead of a shared platform address — more trustworthy, better branding. Then they start landing in spam. The fix is almost always the email authentication trio: SPF, DKIM, and DMARC. Here's what each does and how to get them right.

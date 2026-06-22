@@ -7,6 +7,13 @@ tags: ["self-host", "architecture", "decision", "guide"]
 author: "Ollastack"
 readingTime: 7
 draft: false
+faq:
+  - q: "Should I self-host a form backend?"
+    a: "Default to hosted unless a hard requirement (data residency, compliance, air-gap, or a real cost crossover) forces self-hosting. The operational burden is usually worth more spent on your product."
+  - q: "Is the decision reversible?"
+    a: "With Ollastack, yes — the hosted service and the self-hostable instance share the same endpoints and API, so you can start hosted and move later without re-integrating."
+  - q: "What does self-hosting actually cost?"
+    a: "Operations: uptime, backups, deliverability (SPF/DKIM/DMARC, reputation), spam tuning, and scaling — paid in engineering time, not just dollars."
 ---
 
 "Just use a hosted form backend" is good advice until it isn't — until a compliance requirement, a data-residency rule, or a cost curve pushes you toward running it yourself. Here's how to decide without over- or under-engineering it.

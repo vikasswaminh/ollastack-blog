@@ -31,33 +31,4 @@ const iso = (date: Date) => date.toISOString().slice(0, 10);
 >
   <p class="lede">{d.description}</p>
   <Content />
-  {d.faq && d.faq.length > 0 && (
-    <section class="post-faq">
-      <h2 id="faq">Frequently asked questions</h2>
-      {d.faq.map((f) => (
-        <details>
-          <summary>{f.q}</summary>
-          <p>{f.a}</p>
-        </details>
-      ))}
-    </section>
-  )}
 </BlogPost>
-
-<style is:global>
-  .post-faq { margin-top: 8px; }
-  .post-faq details {
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 2px 16px;
-    margin-bottom: 8px;
-    background: var(--bg);
-  }
-  .post-faq summary {
-    cursor: pointer;
-    font-weight: 600;
-    padding: 12px 0;
-    font-size: 15.5px;
-  }
-  .post-faq details p { margin: 0 0 12px; color: var(--muted); }
-</style>

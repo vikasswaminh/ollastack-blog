@@ -7,6 +7,13 @@ tags: ["spam", "ml", "deliverability", "architecture"]
 author: "Ollastack"
 readingTime: 8
 draft: false
+faq:
+  - q: "What is ML spam quarantine?"
+    a: "When only the ML classifier flags a submission, it's delivered and labeled as possible spam rather than deleted — so an uncertain-but-real lead is never silently lost."
+  - q: "What does fail open mean?"
+    a: "If the spam classifier errors, the submission is delivered unfiltered rather than dropped. The invariant is that a real lead can never be silently lost."
+  - q: "Can I recover a quarantined lead?"
+    a: "Yes — it's delivered and visible; one click recovers it as a clean lead, and rejected submissions are recorded in a failures log."
 ---
 
 The worst bug a form backend can have isn't downtime — it's a real lead that quietly gets filtered as spam and never reaches you. You don't get an error. You don't get a missing-row alert. You just lose business and never know. Most spam systems are built to *fail closed*: when unsure, drop. For a form backend, that default is exactly backwards. Here's how we think about it.

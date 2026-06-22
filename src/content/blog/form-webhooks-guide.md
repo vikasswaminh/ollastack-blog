@@ -7,6 +7,13 @@ tags: ["webhooks", "guide", "backend"]
 author: "Ollastack"
 readingTime: 8
 draft: false
+faq:
+  - q: "How do I verify a form webhook signature?"
+    a: "Each delivery carries an HMAC-SHA256 signature header; recompute the HMAC of the raw body with your secret and compare in constant time."
+  - q: "What happens if my endpoint is down?"
+    a: "Failed deliveries retry on a backoff ladder (up to 5 attempts), and you can replay the exact stored payload from the dashboard after fixing the bug."
+  - q: "How do I handle retries idempotently?"
+    a: "Key on the delivery or submission id and ignore duplicates, so a retry or replay doesn't double-process."
 ---
 
 Forwarding form submissions to your own service via webhook is the right pattern — it decouples your processing from the form backend. But a naive webhook setup (unsigned, fire-and-forget, no retry visibility) turns into a debugging nightmare the first time a submission goes missing. Here's how to do it so it's boring and reliable.

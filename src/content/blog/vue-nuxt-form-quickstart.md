@@ -7,6 +7,13 @@ tags: ["vue", "nuxt", "quickstart", "guide"]
 author: "Ollastack"
 readingTime: 7
 draft: false
+faq:
+  - q: "How do I build a contact form in Vue or Nuxt?"
+    a: "A reactive form whose submit handler POSTs to a hosted form endpoint gives you a complete contact form — success/error states, email and spam handling — with no API or mail server."
+  - q: "Does it work in Nuxt too?"
+    a: "Yes — the post includes a Nuxt server-route variant in addition to the client-side Vue 3 version."
+  - q: "Is spam protection included?"
+    a: "Yes — the hosted endpoint runs the spam pipeline; add a honeypot field for extra protection."
 ---
 
 Vue makes the reactive form trivial; the backend is the part that drags. With a hosted form endpoint you keep the Vue side reactive and skip the API route, the email provider, and the spam library entirely.

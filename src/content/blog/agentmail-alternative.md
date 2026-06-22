@@ -7,6 +7,13 @@ tags: ["ai-agents", "email", "comparison", "agent-mail"]
 author: "Ollastack"
 readingTime: 8
 draft: false
+faq:
+  - q: "Is Ollastack an AgentMail alternative?"
+    a: "Yes for agent mailboxes — both give an agent a real inbox to send, receive and reply over an API. Ollastack also bundles form endpoints and CI test inboxes and is self-hostable; AgentMail is a dedicated email specialist."
+  - q: "When is AgentMail the better choice?"
+    a: "If agent email is your whole problem at serious scale and you want a dedicated specialist, AgentMail's focus is an advantage. Choose Ollastack for breadth — email plus forms plus testing on one API."
+  - q: "Does Ollastack spam-filter inbound agent mail?"
+    a: "Yes, with the same pipeline as forms, and it fails open — uncertain mail is delivered and labeled, never silently dropped."
 ---
 
 If you're building an AI agent that needs email, [AgentMail](https://www.agentmail.to/) is one of the names you'll find — an API-first email-inbox provider built specifically for agents, out of Y Combinator and well-funded. It's a focused, capable product. This is an honest look at where Ollastack is a real alternative, where the two differ, and where AgentMail is genuinely the better call — written by the team building the alternative, so weight it accordingly.

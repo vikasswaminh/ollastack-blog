@@ -7,6 +7,13 @@ tags: ["remix", "react-router", "quickstart", "guide"]
 author: "Ollastack"
 readingTime: 6
 draft: false
+faq:
+  - q: "How do I handle a form in Remix?"
+    a: "Use Remix's Form component and a route action that POSTs to a hosted form endpoint. You get a complete contact form with progressive enhancement and no API to build."
+  - q: "Does it work without JavaScript?"
+    a: "Yes — Remix's Form plus route action gives progressive enhancement, so submissions work even before JS hydrates."
+  - q: "Is spam handled?"
+    a: "Yes — the hosted endpoint runs the spam pipeline; add a honeypot field too."
 ---
 
 Remix's whole model — `<Form>` posts to a route `action`, which runs on the server — is exactly the shape a form wants. The only thing you'd normally hand-write is the part the action *does*: receive the submission, email you, filter spam. Hand that to a hosted endpoint and the action is a few lines. (This applies equally to React Router 7's framework mode.)

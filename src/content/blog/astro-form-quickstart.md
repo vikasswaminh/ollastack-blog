@@ -7,6 +7,13 @@ tags: ["astro", "quickstart", "guide"]
 author: "Ollastack"
 readingTime: 6
 draft: false
+faq:
+  - q: "Do I need a server for an Astro contact form?"
+    a: "No. Astro is static-first; point an HTML form at one hosted endpoint and submissions are handled — email, spam filtering and all — with no server or API route."
+  - q: "Plain HTML or fetch?"
+    a: "Both work. Plain HTML needs zero JavaScript; a progressively-enhanced fetch gives you inline success/error states. The post shows both."
+  - q: "Is spam handling included?"
+    a: "Yes — a layered spam pipeline runs on every submission, plus an optional honeypot field."
 ---
 
 Astro's whole pitch is shipping mostly-static HTML with minimal JavaScript. A form fits that perfectly — *if* you don't drag a server along just to receive a POST. With a hosted form endpoint you keep Astro static (output `static`, deploy anywhere) and still get submissions in your inbox.

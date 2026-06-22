@@ -7,6 +7,13 @@ tags: ["ai-agents", "email", "otp", "tutorial"]
 author: "Ollastack"
 readingTime: 7
 draft: false
+faq:
+  - q: "How does an AI agent read an OTP from email?"
+    a: "Give the agent a disposable inbox, use its address in the signup, long-poll the wait endpoint for the email, and read the pre-extracted codes[0] — no HTML scraping."
+  - q: "Why not regex the email body?"
+    a: "Codes appear in many formats (spaced, inside buttons, split across tags); regex breaks. The inbox extracts codes and links into structured fields you assert on."
+  - q: "Test inbox or agent inbox for OTPs?"
+    a: "Prefer a disposable test inbox — it's never spam-filtered, so a strict sender's code is never filtered out from under the agent."
 ---
 
 A huge fraction of agent tasks stall at the same place: a service emails a one-time code or a verification link, and the agent has no inbox to read it from. Giving the agent an email address solves the *receiving* part; reading the **code** out of the message reliably is the part people get wrong by scraping HTML. Here's the clean way.

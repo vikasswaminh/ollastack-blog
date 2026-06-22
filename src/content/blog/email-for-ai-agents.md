@@ -7,6 +7,13 @@ tags: ["ai-agents", "email", "agent-mail", "guide"]
 author: "Ollastack"
 readingTime: 10
 draft: false
+faq:
+  - q: "What does email for AI agents mean?"
+    a: "Giving an agent a real inbox it owns over an API — send from a chosen identity, receive and read structured messages with extracted codes/links, and reply in-thread. It's an inbox, not a one-way notification API."
+  - q: "How is it different from a sending API?"
+    a: "Sending APIs only push mail out. An agent inbox also receives, so the agent can read replies and verification codes and hold a two-way conversation."
+  - q: "Is the inbox spam-filtered?"
+    a: "Agent inboxes are spam-filtered and fail open; disposable test inboxes are unfiltered so a test sees everything."
 ---
 
 The moment an AI agent does real work, it hits email. To finish a signup it needs a verification link. To follow up it needs to reply in a thread it started. To act as a support or sales persona it needs a stable, professional address. Traditional email APIs can't do this — they're built to *send* one-way notifications, not to hold a two-way conversation. "Email for AI agents" is the category that fixes that: a real inbox an agent owns and operates over an API.

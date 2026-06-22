@@ -7,6 +7,13 @@ tags: ["sveltekit", "svelte", "quickstart", "guide"]
 author: "Ollastack"
 readingTime: 7
 draft: false
+faq:
+  - q: "How do I handle forms in SvelteKit?"
+    a: "Use a form action in +page.server.ts that POSTs to a hosted form endpoint, and use:enhance for progressive enhancement — no email or spam backend to write."
+  - q: "Does it work without JS?"
+    a: "Yes — SvelteKit form actions work without JavaScript; use:enhance adds the enhanced experience when JS is available."
+  - q: "Is spam filtering included?"
+    a: "Yes — the hosted endpoint runs the spam pipeline server-side."
 ---
 
 SvelteKit's form actions are one of its best features: a form posts to the server, the server does the work, and `use:enhance` upgrades it to a no-reload submit without you writing fetch boilerplate. The only awkward part is *the work the server does* — receiving the submission, emailing you, filtering spam. Hand that to a hosted endpoint and your action stays three lines.

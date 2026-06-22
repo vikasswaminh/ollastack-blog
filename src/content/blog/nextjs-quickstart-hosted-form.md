@@ -7,6 +7,13 @@ tags: ["nextjs", "react", "quickstart", "guide"]
 author: "Ollastack"
 readingTime: 7
 draft: false
+faq:
+  - q: "How do I add a form to Next.js 14?"
+    a: "Use a client component with a Server Action that POSTs to a hosted form endpoint. You get email, spam filtering and webhooks with no API route of your own."
+  - q: "Do I need an API route?"
+    a: "No — a Server Action or a direct fetch posts to the hosted endpoint; there's no email or spam plumbing to build."
+  - q: "Does it handle spam?"
+    a: "Yes — a layered spam pipeline runs server-side, with an optional honeypot field."
 ---
 
 Next.js makes the UI easy and the *backend of a form* annoying: you either stand up an API route, wire an email provider, and handle spam yourself, or you reach for a hosted form backend and skip all of it. This is the second path, done properly with the App Router — Server Action included.

@@ -7,6 +7,13 @@ tags: ["ai-agents", "email", "mcp", "tutorial"]
 author: "Ollastack"
 readingTime: 9
 draft: false
+faq:
+  - q: "How do I give an AI agent email?"
+    a: "Create a mailbox via the API or the MCP server, then the agent can send, long-poll for replies with wait, read extracted codes/links, and reply in-thread — four endpoints, or native MCP tools in Claude Desktop and Cursor."
+  - q: "Do I need the MCP server?"
+    a: "No — the raw API works from any framework. The MCP server just exposes the same operations as native tools so an MCP client can use them with no glue code."
+  - q: "Is inbound spam-filtered?"
+    a: "Yes, and it fails open — hard spam is hidden, uncertain mail is delivered and badged, and a classifier error delivers unfiltered so a real reply is never lost."
 ---
 
 You want your agent to do the full email loop: create an inbox, send from it, wait for the reply, read the verification code, and respond in-thread. This walks through it two ways — as **MCP tools** (so Claude Desktop, Cursor, or any MCP client can do it natively) and as **raw API calls** (for an agent framework or a script). Both hit the same endpoints.

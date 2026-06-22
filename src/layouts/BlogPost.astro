@@ -79,6 +79,18 @@ const articleLd = {
       <section class="body">
         <slot />
 
+        {faq && faq.length > 0 && (
+          <section class="post-faq">
+            <h2 id="faq">Frequently asked questions</h2>
+            {faq.map((f) => (
+              <details>
+                <summary>{f.q}</summary>
+                <p>{f.a}</p>
+              </details>
+            ))}
+          </section>
+        )}
+
         <p class="muted-note last-updated">
           Last updated {fmtDate(updatedAt)}. Spotted something out of
           date? Email
@@ -337,6 +349,21 @@ const articleLd = {
     border-top: 1px solid var(--line);
     font-size: 13px;
   }
+  .post-faq { margin-top: 8px; }
+  .post-faq :global(details) {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 2px 16px;
+    margin-bottom: 8px;
+    background: var(--bg);
+  }
+  .post-faq :global(summary) {
+    cursor: pointer;
+    font-weight: 600;
+    padding: 12px 0;
+    font-size: 15.5px;
+  }
+  .post-faq :global(details p) { margin: 0 0 12px; color: var(--muted); }
 
   /* ---------- Right rail ---------- */
   .right-rail {

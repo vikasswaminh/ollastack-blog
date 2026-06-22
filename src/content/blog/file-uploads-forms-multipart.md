@@ -7,6 +7,13 @@ tags: ["file-uploads", "forms", "quickstart", "guide"]
 author: "Ollastack"
 readingTime: 6
 draft: false
+faq:
+  - q: "How do I accept file uploads on a form?"
+    a: "Use a multipart/form-data form with a file input pointed at the endpoint. The file arrives attached to the submission — no S3, signed URLs, or upload server needed."
+  - q: "Can I limit file size and type?"
+    a: "Yes — set max size and allowed types in the form settings; the server-side limit is the real boundary (the accept attribute is only a client hint)."
+  - q: "When should I build my own upload pipeline?"
+    a: "For very large files, resumable uploads, or direct-to-your-own-bucket with custom lifecycle rules. For documents and images attached to a form, the multipart endpoint is enough."
 ---
 
 File uploads are the part of forms that usually drags in real backend work: a place to store the file, signed URLs, size and type validation, virus-of-the-week paranoia. If the upload is attached to a form submission (a résumé on a job form, a screenshot on a bug report), a hosted form backend can take all of it — you just need a `multipart` form.

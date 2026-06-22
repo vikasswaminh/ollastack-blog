@@ -7,6 +7,13 @@ tags: ["migration", "getform", "forminit", "guide"]
 author: "Ollastack"
 readingTime: 7
 draft: false
+faq:
+  - q: "Is Getform the same as Forminit?"
+    a: "Getform rebranded to Forminit in 2026. Whether you're on the old or new endpoint, migrating is the same one-line change."
+  - q: "How hard is the migration?"
+    a: "For most forms, swap the action URL and keep your field names. Notifications, webhooks and sender domains are configured in settings."
+  - q: "What's different about Ollastack?"
+    a: "An agent-first API, inspectable webhooks with replay, and reversible spam handling — plus built-in email testing."
 ---
 
 Getform rebranded to Forminit in early 2026, but the product — and the reasons a team might move off it — didn't change. If you're evaluating the switch, the [Forminit alternatives comparison](/blog/forminit-alternatives) covers the landscape. This is the migration itself, which works the same whether you're on a `getform.io` or `forminit` endpoint.

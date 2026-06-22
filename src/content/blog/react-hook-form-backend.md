@@ -7,6 +7,13 @@ tags: ["react", "react-hook-form", "quickstart", "guide"]
 author: "Ollastack"
 readingTime: 7
 draft: false
+faq:
+  - q: "Does React Hook Form receive submissions?"
+    a: "No — it handles client-side validation and state. Pair it with a hosted form endpoint to actually receive, email, and spam-filter submissions."
+  - q: "How do I connect React Hook Form to a backend?"
+    a: "In your onSubmit handler, POST the validated values to the hosted endpoint; the post shows the full pattern with submit state and error handling."
+  - q: "Is spam protection included?"
+    a: "Yes — the hosted endpoint runs the spam pipeline; add a honeypot field for extra coverage."
 ---
 
 React Hook Form is the cleanest way to do client-side form state and validation in React. What it deliberately *doesn't* do is receive the submission — that's your backend's job. This pairs RHF with a hosted form endpoint so you get the whole thing: validation, submit state, error handling, and spam filtering, with no API route or email plumbing.

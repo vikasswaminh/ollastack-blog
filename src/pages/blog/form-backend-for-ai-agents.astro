@@ -8,6 +8,7 @@ const APP = "https://login.ollastack.com";
   slug="form-backend-for-ai-agents"
   title="Form backend for AI agents: why forms break for LLMs"
   description="AI agents increasingly submit forms for users, and most backends flag them as spam. Why traditional backends struggle, and what an agent-ready one looks like."
+  faq={[{"q":"Why do form backends flag AI agents as spam?","a":"Traditional anti-abuse (honeypot, CAPTCHA, per-IP limits) assumes a human in a browser, so automated agent traffic trips every check. An agent-ready backend uses a scoped token as the trust boundary instead."},{"q":"How should an agent submit a form?","a":"With a scoped Bearer token owned by the form owner — the submission is trusted, skips the bot defenses, and is tagged as agent traffic in the inbox and audit log."},{"q":"How do agents discover the API?","a":"From the CORS-open OpenAPI document, so an agent reads the endpoints and parameters itself with no docs scraping."}]}
   publishedAt="2026-05-16"
   updatedAt="2026-05-16"
   readingTime="9 min read"

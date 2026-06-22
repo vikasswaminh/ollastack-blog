@@ -7,6 +7,13 @@ tags: ["smtp", "deliverability", "agencies", "guide"]
 author: "Ollastack"
 readingTime: 7
 draft: false
+faq:
+  - q: "What is per-tenant SMTP?"
+    a: "It lets each tenant send notification email through their own SMTP server, so mail sends from their domain and reputation instead of yours — ideal for agencies and white-label products."
+  - q: "What if a tenant's SMTP fails?"
+    a: "Delivery transparently falls back to the platform sender, so a tenant outage degrades branding for those messages but never loses the mail."
+  - q: "When should I use it vs a custom sender domain?"
+    a: "Custom sender domain is the single-brand answer; per-tenant SMTP is for multiple customers who each need to send from their own domain."
 ---
 
 If you build forms on behalf of clients — an agency, a white-label SaaS, a platform with its own customers — there's a deliverability and branding problem hiding in the notification email: whose domain does it send from? If every client's lead notification comes from *your* platform's address, you own their deliverability reputation and their branding looks off. Per-tenant SMTP fixes that.

@@ -7,6 +7,13 @@ tags: ["testing", "playwright", "cypress", "email", "tutorial"]
 author: "Ollastack"
 readingTime: 7
 draft: false
+faq:
+  - q: "How do I assert on an email in Playwright?"
+    a: "Create a disposable inbox via the API, use its address in your signup flow, then call the wait endpoint to long-poll for the message and assert on codes[0] or links[0] — no flaky sleeps."
+  - q: "Does this work in Cypress too?"
+    a: "Yes — use cy.request to create the inbox and poll the wait endpoint, then assert on the extracted code or link."
+  - q: "How do I avoid flaky email tests?"
+    a: "Use the long-poll wait endpoint instead of a fixed sleep, and assert on the pre-extracted codes/links instead of scraping HTML."
 ---
 
 End-to-end tests hit a wall at email. The test fills the signup form, clicks submit — and now the flow depends on a verification code or magic link that arrives by email, outside the browser. Skipping it leaves your most important flow untested; faking it with a fixed `sleep` and a guessed code makes the suite flaky. Here's how to read the real email inside Playwright or Cypress and assert on it.

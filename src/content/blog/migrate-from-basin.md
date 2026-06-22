@@ -7,6 +7,13 @@ tags: ["migration", "basin", "guide", "comparison"]
 author: "Ollastack"
 readingTime: 7
 draft: false
+faq:
+  - q: "How do I migrate from Basin?"
+    a: "Swap your form's action URL to the Ollastack endpoint and keep the field names — a one-line change for most forms. Then wire notifications and webhooks in settings."
+  - q: "Will my fields still work?"
+    a: "Yes — field names carry over unchanged."
+  - q: "What do I gain over Basin?"
+    a: "An agent-first API, inspectable webhooks with replay, and spam handling you can see and reverse."
 ---
 
 Basin is a polished, developer-friendly form backend — if you're leaving it, it's usually for one of a few specific reasons, not because anything's broken. This guide covers the why briefly and the how in full. For the wider landscape, see [Basin vs Web3Forms](/blog/basin-vs-web3forms).
