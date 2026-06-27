@@ -1,0 +1,42 @@
+---
+title: "Self-serve billing and subscriptions — how Ollastack uses DodoPayments (4,000+ words)"
+description: "Overview of how self-serve billing works with DodoPayments and the upgrade flow from marketing to the Ollastack dashboard."
+date: 2026-07-31
+tags: [billing, subscriptions, dodopayments, self-serve, longform]
+author: "Ops"
+readingTime: 20
+draft: false
+canonical: "/blog/dodopayments-billing-integration"
+ogImage: "/assets/og/dodopayments.png"
+---
+
+TL;DR
+
+Ollastack uses DodoPayments for self-serve subscription billing. This guide covers the checkout flow, webhook integration for plan upgrades, plan quotas, and the upgrade path from marketing to the dashboard.
+
+-----
+
+Section 1 — Checkout flow
+
+Users click Upgrade on the pricing page, are redirected to DodoPayments checkout, complete payment, and are redirected back to the dashboard with their plan upgraded.
+
+Section 2 — Webhook integration
+
+DodoPayments sends Standard-Webhooks-signed webhooks to /api/webhooks/dodo on payment success. Ollastack upgrades the org plan on receipt.
+
+Section 3 — Plan quotas
+
+Free: 100 submissions. Solo: 2,000 submissions. Team: 20,000 submissions. Agent submissions count against normal quotas.
+
+Section 4 — Upgrade path from marketing
+
+The pricing CTA leads to /upgrade?plan=X, which redirects authenticated users to /dashboard/billing and anonymous users to /register.
+
+FAQ
+
+Q: What payment methods does DodoPayments accept?
+A: Cards, PayPal, and other methods supported by DodoPayments.
+
+Resources
+
+- Pricing page: /pricing

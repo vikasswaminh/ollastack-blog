@@ -1,0 +1,25 @@
+---
+// Astro component: minimal SEO partial with JSON-LD support
+const { title, description, url, image, datePublished, author } = Astro.props;
+---
+<head>
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={image} />
+  <meta property="og:url" content={url} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script type="application/ld+json">
+    {JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      'headline': title,
+      'description': description,
+      'image': [image],
+      'author': { '@type': 'Person', 'name': author },
+      'datePublished': datePublished,
+      'mainEntityOfPage': { '@type': 'WebPage', '@id': url }
+    })}
+  </script>
+</head>
