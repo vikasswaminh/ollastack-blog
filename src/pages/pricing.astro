@@ -51,9 +51,16 @@ const allFeatures = [
   "Submission tags, archive, status workflow",
   "Inbox export — CSV, JSON, Excel — by date range",
   "Slack, Discord, Telegram, Mailchimp integrations",
+  "Workflow rules — auto-tag, set status, notify by email/Slack, fire webhooks on a match",
+  "Agent mailboxes — send, receive, and reply from a real email identity",
+  "Disposable test inboxes — assert on OTP codes + links in CI",
+  "Mailbox rules — auto-reply, AI-enrich, or mark read on inbound mail",
+  "AI enrichment — category, sentiment, summary + suggested reply on leads and mail",
+  "Projects — group forms + mailboxes per workspace",
+  "Team roles — owner, admin, member, and read-only viewer",
+  "File uploads — presigned, stored on object storage, auto-linked to submissions",
   "AI-agent Bearer tokens with audit log + 🤖 inbox stamp",
   "Custom SMTP — encrypted at rest, transparent fallback",
-  "Razorpay payment-required forms",
   "Org members + cross-form inbox",
   "Personal API tokens — every call recorded, 300/min per-token rate limit",
   "Public OpenAPI 3.1 spec at /api/openapi.json",
@@ -94,7 +101,7 @@ const faqs = [
   },
   {
     q: "What payment methods do you accept?",
-    a: "Razorpay (cards, UPI, netbanking — works for INR + USD). Stripe and PayPal are on the roadmap; if either is a hard requirement, email us.",
+    a: "Subscriptions are billed through DODO Payments (cards). Stripe and PayPal are on the roadmap; if either is a hard requirement, email us.",
   },
 ];
 ---

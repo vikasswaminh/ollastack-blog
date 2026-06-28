@@ -1,0 +1,115 @@
+---
+import Base from "../../layouts/Base.astro";
+const APP = "https://login.ollastack.com";
+
+const sections = [
+  { id: "why", title: "How it works" },
+  { id: "enable", title: "Enable uploads" },
+  { id: "flow", title: "The upload flow" },
+  { id: "link", title: "Linking to a submission" },
+  { id: "manage", title: "List + delete" },
+];
+---
+
+<Base current="docs" title="Docs — File uploads — Ollastack">
+  <div class="docs-shell container-wide">
+    <aside class="sidebar">
+      <div class="side-eyebrow mono">/ docs / uploads</div>
+      <nav>
+        <ul>
+          {sections.map((s) => (
+            <li><a href={`#${s.id}`}>{s.title}</a></li>
+          ))}
+        </ul>
+      </nav>
+      <div class="side-back"><a href="/docs">← Back to docs</a></div>
+    </aside>
+
+    <article class="content">
+      <span class="chip mono"><span class="dot"></span>file uploads</span>
+      <h1 class="display">Accept files without a storage backend.</h1>
+      <p class="lede">
+        Uploads go straight from the browser to object storage with a presigned
+        URL — the bytes never transit our API — and link themselves to the
+        submission. You add an upload field; we handle the storage.
+      </p>
+
+      <h2 id="why">How it works</h2>
+      <p>
+        A <code>file</code> field on a form is backed by a three-step presigned
+        flow. The client asks for a short-lived upload URL, PUTs the file directly
+        to storage, confirms it, then references the upload id in the submission.
+        The file is validated against the form's limits (size, MIME type) before
+        the URL is ever issued.
+      </p>
+
+      <h2 id="enable">Enable uploads</h2>
+      <p>
+        Add a <code>file</code> field in the builder and set the per-form limits
+        (max size, max files, allowed MIME types). Object storage must be enabled
+        on the server — the presign call returns <code>503</code> if it isn't.
+      </p>
+
+      <h2 id="flow">The upload flow</h2>
+      <p><strong>1. Ask for a presigned URL.</strong></p>
+      <pre class="code"><span class="prompt">$</span> <span class="k">curl</span> -X POST {APP}/api/forms/<span class="hl">&lt;formId&gt;</span>/uploads \
+     -H <span class="s">"Authorization: Bearer &lt;token&gt;"</span> -H <span class="s">"Content-Type: application/json"</span> \
+     -d <span class="s">'&#123; "fieldId": "resume", "filename": "cv.pdf", "mimeType": "application/pdf", "sizeBytes": 84211 &#125;'</span>
+<span class="ok">{`{"uploadId": "...", "uploadUrl": "https://...", "storageKey": "...", "expiresAt": "..."}`}</span></pre>
+      <p><strong>2. PUT the bytes</strong> straight to <code>uploadUrl</code> (not to our API).</p>
+      <pre class="code"><span class="prompt">$</span> <span class="k">curl</span> -X PUT <span class="s">"&lt;uploadUrl&gt;"</span> --data-binary @cv.pdf -H <span class="s">"Content-Type: application/pdf"</span></pre>
+      <p><strong>3. Confirm</strong> the upload completed.</p>
+      <pre class="code"><span class="prompt">$</span> <span class="k">curl</span> -X POST {APP}/api/forms/<span class="hl">&lt;formId&gt;</span>/uploads/<span class="hl">&lt;uploadId&gt;</span>/confirm \
+     -H <span class="s">"Authorization: Bearer &lt;token&gt;"</span></pre>
+
+      <h2 id="link">Linking to a submission</h2>
+      <p>
+        Include the upload ids in the submission payload (e.g. an
+        <code>uploadIds</code> array). When the submission is stored, those
+        uploads are automatically attached to it, so they show up alongside the
+        lead in the inbox and aren't garbage-collected as orphans.
+      </p>
+
+      <h2 id="manage">List + delete</h2>
+      <p>
+        <code>GET /api/forms/&#123;formId&#125;/uploads</code> lists a form's uploads;
+        <code>DELETE /api/forms/&#123;formId&#125;/uploads/&#123;uploadId&#125;</code> removes
+        one (and its stored object). Both need the <code>forms:read</code> /
+        <code>forms:write</code> scope respectively.
+      </p>
+
+      <div class="cta-row">
+        <a class="btn btn-primary btn-lg" href={`${APP}/dashboard`}>Open the dashboard</a>
+        <a class="btn btn-ghost btn-lg" href="/docs">Back to docs</a>
+      </div>
+    </article>
+  </div>
+</Base>
+
+<style>
+  .docs-shell { display: grid; grid-template-columns: 220px 1fr; gap: 56px; padding: 64px 28px 96px; }
+  .sidebar { position: sticky; top: 80px; align-self: start; }
+  .side-eyebrow { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; }
+  .sidebar nav ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 4px; }
+  .sidebar nav a { display: block; padding: 6px 10px; border-radius: 6px; color: var(--muted); font-size: 14px; }
+  .sidebar nav a:hover { background: var(--bg-sunken); color: var(--ink); }
+  .side-back { margin-top: 24px; font-size: 13px; }
+  .side-back a { color: var(--muted); }
+  .content { max-width: 760px; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border: 1px solid var(--line); border-radius: 999px; font-size: 11px; color: var(--muted); margin-bottom: 16px; }
+  .chip .dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+  .content h1 { font-size: 44px; margin: 0 0 14px; letter-spacing: -0.02em; line-height: 1.05; }
+  .content h2 { font-size: 22px; margin: 48px 0 12px; letter-spacing: -0.01em; scroll-margin-top: 80px; }
+  .content .lede { font-size: 18px; color: var(--muted); line-height: 1.6; max-width: 620px; }
+  .content p { line-height: 1.7; margin: 0 0 14px; }
+  .content ul { line-height: 1.8; padding-left: 22px; margin: 0 0 14px; }
+  .content code { background: var(--bg-sunken); border: 1px solid var(--line); padding: 0 5px; border-radius: 4px; font-family: var(--font-mono); font-size: 0.9em; }
+  .code { background: var(--code-bg); color: var(--code-fg); border-radius: 12px; padding: 18px 22px; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.7; overflow-x: auto; white-space: pre; margin: 8px 0 14px; }
+  .code .prompt { color: var(--code-prompt); margin-right: 8px; }
+  .code .k { color: var(--code-cmd); font-weight: 600; }
+  .code .s { color: var(--code-str); }
+  .code .hl { color: var(--accent); }
+  .code .ok { color: var(--code-ok); display: inline-block; margin-top: 8px; }
+  .cta-row { display: flex; gap: 12px; margin-top: 40px; flex-wrap: wrap; }
+  @media (max-width: 900px) { .docs-shell { grid-template-columns: 1fr; } .sidebar { position: static; } }
+</style>

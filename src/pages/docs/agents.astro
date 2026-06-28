@@ -106,7 +106,7 @@ const sections = [
         An agent can do everything the dashboard does — create a form,
         define its fields, and set every option (recipients, subject
         template, autoresponder, CAPTCHA, allowed origins, file uploads,
-        payments). A complete form is three calls.
+        workflow rules). A complete form is three calls.
       </p>
 
       <p><strong>1. Create the form</strong> — returns its <code>id</code> and <code>endpointSlug</code>.</p>
@@ -140,8 +140,8 @@ const sections = [
       <p>
         Every dashboard control maps to one field on
         <code>PATCH /api/forms/&#123;id&#125;</code> — recipients, retention,
-        file-upload limits, the full autoresponder, CAPTCHA, allowed
-        origins, and the Razorpay payment block. The
+        file-upload limits, the full autoresponder, CAPTCHA, and allowed
+        origins. The
         <a href={`${APP}/api/openapi.json`}>OpenAPI spec</a>'s
         <code>UpdateForm</code> schema lists all of them with types and
         limits. Integrations (Slack, Discord, Telegram, Mailchimp) and
