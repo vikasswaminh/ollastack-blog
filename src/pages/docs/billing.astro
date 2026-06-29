@@ -1,0 +1,86 @@
+---
+import Base from "../../layouts/Base.astro";
+const APP = "https://login.ollastack.com";
+const sections = [
+  { id: "plans", title: "Plans" },
+  { id: "subscribe", title: "Subscribe" },
+  { id: "portal", title: "Manage / invoices" },
+  { id: "cancel", title: "Cancel" },
+];
+---
+
+<Base current="docs" title="Docs — Billing — Ollastack" description="Ollastack subscription billing via DODO Payments: list plans, start a checkout, open the customer portal, cancel.">
+  <div class="docs-shell container-wide">
+    <aside class="sidebar">
+      <div class="side-eyebrow mono">/ docs / billing</div>
+      <nav><ul>{sections.map((s) => (<li><a href={`#${s.id}`}>{s.title}</a></li>))}</ul></nav>
+      <div class="side-back"><a href="/docs">← Back to docs</a></div>
+    </aside>
+
+    <article class="content">
+      <span class="chip mono"><span class="dot"></span>billing</span>
+      <h1 class="display">Subscriptions via DODO Payments.</h1>
+      <p class="lede">
+        Plans upgrade an <a href="/docs/teams">organization</a>'s quota. Billing runs through
+        DODO Payments — start a hosted checkout, manage card/invoices in the portal, cancel at
+        period end. These routes are <strong>session-authenticated</strong> (dashboard actions),
+        not Bearer-token. Full schema in the <a href="/docs/api">API reference</a>.
+      </p>
+
+      <h2 id="plans">Plans</h2>
+      <pre class="code"><span class="prompt">$</span> <span class="k">curl</span> {APP}/api/billing/plans -H <span class="s">"Authorization: Bearer &lt;token&gt;"</span>
+<span class="ok">{`{"provider":"dodo","enabled":true,"plans":[{"name":"solo","label":"Solo","quota":2000,"priceLabel":"$9 / month"}, ...]}`}</span></pre>
+
+      <h2 id="subscribe">Subscribe</h2>
+      <p>Returns a hosted checkout URL — redirect the user to it. On payment, a signed DODO webhook upgrades the org's plan.</p>
+      <pre class="code"><span class="prompt">$</span> <span class="k">curl</span> -X POST {APP}/api/billing/dodo/subscribe \
+     -H <span class="s">"Cookie: ollastack_session=…"</span> -H <span class="s">"Content-Type: application/json"</span> \
+     -d <span class="s">'&#123; "plan": "solo", "orgId": "&lt;orgId&gt;" &#125;'</span>
+<span class="ok">{`{"success":true,"data":{"url":"https://checkout.dodopayments.com/session/…"}}`}</span></pre>
+
+      <h2 id="portal">Manage / invoices</h2>
+      <pre class="code"><span class="prompt">$</span> <span class="k">curl</span> -X POST {APP}/api/billing/dodo/portal \
+     -H <span class="s">"Cookie: ollastack_session=…"</span> -H <span class="s">"Content-Type: application/json"</span> \
+     -d <span class="s">'&#123; "orgId": "&lt;orgId&gt;" &#125;'</span>
+<span class="ok">{`{"success":true,"data":{"link":"https://…"}}`}</span></pre>
+
+      <h2 id="cancel">Cancel</h2>
+      <p>Cancels at period end — the paid plan stays active through the cycle you paid for, then drops to free.</p>
+      <pre class="code"><span class="prompt">$</span> <span class="k">curl</span> -X POST {APP}/api/billing/dodo/cancel \
+     -H <span class="s">"Cookie: ollastack_session=…"</span> -H <span class="s">"Content-Type: application/json"</span> \
+     -d <span class="s">'&#123; "orgId": "&lt;orgId&gt;" &#125;'</span></pre>
+
+      <div class="cta-row">
+        <a class="btn btn-primary btn-lg" href={`${APP}/dashboard/billing`}>Open billing</a>
+        <a class="btn btn-ghost btn-lg" href="/docs/api">Full API reference</a>
+      </div>
+    </article>
+  </div>
+</Base>
+
+<style>
+  .docs-shell { display: grid; grid-template-columns: 220px 1fr; gap: 56px; padding: 64px 28px 96px; }
+  .sidebar { position: sticky; top: 80px; align-self: start; }
+  .side-eyebrow { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; }
+  .sidebar nav ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 4px; }
+  .sidebar nav a { display: block; padding: 6px 10px; border-radius: 6px; color: var(--muted); font-size: 14px; }
+  .sidebar nav a:hover { background: var(--bg-sunken); color: var(--ink); }
+  .side-back { margin-top: 24px; font-size: 13px; }
+  .side-back a { color: var(--muted); }
+  .content { max-width: 760px; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border: 1px solid var(--line); border-radius: 999px; font-size: 11px; color: var(--muted); margin-bottom: 16px; }
+  .chip .dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+  .content h1 { font-size: 44px; margin: 0 0 14px; letter-spacing: -0.02em; line-height: 1.05; }
+  .content h2 { font-size: 22px; margin: 48px 0 12px; letter-spacing: -0.01em; scroll-margin-top: 80px; }
+  .content .lede { font-size: 18px; color: var(--muted); line-height: 1.6; max-width: 620px; }
+  .content p { line-height: 1.7; margin: 0 0 14px; }
+  .content code { background: var(--bg-sunken); border: 1px solid var(--line); padding: 0 5px; border-radius: 4px; font-family: var(--font-mono); font-size: 0.9em; }
+  .code { background: var(--code-bg); color: var(--code-fg); border-radius: 12px; padding: 18px 22px; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.7; overflow-x: auto; white-space: pre; margin: 8px 0 14px; }
+  .code .prompt { color: var(--code-prompt); margin-right: 8px; }
+  .code .k { color: var(--code-cmd); font-weight: 600; }
+  .code .s { color: var(--code-str); }
+  .code .hl { color: var(--accent); }
+  .code .ok { color: var(--code-ok); display: inline-block; margin-top: 8px; }
+  .cta-row { display: flex; gap: 12px; margin-top: 40px; flex-wrap: wrap; }
+  @media (max-width: 900px) { .docs-shell { grid-template-columns: 1fr; } .sidebar { position: static; } }
+</style>
