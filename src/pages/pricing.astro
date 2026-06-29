@@ -38,11 +38,12 @@ const tiers = [
   },
 ];
 
-// Every tier includes everything. Shown once below the price grid.
+// Core features on every tier (incl. Free). Paid-only extras are listed
+// separately below — see `paidOnly`. Shown once below the price grid.
 const allFeatures = [
   "Unlimited forms",
   "Spam filtering — honeypot, per-IP rate limit, CAPTCHA (Turnstile / hCaptcha / reCAPTCHA)",
-  "Email notifications — through our SMTP or yours",
+  "Email notifications — our SMTP, or bring your own SMTP server (BYO SMTP)",
   "Webhooks — HMAC-signed, auto-retried, with full delivery history",
   "Multi-step forms + conditional show-if logic",
   "Per-form autoresponder + magic fields",
@@ -64,6 +65,14 @@ const allFeatures = [
   "Org members + cross-form inbox",
   "Personal API tokens — every call recorded, 300/min per-token rate limit",
   "Public OpenAPI 3.1 spec at /api/openapi.json",
+];
+
+// Paid-plan only — the few things Free does NOT get. Sending from your own
+// verified domain mutates the shared email account / mailbox routing, so it's
+// gated to paid plans (Solo / Team). Keep this honest — Free really can't.
+const paidOnly = [
+  "Send from your own verified domain (custom sender domain)",
+  "Bring your own agent-mailbox domain (custom mailbox domain)",
 ];
 
 const faqs = [
@@ -139,22 +148,31 @@ const faqs = [
               <strong>{t.submissions}</strong> submissions / month
             </li>
             <li>Unlimited forms</li>
-            <li>All features (listed below)</li>
+            <li>All core features (listed below)</li>
           </ul>
         </article>
       ))}
     </div>
 
     <div class="all-features">
-      <h2 class="all-features-title">Every tier includes every feature.</h2>
+      <h2 class="all-features-title">Every tier includes the same core features.</h2>
       <p class="all-features-sub">
-        We don't gate features by plan. The only thing that changes is the
-        monthly submission cap.
+        Almost nothing is gated by plan — the monthly submission cap is the main
+        difference. The only paid-plan extras are listed at the bottom.
       </p>
       <ul class="all-features-list">
         {allFeatures.map((f) => (
           <li>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 12l5 5L20 7"/></svg>
+            <span>{f}</span>
+          </li>
+        ))}
+      </ul>
+      <p class="paid-only-label">Paid plans (Solo / Team) also add:</p>
+      <ul class="all-features-list paid-only-list">
+        {paidOnly.map((f) => (
+          <li>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M12 2v20M2 12h20"/></svg>
             <span>{f}</span>
           </li>
         ))}
@@ -310,6 +328,15 @@ const faqs = [
     margin-top: 4px;
     flex-shrink: 0;
   }
+  .paid-only-label {
+    margin: 28px 0 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .paid-only-list li svg { color: var(--muted); }
 
   .enterprise-note {
     text-align: center;
