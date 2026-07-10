@@ -462,12 +462,13 @@ const siteLd = {
 
         <article class="path-card">
           <div class="path-eyebrow mono">step 2 · 60 seconds</div>
-          <h3 class="path-name">Mint an agent token</h3>
+          <h3 class="path-name">Connect your agent</h3>
           <p class="path-body">
-            Dashboard → Settings → API tokens → <strong>New agent token</strong>.
-            Scoped, labelled, audited. Hand it to your agent.
+            One click on <strong>Connect your agent</strong> mints a scoped,
+            audited token and hands you a paste-ready agent prompt plus a
+            curl/SDK quickstart. No token plumbing to write yourself.
           </p>
-          <a class="path-link mono" href="/docs/agents">→ /docs/agents</a>
+          <a class="path-link mono" href={`${APP}/dashboard/connect`}>→ connect your agent</a>
         </article>
 
         <article class="path-card path-card-accent">
@@ -519,6 +520,16 @@ const siteLd = {
           </dd>
         </div>
         <div class="cap-row">
+          <dt>Never lose a lead</dt>
+          <dd>
+            Nothing is silently dropped. Every submission blocked by spam,
+            rate-limit, or validation is logged and reviewable, and a
+            mis-flagged lead un-flags and re-sends as a clean notification in
+            one click. The spam filter can quarantine — it can't lose you a
+            real customer.
+          </dd>
+        </div>
+        <div class="cap-row">
           <dt>Self-describing API</dt>
           <dd>
             Public
@@ -546,8 +557,8 @@ const siteLd = {
           <dt>Email + 1,000+ integrations</dt>
           <dd>
             Email notifications out of the box (from your own domain on paid
-            plans). Slack, Discord, Telegram, Mailchimp native. Anything else
-            via Zapier, Make, n8n, Activepieces —
+            plans). Slack, Discord, Telegram, Google Sheets, Mailchimp native —
+            no Zapier subscription. Anything else via Zapier, Make, n8n, Activepieces —
             <a class="inline-link" href="/docs/integrations">/docs/integrations</a>.
           </dd>
         </div>
