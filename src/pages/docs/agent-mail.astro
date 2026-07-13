@@ -289,13 +289,13 @@ your token lacks the mailbox's mode scope, e.g. mail.agent:read).`;
       <pre class="code">{cAgentPrompt}</pre>
 
       <h2 id="limits">Limits &amp; things to know</h2>
-      <p>All caps are per your org's plan. <code>GET /api/mailboxes/usage</code> returns live usage + ceilings.</p>
+      <p>Mailbox count is per your org's plan; received &amp; sent quotas are <strong>per inbox</strong>. <code>GET /api/mailboxes/usage</code> returns live usage + ceilings.</p>
       <table>
         <thead><tr><th></th><th>free</th><th>solo</th><th>team</th></tr></thead>
         <tbody>
-          <tr><td>Mailboxes</td><td>1</td><td>5</td><td>20</td></tr>
-          <tr><td>Received / month</td><td>100</td><td>5,000</td><td>50,000</td></tr>
-          <tr><td>Sent / month</td><td>50</td><td>2,000</td><td>20,000</td></tr>
+          <tr><td>Mailboxes</td><td>3</td><td>5</td><td>20</td></tr>
+          <tr><td>Received / month (per inbox)</td><td>1,000</td><td>5,000</td><td>50,000</td></tr>
+          <tr><td>Sent / month (per inbox)</td><td>1,000</td><td>2,000</td><td>20,000</td></tr>
           <tr><td>Max retention (days)</td><td>3</td><td>30</td><td>90</td></tr>
         </tbody>
       </table>
