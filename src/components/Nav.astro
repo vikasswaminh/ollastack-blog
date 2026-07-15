@@ -28,16 +28,66 @@ const links = [
       </nav>
     </div>
     <div class="nav-right">
-      <a class="btn btn-ghost btn-sm" href={`${APP}/login`}>Sign in</a>
+      <a class="btn btn-ghost btn-sm nav-signin" href={`${APP}/login`}>Sign in</a>
       <a class="btn btn-primary btn-sm" href={`${APP}/register`}>
         Start free
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true">
           <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </a>
+      <button
+        type="button"
+        class="nav-burger"
+        id="nav-burger"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="nav-mobile"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/>
+        </svg>
+      </button>
     </div>
   </div>
+
+  <!-- Mobile navigation — the ≤720px replacement for the hidden .nav-links -->
+  <nav class="nav-mobile" id="nav-mobile" aria-label="Mobile">
+    {links.map((link) => (
+      <a
+        href={link.href}
+        class:list={["nav-mobile-link", current === link.id && "active"]}
+      >{link.label}</a>
+    ))}
+    <a class="nav-mobile-link" href={`${APP}/login`}>Sign in</a>
+    <a class="nav-mobile-cta btn btn-primary" href={`${APP}/register`}>Start free</a>
+  </nav>
 </header>
+
+<script is:inline>
+  (function () {
+    var btn = document.getElementById("nav-burger");
+    var panel = document.getElementById("nav-mobile");
+    if (!btn || !panel) return;
+    function setOpen(open) {
+      panel.classList.toggle("open", open);
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      btn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    }
+    btn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      setOpen(!panel.classList.contains("open"));
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") setOpen(false);
+    });
+    document.addEventListener("click", function (e) {
+      if (panel.classList.contains("open") && !panel.contains(e.target) && e.target !== btn) setOpen(false);
+    });
+    panel.addEventListener("click", function (e) {
+      if (e.target.closest("a")) setOpen(false);
+    });
+  })();
+</script>
 
 <style>
   .nav {
@@ -67,7 +117,58 @@ const links = [
   .nav-link:hover { color: var(--ink); }
   .nav-link.active { color: var(--ink); }
   .nav-right { display: flex; align-items: center; gap: 8px; }
+
+  /* Hamburger — hidden on desktop, shown ≤720px in place of .nav-links */
+  .nav-burger {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: var(--r-2);
+    cursor: pointer;
+  }
+  .nav-burger:hover { background: var(--bg-sunken, rgba(0, 0, 0, 0.04)); }
+
+  /* Mobile menu panel — a drop-down under the bar, toggled by the burger */
+  .nav-mobile {
+    display: none;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 16px 16px;
+    background: var(--bg, #fff);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-mobile.open { display: flex; }
+  .nav-mobile-link {
+    font-size: 15px;
+    color: var(--muted);
+    padding: 10px 12px;
+    border-radius: var(--r-2);
+  }
+  .nav-mobile-link:hover,
+  .nav-mobile-link.active {
+    color: var(--ink);
+    background: var(--bg-sunken, rgba(0, 0, 0, 0.04));
+  }
+  .nav-mobile-cta { margin-top: 8px; justify-content: center; }
+
   @media (max-width: 720px) {
     .nav-links { display: none; }
+    .nav-burger { display: inline-flex; }
+  }
+  /* Never show the mobile panel or burger on desktop, even if JS left it open */
+  @media (min-width: 721px) {
+    .nav-mobile { display: none !important; }
+    .nav-burger { display: none !important; }
+  }
+  /* On the narrowest phones, fold the ghost "Sign in" into the menu to
+     avoid crowding the bar (logo + Start free + burger stay). */
+  @media (max-width: 460px) {
+    .nav-signin { display: none; }
   }
 </style>

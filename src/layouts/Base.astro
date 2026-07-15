@@ -48,5 +48,68 @@ const ogImage = `${origin}/og.png`;
   <Nav current={current} />
   <main><slot /></main>
   <Footer />
+
+  <!-- Progressive enhancement: give every hand-written docs code block a
+       copy-to-clipboard button. (The Scalar API-ref page has its own.) -->
+  <script is:inline>
+    (function () {
+      var blocks = document.querySelectorAll("pre.code");
+      blocks.forEach(function (pre) {
+        if (pre.querySelector(".code-copy")) return;
+        // Capture the code BEFORE injecting the button; strip shell prompts.
+        var code = pre.textContent.replace(/^\s*\$\s+/gm, "");
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "code-copy";
+        btn.textContent = "Copy";
+        btn.setAttribute("aria-label", "Copy code");
+        btn.addEventListener("click", function () {
+          navigator.clipboard.writeText(code).then(function () {
+            btn.textContent = "Copied";
+            setTimeout(function () { btn.textContent = "Copy"; }, 1500);
+          }).catch(function () {});
+        });
+        pre.appendChild(btn);
+      });
+    })();
+  </script>
 </body>
 </html>
+
+<style is:global>
+  /* Responsive docs tables — scroll inside their own box on small screens
+     instead of pushing the page body wide (fixes ~300px horizontal overflow
+     on /docs and other docs pages with wide API tables). */
+  @media (max-width: 640px) {
+    .content table {
+      display: block;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      max-width: 100%;
+    }
+  }
+
+  /* Copy button injected on hand-written docs code blocks. */
+  pre.code { position: relative; }
+  .code-copy {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 11px;
+    line-height: 1;
+    padding: 4px 8px;
+    color: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 5px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.12s ease;
+  }
+  pre.code:hover .code-copy,
+  .code-copy:focus { opacity: 1; }
+  /* Touch devices have no hover — keep the button visible there. */
+  @media (hover: none) {
+    .code-copy { opacity: 0.7; }
+  }
+</style>
