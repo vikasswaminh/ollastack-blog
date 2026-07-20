@@ -8,6 +8,13 @@ readingTime: 20
 draft: false
 canonical: "/blog/dodopayments-billing-integration"
 ogImage: "/assets/og/dodopayments.png"
+faq:
+  - q: "How does upgrading to a paid plan work?"
+    a: "From the dashboard billing page you pick a plan and are sent to a DODO Payments checkout; on payment, a signed webhook upgrades your organization's plan immediately. Cancel any time from the same page."
+  - q: "What payment methods are supported?"
+    a: "Subscriptions are billed through DODO Payments (cards). Your new quota applies immediately on upgrade, with no overage charges — if you hit the cap, submissions pause until the next cycle or an upgrade."
+  - q: "Can I cancel or change my plan?"
+    a: "Yes — self-serve from the billing page. Canceling skips the next cycle and drops you back to the free tier's quota; your existing data stays accessible."
 ---
 
 TL;DR

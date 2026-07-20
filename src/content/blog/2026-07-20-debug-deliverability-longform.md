@@ -8,6 +8,13 @@ readingTime: 22
 draft: false
 canonical: "/blog/debug-email-deliverability"
 ogImage: "/assets/og/debug-deliverability.png"
+faq:
+  - q: "Why is my email going to spam or bouncing?"
+    a: "The usual causes are missing SPF/DKIM/DMARC alignment, a cold or shared sending domain, or content that trips spam filters. Confirm all three auth records pass first, then inspect bounce webhooks for the specific reason code."
+  - q: "How do I see why a message bounced?"
+    a: "Consume Ollastack's bounce and complaint webhooks and check the email log — each carries the reason (hard vs soft bounce, complaint) so you can suppress bad addresses and diagnose reputation issues."
+  - q: "What is DMARC p=REJECT and do I need it?"
+    a: "DMARC tells receivers what to do when SPF and DKIM fail; p=REJECT means discard unauthenticated mail sent as your domain. It's the strongest anti-spoofing stance and, once your legitimate mail aligns, it improves inbox placement."
 ---
 
 TL;DR

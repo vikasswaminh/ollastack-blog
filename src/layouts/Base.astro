@@ -3,16 +3,22 @@ import "../styles/global.css";
 import AnnouncementBar from "../components/AnnouncementBar.astro";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
+import { docsBreadcrumbLd, techArticleLd } from "../lib/schema";
 
 interface Props {
   title?: string;
   description?: string;
   current?: string;
+  // When both are set (docs pages), Base emits BreadcrumbList + TechArticle.
+  docsName?: string;
+  docsSlug?: string;
 }
 const {
   title = "Ollastack — AI agent forms, mailboxes & email testing",
   description = "One platform for AI agents: forms they can submit, agent mailboxes that send and receive email, and disposable inboxes for email testing in CI.",
   current,
+  docsName,
+  docsSlug,
 } = Astro.props;
 const origin = (Astro.site ?? new URL("https://ollastack.com")).origin;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://ollastack.com").toString();
@@ -42,6 +48,12 @@ const ogImage = `${origin}/og.png`;
   <meta name="twitter:image" content={ogImage} />
   <meta name="theme-color" content="#fafaf7" />
   <title>{title}</title>
+  {docsName && docsSlug && (
+    <>
+      <script type="application/ld+json" set:html={JSON.stringify(docsBreadcrumbLd(docsName, docsSlug))} is:inline />
+      <script type="application/ld+json" set:html={JSON.stringify(techArticleLd({ title: docsName, description, slug: docsSlug }))} is:inline />
+    </>
+  )}
 </head>
 <body>
   <AnnouncementBar />

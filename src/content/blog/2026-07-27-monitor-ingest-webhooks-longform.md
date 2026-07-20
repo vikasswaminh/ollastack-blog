@@ -8,6 +8,13 @@ readingTime: 20
 draft: false
 canonical: "/blog/monitor-mail-ingest-webhooks"
 ogImage: "/assets/og/monitor-ingest.png"
+faq:
+  - q: "What should I monitor for email ingest?"
+    a: "Ingest success rate, end-to-end latency, and webhook delivery success/failure. A silent drop in ingested messages or a rising webhook-failure rate is your earliest signal that something upstream broke."
+  - q: "How do I get alerted when webhooks start failing?"
+    a: "Track delivery outcomes and page on a failure-rate threshold; Ollastack records every webhook attempt with status and error, and supports replay once you've fixed the downstream endpoint."
+  - q: "What belongs in a mail-ingest runbook?"
+    a: "The healthy baseline (latency, volume), where to look first (ingest logs, webhook delivery history), how to replay missed deliveries, and the escalation path — so on-call can act without reverse-engineering the system."
 ---
 
 TL;DR

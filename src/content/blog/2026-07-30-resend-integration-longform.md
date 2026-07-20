@@ -8,6 +8,13 @@ readingTime: 20
 draft: false
 canonical: "/blog/resend-integration-ollastack"
 ogImage: "/assets/og/resend-integration.png"
+faq:
+  - q: "How does Ollastack send email under the hood?"
+    a: "It sends via Resend by default, with platform-SMTP and per-tenant-SMTP fallbacks. You can rely on the platform sender or bring your own SMTP server per organization."
+  - q: "Can I use my own SMTP instead of the platform sender?"
+    a: "Yes — configure per-tenant SMTP (or a verified custom sender domain) so mail goes out under your identity; Ollastack falls back to the platform sender if your server errors, so notifications never silently drop."
+  - q: "What happens if my SMTP server fails mid-send?"
+    a: "Ollastack's dispatch catches the error and transparently falls back to the platform sender, so a transient SMTP outage doesn't cost you the notification."
 ---
 
 TL;DR

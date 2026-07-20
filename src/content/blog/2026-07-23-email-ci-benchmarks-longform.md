@@ -8,6 +8,13 @@ readingTime: 20
 draft: false
 canonical: "/blog/email-testing-in-ci-case-studies"
 ogImage: "/assets/og/ci-benchmarks.png"
+faq:
+  - q: "Why test email in CI at all?"
+    a: "Because calling sendEmail() isn't proof the email arrived, rendered, or carried the right OTP. A CI email test catches template regressions, broken links, and deliverability breakage before users hit them."
+  - q: "How fast is an email assertion in CI?"
+    a: "With a disposable inbox and a long-poll /wait, an OTP assertion returns the instant the message lands — in our own testing, receive-to-extracted-code was about 10 seconds end-to-end, fast enough for the hot path of a build."
+  - q: "What should an email CI test actually assert?"
+    a: "Assert on the extracted code or link (codes[0] / links[0]), not raw HTML — it survives the template changes that break a brittle regex."
 ---
 
 TL;DR

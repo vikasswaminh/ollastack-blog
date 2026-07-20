@@ -8,6 +8,13 @@ readingTime: 20
 draft: false
 canonical: "/blog/hosted-contact-form-example"
 ogImage: "/assets/og/hosted-contact-form.png"
+faq:
+  - q: "What's the simplest way to add a working contact form to a static site?"
+    a: "Point an HTML <form> at an Ollastack endpoint URL — no server needed. You get validation, honeypot spam protection, file attachments, and email notifications out of the box."
+  - q: "Can a hosted contact form handle file attachments?"
+    a: "Yes — Ollastack accepts multipart submissions and stores uploads on presigned object storage, auto-linked to the submission, with no upload server to run yourself."
+  - q: "How do I stop spam on a hosted contact form?"
+    a: "Ollastack applies a honeypot, per-IP rate limits, optional CAPTCHA, and an ML classifier that quarantines rather than drops — so bots are blocked while a real message is never silently lost."
 ---
 
 TL;DR

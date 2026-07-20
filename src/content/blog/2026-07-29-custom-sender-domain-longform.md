@@ -8,6 +8,13 @@ readingTime: 22
 draft: false
 canonical: "/blog/custom-sender-domain-onboarding"
 ogImage: "/assets/og/custom-sender-domain.png"
+faq:
+  - q: "How do I send from my own domain?"
+    a: "Add your domain as a custom sender, publish the SPF, DKIM, and (recommended) DMARC DNS records, and wait for verification. Once verified, notifications and agent mail send from your domain instead of the platform default."
+  - q: "Why isn't my custom sender domain verifying?"
+    a: "Almost always a DNS issue — a missing or mistyped DKIM/SPF record, a record on the wrong host, or provider caching. Confirm each record resolves publicly and give DNS time to propagate before retrying."
+  - q: "Do I need DMARC for a custom sender domain?"
+    a: "It's not required to send, but a DMARC record (start at p=none, then tighten) protects your domain from spoofing and improves inbox placement once your legitimate mail aligns on SPF and DKIM."
 ---
 
 TL;DR

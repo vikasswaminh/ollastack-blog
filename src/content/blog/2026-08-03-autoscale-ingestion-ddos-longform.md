@@ -8,6 +8,13 @@ readingTime: 22
 draft: false
 canonical: "/blog/autoscale-form-ingestion-ddos"
 ogImage: "/assets/og/autoscale-ddos.png"
+faq:
+  - q: "How does Ollastack stay up during a traffic burst?"
+    a: "Layered rate limits (per-IP-per-form, per-IP, and a high per-form DDoS backstop) shed abusive traffic while legitimate submissions pass, and quota reservation is atomic so concurrency can't over-admit."
+  - q: "What's the difference between the rate-limit buckets?"
+    a: "The per-IP-per-form limit is the real abuse defense — tripping it only affects that one IP on that one form. The per-form global limit is a high DDoS-only backstop that sits far above legitimate traffic."
+  - q: "Do rejected submissions during a burst just disappear?"
+    a: "No — a submission blocked by rate-limit, captcha, or validation is recorded in a failures log with a payload snapshot, so the owner can see lost enquiries rather than guess."
 ---
 
 TL;DR

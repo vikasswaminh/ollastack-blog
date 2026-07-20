@@ -8,6 +8,13 @@ readingTime: 20
 draft: false
 canonical: "/blog/tenant-smtp-for-agencies"
 ogImage: "/assets/og/tenant-smtp-agencies.png"
+faq:
+  - q: "What is per-tenant SMTP?"
+    a: "It lets each client (tenant) send through their own SMTP server and sending identity, so reputation, DKIM alignment, and reporting stay separated per client instead of sharing one pool."
+  - q: "Why would an agency use tenant SMTP?"
+    a: "So one client's deliverability problems don't affect another's, and each client's mail is sent and reported under their own domain. Ollastack tries the tenant's SMTP first and falls back to the platform sender on error."
+  - q: "Does tenant SMTP fall back if the client's server is down?"
+    a: "Yes — Ollastack's dispatch tries the tenant SMTP first and falls back to the platform sender on any error, so a misconfigured client server doesn't silently drop notifications."
 ---
 
 TL;DR

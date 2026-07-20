@@ -63,3 +63,36 @@ export const faqPageLd = (faqs: Faq[]) => ({
     acceptedAnswer: { "@type": "Answer", text: f.a },
   })),
 });
+
+// Docs-page structured data. BreadcrumbList still yields a SERP breadcrumb and,
+// with TechArticle, gives AI Mode a named, attributable source for "how do I…"
+// answers (docs are a prime citation surface). Emitted centrally by Base.astro
+// when a page passes docsName + docsSlug.
+export const docsBreadcrumbLd = (name: string, slug: string) => ({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: `${SITE}/` },
+    { "@type": "ListItem", position: 2, name: "Docs", item: `${SITE}/docs` },
+    { "@type": "ListItem", position: 3, name, item: `${SITE}/docs/${slug}` },
+  ],
+});
+
+export const techArticleLd = (opts: {
+  title: string;
+  description: string;
+  slug: string;
+}) => ({
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: opts.title,
+  description: opts.description,
+  author: { "@type": "Organization", name: "Ollastack", url: `${SITE}/` },
+  publisher: {
+    "@type": "Organization",
+    name: "Ollastack",
+    logo: { "@type": "ImageObject", url: `${SITE}/logo.svg` },
+  },
+  mainEntityOfPage: { "@type": "WebPage", "@id": `${SITE}/docs/${opts.slug}` },
+  image: `${SITE}/og.png`,
+});

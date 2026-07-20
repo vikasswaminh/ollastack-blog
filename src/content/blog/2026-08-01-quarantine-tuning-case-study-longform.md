@@ -8,6 +8,13 @@ readingTime: 22
 draft: false
 canonical: "/blog/quarantine-tuning-case-study"
 ogImage: "/assets/og/quarantine-tuning.png"
+faq:
+  - q: "What is spam quarantine?"
+    a: "When only the ML classifier flags a submission, Ollastack quarantines it — still delivered, just labeled [Possible spam] — instead of dropping it, so a borderline-but-real lead is never lost."
+  - q: "How do you reduce false-positive quarantines?"
+    a: "By setting a conservative confidence threshold (0.92, where real spam scores 0.96–0.999) and requiring a corroborating signal — a link, heavy ALL-CAPS, or a soft keyword — before treating an ML hit as hard spam."
+  - q: "Does the spam filter ever silently drop a real lead?"
+    a: "No. The invariant is that a real lead can't be lost: ML-alone hits are delivered and labeled, and anything rejected earlier is written to a failures log the owner can review and recover."
 ---
 
 TL;DR

@@ -8,6 +8,13 @@ readingTime: 20
 draft: false
 canonical: "/blog/email-api-security-guide"
 ogImage: "/assets/og/api-security.png"
+faq:
+  - q: "How should I store an Ollastack API token?"
+    a: "In a server-side secret store or environment variable, never in client code or a committed file. Use a scoped token so a leak is limited to what that token can do, and rotate it if exposed."
+  - q: "What do token scopes protect against?"
+    a: "Scopes limit a token to specific actions — a CI token scoped mail.test:* can drive throwaway inboxes but can't read or send from your production agent mailboxes, so a leaked CI token can't reach real correspondence."
+  - q: "How do I keep secrets out of logs?"
+    a: "Redact credentials before logging, prefer structured logging with allow-lists, and rely on the platform's PII scrubbing — Ollastack redacts submission payloads and recipient fields when a submission is deleted."
 ---
 
 TL;DR

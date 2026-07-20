@@ -8,6 +8,13 @@ readingTime: 21
 draft: false
 canonical: "/blog/nextjs-serverless-form-endpoint"
 ogImage: "/assets/og/nextjs-serverless.png"
+faq:
+  - q: "How do I build a serverless form endpoint in the Next.js App Router?"
+    a: "Add a Route Handler (app/api/contact/route.ts) that validates the request and forwards it to your Ollastack form endpoint. Ollastack stores the submission, runs spam filtering, and sends notifications, so your handler stays thin — validation and error shaping only."
+  - q: "Should I POST from the client or from a Next.js Route Handler?"
+    a: "Either works. A client-side POST is simplest; a Route Handler lets you add server-side validation, keep secrets off the client, and attach a Bearer token so a trusted server or agent submits past the bot defenses."
+  - q: "Do I need a database for a Next.js contact form?"
+    a: "No. Ollastack is the backend — it stores submissions, exposes them via API and inbox, and sends notifications — so a static or serverless Next.js app needs no database of its own."
 ---
 
 TL;DR

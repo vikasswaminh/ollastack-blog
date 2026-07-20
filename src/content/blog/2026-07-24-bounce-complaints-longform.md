@@ -8,6 +8,13 @@ readingTime: 20
 draft: false
 canonical: "/blog/handling-bounces-complaints"
 ogImage: "/assets/og/bounce-complaints.png"
+faq:
+  - q: "What's the difference between a bounce and a complaint?"
+    a: "A bounce means the message couldn't be delivered (hard = permanent, soft = temporary); a complaint means the recipient marked it as spam. Both should suppress future sends to that address."
+  - q: "How should my app react to a bounce webhook?"
+    a: "Verify the signature, suppress hard-bounced addresses immediately, retry soft bounces with backoff, and log the reason so you can spot reputation trends early."
+  - q: "How do I receive bounce and complaint events?"
+    a: "Subscribe an HMAC-signed webhook; Ollastack posts each event with its type and reason, retries on failure with backoff, and keeps a delivery history you can replay."
 ---
 
 TL;DR

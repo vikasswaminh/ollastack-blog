@@ -8,6 +8,13 @@ readingTime: 20
 draft: false
 canonical: "/blog/measure-email-deliverability-metrics"
 ogImage: "/assets/og/deliverability-metrics.png"
+faq:
+  - q: "Which email metrics actually matter for deliverability?"
+    a: "Bounce rate, complaint rate, and authentication pass rate matter most — they directly affect whether mailbox providers accept your mail. Open rate is a softer signal and increasingly unreliable due to privacy proxies."
+  - q: "What bounce rate is too high?"
+    a: "As a rule of thumb, keep hard bounces under about 2% and complaints under about 0.1%; sustained higher rates get your domain throttled or blocked. Instrument them per-send so you catch a spike early."
+  - q: "How do I instrument deliverability?"
+    a: "Capture bounce and complaint webhooks plus the email log, then track auth pass rate (SPF/DKIM/DMARC) and per-domain delivery outcomes so a regression is visible before it costs you the inbox."
 ---
 
 TL;DR

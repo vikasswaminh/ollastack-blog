@@ -8,6 +8,13 @@ readingTime: 22
 draft: false
 canonical: "/blog/security-privacy-pii-redaction"
 ogImage: "/assets/og/security-privacy.png"
+faq:
+  - q: "What happens to my data when I delete a submission?"
+    a: "Deletion scrubs PII from related rows too — the webhook delivery payload, and the notification email log's recipients and subject — so a deleted submission doesn't linger in side tables."
+  - q: "Can I set data retention on submissions?"
+    a: "Yes — retention is configurable per form, and a retention job deletes older submissions (scrubbing their PII) so you don't hold data longer than your policy allows."
+  - q: "How is PII protected in general?"
+    a: "Least-privilege token scopes, PII redaction on delete and on retention expiry, and encrypted-at-rest tenant SMTP credentials — so personal data isn't exposed through logs, side tables, or over-broad tokens."
 ---
 
 TL;DR

@@ -8,6 +8,13 @@ readingTime: 20
 draft: false
 canonical: "/blog/email-scaling-quotas-retries"
 ogImage: "/assets/og/email-scaling.png"
+faq:
+  - q: "How do send quotas protect deliverability?"
+    a: "Quotas cap how much you send per window so a burst can't damage your domain reputation or trip a provider's rate limit. Ollastack enforces per-plan monthly quotas and reserves them atomically so you never overshoot."
+  - q: "What retry policy should I use for failed sends or webhooks?"
+    a: "Exponential backoff with a capped number of attempts — Ollastack retries webhook deliveries on a 1m/5m/30m/2h/10h ladder — so transient failures recover without hammering a struggling endpoint."
+  - q: "How do I handle traffic bursts without losing submissions?"
+    a: "Admit up to your quota atomically and record the overflow instead of dropping it: Ollastack logs rate-limited submissions to a failures log so the owner can see and recover lost enquiries."
 ---
 
 TL;DR
