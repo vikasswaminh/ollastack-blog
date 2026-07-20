@@ -1,3 +1,27 @@
+# AI answer engines are explicitly welcomed. They're already covered by the
+# `*` group below — naming them here just makes intent unambiguous so a future
+# Disallow can't accidentally lock them out (getting cited by these is the point).
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
 User-agent: *
 Allow: /
 
