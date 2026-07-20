@@ -1,0 +1,40 @@
+# Ollastack
+
+> One platform for AI agents: forms they can submit, agent mailboxes that send and receive email, and disposable inboxes for email testing in CI. Self-hosted, agent-first, and MCP-ready — every capability is a documented REST endpoint discoverable from a live OpenAPI 3.1 spec.
+
+Ollastack gives AI agents three primitives:
+
+- **Agent forms** — structured submission endpoints with spam filtering, webhooks, file uploads, and rules. An agent (or a static site) POSTs to a slug; the owner gets the data.
+- **Agent mailboxes** — persistent email identities (`handle@agent.ollastack.com`) that send and receive real email, spam-filtered, with threading, attachments, and a long-poll `/wait` for inbound.
+- **Email testing** — disposable inboxes on a test subdomain that capture every message and extract OTP codes and links at ingest, for verification/magic-link/2FA flows in CI.
+
+Agents discover the whole API from the OpenAPI 3.1 document; every operation ships a copy-paste `curl`.
+
+## API
+- [OpenAPI 3.1 spec](https://login.ollastack.com/api/openapi.json): Machine-readable, CORS-open, FastMCP-ready. The source of truth for every endpoint.
+- [API reference](https://ollastack.com/docs/api): Human-readable reference rendered live from the spec, with curl for each operation.
+
+## Docs
+- [Docs home](https://ollastack.com/docs): Index of guides.
+- [Agents](https://ollastack.com/docs/agents): Connect an AI agent — mint a scoped token, submit forms, drive mail.
+- [Agent Mail](https://ollastack.com/docs/agent-mail): Persistent send/receive mailboxes; `/wait`, rules, webhooks, attachments.
+- [SMTP](https://ollastack.com/docs/smtp): Per-tenant SMTP and custom sender domains.
+- [SMS testing](https://ollastack.com/docs/sms): Disposable inboxes for OTP/2FA over SMS.
+- [Uploads](https://ollastack.com/docs/uploads): Presigned S3/R2 file uploads attached to submissions.
+- [Integrations](https://ollastack.com/docs/integrations): Slack, Discord, Telegram, Google Sheets, Mailchimp, Apprise.
+- [Apprise](https://ollastack.com/docs/apprise): Fan-out notifications via an Apprise server.
+- [Workflow rules](https://ollastack.com/docs/workflow-rules): "When a submission/message matches X, do Y."
+- [Projects](https://ollastack.com/docs/projects): Group forms and mailboxes per project.
+- [Teams](https://ollastack.com/docs/teams): Org members and roles.
+- [Billing](https://ollastack.com/docs/billing): Plans and quotas.
+
+## Product
+- [Email API](https://ollastack.com/email-api): Send, receive, and test email over a simple API.
+- [Use cases](https://ollastack.com/use-cases): What agents build with Ollastack.
+- [Pricing](https://ollastack.com/pricing): Free and paid tiers.
+- [Blog](https://ollastack.com/blog): Guides and comparisons.
+
+## Resources
+- [Migration hub](https://ollastack.com/resources/migration-hub): Moving from Formspree, Mailosaur, SendGrid Inbound Parse, and others.
+- [Developer hub](https://ollastack.com/resources/developer-hub): Integration guides and references.
+- [Deliverability hub](https://ollastack.com/resources/deliverability-hub): SPF/DKIM/DMARC and inbox-placement guidance.

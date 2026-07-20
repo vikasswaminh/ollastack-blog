@@ -1,0 +1,47 @@
+# Ollastack — full context for AI crawlers
+
+> One platform for AI agents: forms they can submit, agent mailboxes that send and receive email, and disposable inboxes for email testing in CI. Self-hosted, agent-first, MCP-ready. Every capability is a documented REST endpoint discoverable from a live OpenAPI 3.1 spec at https://login.ollastack.com/api/openapi.json.
+
+## What Ollastack is
+
+Ollastack is the message layer for AI agents. It exposes three primitives an agent needs to interact with the human world over email and forms, each as a plain REST endpoint with a copy-paste `curl` in the docs. The API host is `https://login.ollastack.com`; the marketing site is `https://ollastack.com`.
+
+### 1. Agent forms
+Structured submission endpoints. An agent or a static website POSTs `application/json`, `x-www-form-urlencoded`, or `multipart/form-data` to `POST /api/submit/{endpointSlug}` and the form owner receives the data. Features: a layered spam pipeline (honeypot, IP blocklist, keyword/regex, excessive-links, Akismet, and a local ML classifier with a quarantine tier that never silently drops a real lead), per-IP and per-form rate limiting, presigned S3/R2 file uploads, signed webhooks with retry, workflow rules, CSV/XLSX export, and multi-tenant org isolation. Bearer tokens carry scopes; a token owned by the form owner submits as a trusted agent and skips honeypot/captcha/rate-limit.
+
+### 2. Agent mailboxes
+Persistent email identities. Create `handle@agent.ollastack.com` and the agent can send as that identity and receive real inbound mail. Inbound is spam-filtered with the same pipeline as forms (fail-open — a classifier error delivers unfiltered). Capabilities: threaded replies (In-Reply-To/References), attachments (inbound stored in object storage, downloadable via short-lived presigned URLs; outbound up to 20 files / 10 MB), a long-poll `GET .../wait` that blocks until the next inbound message arrives, ingest-time extraction of OTP codes and links, `+tag` subaddressing, per-mailbox HMAC-signed webhooks (lean bodyless by default, full Inbound-Parse payload opt-in), scheduled send, and workflow rules (auto-reply, forward, webhook, notify). Scopes are split by module: `mail.agent:read|write|send` for persistent identities, `mail.test:*` for disposable inboxes — a CI token cannot read or send as a business identity.
+
+### 3. Email (and SMS) testing
+Disposable inboxes on a test subdomain, never spam-filtered (a test must see every message). Codes and links are extracted at ingest, so an agent or CI job creates an inbox, triggers a signup/reset/2FA email in the app under test, calls `/wait`, and reads `message.codes[0]`. SMS testing provides the same shape for OTP over SMS. This is a drop-in replacement for Mailosaur/Mailinator and for SendGrid/Mailgun Inbound Parse.
+
+## API discovery
+- OpenAPI 3.1 spec (source of truth, CORS-open, FastMCP-ready): https://login.ollastack.com/api/openapi.json
+- Human API reference with per-endpoint curl: https://ollastack.com/docs/api
+- Auth: `Authorization: Bearer <token>` (mint scoped tokens in the dashboard) or a session cookie for dashboard routes. Mail routes enforce mode-aware scopes.
+
+## Docs
+- Docs home: https://ollastack.com/docs
+- Agents (connect an agent, tokens, scopes): https://ollastack.com/docs/agents
+- Agent Mail (send/receive, /wait, rules, webhooks, attachments): https://ollastack.com/docs/agent-mail
+- SMTP (per-tenant SMTP, custom sender domains): https://ollastack.com/docs/smtp
+- SMS testing: https://ollastack.com/docs/sms
+- Uploads (presigned S3/R2): https://ollastack.com/docs/uploads
+- Integrations (Slack/Discord/Telegram/Sheets/Mailchimp/Apprise): https://ollastack.com/docs/integrations
+- Apprise: https://ollastack.com/docs/apprise
+- Workflow rules: https://ollastack.com/docs/workflow-rules
+- Projects (group forms + mailboxes): https://ollastack.com/docs/projects
+- Teams (org members and roles): https://ollastack.com/docs/teams
+- Billing (plans and quotas): https://ollastack.com/docs/billing
+
+## Product and resources
+- Email API overview: https://ollastack.com/email-api
+- Use cases: https://ollastack.com/use-cases
+- Pricing: https://ollastack.com/pricing
+- Blog: https://ollastack.com/blog
+- Migration hub (Formspree, Mailosaur, Inbound Parse, ...): https://ollastack.com/resources/migration-hub
+- Developer hub: https://ollastack.com/resources/developer-hub
+- Deliverability hub (SPF/DKIM/DMARC): https://ollastack.com/resources/deliverability-hub
+
+## Positioning
+Ollastack is built by Networkers Home. It competes with Formspree (forms), AgentMail (agent mailboxes), and Mailosaur (email testing) — but unifies all three behind one agent-first API, with the differentiator that agent inboxes are spam-filtered and every capability is MCP-discoverable from the OpenAPI spec.

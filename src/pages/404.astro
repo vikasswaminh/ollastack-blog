@@ -1,0 +1,39 @@
+---
+import Base from "../layouts/Base.astro";
+// A real 404 page. Astro builds this to /404.html, which Cloudflare Pages
+// serves with a 404 status for unknown routes — replacing the previous
+// soft-404 (unknown URLs returned HTTP 200 + the homepage, which crawlers
+// treat as duplicate content and Google flags).
+---
+
+<Base
+  title="Page not found — Ollastack"
+  description="That page doesn't exist. Head back to the docs or the homepage."
+>
+  <section style="max-width: 720px; margin: 0 auto; padding: 96px 24px; text-align: center;">
+    <p class="nf-code mono">404</p>
+    <h1 class="nf-h1">This page doesn't exist</h1>
+    <p class="nf-lede">
+      The link may be broken or the page may have moved. Try one of these instead:
+    </p>
+    <div class="nf-links">
+      <a href="/" class="nf-btn nf-btn-primary">Home</a>
+      <a href="/docs" class="nf-btn">Docs</a>
+      <a href="/email-api" class="nf-btn">Email API</a>
+      <a href="/pricing" class="nf-btn">Pricing</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf-code { font-size: 15px; letter-spacing: 0.14em; color: var(--accent); margin: 0 0 10px; }
+  .nf-h1 { font-size: 34px; letter-spacing: -0.02em; margin: 0 0 12px; line-height: 1.1; }
+  .nf-lede { font-size: 17px; color: var(--muted); line-height: 1.6; margin: 0 auto 28px; max-width: 520px; }
+  .nf-links { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+  .nf-btn {
+    display: inline-flex; align-items: center; padding: 9px 16px; border-radius: 8px;
+    border: 1px solid var(--line); color: var(--ink); text-decoration: none; font-size: 14px;
+  }
+  .nf-btn:hover { border-color: var(--accent); }
+  .nf-btn-primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+</style>

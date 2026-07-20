@@ -12,30 +12,49 @@ interface Entry {
   priority: string;
 }
 
-const staticPages: Entry[] = [
-  { url: "/",         lastmod: TODAY, changefreq: "weekly",  priority: "1.0" },
-  { url: "/email-api", lastmod: TODAY, changefreq: "weekly",  priority: "0.9" },
-  { url: "/pricing",  lastmod: TODAY, changefreq: "monthly", priority: "0.9" },
-  { url: "/docs",     lastmod: TODAY, changefreq: "weekly",  priority: "0.8" },
-  { url: "/docs/agents", lastmod: TODAY, changefreq: "monthly", priority: "0.7" },
-  { url: "/docs/smtp",   lastmod: TODAY, changefreq: "monthly", priority: "0.7" },
-  { url: "/blog",     lastmod: TODAY, changefreq: "weekly",  priority: "0.8" },
-  { url: "/resources",                  lastmod: TODAY, changefreq: "monthly", priority: "0.8" },
-  { url: "/resources/migration-hub",    lastmod: TODAY, changefreq: "monthly", priority: "0.8" },
-  { url: "/resources/developer-hub",    lastmod: TODAY, changefreq: "monthly", priority: "0.8" },
-  { url: "/resources/deliverability-hub", lastmod: TODAY, changefreq: "monthly", priority: "0.8" },
-  { url: "/contact",  lastmod: TODAY, changefreq: "monthly", priority: "0.6" },
-  { url: "/careers",  lastmod: TODAY, changefreq: "weekly",  priority: "0.6" },
-];
+// Auto-enumerate every static page under src/pages so the sitemap can't drift
+// out of sync with the site (it used to be a hand-maintained list, and ~11 docs
+// pages + /use-cases had silently fallen off it). Blog posts are handled
+// separately below (markdown collection + legacy .astro posts).
+const pageFiles = import.meta.glob("./**/*.astro");
 
-// Legacy .astro posts (from data/posts) + the markdown content collection.
-const legacyBlog: Entry[] = posts.map((p) => ({
-  url: `/blog/${p.slug}`,
-  lastmod: p.date,
-  changefreq: "monthly",
-  priority: "0.7",
-}));
+function fileToUrl(key: string): string | null {
+  // "./docs/agent-mail.astro" -> "/docs/agent-mail"; "./index.astro" -> "/"
+  let p = key.replace(/^\.\//, "/").replace(/\.astro$/, "");
+  if (p.includes("[")) return null; // dynamic route (e.g. blog/[...slug])
+  p = p.replace(/\/index$/, "");
+  if (p === "") p = "/";
+  if (p === "/404") return null; // not indexable
+  return p;
+}
 
+function priorityFor(url: string): string {
+  if (url === "/") return "1.0";
+  if (url === "/pricing" || url === "/email-api") return "0.9";
+  if (url === "/docs" || url === "/blog" || url.startsWith("/resources")) return "0.8";
+  return "0.7";
+}
+function changefreqFor(url: string): "weekly" | "monthly" {
+  if (["/", "/docs", "/blog", "/email-api", "/careers"].includes(url)) return "weekly";
+  return "monthly";
+}
+
+// Better lastmod for the standalone .astro blog posts, from their post metadata.
+const postDate: Record<string, string> = Object.fromEntries(
+  posts.map((p) => [`/blog/${p.slug}`, p.date])
+);
+
+const staticEntries: Entry[] = Object.keys(pageFiles)
+  .map(fileToUrl)
+  .filter((u): u is string => u !== null)
+  .map((url) => ({
+    url,
+    lastmod: postDate[url] ?? TODAY,
+    changefreq: changefreqFor(url),
+    priority: url.startsWith("/blog/") ? "0.7" : priorityFor(url),
+  }));
+
+// Markdown blog posts (not .astro files, so not in the glob above).
 const collectionBlog: Entry[] = (
   await getCollection("blog", ({ data }) => data.draft !== true)
 ).map((p) => ({
@@ -45,7 +64,12 @@ const collectionBlog: Entry[] = (
   priority: "0.7",
 }));
 
-const all: Entry[] = [...staticPages, ...legacyBlog, ...collectionBlog];
+// Dedupe by URL (a standalone .astro post and its posts[] entry can overlap).
+const byUrl = new Map<string, Entry>();
+for (const e of [...staticEntries, ...collectionBlog]) {
+  if (!byUrl.has(e.url)) byUrl.set(e.url, e);
+}
+const all = [...byUrl.values()].sort((a, b) => a.url.localeCompare(b.url));
 
 const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

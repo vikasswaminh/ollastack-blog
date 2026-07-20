@@ -1,0 +1,7 @@
+# Ollastack security contact — RFC 9116 (https://securitytxt.org)
+# NOTE: the Expires field is mandatory. Refresh this file (bump Expires
+# ~12 months out) before the date below, or scanners will flag it as expired.
+Contact: mailto:security@networkershome.com
+Expires: 2027-07-20T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://ollastack.com/.well-known/security.txt
