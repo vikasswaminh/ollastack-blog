@@ -2,7 +2,7 @@
 title: "AgentMail alternative: agent email + forms + testing"
 description: "AgentMail is a dedicated agent email API. Ollastack bundles agent mail with forms and CI test inboxes on one API, and is self-hostable. An honest comparison."
 date: 2026-08-06
-updated: 2026-06-21
+updated: 2026-07-20
 tags: ["ai-agents", "email", "comparison", "agent-mail"]
 author: "Ollastack"
 readingTime: 8
@@ -29,7 +29,7 @@ Both give an agent a real inbox it can operate over an API — create an address
 ## Where Ollastack differs
 
 - **It's three pillars, not one.** The same API and token also give you [headless form endpoints](/resources/developer-hub) (capture leads, let the agent submit on a user's behalf) and [disposable test inboxes](/blog/test-otp-email-in-ci) for CI. One vendor, one bill, one mental model.
-- **Inbound agent mail is spam-filtered, and fails open.** Ollastack runs its form spam pipeline on inbound agent mail — hard spam hidden, uncertain mail delivered and badged, and a classifier error delivers unfiltered rather than dropping. A real reply can't be lost. (See [the fail-open principle](/blog/ml-quarantine-explained).)
+- **Inbound agent mail is spam-filtered, and fails open.** Ollastack runs its form spam pipeline on inbound agent mail — hard spam hidden, uncertain mail delivered and badged, and a classifier error delivers unfiltered rather than dropping. A real reply can't be lost. (See [the fail-open principle](/blog/ml-quarantine-explained).) Deliverability is proven end-to-end, too: in our own testing a mailbox→Gmail send passed SPF, DKIM, and DMARC (`p=REJECT`) in **about 7 seconds**, landing in the inbox rather than spam.
 - **Chosen, persistent identity vs disposable, in one model.** An *agent* mailbox is a handle you choose on `agent.ollastack.com` (or your own verified domain); a *test* mailbox is disposable and unfiltered. Same API, two guarantees — see [agent email identity](/blog/agent-email-identity).
 - **A first-class MCP server.** The [Ollastack MCP](/blog/build-ai-agent-that-sends-and-receives-email) exposes mailbox + form tools to Claude Desktop, Cursor, or any MCP client, generated from the live OpenAPI spec.
 - **Self-hostable.** Ollastack is a hosted service *and* a self-hostable monorepo on the same API — so if a data-residency or compliance requirement appears later, you can run your own instance without re-integrating. (See [self-host vs hosted](/blog/self-host-vs-hosted-form-backend).)
@@ -51,12 +51,14 @@ We're not going to pretend a bundled platform beats a funded specialist on email
 | Form endpoints | — | ✅ |
 | CI test inboxes | — | ✅ |
 | One API/token for all three | — | ✅ |
-| MCP server | — _(check their docs)_ | ✅ |
-| Inbound spam filtering (fail-open) | — _(check their docs)_ | ✅ |
-| Self-hostable | — _(hosted)_ | ✅ |
+| MCP server | ✅ native | ✅ |
+| Inbound spam filtering (fail-open) | — | ✅ |
+| Self-hostable | — (hosted) | ✅ |
 | Dedicated email-for-agents focus | ✅ | partial (one of three pillars) |
 
-(Cells marked _check their docs_ are areas where you should verify AgentMail's current capabilities directly rather than take a competitor's word for it.)
+AgentMail ships a native MCP server, SPF/DKIM/DMARC, and webhooks + websockets (verified on [their docs](https://www.agentmail.to/docs/introduction), July 2026). The spam-filtering row reflects Ollastack's specific fail-open inbound quarantine — a design choice, not a checkbox — so verify AgentMail's current capabilities directly rather than taking a competitor's word for it.
+
+On price, AgentMail has a genuinely usable free tier — **3 inboxes and 3,000 emails/month, no card** — with paid plans from **$20/month** (10 inboxes, 10,000 emails) as of July 2026 ([agentmail.to/pricing](https://www.agentmail.to/pricing)). Ollastack doesn't meter agent mail by inbox count — agent mailboxes come with the platform (free to start at 100 form submissions/month, with monthly mail quotas per plan). For one disposable inbox per session at high volume, AgentMail's per-inbox model is built for exactly that; for a few persistent agent identities alongside forms and testing, Ollastack's bundling fits better.
 
 ## How to choose
 

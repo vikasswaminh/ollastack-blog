@@ -2,7 +2,7 @@
 title: "Formspree alternative for developers and AI agents"
 description: "Ollastack as a Formspree alternative — agent-first API, reversible spam handling, webhooks with replay, and built-in mail testing. Plus where Formspree wins."
 date: 2026-06-24
-updated: 2026-06-19
+updated: 2026-07-20
 tags: ["comparison", "formspree", "product"]
 author: "Ollastack"
 readingTime: 9
@@ -32,7 +32,7 @@ Ollastack lets you mint a **scoped API token**. A submission carrying the form o
 
 The worst failure mode of a form backend is the silent one: a real lead gets filtered and you never know. Ollastack is built so that **a real lead can never be silently dropped.**
 
-The pipeline runs honeypot → IP blocklist → keyword/regex → excessive-links → Akismet → an in-process ML classifier. When only the ML model flags something, it's *quarantined* — still delivered, just labeled `[Possible spam]` — and one click recovers it as a clean lead. Anything rejected earlier (rate-limit, captcha, origin) is written to a failures log you can actually read. You're never guessing where a submission went.
+The pipeline runs honeypot → IP blocklist → keyword/regex → excessive-links → Akismet → an in-process ML classifier. When only the ML model flags something, it's *quarantined* — still delivered, just labeled `[Possible spam]` — and one click recovers it as a clean lead. The classifier is deliberately conservative: it only quarantines above **0.92** confidence, and real spam in our logs scores **0.96–0.999**, so the label errs toward delivering a borderline lead rather than hiding it. Anything rejected earlier (rate-limit, captcha, origin) is written to a failures log you can actually read. You're never guessing where a submission went.
 
 ## 3. Webhooks you can inspect and replay
 
@@ -53,7 +53,11 @@ Most form backends stop at "we emailed you." Ollastack ships an agent-mail modul
 | Webhooks: retries + replay | basic | ✅ history + replay |
 | Built-in mail/OTP testing | — | ✅ test inboxes + `/wait` |
 | Custom sender domain / per-tenant SMTP | paid | ✅ |
-| Free tier | small | 100 submissions/mo |
+| Free tier | 50 submissions/mo | **100** submissions/mo |
+| Entry paid plan | $15/mo · 200 subs | **$9/mo · 1,000 subs** |
+| CSV export / webhooks / uploads on free | — (paid) | ✅ included |
+
+*Formspree figures as of July 2026 — verify at [formspree.io/plans](https://formspree.io/plans). Both count monthly form submissions, so these are like-for-like.*
 
 ## How to evaluate the switch
 

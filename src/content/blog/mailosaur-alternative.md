@@ -2,7 +2,7 @@
 title: "Mailosaur alternative: inbox + OTP testing in CI"
 description: "Disposable test inboxes that prove your OTP or magic link arrived — create, long-poll, assert on the extracted code. vs Mailosaur, MailSlurp & Mailsac."
 date: 2026-06-26
-updated: 2026-06-19
+updated: 2026-07-20
 tags: ["testing", "ci", "email", "comparison"]
 author: "Ollastack"
 readingTime: 9
@@ -51,7 +51,7 @@ MSG=$(curl -s "https://login.ollastack.com/api/mailboxes/$ID/wait?timeout=55" \
 echo "$MSG" | jq '.data.codes, .data.links'
 ```
 
-The `/wait` endpoint is the key ergonomic: it long-polls and returns the instant a message arrives, so your test doesn't sleep-and-retry. And `codes[]` / `links[]` are extracted for you — you assert on the OTP directly instead of regex-ing an HTML body.
+The `/wait` endpoint is the key ergonomic: it long-polls and returns the instant a message arrives, so your test doesn't sleep-and-retry. And `codes[]` / `links[]` are extracted for you — you assert on the OTP directly instead of regex-ing an HTML body. In our own testing, a message sent to a fresh test inbox was received, parsed, and had its OTP extracted in **about 10 seconds** end-to-end — inside the hot path of a CI run, not a coffee break.
 
 In a Node test it reads about as cleanly:
 
@@ -86,6 +86,10 @@ Token scopes keep them isolated: a CI token scoped `mail.test:*` can drive throw
 | Agent identities (send/reply) | — | partial | — | ✅ |
 
 The honest framing: if you only need email testing and nothing else, the dedicated services are excellent and you should evaluate them on their own merits. Ollastack makes sense when the same platform also handles your form submissions and you'd rather not run two vendors — or when you specifically want the agent-identity side (an LLM agent that sends and receives mail under a real, spam-filtered address).
+
+## What it costs
+
+Mailosaur is a dedicated email- and SMS-testing platform, and it's priced like one: the Personal plan starts at **$20/month** (billed annually) for 15,000 test emails a month, with a **14-day free trial** rather than a permanent free tier (as of July 2026 — [mailosaur.com/pricing](https://mailosaur.com/pricing)). It also goes deeper on pure testing than Ollastack does: email accessibility and rendering previews, POP3/IMAP access, and SMS testing are all first-class there. Ollastack takes the opposite shape — disposable test inboxes are **included on the free 100-submission/month plan**, because testing is one pillar of a platform that also does form capture and agent mailboxes. If email testing is the whole job and you want the deepest testing toolkit, Mailosaur earns its place; if you want the testing loop bundled with forms and agent mail behind one token, that's Ollastack.
 
 ## Things people get wrong
 
