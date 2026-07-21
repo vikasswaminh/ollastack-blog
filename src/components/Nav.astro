@@ -7,6 +7,7 @@ const links = [
   { href: "/", label: "Product", id: "home" },
   { href: "/use-cases", label: "Use cases", id: "use-cases" },
   { href: "/docs", label: "Docs", id: "docs" },
+  { href: "/docs/api", label: "API", id: "api" },
   { href: "/docs/agents", label: "For agents", id: "agents" },
   { href: "/docs/agent-mail", label: "Agent mail", id: "agent-mail" },
   { href: "/email-api", label: "Email API", id: "email-api" },
@@ -157,12 +158,14 @@ const links = [
   }
   .nav-mobile-cta { margin-top: 8px; justify-content: center; }
 
-  @media (max-width: 720px) {
+  /* Collapse to the burger at ≤860px: the 8-item inline nav overflows the bar
+     between ~721–819px (verified in-browser), so switch to the menu before that. */
+  @media (max-width: 860px) {
     .nav-links { display: none; }
     .nav-burger { display: inline-flex; }
   }
   /* Never show the mobile panel or burger on desktop, even if JS left it open */
-  @media (min-width: 721px) {
+  @media (min-width: 861px) {
     .nav-mobile { display: none !important; }
     .nav-burger { display: none !important; }
   }
