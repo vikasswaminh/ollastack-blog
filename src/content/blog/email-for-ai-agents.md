@@ -6,7 +6,6 @@ updated: 2026-06-21
 tags: ["ai-agents", "email", "agent-mail", "guide"]
 author: "Ollastack"
 readingTime: 10
-draft: false
 faq:
   - q: "What does email for AI agents mean?"
     a: "Giving an agent a real inbox it owns over an API — send from a chosen identity, receive and read structured messages with extracted codes/links, and reply in-thread. It's an inbox, not a one-way notification API."

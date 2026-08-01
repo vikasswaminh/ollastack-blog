@@ -6,7 +6,6 @@ updated: 2026-06-19
 tags: ["deliverability", "dkim", "spf", "dmarc", "guide"]
 author: "Ollastack"
 readingTime: 9
-draft: false
 faq:
   - q: "Why do my form notifications land in spam?"
     a: "Usually because SPF, DKIM and DMARC for your sending domain aren't aligned. Publish the records the post lists and verify all three pass before moving DMARC to reject."

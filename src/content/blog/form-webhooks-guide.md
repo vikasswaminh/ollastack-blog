@@ -6,7 +6,6 @@ updated: 2026-06-19
 tags: ["webhooks", "guide", "backend"]
 author: "Ollastack"
 readingTime: 8
-draft: false
 faq:
   - q: "How do I verify a form webhook signature?"
     a: "Each delivery carries an HMAC-SHA256 signature header; recompute the HMAC of the raw body with your secret and compare in constant time."

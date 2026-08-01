@@ -6,7 +6,6 @@ updated: 2026-06-21
 tags: ["email-api", "comparison", "sendgrid", "free"]
 author: "Ollastack"
 readingTime: 6
-draft: false
 faq:
   - q: "What's a good SendGrid free alternative?"
     a: "For one-way sending, Resend or Mailgun are direct SendGrid alternatives. If you also need to receive — read replies, OTP codes, or inbound mail — Ollastack is a full-duplex alternative with a free tier that sends and receives, no credit card."

@@ -6,7 +6,6 @@ updated: 2026-06-19
 tags: ["migration", "getform", "forminit", "guide"]
 author: "Ollastack"
 readingTime: 7
-draft: false
 faq:
   - q: "Is Getform the same as Forminit?"
     a: "Getform rebranded to Forminit in 2026. Whether you're on the old or new endpoint, migrating is the same one-line change."

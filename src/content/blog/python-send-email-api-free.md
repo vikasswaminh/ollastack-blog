@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Send email in Python via API, free"
 description: "Send email from Python with a free HTTP API — no smtplib, no Gmail app password. The send call, how to receive the reply, and why it beats SMTP."
 date: 2026-06-21
@@ -6,7 +7,6 @@ updated: 2026-06-21
 tags: ["email-api", "python", "send", "tutorial"]
 author: "Ollastack"
 readingTime: 6
-draft: false
 faq:
   - q: "How do I send email in Python via a free API?"
     a: "POST to the send endpoint with httpx or requests: a JSON body with to, subject, and text/html plus a Bearer token. No smtplib, no SMTP server, and the free tier needs no credit card."

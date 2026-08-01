@@ -6,7 +6,6 @@ updated: 2026-06-19
 tags: ["ai-agents", "email", "agent-mail", "guide"]
 author: "Ollastack"
 readingTime: 8
-draft: false
 faq:
   - q: "What is an agent email identity?"
     a: "A persistent, chosen email address an AI agent owns — on agent.ollastack.com or your own verified domain — that it sends from, receives into, and replies through over an API. It's spam-filtered, unlike a disposable test inbox."

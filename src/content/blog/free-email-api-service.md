@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Free email API service (send and receive)"
 description: "A free email API service that also receives — create an inbox, send, read replies and OTP codes over HTTP, no credit card. With the honest free-tier limits."
 date: 2026-06-21
@@ -6,7 +7,6 @@ updated: 2026-06-21
 tags: ["email-api", "free", "guide"]
 author: "Ollastack"
 readingTime: 7
-draft: false
 faq:
   - q: "Is there a genuinely free email API service?"
     a: "Yes. Ollastack's free tier gives you a real email API — create mailboxes, send, receive, and read messages over HTTP, plus disposable test inboxes — with no credit card. It's metered with a modest monthly send quota."

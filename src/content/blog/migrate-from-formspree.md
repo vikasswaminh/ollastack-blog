@@ -6,7 +6,6 @@ updated: 2026-06-19
 tags: ["migration", "formspree", "guide"]
 author: "Ollastack"
 readingTime: 9
-draft: false
 faq:
   - q: "How hard is it to migrate from Formspree?"
     a: "For most forms it's a one-line change — swap the form's action URL to your Ollastack endpoint and keep the existing field names. The remaining work is wiring notifications, webhooks, and optionally a custom sender domain, all in the form settings."
@@ -22,7 +21,7 @@ faq:
 
 Migrating a form backend sounds scary and usually isn't. A form endpoint is one URL your HTML posts to — change the URL, keep the field names, and you're 90% done. The other 10% is notifications, webhooks, spam handling, and making sure nothing silently breaks. This guide walks the whole thing, end to end.
 
-If you're still deciding whether to switch, the broader [Formspree alternatives comparison](/blog/formspree-alternatives) covers the landscape. This piece assumes you've decided and want the mechanics.
+If you're still deciding whether to switch, the broader [Formspree alternatives comparison](/resources/migration-hub/) covers the landscape. This piece assumes you've decided and want the mechanics.
 
 ## Why teams move off Formspree
 

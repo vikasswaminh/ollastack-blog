@@ -6,7 +6,6 @@ updated: 2026-06-19
 tags: ["migration", "netlify", "guide"]
 author: "Ollastack"
 readingTime: 8
-draft: false
 faq:
   - q: "How do I move off Netlify Forms?"
     a: "Drop the data-netlify attributes, point the form's action at the Ollastack endpoint, and keep your field names — one diff. Notifications and webhooks move to settings."

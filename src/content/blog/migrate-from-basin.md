@@ -6,7 +6,6 @@ updated: 2026-06-19
 tags: ["migration", "basin", "guide", "comparison"]
 author: "Ollastack"
 readingTime: 7
-draft: false
 faq:
   - q: "How do I migrate from Basin?"
     a: "Swap your form's action URL to the Ollastack endpoint and keep the field names — a one-line change for most forms. Then wire notifications and webhooks in settings."

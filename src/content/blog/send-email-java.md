@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Send email in Java via HTTP API (no SMTP)"
 description: "Send email from Java with one HTTP call — no JavaMail, no SMTP. The send code with HttpClient, how to receive the reply, and error handling."
 date: 2026-06-21
@@ -6,7 +7,6 @@ updated: 2026-06-21
 tags: ["email-api", "java", "tutorial"]
 author: "Ollastack"
 readingTime: 6
-draft: false
 faq:
   - q: "How do I send email in Java without SMTP or JavaMail?"
     a: "POST to the send endpoint with the built-in java.net.http.HttpClient (Java 11+): a JSON body and a Bearer token. No JavaMail, no SMTP session — one HTTPS request that returns a message id."

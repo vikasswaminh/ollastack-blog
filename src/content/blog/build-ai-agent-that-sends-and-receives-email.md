@@ -6,7 +6,6 @@ updated: 2026-06-21
 tags: ["ai-agents", "email", "mcp", "tutorial"]
 author: "Ollastack"
 readingTime: 9
-draft: false
 faq:
   - q: "How do I give an AI agent email?"
     a: "Create a mailbox via the API or the MCP server, then the agent can send, long-poll for replies with wait, read extracted codes/links, and reply in-thread — four endpoints, or native MCP tools in Claude Desktop and Cursor."

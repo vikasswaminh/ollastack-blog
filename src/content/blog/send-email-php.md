@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Send email in PHP via HTTP API (no SMTP)"
 description: "Send email from PHP with one HTTP call — no PHPMailer, no SMTP config. The send code with cURL, how to receive the reply, and error handling. Free to start."
 date: 2026-06-21
@@ -6,7 +7,6 @@ updated: 2026-06-21
 tags: ["email-api", "php", "tutorial"]
 author: "Ollastack"
 readingTime: 6
-draft: false
 faq:
   - q: "How do I send email in PHP without SMTP or PHPMailer?"
     a: "POST to the send endpoint with cURL: a JSON body (to, subject, text) and a Bearer token. No PHPMailer, no SMTP host or credentials — one HTTPS request that returns a message id."

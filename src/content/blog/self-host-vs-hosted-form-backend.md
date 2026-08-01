@@ -6,7 +6,6 @@ updated: 2026-06-19
 tags: ["self-host", "architecture", "decision", "guide"]
 author: "Ollastack"
 readingTime: 7
-draft: false
 faq:
   - q: "Should I self-host a form backend?"
     a: "Default to hosted unless a hard requirement (data residency, compliance, air-gap, or a real cost crossover) forces self-hosting. The operational burden is usually worth more spent on your product."

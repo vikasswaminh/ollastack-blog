@@ -8,15 +8,6 @@ export interface PostMeta {
 
 export const posts: PostMeta[] = [
   {
-    slug: "formspree-alternatives",
-    title:
-      "Formspree alternatives in 2026: an honest comparison from someone building one",
-    description:
-      "If you're shopping for a Formspree alternative, here's the landscape — Basin, Formcarry, Forminit, Web3Forms, Netlify Forms, Formspark, Ollastack — with the tradeoffs each one carries. Including cases where Formspree is still the right call.",
-    date: "2026-05-16",
-    readingTime: "13 min read",
-  },
-  {
     slug: "netlify-forms-alternatives",
     title: "Netlify Forms alternatives in 2026: a migration guide",
     description:

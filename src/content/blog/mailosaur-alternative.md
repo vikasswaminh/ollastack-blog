@@ -6,7 +6,6 @@ updated: 2026-07-20
 tags: ["testing", "ci", "email", "comparison"]
 author: "Ollastack"
 readingTime: 9
-draft: false
 faq:
   - q: "What's a good Mailosaur alternative for CI email testing?"
     a: "Ollastack provides disposable test inboxes with the same core flow — create an inbox, long-poll /wait for the message, assert on the auto-extracted code or link — and it's also a form backend and can host persistent agent identities. For pure email testing, Mailosaur, MailSlurp and Mailsac are also strong; evaluate on fit."

@@ -1,11 +1,11 @@
 ---
+draft: true
 title: "Debugging email deliverability — bounces, reputation and webhooks (4,000+ words)"
 description: "Tools and workflows to diagnose bounces, complaints, and reputation issues for inbound and outbound email with Ollastack."
 date: 2026-07-20
 tags: [deliverability, debugging, bounces, email-ops, longform]
 author: "Email Ops"
 readingTime: 22
-draft: false
 canonical: "/blog/debug-email-deliverability"
 ogImage: "/assets/og/debug-deliverability.png"
 faq:

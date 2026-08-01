@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Free temporary email API (disposable inboxes)"
 description: "A free temporary email API for disposable inboxes you create and read over HTTP — test signups, read OTPs, and give agents throwaway addresses."
 date: 2026-06-21
@@ -6,7 +7,6 @@ updated: 2026-06-21
 tags: ["email-api", "temporary", "disposable", "tutorial"]
 author: "Ollastack"
 readingTime: 6
-draft: false
 faq:
   - q: "What is a temporary email API?"
     a: "A temporary email API creates disposable inboxes on demand and lets you read their incoming mail over HTTP. Unlike a throwaway-email website, it's programmatic — your code or CI creates the inbox, reads the message, and moves on."

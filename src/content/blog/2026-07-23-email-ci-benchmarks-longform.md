@@ -1,11 +1,11 @@
 ---
+draft: true
 title: "Why email testing in CI matters — benchmarks and case studies (4,000+ words)"
 description: "Real benchmarks and case studies showing how automated email tests prevent regressions in deliverability and user experience."
 date: 2026-07-23
 tags: [testing, ci, benchmarks, case-study, email, longform]
 author: "QA Lead"
 readingTime: 20
-draft: false
 canonical: "/blog/email-testing-in-ci-case-studies"
 ogImage: "/assets/og/ci-benchmarks.png"
 faq:

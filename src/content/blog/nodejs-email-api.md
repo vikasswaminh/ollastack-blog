@@ -6,7 +6,6 @@ updated: 2026-06-21
 tags: ["email-api", "nodejs", "javascript", "tutorial"]
 author: "Ollastack"
 readingTime: 6
-draft: false
 faq:
   - q: "How do I send email in Node.js without SMTP?"
     a: "Use fetch to POST to the send endpoint with a Bearer token and a JSON body (to, subject, text/html). No Nodemailer, no SMTP host or credentials — one HTTPS call that returns a message id."
@@ -83,6 +82,6 @@ For production, give the mailbox a `webhook_url` instead and let inbound mail PO
 
 Check `res.ok` and read the structured error body on failure rather than assuming the send went through — the API returns a `code` and `message` you can log and act on, unlike a thrown SMTP socket error.
 
-See the [email API overview](/email-api), [free API to send email](/blog/free-api-to-send-email), and the [Python version](/blog/python-email-api).
+See the [email API overview](/email-api), [free API to send email](/email-api/), and the [Python version](/blog/python-email-api).
 
 [Get a free token](https://login.ollastack.com/register) — send and receive from Node, no card.

@@ -6,7 +6,6 @@ updated: 2026-06-21
 tags: ["testing", "playwright", "cypress", "email", "tutorial"]
 author: "Ollastack"
 readingTime: 7
-draft: false
 faq:
   - q: "How do I assert on an email in Playwright?"
     a: "Create a disposable inbox via the API, use its address in your signup flow, then call the wait endpoint to long-poll for the message and assert on codes[0] or links[0] — no flaky sleeps."

@@ -1,11 +1,11 @@
 ---
+draft: true
 title: "Custom sender domain onboarding — DNS, verification and common errors (4,000+ words)"
 description: "A step-by-step guide to add and verify custom sender domains with Ollastack, including common DNS pitfalls and Resend-specific verification steps."
 date: 2026-07-29
 tags: [dns, sender-domain, verification, onboarding, longform]
 author: "Email Ops"
 readingTime: 22
-draft: false
 canonical: "/blog/custom-sender-domain-onboarding"
 ogImage: "/assets/og/custom-sender-domain.png"
 faq:

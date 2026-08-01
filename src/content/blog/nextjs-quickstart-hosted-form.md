@@ -6,7 +6,6 @@ updated: 2026-06-19
 tags: ["nextjs", "react", "quickstart", "guide"]
 author: "Ollastack"
 readingTime: 7
-draft: false
 faq:
   - q: "How do I add a form to Next.js 14?"
     a: "Use a client component with a Server Action that POSTs to a hosted form endpoint. You get email, spam filtering and webhooks with no API route of your own."

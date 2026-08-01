@@ -1,5 +1,6 @@
 ---
 import Base from "./Base.astro";
+import { getCollection } from "astro:content";
 import { posts, fmtDate, type PostMeta } from "../data/posts";
 
 interface Props {
@@ -32,7 +33,28 @@ const faqLd =
       }
     : null;
 
-const related: PostMeta[] = posts.filter((p) => p.slug !== slug).slice(0, 3);
+// Related posts drawn from the FULL live corpus (legacy .astro + every
+// non-draft markdown post), ranked by shared slug keywords so each post links
+// to genuine topical siblings — not the same 7 legacy posts every time. This
+// is the site's main internal-linking distributor, so it must reach everything.
+const collectionPosts: PostMeta[] = (
+  await getCollection("blog", ({ data }) => data.draft !== true)
+).map((p) => ({
+  slug: p.slug,
+  title: p.data.title,
+  description: p.data.description,
+  date: p.data.date.toISOString().slice(0, 10),
+  readingTime: `${p.data.readingTime} min read`,
+}));
+const STOP = new Set(["the","a","an","to","for","and","in","of","with","your","from","how","2026","without","vs","form","forms","email","api"]);
+const toks = (s: string) => new Set(s.split("-").filter((t) => t.length > 2 && !STOP.has(t)));
+const cur = toks(slug);
+const related: PostMeta[] = [...posts, ...collectionPosts]
+  .filter((p) => p.slug !== slug)
+  .map((p) => ({ p, score: [...toks(p.slug)].filter((t) => cur.has(t)).length }))
+  .sort((a, b) => b.score - a.score || b.p.date.localeCompare(a.p.date))
+  .slice(0, 4)
+  .map((x) => x.p);
 
 // Article structured data — gives every post (legacy .astro + markdown
 // collection) rich-result eligibility and clean author/publisher/date signals.
@@ -97,6 +119,22 @@ const articleLd = {
           <a href="mailto:hello@ollastack.com">hello@ollastack.com</a>.
         </p>
       </section>
+
+      {related.length > 0 && (
+        <nav class="related-foot" aria-label="Related posts">
+          <div class="related-eyebrow mono">Related reading</div>
+          <ul>
+            {related.map((p) => (
+              <li>
+                <a href={`/blog/${p.slug}/`}>
+                  <span class="rel-title">{p.title}</span>
+                  <span class="rel-meta mono">{p.readingTime}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
     </article>
 
     <aside class="right-rail">
@@ -113,20 +151,6 @@ const articleLd = {
           Start free →
         </a>
         <p class="cta-fine mono">No credit card · 100 submissions/mo</p>
-      </div>
-
-      <div class="related">
-        <div class="related-eyebrow mono">More posts</div>
-        <ul>
-          {related.map((p) => (
-            <li>
-              <a href={`/blog/${p.slug}`}>
-                <span class="rel-title">{p.title}</span>
-                <span class="rel-meta mono">{p.readingTime}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
       </div>
     </aside>
   </div>
@@ -446,6 +470,38 @@ const articleLd = {
     display: block;
     font-size: 11px;
     color: var(--muted-2);
+  }
+
+  /* Always-visible related section at the foot of the article (main column),
+     so internal links reach every post on all breakpoints — not hidden in the
+     desktop-only right rail. */
+  .related-foot {
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+  }
+  .related-foot ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 28px;
+  }
+  .related-foot li a {
+    display: block;
+    color: var(--ink);
+    transition: color 0.12s ease;
+    border-bottom: none;
+  }
+  .related-foot li a:hover { color: var(--accent); }
+  .related-foot .rel-title {
+    font-size: 14px;
+    line-height: 1.4;
+    margin-bottom: 3px;
+  }
+  @media (max-width: 600px) {
+    .related-foot ul { grid-template-columns: 1fr; }
   }
 
   /* ---------- Responsive ---------- */

@@ -1,11 +1,11 @@
 ---
+draft: true
 title: "Autoscaling form ingestion and DDoS resilience — architecture notes (4,000+ words)"
 description: "Architectural patterns to survive traffic bursts and DDoS while preserving important per-IP rate-limits and submission integrity."
 date: 2026-08-03
 tags: [architecture, scaling, ddos, rate-limits, sre, longform]
 author: "SRE"
 readingTime: 22
-draft: false
 canonical: "/blog/autoscale-form-ingestion-ddos"
 ogImage: "/assets/og/autoscale-ddos.png"
 faq:

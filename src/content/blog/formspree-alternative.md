@@ -6,7 +6,6 @@ updated: 2026-07-20
 tags: ["comparison", "formspree", "product"]
 author: "Ollastack"
 readingTime: 9
-draft: false
 faq:
   - q: "Is Ollastack a drop-in Formspree replacement?"
     a: "For the common case, yes — you point your form at a new endpoint URL and keep your existing HTML; the submission shape is compatible. You only touch field names if a webhook or serverless handler depends on them. See the step-by-step migration guide."
@@ -20,7 +19,7 @@ faq:
 
 There are a lot of form backends, and most of them do the same core thing well: take a POST, store it, email you. If that's all you need, almost any of them — including Formspree — is fine. This post is about the cases where it *isn't* all you need, and why teams in those cases end up on Ollastack.
 
-If you want the full field — Basin, Formcarry, Web3Forms, Netlify Forms, Formspark and the rest — read the [Formspree alternatives comparison](/blog/formspree-alternatives). Here we go narrow: Ollastack specifically, and the four things that make it different.
+If you want the full field — Basin, Formcarry, Web3Forms, Netlify Forms, Formspark and the rest — read the [Formspree alternatives comparison](/resources/migration-hub/). Here we go narrow: Ollastack specifically, and the four things that make it different.
 
 ## 1. It treats AI agents as first-class clients, not spam
 

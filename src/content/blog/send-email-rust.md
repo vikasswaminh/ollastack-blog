@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Send email in Rust via HTTP API (send and receive)"
 description: "Send email from Rust with one HTTP call — no SMTP crate. The send code with reqwest, how to receive the reply, and error handling."
 date: 2026-06-21
@@ -6,7 +7,6 @@ updated: 2026-06-21
 tags: ["email-api", "rust", "tutorial"]
 author: "Ollastack"
 readingTime: 6
-draft: false
 faq:
   - q: "How do I send email in Rust without SMTP?"
     a: "POST to the send endpoint with reqwest: a JSON body and a Bearer token. No lettre/SMTP crate, no mail server — one async HTTPS request that returns a message id."

@@ -1,11 +1,11 @@
 ---
+draft: true
 title: "Tenant SMTP for agencies — configuration and use-cases (4,000+ words)"
 description: "How agencies can use per-tenant SMTP to preserve sender reputation and reporting per client with Ollastack."
 date: 2026-07-28
 tags: [smtp, agencies, tenant, deliverability, guide, longform]
 author: "Partnerships"
 readingTime: 20
-draft: false
 canonical: "/blog/tenant-smtp-for-agencies"
 ogImage: "/assets/og/tenant-smtp-agencies.png"
 faq:

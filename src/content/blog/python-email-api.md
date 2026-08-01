@@ -6,7 +6,6 @@ updated: 2026-06-21
 tags: ["email-api", "python", "tutorial"]
 author: "Ollastack"
 readingTime: 6
-draft: false
 faq:
   - q: "What's the simplest Python email API?"
     a: "An HTTP API you call with httpx or requests: POST to send, GET the wait endpoint to receive. One Bearer token, no smtplib, no SMTP server — and it can both send and receive."
@@ -79,6 +78,6 @@ The send endpoint returns a structured error body (a `code` and `message`) on fa
 
 ## Where it fits
 
-This is the Python view of the [email API](/email-api). See also [send email in Python (free)](/blog/python-send-email-api-free) and the [Node.js version](/blog/nodejs-email-api).
+This is the Python view of the [email API](/email-api). See also [send email in Python (free)](/email-api/) and the [Node.js version](/blog/nodejs-email-api).
 
 [Get a free token](https://login.ollastack.com/register) — send and receive from Python, no card.

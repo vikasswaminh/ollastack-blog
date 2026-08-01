@@ -6,7 +6,6 @@ updated: 2026-06-22
 tags: ["testing", "docker", "ci", "email"]
 author: "Ollastack"
 readingTime: 7
-draft: false
 faq:
   - q: "How do I test email from inside a Docker container?"
     a: "Use a disposable inbox over HTTP rather than a local SMTP catcher: create an inbox via the API, point your app at its address, then long-poll the wait endpoint and assert on the extracted code or link. It needs only an OLLASTACK_API_TOKEN env var — no SMTP service in the compose file."

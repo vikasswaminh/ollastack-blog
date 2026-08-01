@@ -1,11 +1,11 @@
 ---
+draft: true
 title: "Security and privacy — how Ollastack redacts PII and enforces retention policies (4,000+ words)"
 description: "How Ollastack scrubs personally identifiable information on submission deletion, enforces data retention policies, and provides compliance controls."
 date: 2026-08-06
 tags: [security, privacy, pii, retention, compliance, longform]
 author: "Security/Compliance"
 readingTime: 22
-draft: false
 canonical: "/blog/security-privacy-pii-redaction"
 ogImage: "/assets/og/security-privacy.png"
 faq:

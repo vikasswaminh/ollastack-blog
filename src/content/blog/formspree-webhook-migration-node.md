@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Migrate Formspree webhooks to Ollastack (Node.js)"
 description: "Move a Formspree webhook consumer to Ollastack in Node — verify the new HMAC signature, map the payload, and gain retries and replay you couldn't have before."
 date: 2026-08-18
@@ -6,7 +7,6 @@ updated: 2026-06-22
 tags: ["migration", "formspree", "webhooks", "nodejs"]
 author: "Ollastack"
 readingTime: 7
-draft: false
 faq:
   - q: "How do I migrate a Formspree webhook to Ollastack?"
     a: "Point the webhook at your existing consumer, switch signature verification to the X-Ollastack-Signature HMAC-SHA256 header, and map the payload (the submission fields live under a data object). Retries and replay are handled for you."

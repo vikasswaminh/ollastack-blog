@@ -1,11 +1,11 @@
 ---
+draft: true
 title: "Case study — reducing false-positive quarantine rates by tuning ML thresholds (4,000+ words)"
 description: "Real-world case study showing how tuning ML thresholds and corroborating signals lowered false-positive quarantine rates for form submissions."
 date: 2026-08-01
 tags: [case-study, ml, quarantine, tuning, spam, longform]
 author: "ML Eng"
 readingTime: 22
-draft: false
 canonical: "/blog/quarantine-tuning-case-study"
 ogImage: "/assets/og/quarantine-tuning.png"
 faq:

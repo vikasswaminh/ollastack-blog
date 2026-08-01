@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Send email in Ruby via HTTP API (send and receive)"
 description: "Send email from Ruby with one HTTP call — no ActionMailer, no SMTP. The send code with Net::HTTP, how to receive the reply, and error handling."
 date: 2026-06-21
@@ -6,7 +7,6 @@ updated: 2026-06-21
 tags: ["email-api", "ruby", "rails", "tutorial"]
 author: "Ollastack"
 readingTime: 6
-draft: false
 faq:
   - q: "How do I send email in Ruby without SMTP?"
     a: "POST to the send endpoint with Net::HTTP: a JSON body (to, subject, text) and a Bearer token. No SMTP host or ActionMailer config — one HTTPS request that returns a message id."

@@ -6,7 +6,6 @@ updated: 2026-06-22
 tags: ["forms", "conversion", "design", "guide"]
 author: "Ollastack"
 readingTime: 7
-draft: false
 faq:
   - q: "How do I increase form conversion rates?"
     a: "Cut fields to the minimum, use a single column, validate inline, write clear error and success states, and make the form fast on mobile. Each removed field and each avoided friction point raises completion."

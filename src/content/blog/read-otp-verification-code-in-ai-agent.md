@@ -6,7 +6,6 @@ updated: 2026-06-21
 tags: ["ai-agents", "email", "otp", "tutorial"]
 author: "Ollastack"
 readingTime: 7
-draft: false
 faq:
   - q: "How does an AI agent read an OTP from email?"
     a: "Give the agent a disposable inbox, use its address in the signup, long-poll the wait endpoint for the email, and read the pre-extracted codes[0] — no HTML scraping."

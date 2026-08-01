@@ -1,11 +1,11 @@
 ---
+draft: true
 title: "Integrating Ollastack with Resend and platform SMTP (4,000+ words)"
 description: "Integrate Resend for platform sending or configure tenant SMTP fallbacks with Ollastack — configuration examples and error handling."
 date: 2026-07-30
 tags: [resend, smtp, integration, platform, configuration, longform]
 author: "Integrations Eng"
 readingTime: 20
-draft: false
 canonical: "/blog/resend-integration-ollastack"
 ogImage: "/assets/og/resend-integration.png"
 faq:

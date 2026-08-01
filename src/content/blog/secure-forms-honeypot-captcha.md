@@ -6,7 +6,6 @@ updated: 2026-06-19
 tags: ["security", "spam", "forms", "guide"]
 author: "Ollastack"
 readingTime: 8
-draft: false
 faq:
   - q: "How do I stop form spam without CAPTCHA on everything?"
     a: "Layer cheap invisible defenses first — a honeypot field, an origin allowlist, and per-IP-per-form rate limits — and turn CAPTCHA on only for the forms that actually attract abuse."

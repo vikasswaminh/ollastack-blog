@@ -1,11 +1,11 @@
 ---
+draft: true
 title: "Build a hosted contact form with serverless functions and Ollastack (4,000+ words)"
 description: "Full example: hosted contact form with validation, file attachments, honeypot spam protection, and notification flows using Ollastack as the backend."
 date: 2026-07-19
 tags: [contact-form, serverless, tutorial, forms, longform]
 author: "Frontend Eng"
 readingTime: 20
-draft: false
 canonical: "/blog/hosted-contact-form-example"
 ogImage: "/assets/og/hosted-contact-form.png"
 faq:

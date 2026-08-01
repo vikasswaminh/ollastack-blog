@@ -6,7 +6,6 @@ updated: 2026-06-19
 tags: ["testing", "ci", "otp", "email", "guide"]
 author: "Ollastack"
 readingTime: 9
-draft: false
 faq:
   - q: "How do I test OTP emails in CI?"
     a: "Create a disposable test inbox, drive your signup with its address, long-poll the wait endpoint for the email, and assert on the extracted code — reliable, no sleeps."

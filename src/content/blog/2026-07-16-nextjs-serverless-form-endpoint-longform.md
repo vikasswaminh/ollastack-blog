@@ -1,11 +1,11 @@
 ---
+draft: true
 title: "Serverless form endpoints with Next.js app router and Ollastack (4,000+ words)"
 description: "Build serverless form endpoints using Next.js app router and Ollastack's hosted backend with middleware validation and error handling."
 date: 2026-07-16
 tags: [nextjs, serverless, forms, api, tutorial, longform]
 author: "Frontend Eng"
 readingTime: 21
-draft: false
 canonical: "/blog/nextjs-serverless-form-endpoint"
 ogImage: "/assets/og/nextjs-serverless.png"
 faq:

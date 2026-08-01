@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Send email in C# / .NET via HTTP API (no SMTP)"
 description: "Send email from C# with one HTTP call — no SmtpClient, no MailKit. The send code with HttpClient, how to receive the reply, and error handling."
 date: 2026-06-21
@@ -6,7 +7,6 @@ updated: 2026-06-21
 tags: ["email-api", "csharp", "dotnet", "tutorial"]
 author: "Ollastack"
 readingTime: 6
-draft: false
 faq:
   - q: "How do I send email in C# without SMTP?"
     a: "POST to the send endpoint with HttpClient and PostAsJsonAsync: a JSON body and a Bearer token. No SmtpClient, no MailKit, no SMTP host — one HTTPS request that returns a message id."

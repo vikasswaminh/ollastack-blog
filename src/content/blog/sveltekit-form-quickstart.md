@@ -6,7 +6,6 @@ updated: 2026-06-19
 tags: ["sveltekit", "svelte", "quickstart", "guide"]
 author: "Ollastack"
 readingTime: 7
-draft: false
 faq:
   - q: "How do I handle forms in SvelteKit?"
     a: "Use a form action in +page.server.ts that POSTs to a hosted form endpoint, and use:enhance for progressive enhancement — no email or spam backend to write."

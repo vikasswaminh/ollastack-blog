@@ -6,7 +6,6 @@ updated: 2026-06-19
 tags: ["react", "react-hook-form", "quickstart", "guide"]
 author: "Ollastack"
 readingTime: 7
-draft: false
 faq:
   - q: "Does React Hook Form receive submissions?"
     a: "No — it handles client-side validation and state. Pair it with a hosted form endpoint to actually receive, email, and spam-filter submissions."

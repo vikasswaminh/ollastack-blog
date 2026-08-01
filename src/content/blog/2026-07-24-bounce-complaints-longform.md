@@ -1,11 +1,11 @@
 ---
+draft: true
 title: "Handling bounces and complaints — best practices for webhook consumers (4,000+ words)"
 description: "Practical guide to receive, interpret and react to bounce and complaint webhooks in your application using Ollastack."
 date: 2026-07-24
 tags: [bounces, complaints, webhooks, best-practices, email-ops, longform]
 author: "Backend Eng"
 readingTime: 20
-draft: false
 canonical: "/blog/handling-bounces-complaints"
 ogImage: "/assets/og/bounce-complaints.png"
 faq:

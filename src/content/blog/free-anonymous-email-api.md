@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Free email API with disposable addresses"
 description: "A free email API with disposable addresses that keep a personal inbox private from the recipient — the honest take on 'anonymous', and how to use it."
 date: 2026-06-21
@@ -6,7 +7,6 @@ updated: 2026-06-21
 tags: ["email-api", "free", "disposable", "developers"]
 author: "Ollastack"
 readingTime: 6
-draft: false
 faq:
   - q: "Is there a free anonymous email API for developers?"
     a: "There's a free email API with disposable addresses you create and read over HTTP without exposing a personal inbox. That gives you separation and throwaway addresses — but be clear: traffic is authenticated to your account and logged, so it's 'disposable and private from the recipient,' not untraceable."

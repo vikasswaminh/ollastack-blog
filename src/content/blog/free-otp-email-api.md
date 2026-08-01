@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Free OTP email API: send and verify codes"
 description: "A free OTP email API to send one-time codes and verify them by reading the email back — with the code extracted for you, so you never scrape HTML."
 date: 2026-06-21
@@ -6,7 +7,6 @@ updated: 2026-06-21
 tags: ["email-api", "otp", "free", "tutorial"]
 author: "Ollastack"
 readingTime: 6
-draft: false
 faq:
   - q: "Is there a free OTP email API?"
     a: "Yes. Ollastack's free tier lets you send one-time-code emails and — because every mailbox also receives — read the code back to verify delivery, with no credit card."

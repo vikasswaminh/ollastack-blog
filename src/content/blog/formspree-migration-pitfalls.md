@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Formspree migration pitfalls to avoid"
 description: "Migrating off Formspree is a one-line change, but a few things bite: CC/BCC handling, recipient verification, spam-test wording, and skipping the cutover check."
 date: 2026-08-20
@@ -6,7 +7,6 @@ updated: 2026-06-22
 tags: ["migration", "formspree", "guide"]
 author: "Ollastack"
 readingTime: 7
-draft: false
 faq:
   - q: "What's the most common Formspree migration mistake?"
     a: "Skipping the cutover verification — deleting the Formspree form before confirming the new endpoint delivers the notification and fires the webhook. Always run a real test (and ideally both endpoints in parallel) first."

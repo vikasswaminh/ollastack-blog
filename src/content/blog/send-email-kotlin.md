@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Send email in Kotlin via HTTP API (no SMTP)"
 description: "Send email from Kotlin with one HTTP call — no JavaMail, no SMTP. The send code with java.net.http, how to receive the reply, and error handling. Free to start."
 date: 2026-06-21
@@ -6,7 +7,6 @@ updated: 2026-06-21
 tags: ["email-api", "kotlin", "android", "tutorial"]
 author: "Ollastack"
 readingTime: 6
-draft: false
 faq:
   - q: "How do I send email in Kotlin without SMTP?"
     a: "POST to the send endpoint using the JDK's java.net.http.HttpClient (or Ktor): a JSON body and a Bearer token. No SMTP host or JavaMail — one HTTPS request that returns a message id."

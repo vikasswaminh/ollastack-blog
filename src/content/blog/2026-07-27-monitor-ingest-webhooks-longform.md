@@ -1,11 +1,11 @@
 ---
+draft: true
 title: "Monitoring mail ingest and webhook health — alerts and runbooks (4,000+ words)"
 description: "Set up effective monitoring and alerts for mailbox ingest, webhook delivery success and failure modes with Ollastack."
 date: 2026-07-27
 tags: [monitoring, alerts, webhooks, ingest, runbooks, longform]
 author: "SRE"
 readingTime: 20
-draft: false
 canonical: "/blog/monitor-mail-ingest-webhooks"
 ogImage: "/assets/og/monitor-ingest.png"
 faq:

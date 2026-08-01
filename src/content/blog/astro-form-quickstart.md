@@ -6,7 +6,6 @@ updated: 2026-06-19
 tags: ["astro", "quickstart", "guide"]
 author: "Ollastack"
 readingTime: 6
-draft: false
 faq:
   - q: "Do I need a server for an Astro contact form?"
     a: "No. Astro is static-first; point an HTML form at one hosted endpoint and submissions are handled — email, spam filtering and all — with no server or API route."

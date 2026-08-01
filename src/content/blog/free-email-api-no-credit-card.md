@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Free email API — no credit card required"
 description: "A free email API you can start with no credit card — send and receive over HTTP, read OTP codes, and no surprise charge when you cross the free limit."
 date: 2026-06-21
@@ -6,7 +7,6 @@ updated: 2026-06-21
 tags: ["email-api", "free", "developers"]
 author: "Ollastack"
 readingTime: 6
-draft: false
 faq:
   - q: "Is there a free email API with no credit card?"
     a: "Yes. Ollastack lets you sign up, get an API token, and send and receive email over HTTP without a credit card. The free tier is metered with a modest monthly send quota; receiving and test inboxes are included."

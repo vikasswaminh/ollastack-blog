@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Email inbox API: a real inbox over HTTP"
 description: "Give your app or agent a real inbox over HTTP — create it, send, receive, and read messages as JSON. How it differs from a send-only email API."
 date: 2026-06-21
@@ -6,7 +7,6 @@ updated: 2026-06-21
 tags: ["email-api", "inbox", "tutorial"]
 author: "Ollastack"
 readingTime: 7
-draft: false
 faq:
   - q: "What is an email inbox API?"
     a: "An email inbox API gives your code a real, addressable inbox it operates over HTTP — create the inbox, send from it, receive into it, and read messages (with extracted codes and links) as JSON. Unlike a send-only email API, it holds two-way conversations."

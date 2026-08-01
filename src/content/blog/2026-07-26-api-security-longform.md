@@ -1,11 +1,11 @@
 ---
+draft: true
 title: "Secrets and security — protecting API keys and mailbox credentials (4,000+ words)"
 description: "Best practices for storing and rotating API keys, protecting mailboxes, preventing secrets from leaking in logs, and role-based access control."
 date: 2026-07-26
 tags: [security, api-keys, secrets, best-practices, longform]
 author: "Security Eng"
 readingTime: 20
-draft: false
 canonical: "/blog/email-api-security-guide"
 ogImage: "/assets/og/api-security.png"
 faq:

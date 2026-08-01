@@ -1,11 +1,11 @@
 ---
+draft: true
 title: "Self-serve billing and subscriptions — how Ollastack uses DodoPayments (4,000+ words)"
 description: "Overview of how self-serve billing works with DodoPayments and the upgrade flow from marketing to the Ollastack dashboard."
 date: 2026-07-31
 tags: [billing, subscriptions, dodopayments, self-serve, longform]
 author: "Ops"
 readingTime: 20
-draft: false
 canonical: "/blog/dodopayments-billing-integration"
 ogImage: "/assets/og/dodopayments.png"
 faq:

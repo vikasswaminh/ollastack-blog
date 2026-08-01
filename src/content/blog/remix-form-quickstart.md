@@ -6,7 +6,6 @@ updated: 2026-06-19
 tags: ["remix", "react-router", "quickstart", "guide"]
 author: "Ollastack"
 readingTime: 6
-draft: false
 faq:
   - q: "How do I handle a form in Remix?"
     a: "Use Remix's Form component and a route action that POSTs to a hosted form endpoint. You get a complete contact form with progressive enhancement and no API to build."

@@ -1,11 +1,11 @@
 ---
+draft: true
 title: "Safe email scaling — quotas, backoff and retry policies explained (4,000+ words)"
 description: "Designing send quotas, exponential backoff and robust retry strategies for high-volume form traffic with Ollastack."
 date: 2026-07-22
 tags: [scaling, quotas, retries, email, best-practices, longform]
 author: "SRE"
 readingTime: 20
-draft: false
 canonical: "/blog/email-scaling-quotas-retries"
 ogImage: "/assets/og/email-scaling.png"
 faq:

@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "A free API to send email in one call"
 description: "Send email with one HTTP POST — no SMTP, no mail server. A free API to send email, the deliverability basics, and how to receive the reply too."
 date: 2026-06-21
@@ -6,7 +7,6 @@ updated: 2026-06-21
 tags: ["email-api", "send", "free", "tutorial"]
 author: "Ollastack"
 readingTime: 6
-draft: false
 faq:
   - q: "What's the simplest free API to send email?"
     a: "A single authenticated HTTP POST: create a mailbox once, then POST to /api/mailboxes/{id}/send with to, subject, and text or html. No SMTP server, no credentials beyond an API token, and the free tier needs no credit card."

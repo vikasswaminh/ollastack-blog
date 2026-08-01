@@ -6,7 +6,6 @@ updated: 2026-06-21
 tags: ["email-api", "inbound", "tutorial"]
 author: "Ollastack"
 readingTime: 7
-draft: false
 faq:
   - q: "What is an inbound email API?"
     a: "An inbound email API gives you a real receiving address and hands incoming messages to your code as structured JSON over HTTP — the parsed from, subject, text and HTML bodies, attachments, and (with Ollastack) pre-extracted one-time codes and links. It replaces running your own mail server or scraping an IMAP mailbox."
@@ -72,6 +71,6 @@ Prefer push? Give the mailbox a `webhook_url` and every inbound message POSTs to
 
 ## Where it fits
 
-Inbound is the half that send-only APIs skip — and it's the foundation for two-way conversations, agent inboxes, and CI email testing. It lives on the same API as sending: see the [email API overview](/email-api) and the sibling [email inbox API](/blog/email-inbox-api) and [free email API service](/blog/free-email-api-service) guides.
+Inbound is the half that send-only APIs skip — and it's the foundation for two-way conversations, agent inboxes, and CI email testing. It lives on the same API as sending: see the [email API overview](/email-api) and the sibling [email inbox API](/email-api/) and [free email API service](/email-api/) guides.
 
 [Get an inbound address](https://login.ollastack.com/register) — receive mail as JSON, free to start, no credit card.

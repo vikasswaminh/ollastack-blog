@@ -6,7 +6,6 @@ updated: 2026-06-19
 tags: ["smtp", "deliverability", "agencies", "guide"]
 author: "Ollastack"
 readingTime: 7
-draft: false
 faq:
   - q: "What is per-tenant SMTP?"
     a: "It lets each tenant send notification email through their own SMTP server, so mail sends from their domain and reputation instead of yours — ideal for agencies and white-label products."

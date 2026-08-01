@@ -6,7 +6,6 @@ updated: 2026-06-21
 tags: ["email-api", "comparison", "resend", "free"]
 author: "Ollastack"
 readingTime: 6
-draft: false
 faq:
   - q: "What's a Resend free tier alternative that receives email?"
     a: "Ollastack offers a free tier that sends AND receives — each mailbox has a real receiving address, so you can read replies, OTP codes, and inbound mail over HTTP. Resend is a sending API and doesn't provide inboxes."

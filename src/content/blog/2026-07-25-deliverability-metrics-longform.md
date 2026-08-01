@@ -1,11 +1,11 @@
 ---
+draft: true
 title: "Measuring email deliverability — open rate, bounce rate and reputation metrics (4,000+ words)"
 description: "Which metrics matter for deliverability and how to instrument them for speedy diagnosis using Ollastack's analytics."
 date: 2026-07-25
 tags: [metrics, deliverability, analytics, monitoring, longform]
 author: "Analytics"
 readingTime: 20
-draft: false
 canonical: "/blog/measure-email-deliverability-metrics"
 ogImage: "/assets/og/deliverability-metrics.png"
 faq:

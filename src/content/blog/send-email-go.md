@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Send email in Go via HTTP API (send and receive)"
 description: "Send email from Go with one HTTP call — no SMTP, no net/smtp wiring. The send code with net/http, how to receive the reply, and error handling. Free to start."
 date: 2026-06-21
@@ -6,7 +7,6 @@ updated: 2026-06-21
 tags: ["email-api", "go", "golang", "tutorial"]
 author: "Ollastack"
 readingTime: 6
-draft: false
 faq:
   - q: "How do I send email in Go without SMTP?"
     a: "POST to the send endpoint with net/http: a JSON body (to, subject, text) plus a Bearer token. No net/smtp, no SMTP host or auth — one HTTPS request that returns a message id."

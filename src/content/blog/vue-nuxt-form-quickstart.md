@@ -6,7 +6,6 @@ updated: 2026-06-19
 tags: ["vue", "nuxt", "quickstart", "guide"]
 author: "Ollastack"
 readingTime: 7
-draft: false
 faq:
   - q: "How do I build a contact form in Vue or Nuxt?"
     a: "A reactive form whose submit handler POSTs to a hosted form endpoint gives you a complete contact form — success/error states, email and spam handling — with no API or mail server."

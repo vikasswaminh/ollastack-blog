@@ -6,7 +6,6 @@ updated: 2026-06-21
 tags: ["testing", "ci", "email", "email-testing-api", "guide"]
 author: "Ollastack"
 readingTime: 8
-draft: false
 faq:
   - q: "What is an email testing API?"
     a: "An API that gives your tests a real inbox they read over HTTP, so CI can prove an email actually arrived and contained the right code, link or copy — without running a mail server."

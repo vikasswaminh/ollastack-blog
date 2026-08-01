@@ -6,7 +6,6 @@ updated: 2026-06-19
 tags: ["spam", "ml", "deliverability", "architecture"]
 author: "Ollastack"
 readingTime: 8
-draft: false
 faq:
   - q: "What is ML spam quarantine?"
     a: "When only the ML classifier flags a submission, it's delivered and labeled as possible spam rather than deleted — so an uncertain-but-real lead is never silently lost."

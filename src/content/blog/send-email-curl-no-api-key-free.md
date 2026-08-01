@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Send email with curl, free (and read the reply)"
 description: "Send email with one curl command, free — no SMTP. Plus the honest truth about 'no API key' senders and how to receive the reply from the shell."
 date: 2026-06-21
@@ -6,7 +7,6 @@ updated: 2026-06-21
 tags: ["email-api", "curl", "send", "tutorial"]
 author: "Ollastack"
 readingTime: 6
-draft: false
 faq:
   - q: "How do I send email with curl for free?"
     a: "POST to the send endpoint with an Authorization header and a JSON body: curl -X POST https://login.ollastack.com/api/mailboxes/{id}/send -H 'Authorization: Bearer TOKEN' -H 'Content-Type: application/json' -d '{\"to\":\"...\",\"subject\":\"...\",\"text\":\"...\"}'. The free tier needs no credit card."

@@ -6,7 +6,6 @@ updated: 2026-06-19
 tags: ["file-uploads", "forms", "quickstart", "guide"]
 author: "Ollastack"
 readingTime: 6
-draft: false
 faq:
   - q: "How do I accept file uploads on a form?"
     a: "Use a multipart/form-data form with a file input pointed at the endpoint. The file arrives attached to the submission — no S3, signed URLs, or upload server needed."

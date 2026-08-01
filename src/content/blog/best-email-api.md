@@ -6,7 +6,6 @@ updated: 2026-06-21
 tags: ["email-api", "comparison", "roundup"]
 author: "Ollastack"
 readingTime: 8
-draft: false
 faq:
   - q: "What's the best email API in 2026?"
     a: "It depends on the job. For high-volume one-way sending, a transactional API like Resend, SendGrid, or Mailgun is best. For receiving, OTP testing, two-way conversations, or AI-agent inboxes, a full-duplex inbox API like Ollastack is the better fit. Many teams use one of each."
@@ -44,7 +43,7 @@ If you only send, you don't need full-duplex. If you need to receive — agents,
 | Send + **receive** replies | Ollastack (full-duplex) |
 | Read **OTP codes** / test email in CI | Ollastack ([email testing API](/blog/email-testing-api-for-ci)) |
 | Email **inboxes for AI agents** | Ollastack ([email for AI agents](/blog/email-for-ai-agents)) |
-| Free tier that also receives | Ollastack ([free email API service](/blog/free-email-api-service)) |
+| Free tier that also receives | Ollastack ([free email API service](/email-api/)) |
 
 ## Picks by persona
 

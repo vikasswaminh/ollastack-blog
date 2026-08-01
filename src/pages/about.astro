@@ -1,0 +1,85 @@
+---
+import Base from "../layouts/Base.astro";
+
+const SITE = "https://ollastack.com";
+const TITLE = "About Ollastack — a product of Ollasoftware Solutions";
+const DESC =
+  "Ollastack is the agent-first form + email backend built by Ollasoftware Solutions, a software company based in Montreal, Canada and Bangalore, India.";
+
+const aboutLd = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  name: TITLE,
+  url: `${SITE}/about/`,
+  mainEntity: {
+    "@type": "Organization",
+    name: "Ollastack",
+    url: `${SITE}/`,
+    description: DESC,
+    parentOrganization: {
+      "@type": "Organization",
+      name: "Ollasoftware Solutions",
+      url: "https://ollasoftware.com",
+      location: [
+        { "@type": "Place", address: { "@type": "PostalAddress", addressLocality: "Montreal", addressRegion: "QC", addressCountry: "CA" } },
+        { "@type": "Place", address: { "@type": "PostalAddress", addressLocality: "Bangalore", addressRegion: "KA", addressCountry: "IN" } },
+      ],
+    },
+    sameAs: ["https://ollasoftware.com"],
+  },
+};
+---
+
+<Base current="about" title={TITLE} description={DESC}>
+  <script type="application/ld+json" set:html={JSON.stringify(aboutLd)} is:inline />
+
+  <section class="about">
+    <div class="container">
+      <div class="eyebrow mono">/ about</div>
+      <h1 class="display">Built by Ollasoftware Solutions.</h1>
+      <p class="lede">
+        Ollastack is an agent-first backend for <strong>forms</strong>,
+        <strong>real agent mailboxes</strong>, and <strong>disposable email
+        testing inboxes</strong> — one API, one OpenAPI spec an agent reads
+        itself, one token system.
+      </p>
+
+      <div class="prose">
+        <p>
+          Ollastack is a product of <strong>Ollasoftware Solutions</strong>, a
+          software company with teams in <strong>Montreal, Canada</strong> and
+          <strong>Bangalore, India</strong>. We build developer tools for the
+          AI-agent era — infrastructure that treats an autonomous agent as a
+          first-class client, not a bot to block.
+        </p>
+        <p>
+          The product started as a headless form backend — drop-in endpoints
+          with spam filtering, file uploads, and signed webhooks — and grew into
+          a message layer: agents get their own email addresses they control
+          over HTTP, and CI pipelines get disposable inboxes to assert on OTP and
+          verification mail. Every capability is exposed through a single
+          OpenAPI spec, so an agent can discover and drive the whole API on its
+          own.
+        </p>
+        <p>
+          Want the details? Read the <a href="/docs/">docs</a>, browse the
+          <a href="/resources/">resource hubs</a> and the
+          <a href="/blog/">blog</a>, or see <a href="/pricing/">pricing</a>.
+          Questions: <a href="mailto:hello@ollastack.com">hello@ollastack.com</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .about { padding: 72px 0 96px; }
+  .about .container { max-width: 760px; }
+  .eyebrow { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 18px; }
+  .about h1 { font-size: 44px; margin: 0 0 16px; letter-spacing: -0.02em; line-height: 1.06; }
+  .lede { font-size: 19px; color: var(--muted); line-height: 1.6; margin: 0 0 32px; }
+  .prose p { font-size: 16px; line-height: 1.75; color: var(--ink); margin: 0 0 16px; }
+  .prose a { color: var(--accent); border-bottom: 1px solid var(--muted-3); }
+  .prose a:hover { border-color: var(--accent); }
+  @media (max-width: 600px) { .about h1 { font-size: 32px; } }
+</style>
