@@ -71,12 +71,18 @@ for (const e of [...staticEntries, ...collectionBlog]) {
 }
 const all = [...byUrl.values()].sort((a, b) => a.url.localeCompare(b.url));
 
+// Cloudflare Pages 308-redirects every non-slash URL to its trailing-slash form
+// (e.g. /docs/agents -> /docs/agents/), and that slash form is what each page
+// self-canonicalizes to. Advertise the SAME trailing-slash URL in <loc> so the
+// sitemap doesn't point Google at URLs that immediately redirect. Root stays "/".
+const withSlash = (u: string): string => (u === "/" ? "/" : `${u}/`);
+
 const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${all
   .map(
     (e) => `  <url>
-    <loc>${SITE}${e.url}</loc>
+    <loc>${SITE}${withSlash(e.url)}</loc>
     <lastmod>${e.lastmod}</lastmod>
     <changefreq>${e.changefreq}</changefreq>
     <priority>${e.priority}</priority>
