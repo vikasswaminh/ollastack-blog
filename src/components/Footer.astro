@@ -53,6 +53,22 @@ const groups: { title: string; items: FooterLink[] }[] = [
     ],
   },
 ];
+
+// Sister brands under the Ollasoftware Solutions group. Followed links (no
+// rel=nofollow) so equity passes between the group's sites. ollastack.com is
+// this site, so it's not listed here.
+const groupBrands: FooterLink[] = [
+  { label: "Ollasoftware", href: "https://ollasoftware.com" },
+  { label: "OllaBear", href: "https://ollabear.com" },
+  { label: "OllaDNS", href: "https://olladns.com" },
+  { label: "OllaGraph", href: "https://ollagraph.com" },
+  { label: "OllaLink", href: "https://ollalink.com" },
+  { label: "OllaNode", href: "https://ollanode.com" },
+  { label: "OllaSuper", href: "https://ollasuper.com" },
+  { label: "OllaSync", href: "https://ollasync.com" },
+  { label: "OllaVPN", href: "https://ollavpn.com" },
+  { label: "OllaWrite", href: "https://ollawrite.com" },
+];
 ---
 
 <footer>
@@ -72,8 +88,15 @@ const groups: { title: string; items: FooterLink[] }[] = [
       ))}
     </div>
     <hr class="hr" />
+    <div class="foot-brands">
+      <span class="foot-brands-label mono">Part of the Ollasoftware group</span>
+      <nav class="foot-brands-links" aria-label="Ollasoftware group brands">
+        {groupBrands.map((b) => <a href={b.href}>{b.label}</a>)}
+      </nav>
+    </div>
+    <hr class="hr hr-tight" />
     <div class="foot-bottom mono">
-      <span>© 2026 Ollastack</span>
+      <span>© 2026 Ollastack — an Ollasoftware Solutions company</span>
       <span class="foot-meta">
         <a href="mailto:hello@ollastack.com">hello@ollastack.com</a>
       </span>
@@ -123,6 +146,36 @@ const groups: { title: string; items: FooterLink[] }[] = [
   }
   li a:hover { color: var(--ink); }
   .hr { margin: 40px 0 18px; }
+  .hr-tight { margin: 18px 0 18px; }
+
+  /* Sister-brand strip — cross-links the Ollasoftware group for intra-group
+     link equity. Wraps to as many rows as needed; muted so it doesn't compete
+     with the primary footer nav. */
+  .foot-brands {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 8px 18px;
+  }
+  .foot-brands-label {
+    font-size: 11px;
+    color: var(--muted-2);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-right: 4px;
+  }
+  .foot-brands-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+  }
+  .foot-brands-links a {
+    font-size: 13px;
+    color: var(--muted);
+    transition: color 0.12s ease;
+  }
+  .foot-brands-links a:hover { color: var(--ink); }
+
   .foot-bottom {
     display: flex;
     justify-content: space-between;
