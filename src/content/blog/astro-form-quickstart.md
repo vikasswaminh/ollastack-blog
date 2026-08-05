@@ -86,4 +86,4 @@ Every form gets a hosted page at `login.ollastack.com/f/your-slug` — link to i
 - Add file uploads — the endpoint handles `multipart/form-data`.
 - Let an agent submit with a scoped token (it reads the API from `/api/openapi.json`).
 
-[Get your endpoint](https://login.ollastack.com/register) — 100 submissions/month free.
+[Get your endpoint](https://login.ollastack.com/register) — 50 submissions/month free.

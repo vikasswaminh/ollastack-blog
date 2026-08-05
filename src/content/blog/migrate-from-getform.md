@@ -67,4 +67,4 @@ CC/BCC live in form settings, not in public payloads (so your form can't be used
 3. Trigger the webhook → confirm a recorded delivery.
 4. Remove the old Getform/Forminit form.
 
-[Create your form](https://login.ollastack.com/register) — 100 submissions/month free, no card.
+[Create your form](https://login.ollastack.com/register) — 50 submissions/month free, no card.

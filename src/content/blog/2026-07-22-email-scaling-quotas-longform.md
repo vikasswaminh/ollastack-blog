@@ -25,7 +25,7 @@ Sending email at scale requires deliberate quota design, backoff strategies, and
 
 Section 1 — Send quotas by plan
 
-Free: 100 submissions/month. Solo: 2,000. Team: 20,000. Agent submissions count against normal quotas.
+Free: 50 submissions/month. Solo: 2,000. Team: 20,000. Agent submissions count against normal quotas.
 
 Section 2 — Rate-limit buckets (three layers)
 

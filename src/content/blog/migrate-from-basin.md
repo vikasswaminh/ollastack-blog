@@ -78,4 +78,4 @@ CC/BCC are set in form settings, not read from public payloads (anti-relay).
 3. Webhook fired → delivery recorded.
 4. Remove the Basin form.
 
-[Start free](https://login.ollastack.com/register) — 100 submissions/month, no card. The endpoint is the only thing to remember.
+[Start free](https://login.ollastack.com/register) — 50 submissions/month, no card. The endpoint is the only thing to remember.

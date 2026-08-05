@@ -118,4 +118,4 @@ Two shortcuts worth knowing:
 - Let an AI agent submit the same form with a scoped Bearer token (it discovers the API from `/api/openapi.json`).
 - Add file uploads (the endpoint handles `multipart/form-data`).
 
-[Create your form](https://login.ollastack.com/register) — free tier is 100 submissions/month, no credit card. The endpoint is the only thing you have to remember.
+[Create your form](https://login.ollastack.com/register) — free tier is 50 submissions/month, no credit card. The endpoint is the only thing you have to remember.

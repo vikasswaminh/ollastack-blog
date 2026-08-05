@@ -145,4 +145,4 @@ Before you delete the Formspree form:
 
 To be fair: if you have a single static contact form, never need an API, never script submissions, and the free tier covers your volume, Formspree is a perfectly good place to stay. The case for moving is real traffic, programmatic/agent submissions, deliverability control, or wanting your spam decisions to be visible and reversible.
 
-Ready to try it? [Create a form](https://login.ollastack.com/register) — the free tier is 100 submissions/month, no credit card.
+Ready to try it? [Create a form](https://login.ollastack.com/register) — the free tier is 50 submissions/month, no credit card.

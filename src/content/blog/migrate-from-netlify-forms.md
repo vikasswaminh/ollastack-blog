@@ -77,4 +77,4 @@ If your Netlify form accepted file uploads, the Ollastack endpoint handles `mult
 
 The upside beyond pricing: your forms are now host-independent. Migrate hosts whenever you want — the form endpoint never changes.
 
-[Create your first form](https://login.ollastack.com/register) — 100 submissions/month free, no credit card.
+[Create your first form](https://login.ollastack.com/register) — 50 submissions/month free, no credit card.

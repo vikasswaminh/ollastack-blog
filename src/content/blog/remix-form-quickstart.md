@@ -76,4 +76,4 @@ export default function Contact() {
 - File uploads: forward `request.formData()` as `multipart/form-data` (the endpoint accepts it).
 - Let an agent submit with a scoped Bearer token; it reads the API from `/api/openapi.json`.
 
-[Create your form](https://login.ollastack.com/register) — 100 submissions/month free, no card.
+[Create your form](https://login.ollastack.com/register) — 50 submissions/month free, no card.

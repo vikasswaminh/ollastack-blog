@@ -20,9 +20,9 @@ export interface Plan {
 }
 
 export const PLANS: Plan[] = [
-  { name: "Free", price: "0", submissions: "100" },
-  { name: "Solo", price: "9", submissions: "1,000" },
-  { name: "Team", price: "29", submissions: "10,000" },
+  { name: "Free", price: "0", submissions: "50" },
+  { name: "Solo", price: "9", submissions: "500" },
+  { name: "Team", price: "29", submissions: "5,000" },
 ];
 
 export const softwareApplicationLd = {

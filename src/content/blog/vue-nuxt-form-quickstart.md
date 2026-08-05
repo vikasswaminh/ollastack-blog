@@ -89,4 +89,4 @@ Set your notification email in form settings (verify it first — a form only no
 - File uploads: send `FormData` instead of JSON (the endpoint accepts `multipart/form-data`).
 - Agent submissions via a scoped Bearer token (API self-describes at `/api/openapi.json`).
 
-[Get your endpoint](https://login.ollastack.com/register) — 100 submissions/month free, no card.
+[Get your endpoint](https://login.ollastack.com/register) — 50 submissions/month free, no card.

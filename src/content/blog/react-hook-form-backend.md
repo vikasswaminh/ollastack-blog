@@ -99,4 +99,4 @@ RHF validates in the browser, which a determined client can bypass. The endpoint
 - File uploads: switch the body to `FormData` (the endpoint accepts `multipart/form-data`).
 - Agent submissions: a scoped Bearer token lets an AI agent submit cleanly; it reads the API from `/api/openapi.json`.
 
-[Get your endpoint](https://login.ollastack.com/register) — 100 submissions/month free, no card.
+[Get your endpoint](https://login.ollastack.com/register) — 50 submissions/month free, no card.

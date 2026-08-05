@@ -14,7 +14,7 @@ faq:
   - q: "When should I stay on Formspree?"
     a: "If you have a single static contact form, never submit it programmatically, don't need inspectable webhooks or mail testing, and the free volume covers you, Formspree is mature and simple — there's no reason to move."
   - q: "Does Ollastack have a free tier?"
-    a: "Yes — 100 submissions per month with no credit card."
+    a: "Yes — 50 submissions per month with no credit card."
 ---
 
 There are a lot of form backends, and most of them do the same core thing well: take a POST, store it, email you. If that's all you need, almost any of them — including Formspree — is fine. This post is about the cases where it *isn't* all you need, and why teams in those cases end up on Ollastack.
@@ -73,4 +73,4 @@ The endpoint contract and API are the same whether you stay hosted or later self
 
 No spin here. If you have a single static contact form, you never script or agent-submit it, you don't need an inspectable webhook or mail testing, and the free volume covers you — Formspree is mature, simple, and there's no reason to move. The case for Ollastack is real traffic, programmatic/agent submissions, deliverability control, and wanting your spam and delivery decisions to be observable instead of magic.
 
-If that's you: [start free](https://login.ollastack.com/register) (100 submissions/month, no card), or read the [step-by-step migration guide](/blog/migrate-from-formspree) — the cutover is usually a one-line change.
+If that's you: [start free](https://login.ollastack.com/register) (50 submissions/month, no card), or read the [step-by-step migration guide](/blog/migrate-from-formspree) — the cutover is usually a one-line change.

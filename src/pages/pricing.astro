@@ -6,7 +6,7 @@ const APP = "https://login.ollastack.com";
 // Pricing-specific meta description. Without this, Base falls back to the
 // generic site description, so /pricing had no page-specific snippet.
 const PRICE_DESC =
-  "Ollastack pricing: Free (100 submissions/mo), Solo $9/mo (1,000), Team $29/mo (10,000). Agent mailboxes and email testing on every tier. USD, no overage.";
+  "Ollastack pricing: Free (50 submissions/mo), Solo $9/mo (500), Team $29/mo (5,000). Agent mailboxes and email testing on every tier. USD, no overage.";
 
 const tiers = [
   {
@@ -14,7 +14,7 @@ const tiers = [
     price: "$0",
     period: "/ month",
     blurb: "For trying it out and side projects.",
-    submissions: "100",
+    submissions: "50",
     cta: "Start free",
     href: `${APP}/register`,
     emphasis: false,
@@ -25,7 +25,7 @@ const tiers = [
     price: "$9",
     period: "/ month",
     blurb: "For developers shipping their first agent-backed form.",
-    submissions: "1,000",
+    submissions: "500",
     cta: "Get Solo",
     href: `${APP}/upgrade?plan=solo`,
     emphasis: true,
@@ -36,7 +36,7 @@ const tiers = [
     price: "$29",
     period: "/ month",
     blurb: "For teams running multiple agent integrations at volume.",
-    submissions: "10,000",
+    submissions: "5,000",
     cta: "Get Team",
     href: `${APP}/upgrade?plan=team`,
     emphasis: false,
@@ -192,7 +192,7 @@ const faqs = [
     </div>
 
     <p class="enterprise-note">
-      Need more than 10,000 submissions / month or a custom arrangement?
+      Need more than 5,000 submissions / month or a custom arrangement?
       <a href="mailto:hello@ollastack.com">Talk to us</a>.
     </p>
   </section>
