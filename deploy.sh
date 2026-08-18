@@ -30,8 +30,8 @@ if [[ -z "${CLOUDFLARE_API_TOKEN:-}" ]]; then
   exit 2
 fi
 
-REV=$(git -C .. rev-parse --short HEAD 2>/dev/null || echo "unknown")
-DIRTY=$(git -C .. status --porcelain marketing 2>/dev/null | head -1)
+REV=$(git rev-parse --short HEAD 2>/dev/null || echo "unknown")
+DIRTY=$(git status --porcelain 2>/dev/null | head -1)
 if [[ -n "$DIRTY" ]]; then
   echo "⚠ marketing/ has uncommitted changes — they'll be in the deploy."
 fi
