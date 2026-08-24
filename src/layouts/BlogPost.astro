@@ -246,34 +246,34 @@ const articleLd = {
     gap: 6px;
     font-size: 12px;
     font-weight: 700;
-    color: #ea580c;
-    background: #fff7ed;
-    border: 1.5px solid #fed7aa;
+    color: #e11d48;
+    background: #fff1f2;
+    border: 1.5px solid #fecdd3;
     padding: 7px 16px;
     border-radius: 9999px;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     margin-bottom: 20px;
     transition: all 0.2s ease;
-    box-shadow: 0 2px 6px rgba(234, 88, 12, 0.08);
+    box-shadow: 0 2px 6px rgba(225, 29, 72, 0.08);
     text-decoration: none !important;
     align-self: flex-start;
   }
   .back:hover {
-    background: #ea580c;
+    background: #e11d48;
     color: #ffffff !important;
-    border-color: #ea580c;
+    border-color: #e11d48;
     transform: translateX(-3px);
-    box-shadow: 0 4px 14px rgba(234, 88, 12, 0.25);
+    box-shadow: 0 4px 14px rgba(225, 29, 72, 0.25);
   }
 
-  /* Table of Contents Professional Box - Light Orange Theme */
+  /* Table of Contents Professional Box - Light Red Theme */
   .toc-box {
-    background: #fff7ed;
-    border: 1.5px solid #fed7aa;
-    border-left: 4px solid #ea580c;
+    background: #fff1f2;
+    border: 1.5px solid #fecdd3;
+    border-left: 4px solid #e11d48;
     border-radius: 16px;
-    box-shadow: 0 8px 24px rgba(234, 88, 12, 0.07), 0 1px 3px rgba(0, 0, 0, 0.02);
+    box-shadow: 0 8px 24px rgba(225, 29, 72, 0.07), 0 1px 3px rgba(0, 0, 0, 0.02);
     display: flex;
     flex-direction: column;
     max-height: calc(100vh - 170px);
@@ -281,17 +281,17 @@ const articleLd = {
     transition: all 0.2s ease;
   }
   .toc-box:hover {
-    border-color: #fdba74;
-    box-shadow: 0 12px 28px rgba(234, 88, 12, 0.1);
+    border-color: #fda4af;
+    box-shadow: 0 12px 28px rgba(225, 29, 72, 0.1);
   }
   .toc-box-head {
-    background: #ffedd5;
+    background: #ffe4e6;
     color: #000000;
     padding: 13px 15px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1.5px solid #fed7aa;
+    border-bottom: 1.5px solid #fecdd3;
   }
   .toc-box-title {
     display: flex;
@@ -304,17 +304,17 @@ const articleLd = {
     color: #000000;
   }
   .toc-box-title svg {
-    color: #ea580c;
+    color: #e11d48;
   }
   .toc-box-count {
     font-size: 11px;
     font-weight: 700;
     color: #ffffff;
-    background: #ea580c;
+    background: #e11d48;
     padding: 2px 9px;
     border-radius: 20px;
     letter-spacing: 0.02em;
-    box-shadow: 0 1px 3px rgba(234, 88, 12, 0.2);
+    box-shadow: 0 1px 3px rgba(225, 29, 72, 0.2);
   }
   .toc-box-list {
     display: flex;
@@ -322,7 +322,7 @@ const articleLd = {
     gap: 3px;
     padding: 10px 8px;
     overflow-y: auto;
-    background: #fff7ed;
+    background: #fff1f2;
   }
   .toc-box-list::-webkit-scrollbar {
     width: 4px;
@@ -331,7 +331,7 @@ const articleLd = {
     background: transparent;
   }
   .toc-box-list::-webkit-scrollbar-thumb {
-    background: #fed7aa;
+    background: #fecdd3;
     border-radius: 4px;
   }
   .toc-box-list :global(.toc-item) {
@@ -349,8 +349,8 @@ const articleLd = {
     font-size: 11px;
     font-weight: 700;
     color: #000000;
-    background: #ffedd5;
-    border: 1px solid #fed7aa;
+    background: #ffe4e6;
+    border: 1px solid #fecdd3;
     padding: 1px 5px;
     border-radius: 5px;
     min-width: 22px;
@@ -368,29 +368,29 @@ const articleLd = {
     transition: color 0.16s ease;
   }
   .toc-box-list :global(.toc-item:hover) {
-    background: #ffedd5;
+    background: #ffe4e6;
     transform: translateX(2px);
   }
   .toc-box-list :global(.toc-item:hover .toc-text) {
     color: #000000 !important;
   }
   .toc-box-list :global(.toc-item:hover .toc-num) {
-    background: #ea580c;
+    background: #e11d48;
     color: #ffffff;
-    border-color: #ea580c;
+    border-color: #e11d48;
   }
   .toc-box-list :global(.toc-item.active) {
-    background: #fed7aa;
-    box-shadow: 0 1px 4px rgba(234, 88, 12, 0.12);
+    background: #fecdd3;
+    box-shadow: 0 1px 4px rgba(225, 29, 72, 0.12);
   }
   .toc-box-list :global(.toc-item.active .toc-text) {
     color: #000000 !important;
     font-weight: 800 !important;
   }
   .toc-box-list :global(.toc-item.active .toc-num) {
-    background: #ea580c;
+    background: #e11d48;
     color: #ffffff !important;
-    border-color: #ea580c;
+    border-color: #e11d48;
     font-weight: 800;
   }
   .toc-box-list :global(.toc-empty) {
@@ -457,9 +457,9 @@ const articleLd = {
     color: var(--ink);
   }
   .body :global(:not(pre) > code) {
-    background: #fff7ed !important;
-    color: #9a3412 !important;
-    border: 1px solid #fed7aa !important;
+    background: #fff1f2 !important;
+    color: #9f1239 !important;
+    border: 1px solid #fecdd3 !important;
     padding: 2px 7px !important;
     border-radius: 6px !important;
     font-family: var(--font-mono);
@@ -467,16 +467,16 @@ const articleLd = {
     font-weight: 600;
   }
   .body :global(a) {
-    color: #ea580c !important;
+    color: #e11d48 !important;
     font-weight: 600 !important;
     text-decoration: underline !important;
-    text-decoration-color: rgba(234, 88, 12, 0.45) !important;
+    text-decoration-color: rgba(225, 29, 72, 0.45) !important;
     text-underline-offset: 3px !important;
     transition: all 0.15s ease !important;
   }
   .body :global(a:hover) {
-    color: #c2410c !important;
-    text-decoration-color: #c2410c !important;
+    color: #be123c !important;
+    text-decoration-color: #be123c !important;
   }
   .body :global(table) {
     width: 100%;
@@ -524,7 +524,7 @@ const articleLd = {
     color: #ffffff;
   }
   .body :global(.code .s),
-  .body :global(pre .s) { color: #fdba74 !important; }
+  .body :global(pre .s) { color: #fda4af !important; }
   .body :global(.code .k),
   .body :global(pre .k) { color: #38bdf8 !important; }
   .body :global(.code .c),
@@ -547,7 +547,7 @@ const articleLd = {
     transition: border-color 0.15s ease;
   }
   .post-faq :global(details:hover) {
-    border-color: #fdba74;
+    border-color: #fda4af;
   }
   .post-faq :global(summary) {
     cursor: pointer;
@@ -606,10 +606,10 @@ const articleLd = {
     border-bottom: none !important;
   }
   .cta-button:hover {
-    background: #ea580c;
+    background: #e11d48;
     color: #ffffff !important;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(234, 88, 12, 0.25);
+    box-shadow: 0 4px 12px rgba(225, 29, 72, 0.25);
   }
   .cta-fine {
     margin: 12px 0 0;
@@ -625,9 +625,9 @@ const articleLd = {
   }
   .related-foot .related-eyebrow {
     font-size: 12px;
-    color: #ea580c;
-    background: #fff7ed;
-    border: 1px solid #fed7aa;
+    color: #e11d48;
+    background: #fff1f2;
+    border: 1px solid #fecdd3;
     padding: 4px 12px;
     border-radius: 20px;
     font-weight: 600;
@@ -663,14 +663,14 @@ const articleLd = {
     left: 0;
     width: 4px;
     height: 100%;
-    background: #ea580c;
+    background: #e11d48;
     opacity: 0;
     transition: opacity 0.2s ease;
   }
   .related-foot li a:hover {
-    border-color: #fdba74;
+    border-color: #fda4af;
     transform: translateY(-2px);
-    box-shadow: 0 10px 24px rgba(234, 88, 12, 0.09);
+    box-shadow: 0 10px 24px rgba(225, 29, 72, 0.09);
   }
   .related-foot li a:hover::before {
     opacity: 1;
@@ -685,7 +685,7 @@ const articleLd = {
     transition: color 0.15s ease;
   }
   .related-foot li a:hover .rel-title {
-    color: #ea580c;
+    color: #e11d48;
   }
   .related-foot .rel-meta {
     font-size: 12px;
