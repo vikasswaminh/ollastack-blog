@@ -85,16 +85,16 @@ const posts = [...legacyPosts, ...collectionPosts].sort((a, b) =>
     align-items: center;
     gap: 6px;
     font-size: 12px;
-    color: #e11d48;
-    background: #fff1f2;
-    border: 1px solid #fecdd3;
+    color: #dc2626;
+    background: #fef2f2;
+    border: 1.5px solid #fca5a5;
     padding: 5px 14px;
     border-radius: 20px;
-    font-weight: 700;
+    font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     margin-bottom: 22px;
-    box-shadow: 0 1px 3px rgba(225, 29, 72, 0.06);
+    box-shadow: 0 1px 3px rgba(220, 38, 38, 0.08);
   }
   .blog-head h1 {
     font-size: 48px;
@@ -136,16 +136,16 @@ const posts = [...legacyPosts, ...collectionPosts].sort((a, b) =>
     position: absolute;
     top: 0;
     left: 0;
-    width: 5px;
+    width: 6px;
     height: 100%;
-    background: #e11d48;
+    background: #dc2626;
     opacity: 0;
     transition: opacity 0.2s ease;
   }
   .post-card:hover {
-    border-color: #e11d48;
+    border-color: #dc2626;
     transform: translateY(-3px);
-    box-shadow: 0 16px 36px rgba(225, 29, 72, 0.09);
+    box-shadow: 0 16px 36px rgba(220, 38, 38, 0.12);
   }
   .post-card:hover::before {
     opacity: 1;
@@ -164,13 +164,13 @@ const posts = [...legacyPosts, ...collectionPosts].sort((a, b) =>
     gap: 10px;
   }
   .meta-tag {
-    background: #fff1f2;
-    color: #e11d48;
-    border: 1px solid #fecdd3;
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fca5a5;
     padding: 3px 9px;
     border-radius: 6px;
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: 0.04em;
   }
   .post-arrow {
@@ -179,7 +179,7 @@ const posts = [...legacyPosts, ...collectionPosts].sort((a, b) =>
     transition: all 0.2s ease;
   }
   .post-card:hover .post-arrow {
-    color: #e11d48;
+    color: #dc2626;
     transform: translateX(4px);
   }
   .dot { opacity: 0.4; }
@@ -193,7 +193,7 @@ const posts = [...legacyPosts, ...collectionPosts].sort((a, b) =>
     transition: color 0.15s ease;
   }
   .post-card:hover h2 {
-    color: #e11d48;
+    color: #dc2626;
   }
   .post-card p {
     color: #475569;
@@ -210,8 +210,8 @@ const posts = [...legacyPosts, ...collectionPosts].sort((a, b) =>
     align-items: center;
     gap: 6px;
     font-size: 13px;
-    font-weight: 700;
-    color: #e11d48;
+    font-weight: 800;
+    color: #dc2626;
     text-transform: uppercase;
     letter-spacing: 0.06em;
   }
