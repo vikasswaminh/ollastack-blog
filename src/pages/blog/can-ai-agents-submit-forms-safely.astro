@@ -555,9 +555,9 @@ const APP = "https://login.ollastack.com";
 curl -X POST https://login.ollastack.com/api/forms/frm_.../agents \
   -H <span class="s">"Authorization: Bearer fmd_owner_..."</span> \
   -H <span class="s">"Content-Type: application/json"</span> \
-  -d <span class="s">'{"label":"Scheduling agent"}'</span>
+  -d <span class="s">'&#123;"label":"Scheduling agent"&#125;'</span>
 
-<span class="c"># → { "agentId": "agt_…", "token": "fmd_agent_…" }</span></pre>
+<span class="c"># → &#123; "agentId": "agt_…", "token": "fmd_agent_…" &#125;</span></pre>
   <p>
     That token — and only that token — is what the agent gets. Not the owner's
     dashboard login, not a session cookie, nothing that reaches beyond this one form.
@@ -566,13 +566,13 @@ curl -X POST https://login.ollastack.com/api/forms/frm_.../agents \
   <pre class="code">curl -X POST https://login.ollastack.com/api/forms/frm_.../submit \
   -H <span class="s">"Authorization: Bearer fmd_agent_..."</span> \
   -H <span class="s">"Content-Type: application/json"</span> \
-  -d <span class="s">'{
+  -d <span class="s">'&#123;
         "name": "Priya Shah",
         "email": "priya@example.com",
         "message": "Requesting a 30-minute product demo, preferably next week."
-      }'</span>
+      &#125;'</span>
 
-<span class="c"># → { "status": "received", "submissionId": "sub_…", "agent": "Scheduling agent" }</span></pre>
+<span class="c"># → &#123; "status": "received", "submissionId": "sub_…", "agent": "Scheduling agent" &#125;</span></pre>
   <p>
     Notice what that response gives the agent: an unambiguous status, a submission
     ID it can reference later, and confirmation of which identity the submission was
@@ -618,7 +618,7 @@ curl -X POST https://login.ollastack.com/api/forms/frm_.../agents \
     the agent owns can receive that confirmation, extract a verification code or link
     automatically instead of the agent having to regex raw HTML, and reply in-thread
     if a conversation continues — all over an API the agent can drive the same way
-    it drove the form submission. This is covered in depth in{" "}
+    it drove the form submission. This is covered in depth in
     <a href="/blog/email-for-ai-agents">email for AI agents</a>, and the two
     capabilities are designed to sit on the same API and the same token system
     deliberately, because in practice they're almost never used independently — an
@@ -756,9 +756,9 @@ curl -X POST https://login.ollastack.com/api/forms/frm_.../agents \
     the start, on the theory that "an agent needs to reach a form" and "an agent
     needs to reach an inbox" are the same underlying problem wearing two different
     hats. If you're building something that needs to submit forms — or receive what
-    those forms trigger — on behalf of real users,{" "}
-    <a href={`${APP}/register`}>start free and see the agent path directly</a>; it's
-    in every plan, including the free tier.
+    those forms trigger — on behalf of real users,
+    <a href="https://login.ollastack.com/register">start free and see the agent path directly</a>;
+    it's in every plan, including the free tier.
   </p>
 
   <style>
