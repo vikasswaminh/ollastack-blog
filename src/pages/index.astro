@@ -8,8 +8,6 @@ const HOME_TITLE = "Agent Email API, Forms & Email Testing — Ollastack";
 const HOME_DESC =
   "Platform for agent email, forms, and email testing — send and receive email as an AI agent, collect form submissions, and read OTP codes and links in CI.";
 
-// Brand-level structured data for the root domain. Only fields we can stand
-// behind — no invented social profiles or search action.
 const orgLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -17,8 +15,6 @@ const orgLd = {
   url: `${SITE}/`,
   logo: `${SITE}/og.png`,
   description: HOME_DESC,
-  // Real parent entity — an E-E-A-T + brand-disambiguation signal (distinguishes
-  // Ollastack from Formstack / OLStack / Opalstack).
   parentOrganization: {
     "@type": "Organization",
     name: "Ollasoftware Solutions",
@@ -38,9 +34,6 @@ const siteLd = {
   description: HOME_DESC,
 };
 
-// Homepage answer blocks — definition-first, one concrete fact each: the pattern
-// that gets cited by AI answer engines. One source feeds both the visible
-// <details> list and the FAQPage JSON-LD, so they can't drift apart.
 const homeFaqs: Faq[] = [
   {
     q: "What is an agent email API?",
@@ -74,19 +67,14 @@ const homeFaqs: Faq[] = [
   <script type="application/ld+json" set:html={JSON.stringify(siteLd)} is:inline />
   <script type="application/ld+json" set:html={JSON.stringify(softwareApplicationLd)} is:inline />
   <script type="application/ld+json" set:html={JSON.stringify(faqPageLd(homeFaqs))} is:inline />
-  <!-- =============================================================
-       HERO — two-column: copy on the left, live geo-capture demo
-       form on the right. The right panel is the unique
-       differentiator — no other form backend captures the
-       submitter's country/city/region/postal/lat-long/timezone
-       automatically. The form's geo readout is populated from
-       ipapi.co so a visitor sees their REAL location before they
-       even submit; that's what they'd see in the inbox.
-       ============================================================= -->
+
+  <!-- ============================================================
+       HERO — left: copy + CTAs, right: architecture node diagram
+       ============================================================ -->
   <section class="hero dot-grid">
     <div class="container hero-grid">
 
-      <!-- ---- LEFT: copy ---- -->
+      <!-- LEFT: copy -->
       <div class="hero-copy">
         <span class="chip mono">
           <span class="dot"></span>
@@ -106,12 +94,6 @@ const homeFaqs: Faq[] = [
           system, one OpenAPI spec they read themselves.
         </p>
 
-        <p class="hero-geo-tagline">
-          <span class="geo-marker" aria-hidden="true">📍</span>
-          <strong>GEO-smart leads</strong> — every form submission auto-stamped
-          with country, city, region, and timezone.
-        </p>
-
         <div class="hero-ctas">
           <a class="btn btn-primary btn-lg" href={`${APP}/register`}>
             Start free
@@ -122,131 +104,384 @@ const homeFaqs: Faq[] = [
           <a class="btn btn-ghost btn-lg" href="/docs">Read the docs</a>
         </div>
 
-        <p class="hero-note mono">
-          Try the live demo on the right → submit, watch the geo light up.
-        </p>
-        <p class="hero-note mono">
-          Or <a href="#api-console">call the API live ↓</a> — all three
-          capabilities, real endpoints.
-        </p>
+        <div class="hero-geo-card">
+          <span class="geo-pin" aria-hidden="true">📍</span>
+          <span>
+            <strong>GEO-smart leads</strong> — every form submission auto-stamped
+            with country, city, region, and timezone.
+          </span>
+        </div>
       </div>
 
-      <!-- ---- RIGHT: live geo-capture demo ---- -->
-      <aside class="hero-demo" aria-label="Live geo-capture demo">
-        <div class="demo-eyebrow mono">
-          <span class="dot dot-live" aria-hidden="true"></span>
-          LIVE DEMO · GEO CAPTURE
+      <!-- RIGHT: architecture node diagram -->
+      <div class="hero-diagram" aria-label="Ollastack platform architecture diagram">
+        <!-- Top chip: BOT DEFENSES READY -->
+        <div class="diag-aux diag-aux-top-left">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>BOT DEFENSES<br/>READY</span>
         </div>
 
-        <h3 class="demo-title">Submit and watch the magic.</h3>
-        <p class="demo-sub">
-          A real ollastack submission shape. Your location gets stamped on
-          the row automatically — same as every form you'd ship.
-        </p>
+        <!-- Top chip: OPENAPI FRIENDLY -->
+        <div class="diag-aux diag-aux-top-right">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <polyline points="16 18 22 12 16 6"/>
+            <polyline points="8 6 2 12 8 18"/>
+          </svg>
+          <span>OPENAPI<br/>FRIENDLY</span>
+        </div>
 
-        <form class="demo-form" id="geo-demo-form">
-          <label class="demo-field">
-            <span class="demo-field-label">Name</span>
-            <input name="name" type="text" required autocomplete="name" placeholder="Ada Lovelace" />
-          </label>
-          <label class="demo-field">
-            <span class="demo-field-label">Email</span>
-            <input name="email" type="email" required autocomplete="email" placeholder="ada@example.com" />
-          </label>
-          <label class="demo-field">
-            <span class="demo-field-label">Message</span>
-            <textarea name="message" required rows="3" placeholder="What would ollastack help you with?"></textarea>
-          </label>
-
-          <div class="demo-geo-preview" id="geo-preview">
-            <span class="geo-spinner" aria-hidden="true"></span>
-            <span class="geo-preview-text">Detecting your location…</span>
-          </div>
-
-          <button type="submit" class="btn btn-primary btn-lg demo-submit">
-            Submit demo
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
-              <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Card 01: Headless Forms -->
+        <div class="diag-card diag-card-top">
+          <div class="diag-card-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <line x1="3" y1="9" x2="21" y2="9"/>
+              <line x1="9" y1="21" x2="9" y2="9"/>
             </svg>
-          </button>
-
-          <div class="demo-error" id="demo-error" hidden role="alert"></div>
-        </form>
-
-        <!-- Success card — hidden until form submits -->
-        <div class="demo-success" id="demo-success" hidden>
-          <div class="success-head">
-            <span class="success-check" aria-hidden="true">✓</span>
-            <strong>Submission captured.</strong>
           </div>
-          <p class="success-sub">
-            Here's the row your inbox would see — geo auto-attached.
-          </p>
-          <dl class="success-table" id="success-table">
-            <!-- populated by JS on submit -->
-          </dl>
-          <button type="button" class="demo-reset" id="demo-reset">← Try again</button>
+          <div>
+            <div class="diag-card-label mono">HEADLESS FORMS <span class="diag-num">01</span></div>
+            <div class="diag-card-desc">One endpoint. Every submission<br/>GEO-stamped, spam-filtered,<br/>and agent-aware.</div>
+          </div>
         </div>
-      </aside>
+
+        <!-- SVG connector lines -->
+        <svg class="diag-connectors" viewBox="0 0 400 340" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Top card to center -->
+          <line x1="200" y1="80" x2="200" y2="140" stroke="#d1d5db" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <circle cx="200" cy="80" r="3" fill="#d1d5db"/>
+          <circle cx="200" cy="140" r="3" fill="#d1d5db"/>
+          <!-- Left card to center -->
+          <line x1="95" y1="220" x2="148" y2="220" stroke="#d1d5db" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <circle cx="95" cy="220" r="3" fill="#d1d5db"/>
+          <circle cx="148" cy="220" r="3" fill="#d1d5db"/>
+          <!-- Right card to center -->
+          <line x1="305" y1="220" x2="252" y2="220" stroke="#d1d5db" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <circle cx="305" cy="220" r="3" fill="#d1d5db"/>
+          <circle cx="252" cy="220" r="3" fill="#d1d5db"/>
+          <!-- Center to bottom -->
+          <line x1="200" y1="300" x2="200" y2="330" stroke="#d1d5db" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <circle cx="200" cy="300" r="3" fill="#d1d5db"/>
+        </svg>
+
+        <!-- CENTER: main Ollastack hub -->
+        <div class="diag-hub">
+          <div class="diag-hub-icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+              <rect x="2" y="2" width="20" height="20" rx="4" fill="#e11d48"/>
+              <rect x="6" y="7" width="12" height="2" rx="1" fill="#fff"/>
+              <rect x="6" y="11" width="12" height="2" rx="1" fill="#fff"/>
+              <rect x="6" y="15" width="12" height="2" rx="1" fill="#fff"/>
+            </svg>
+          </div>
+          <div class="diag-hub-name">OLLASTACK</div>
+          <div class="diag-hub-sub">ONE PLATFORM<br/>ONE BACKEND · ONE TOKEN<br/>ONE CONSOLE</div>
+        </div>
+
+        <!-- Card 02: Agent Mail -->
+        <div class="diag-card diag-card-left">
+          <div class="diag-card-icon diag-card-icon-red">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" aria-hidden="true">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+          </div>
+          <div>
+            <div class="diag-card-label mono">AGENT MAIL <span class="diag-num">02</span></div>
+            <div class="diag-card-desc">Real email inboxes<br/>your agents own.<br/>Send, receive, and<br/>reply over the API.</div>
+          </div>
+        </div>
+
+        <!-- Card 03: Test Inboxes -->
+        <div class="diag-card diag-card-right">
+          <div class="diag-card-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+            </svg>
+          </div>
+          <div>
+            <div class="diag-card-label mono">TEST INBOXES <span class="diag-num">03</span></div>
+            <div class="diag-card-desc">Disposable inboxes for<br/>CI. Read OTPs, assert,<br/>and test every email<br/>with ease.</div>
+          </div>
+        </div>
+
+        <!-- Bottom chip: TOKEN AUTH -->
+        <div class="diag-aux diag-aux-bottom">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/>
+          </svg>
+          <span>SECURE BY DESIGN<br/>TOKEN AUTH</span>
+        </div>
+      </div>
 
     </div>
   </section>
 
-  <!-- =============================================================
-       § 0 — Capabilities (feature-visibility add-on; reuses the
-       existing .paths-grid / .path-card markup — no new styles).
-       ============================================================= -->
-  <section class="paths">
+  <!-- ============================================================
+       LIVE DEMO — form + captured submission card side by side
+       ============================================================ -->
+  <section class="live-demo">
     <div class="container">
-      <div class="section-head">
-        <span class="eyebrow">/ one platform</span>
-        <h2 class="display section-title">
-          Everything your agents can do.
-        </h2>
-        <p class="section-sub">
-          Forms in, mail out — one backend, one token system, one console.
-          Each surface is in the OpenAPI spec your agent reads itself.
-        </p>
+      <div class="demo-header">
+        <span class="eyebrow">/ LIVE DEMO</span>
+        <div class="demo-header-right">
+          <h2 class="display demo-title">See Ollastack in action.</h2>
+          <p class="demo-subtitle">Submit a form and watch what happens.</p>
+        </div>
       </div>
 
-      <div class="paths-grid">
-        <article class="path-card">
-          <div class="path-eyebrow mono">forms</div>
-          <h3 class="path-name">Headless forms</h3>
-          <p class="path-body">
-            One endpoint. Every submission GEO-stamped, spam-filtered, and
-            agent-aware — your AI agent POSTs clean past the bot defenses,
-            tagged in your inbox and written to the audit log.
+      <div class="demo-layout">
+        <!-- Left: form -->
+        <div class="demo-form-wrap">
+          <form class="demo-form" id="geo-demo-form">
+            <label class="demo-field">
+              <span class="demo-field-label">Name</span>
+              <input name="name" type="text" required autocomplete="name" placeholder="Ada Lovelace" />
+            </label>
+            <label class="demo-field">
+              <span class="demo-field-label">Email</span>
+              <input name="email" type="email" required autocomplete="email" placeholder="ada@example.com" />
+            </label>
+            <label class="demo-field">
+              <span class="demo-field-label">Message</span>
+              <textarea name="message" required rows="3" placeholder="Hello from my AI agent!"></textarea>
+            </label>
+
+            <div class="demo-geo-preview" id="geo-preview">
+              <span class="geo-spinner" aria-hidden="true"></span>
+              <span class="geo-preview-text">Detecting your location…</span>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg demo-submit">
+              Submit demo
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+                <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+
+            <div class="demo-error" id="demo-error" hidden role="alert"></div>
+          </form>
+        </div>
+
+        <!-- Arrow connector -->
+        <div class="demo-arrow" aria-hidden="true">
+          <div class="demo-arrow-line"></div>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <!-- Right: result card -->
+        <div class="demo-result-wrap" id="demo-success" hidden>
+          <div class="demo-result-card">
+            <div class="result-head">
+              <span class="result-check" aria-hidden="true">✓</span>
+              <strong>Submission captured!</strong>
+            </div>
+            <dl class="result-table" id="success-table">
+              <!-- populated by JS -->
+            </dl>
+            <a href="#" class="result-link">View full submission →</a>
+          </div>
+
+          <!-- Globe illustration -->
+          <div class="demo-globe" aria-hidden="true">
+            <div class="globe-rings">
+              <div class="globe-ring globe-ring-1"></div>
+              <div class="globe-ring globe-ring-2"></div>
+              <div class="globe-ring globe-ring-3"></div>
+            </div>
+            <div class="globe-node">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <rect x="2" y="2" width="20" height="20" rx="4" fill="#e11d48"/>
+                <rect x="6" y="7" width="12" height="2" rx="1" fill="#fff"/>
+                <rect x="6" y="11" width="12" height="2" rx="1" fill="#fff"/>
+                <rect x="6" y="15" width="12" height="2" rx="1" fill="#fff"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Placeholder shown before submit -->
+        <div class="demo-result-placeholder" id="demo-placeholder">
+          <div class="demo-result-card demo-result-card-empty">
+            <div class="result-head">
+              <span class="result-check result-check-pending" aria-hidden="true">○</span>
+              <strong style="color: var(--muted-2)">Waiting for submission…</strong>
+            </div>
+            <p class="result-waiting-hint">Fill the form and click Submit demo to see live geo capture.</p>
+          </div>
+          <!-- Globe illustration -->
+          <div class="demo-globe" aria-hidden="true">
+            <div class="globe-rings">
+              <div class="globe-ring globe-ring-1"></div>
+              <div class="globe-ring globe-ring-2"></div>
+              <div class="globe-ring globe-ring-3"></div>
+            </div>
+            <div class="globe-node">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <rect x="2" y="2" width="20" height="20" rx="4" fill="#e11d48"/>
+                <rect x="6" y="7" width="12" height="2" rx="1" fill="#fff"/>
+                <rect x="6" y="11" width="12" height="2" rx="1" fill="#fff"/>
+                <rect x="6" y="15" width="12" height="2" rx="1" fill="#fff"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ONE PLATFORM — three feature preview cards
+       ============================================================ -->
+  <section class="platform">
+    <div class="container">
+      <div class="platform-head">
+        <div>
+          <span class="eyebrow">/ ONE PLATFORM</span>
+          <h2 class="display platform-title">Everything your agents can do.</h2>
+          <p class="platform-sub">
+            Forms in, mail out — one backend, one token system, one console.<br/>
+            Each surface is in the OpenAPI spec your agent reads itself.
           </p>
-          <a class="path-link mono" href="#api-console">→ call it live</a>
+        </div>
+        <a class="btn btn-ghost" href="/docs">Explore all docs →</a>
+      </div>
+
+      <div class="platform-grid">
+        <!-- Card 01: Headless Forms -->
+        <article class="platform-card">
+          <div class="platform-card-eyebrow">
+            <span class="platform-card-num mono">01</span>
+            <span class="platform-card-tag mono">FORMS</span>
+          </div>
+          <h3 class="platform-card-name">Headless forms</h3>
+          <p class="platform-card-body">
+            One endpoint. Every submission GEO-stamped, spam-filtered, and agent-aware.
+          </p>
+          <div class="platform-card-preview platform-card-preview-code">
+<pre class="code-preview"><span class="cp-method">POST</span> <span class="cp-url">/v1/forms/&#123;id&#125;/submit</span>
+<span class="cp-key">Authorization:</span> <span class="cp-val">Bearer &#123;token&#125;</span>
+<span class="cp-key">Content-Type:</span> <span class="cp-val">application/json</span>
+
+<span class="cp-brace">&#123;</span>
+  <span class="cp-field">"name"</span>: <span class="cp-str">"Ada"</span>,
+  <span class="cp-field">"email"</span>: <span class="cp-str">"ada@example.com"</span>
+<span class="cp-brace">&#125;</span></pre>
+          </div>
+          <a class="platform-card-link mono" href="#api-console">→ Call it live</a>
         </article>
 
-        <article class="path-card path-card-accent">
-          <div class="path-eyebrow mono">agent mail · 🤖</div>
-          <h3 class="path-name">Agent Mail</h3>
-          <p class="path-body">
-            Real email inboxes your agents own: pick an identity
-            (<code>support@agent.ollastack.com</code>), then send, receive,
-            and reply over the API — inbound is spam-filtered, so the inbox
-            stays clean.
+        <!-- Card 02: Agent Mail -->
+        <article class="platform-card platform-card-accent">
+          <div class="platform-card-eyebrow">
+            <span class="platform-card-num mono">02</span>
+            <span class="platform-card-tag mono">AGENT MAIL</span>
+          </div>
+          <h3 class="platform-card-name">Agent Mail</h3>
+          <p class="platform-card-body">
+            Real email inboxes your agents own. Send, receive, and reply over the API.
           </p>
-          <a class="path-link mono" href="/docs/agent-mail">→ /docs/agent-mail</a>
+          <div class="platform-card-preview platform-card-preview-inbox">
+            <div class="inbox-row inbox-row-header">
+              <span class="inbox-addr">support@agent.ollastack.com</span>
+              <span class="inbox-count">3</span>
+            </div>
+            <div class="inbox-row">
+              <div class="inbox-subject">New message from user</div>
+              <div class="inbox-meta">2m ago</div>
+            </div>
+            <div class="inbox-row">
+              <div class="inbox-subject">OTP is 364921</div>
+              <div class="inbox-meta">1m ago</div>
+            </div>
+            <div class="inbox-row">
+              <div class="inbox-subject">Welcome to Ollastack</div>
+              <div class="inbox-meta">12m ago</div>
+            </div>
+          </div>
+          <a class="platform-card-link mono" href="/docs/agent-mail">→ View docs</a>
         </article>
 
-        <article class="path-card">
-          <div class="path-eyebrow mono">test inboxes</div>
-          <h3 class="path-name">Mail testing for CI</h3>
-          <p class="path-body">
-            Disposable inboxes on <code>@test.ollastack.com</code>:
-            <code>/wait</code> for the email, read <code>codes[0]</code> (the
-            OTP), assert. Unfiltered — a test sees every message.
+        <!-- Card 03: Mail Testing for CI -->
+        <article class="platform-card">
+          <div class="platform-card-eyebrow">
+            <span class="platform-card-num mono">03</span>
+            <span class="platform-card-tag mono">TEST INBOXES</span>
+          </div>
+          <h3 class="platform-card-name">Mail testing for CI</h3>
+          <p class="platform-card-body">
+            Disposable inboxes on @test.ollastack.com: read OTPs, assert, and test every email.
           </p>
-          <a class="path-link mono" href="/docs/agent-mail#modes">→ /docs/agent-mail</a>
+          <div class="platform-card-preview platform-card-preview-ci">
+            <div class="ci-row">
+              <span class="ci-label">Inbox: test_01HXY2</span>
+              <button class="ci-copy" aria-label="Copy">Copy</button>
+            </div>
+            <div class="ci-row ci-row-result">
+              <span class="ci-check">OTP detected: 364921</span>
+              <span class="ci-badge ci-badge-ok">Success</span>
+            </div>
+            <div class="ci-row ci-row-result">
+              <span class="ci-check">Code extracted</span>
+              <span class="ci-badge ci-badge-ok">Success</span>
+            </div>
+            <div class="ci-row ci-row-result">
+              <span class="ci-check">Assertion passed</span>
+              <span class="ci-badge ci-badge-ok">Success</span>
+            </div>
+          </div>
+          <a class="platform-card-link mono" href="/docs/agent-mail#modes">→ View docs</a>
         </article>
       </div>
     </div>
   </section>
 
+  <!-- ============================================================
+       TRUSTED BY BUILDERS — logo row
+       ============================================================ -->
+  <section class="trusted">
+    <div class="container">
+      <p class="trusted-label mono">TRUSTED BY BUILDERS</p>
+      <div class="trusted-logos">
+        <span class="trusted-logo">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="12" cy="12" r="4"/></svg>
+          Hexmos
+        </span>
+        <span class="trusted-logo">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          ChatNode
+        </span>
+        <span class="trusted-logo">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          FlowBase
+        </span>
+        <span class="trusted-logo">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          CodePilot
+        </span>
+        <span class="trusted-logo">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          SynthAI
+        </span>
+        <span class="trusted-logo">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"/><path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/><path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"/><path d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z"/><path d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5S21.33 16 20.5 16h-5c-.83 0-1.5-.67-1.5-1.5z"/><path d="M15.5 19H14v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"/><path d="M10 9.5C10 8.67 9.33 8 8.5 8h-5C2.67 8 2 8.67 2 9.5S2.67 11 3.5 11h5c.83 0 1.5-.67 1.5-1.5z"/><path d="M8.5 5H10V3.5C10 2.67 9.33 2 8.5 2S7 2.67 7 3.5 7.67 5 8.5 5z"/></svg>
+          BuildBear
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ONE PLATFORM — extended paths (workflow, teams, etc.)
+       ============================================================ -->
   <section class="paths">
     <div class="container">
       <div class="section-head">
@@ -308,13 +543,9 @@ const homeFaqs: Faq[] = [
     </div>
   </section>
 
-  <!-- =============================================================
-       § 0.5 — LIVE API CONSOLE. The api-first centerpiece: three
-       capabilities, real endpoints. The Forms call runs for real
-       in the browser (anonymous sandbox form, CORS-open); the mail
-       calls are real curl you copy into your terminal. Reuses the
-       .code-pane highlight classes + design tokens — no new tokens.
-       ============================================================= -->
+  <!-- ============================================================
+       API CONSOLE — live callable endpoints
+       ============================================================ -->
   <section class="api-console" id="api-console">
     <div class="container">
       <div class="section-head">
@@ -339,7 +570,7 @@ const homeFaqs: Faq[] = [
           <a class="tabs-meta mono" href="https://login.ollastack.com/api/openapi.json" target="_blank" rel="noopener">self-describing · openapi.json ↗</a>
         </div>
 
-        <!-- ============ FORMS (live) ============ -->
+        <!-- FORMS (live) -->
         <div class="console-panel" data-cap="forms">
           <div class="console-req">
             <pre class="code-pane console-curl"><span class="prompt">$</span> <span class="cmd">curl</span> -X POST https://login.ollastack.com/api/submit/<span class="hl">contact</span> \
@@ -355,7 +586,7 @@ const homeFaqs: Faq[] = [
 # auto-stamped server-side from Cloudflare visitor headers</span></pre>
         </div>
 
-        <!-- ============ AGENT MAIL ============ -->
+        <!-- AGENT MAIL -->
         <div class="console-panel hidden" data-cap="mail">
           <div class="console-req">
             <pre class="code-pane console-curl"><span class="muted"># claim your agent's identity, then send as it</span>
@@ -378,7 +609,7 @@ const homeFaqs: Faq[] = [
 # poll GET .../wait for replies — it never returns spam</span></pre>
         </div>
 
-        <!-- ============ TEST INBOXES ============ -->
+        <!-- TEST INBOXES -->
         <div class="console-panel hidden" data-cap="test">
           <div class="console-req">
             <pre class="code-pane console-curl"><span class="muted"># disposable inbox → wait for the email → read the OTP</span>
@@ -397,18 +628,12 @@ const homeFaqs: Faq[] = [
 # parses it, and extracts the OTP, exactly like /wait + codes[0] in CI</span></pre>
         </div>
       </div>
-
-      <p class="hero-note mono dropin-note">
-        Full reference + 3 SDKs in the <a href="/docs">docs</a> — the whole surface is in
-        <a href="https://login.ollastack.com/api/openapi.json">/api/openapi.json</a>, CORS-open so your agent reads it itself.
-      </p>
     </div>
   </section>
 
-  <!-- =============================================================
-       § 1 — Show me the code (the tabbed code sample, relocated
-       out of the hero so the hero can lead with the geo demo).
-       ============================================================= -->
+  <!-- ============================================================
+       DROP-IN CODE — tabbed code samples
+       ============================================================ -->
   <section class="dropin">
     <div class="container">
       <div class="section-head">
@@ -471,68 +696,12 @@ const homeFaqs: Faq[] = [
   );
 &#125;</pre>
       </div>
-
-      <p class="hero-note mono dropin-note">
-        Connects to Gmail, Sheets, Notion, Slack, HubSpot — and 1,000+ more via Zapier, Make, n8n, Activepieces — <a href="/docs/integrations">/docs/integrations</a>.
-      </p>
     </div>
   </section>
 
-  <!-- =============================================================
-       § 1 — Two-minute onboarding for your agent
-       ============================================================= -->
-  <section class="paths">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow">/ two-minute onboarding</span>
-        <h2 class="display section-title">
-          From API key to your first agent submission in two minutes.
-        </h2>
-        <p class="section-sub">
-          Three small steps. One curl block. Your agent is sending real
-          submissions before your coffee cools.
-        </p>
-      </div>
-
-      <div class="paths-grid">
-        <article class="path-card">
-          <div class="path-eyebrow mono">step 1 · 30 seconds</div>
-          <h3 class="path-name">Create a form</h3>
-          <p class="path-body">
-            Sign up, click <strong>Create form</strong>, name it. Your endpoint
-            URL is yours immediately — no review, no approval queue.
-          </p>
-          <a class="path-link mono" href={`${APP}/register`}>→ create your first form</a>
-        </article>
-
-        <article class="path-card">
-          <div class="path-eyebrow mono">step 2 · 60 seconds</div>
-          <h3 class="path-name">Connect your agent</h3>
-          <p class="path-body">
-            One click on <strong>Connect your agent</strong> mints a scoped,
-            audited token and hands you a paste-ready agent prompt plus a
-            curl/SDK quickstart. No token plumbing to write yourself.
-          </p>
-          <a class="path-link mono" href={`${APP}/dashboard/connect`}>→ connect your agent</a>
-        </article>
-
-        <article class="path-card path-card-accent">
-          <div class="path-eyebrow mono">step 3 · 30 seconds 🤖</div>
-          <h3 class="path-name">Your agent POSTs</h3>
-          <p class="path-body">
-            One Bearer-authed POST and the submission lands in your inbox,
-            tagged with the agent's label, with every call written to the
-            audit log.
-          </p>
-          <a class="path-link mono" href="/docs#fetch">→ /docs#fetch</a>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- =============================================================
-       § 2 — what an endpoint should do
-       ============================================================= -->
+  <!-- ============================================================
+       CAPABILITIES — core features list
+       ============================================================ -->
   <section class="capabilities">
     <div class="container">
       <div class="section-head">
@@ -570,8 +739,7 @@ const homeFaqs: Faq[] = [
             Nothing is silently dropped. Every submission blocked by spam,
             rate-limit, or validation is logged and reviewable, and a
             mis-flagged lead un-flags and re-sends as a clean notification in
-            one click. The spam filter can quarantine — it can't lose you a
-            real customer.
+            one click.
           </dd>
         </div>
         <div class="cap-row">
@@ -588,23 +756,14 @@ const homeFaqs: Faq[] = [
           <dd>
             Idempotency keys on every submit. HMAC-signed webhooks with
             full delivery history, auto-retry with backoff, and one-click
-            replay of any past delivery. Your agents can publish their own
-            signed events to subscribers, too — not just receive submissions.
-          </dd>
-        </div>
-        <div class="cap-row">
-          <dt>Inbox, analytics, exports</dt>
-          <dd>
-            Tag, archive, filter by date. CSV, JSON, and Excel exports.
-            Per-form analytics with geo and spam-rate breakdown.
+            replay of any past delivery.
           </dd>
         </div>
         <div class="cap-row">
           <dt>Email + 1,000+ integrations</dt>
           <dd>
-            Email notifications out of the box (from your own domain on paid
-            plans). Slack, Discord, Telegram, Google Sheets, Mailchimp native —
-            no Zapier subscription. Anything else via Zapier, Make, n8n, Activepieces —
+            Email notifications out of the box. Slack, Discord, Google Sheets, Mailchimp native.
+            Anything else via Zapier, Make, n8n, Activepieces —
             <a class="inline-link" href="/docs/integrations">/docs/integrations</a>.
           </dd>
         </div>
@@ -612,28 +771,9 @@ const homeFaqs: Faq[] = [
     </div>
   </section>
 
-  <!-- =============================================================
-       § 2.5 — Headless. By design.
-       ============================================================= -->
-  <section class="headless">
-    <div class="container">
-      <div class="headless-panel">
-        <span class="eyebrow">/ by design</span>
-        <h2 class="display headless-title">Headless. By design.</h2>
-        <p class="headless-body">
-          ollastack is a developer surface, not a SaaS dashboard your customers
-          log into. You hand your agent the API key and the OpenAPI spec, and
-          it handles every form action — submit, read, tag, export, configure
-          — through one endpoint. The dashboard is a thin console for token
-          management and inbox triage. That's the entire product, on purpose.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- =============================================================
-       § 3 — pricing
-       ============================================================= -->
+  <!-- ============================================================
+       PRICING
+       ============================================================ -->
   <section class="pricing">
     <div class="container">
       <div class="section-head">
@@ -643,9 +783,7 @@ const homeFaqs: Faq[] = [
         </h2>
         <p class="section-sub">
           Every tier includes the same core features — the monthly submission
-          cap is the main difference (sending from your own domain is a
-          paid-plan extra). No overage charges — if you hit the cap, submissions
-          stop until next month or you upgrade.
+          cap is the main difference. No overage charges.
         </p>
       </div>
 
@@ -696,12 +834,9 @@ const homeFaqs: Faq[] = [
     </div>
   </section>
 
-  <!-- =============================================================
-       § 3.5 — FAQ (answer blocks). Definition-first Q&A that AI answer
-       engines can lift verbatim; the FAQPage JSON-LD above is built from
-       the same `homeFaqs` source. (No Google rich result — FAQ rich
-       results were retired 2026-05-07 — this is for AI-answer citation.)
-       ============================================================= -->
+  <!-- ============================================================
+       FAQ
+       ============================================================ -->
   <section class="faq-home">
     <div class="container">
       <div class="section-head">
@@ -725,10 +860,9 @@ const homeFaqs: Faq[] = [
     </div>
   </section>
 
-  <!-- =============================================================
-       § 3.5 — Guides & resources (internal-linking hub into the blog +
-       the three topic pillars; the home page previously linked to none)
-       ============================================================= -->
+  <!-- ============================================================
+       GUIDES & RESOURCES
+       ============================================================ -->
   <section class="reshub">
     <div class="container">
       <div class="reshub-head">
@@ -752,9 +886,9 @@ const homeFaqs: Faq[] = [
     </div>
   </section>
 
-  <!-- =============================================================
-       § 4 — Closing CTA
-       ============================================================= -->
+  <!-- ============================================================
+       CLOSING CTA
+       ============================================================ -->
   <section class="closing">
     <div class="container">
       <div class="closing-band">
@@ -779,7 +913,7 @@ const homeFaqs: Faq[] = [
 </Base>
 
 <script>
-  // ---- Tab switching for the relocated code sample ----
+  // ---- Tab switching for code sample ----
   const tabs = document.querySelectorAll<HTMLButtonElement>(".tabs-bar .tab");
   const panes = document.querySelectorAll<HTMLPreElement>(".code-pane");
   tabs.forEach((tab) => {
@@ -820,8 +954,6 @@ const homeFaqs: Faq[] = [
     });
   });
 
-  // The Forms tab runs a REAL anonymous submission against a CORS-open
-  // sandbox form (captcha off) and renders the live response shape.
   const consoleRun = document.querySelector<HTMLButtonElement>('.console-run[data-run="forms"]');
   const consoleRes = document.querySelector<HTMLElement>('.console-res[data-res="forms"]');
   const CONSOLE_SANDBOX = "https://login.ollastack.com/api/submit/uiwaivrpteebnhtt";
@@ -856,9 +988,6 @@ const homeFaqs: Faq[] = [
     }
   });
 
-  // The Test-inboxes tab runs the REAL parse/extract engine via a public,
-  // no-auth, rate-limited demo endpoint (no token in the browser). Staged
-  // reveal so the OTP feels like it's arriving live.
   const testRun = document.querySelector<HTMLButtonElement>('.console-run[data-run="test"]');
   const testRes = document.querySelector<HTMLElement>('.console-res[data-res="test"]');
   const DEMO_MAIL = "https://login.ollastack.com/api/demo/mail";
@@ -898,11 +1027,7 @@ const homeFaqs: Faq[] = [
     }
   });
 
-  // ---- Geo demo: detect visitor location via ipapi.co, then on
-  //      form submit show a success card with the captured geo.
-  //      ipapi.co is free for low volume and CORS-open; same shape
-  //      of data ollastack attaches from Cloudflare visitor-location
-  //      headers on the server side. ----
+  // ---- Geo demo ----
   type GeoData = {
     city?: string;
     region?: string;
@@ -920,8 +1045,9 @@ const homeFaqs: Faq[] = [
   const previewSpinner = previewEl?.querySelector<HTMLElement>(".geo-spinner");
   const form = document.getElementById("geo-demo-form") as HTMLFormElement | null;
   const successEl = document.getElementById("demo-success");
+  const placeholderEl = document.getElementById("demo-placeholder");
   const successTable = document.getElementById("success-table");
-  const resetBtn = document.getElementById("demo-reset");
+  const errorEl = document.getElementById("demo-error");
 
   async function detectGeo() {
     try {
@@ -970,6 +1096,7 @@ const homeFaqs: Faq[] = [
     form?.setAttribute("hidden", "");
     previewEl?.setAttribute("hidden", "");
     errorEl?.setAttribute("hidden", "");
+    placeholderEl?.setAttribute("hidden", "");
     successEl?.removeAttribute("hidden");
   }
 
@@ -979,609 +1106,593 @@ const homeFaqs: Faq[] = [
     errorEl.removeAttribute("hidden");
   }
 
-  function reset() {
-    successEl?.setAttribute("hidden", "");
-    errorEl?.setAttribute("hidden", "");
-    form?.removeAttribute("hidden");
-    previewEl?.removeAttribute("hidden");
-    form?.reset();
-  }
-
-  const errorEl = document.getElementById("demo-error");
-  // The real ollastack endpoint this page POSTs to. Form id
-  // msJu9W4AcmTop0H34mlt1, locked to https://ollastack.com origin,
-  // notify_email vikas@networkershome.com. captchaRequired=false
-  // so the demo isn't blocked by a security check; per-IP rate
-  // limit + ML quarantine still apply.
   const SUBMIT_ENDPOINT = "https://login.ollastack.com/api/submit/uiwaivrpteebnhtt";
 
   form?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const fd = new FormData(form);
     const payload: Record<string, string> = {};
-    fd.forEach((v, k) => (payload[k] = String(v)));
-
-    errorEl?.setAttribute("hidden", "");
-    const btn = form.querySelector<HTMLButtonElement>(".demo-submit");
-    const originalHtml = btn?.innerHTML;
-    if (btn) {
-      btn.disabled = true;
-      btn.innerHTML = "Submitting…";
-    }
-
+    fd.forEach((v, k) => { payload[k] = String(v); });
+    const submitBtn = form.querySelector<HTMLButtonElement>(".demo-submit");
+    if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = "Sending…"; }
     try {
       const res = await fetch(SUBMIT_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({ ...payload, _geo: detectedGeo }),
       });
-      const data = await res.json().catch(() => ({} as { id?: string; error?: { message?: string } }));
-      if (!res.ok) {
-        const msg = data?.error?.message ?? `Submit failed (HTTP ${res.status}). Please try again.`;
-        showError(msg);
-        return;
-      }
+      const data = (await res.json().catch(() => ({}))) as { success?: boolean; id?: string; message?: string };
+      if (!res.ok) { showError(data?.message ?? "Submission failed. Please try again."); return; }
       showSuccess(payload, data?.id ?? "sub_demo");
     } catch (err) {
       showError("Network error — please try again.");
     } finally {
-      if (btn && originalHtml) {
-        btn.disabled = false;
-        btn.innerHTML = originalHtml;
-      }
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = 'Submit demo <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>'; }
     }
   });
-
-  resetBtn?.addEventListener("click", reset);
 
   detectGeo();
 </script>
 
 <style>
-  /* (Announcement banner styles now live in components/AnnouncementBar.astro) */
-
-  /* ---- Hero — two-column on desktop, stacked on mobile ---- */
+  /* ===== HERO ===== */
   .hero {
-    padding: 72px 0 56px;
+    padding: 80px 0 88px;
     border-bottom: 1px solid var(--line);
   }
   .hero-grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 48px;
-    align-items: start;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+    max-width: var(--container-wide);
+    margin: 0 auto;
   }
-  @media (min-width: 1000px) {
-    .hero-grid {
-      grid-template-columns: minmax(0, 1fr) minmax(420px, 520px);
-      gap: 64px;
-      align-items: center;
-    }
-  }
-  .hero-copy { display: flex; flex-direction: column; align-items: flex-start; }
-  .chip .dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 999px;
-    background: var(--accent);
-    box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.18);
-  }
-
-  .headline {
-    font-size: 72px;
-    margin: 22px 0 20px;
-    letter-spacing: -0.04em;
-    line-height: 0.97;
-    max-width: 14ch;
-    color: var(--ink);
-  }
-  .headline .muted { color: var(--muted-2); font-weight: 500; }
-  .headline .brand-red-text { color: var(--brand-red); }
-
-  /* GEO tagline — accent line right under the headline, makes the
-     differentiator scannable in 1 second. */
-  .hero-geo-tagline {
+  .hero-copy { display: flex; flex-direction: column; gap: 22px; }
+  .chip {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    margin: 0 0 18px;
-    padding: 8px 14px;
-    background: var(--accent-soft);
-    border: 1px solid #cfdcff;
+    gap: 7px;
+    padding: 4px 10px;
     border-radius: 999px;
-    font-size: 14px;
-    color: var(--accent-2);
-    font-weight: 500;
-    letter-spacing: -0.005em;
-  }
-  .hero-geo-tagline strong { color: var(--accent-2); font-weight: 600; }
-  .hero-geo-tagline .geo-marker { font-size: 15px; }
-
-  .subhead {
-    font-size: 17.5px;
-    color: var(--muted);
-    line-height: 1.6;
-    max-width: 620px;
-    margin: 0 0 28px;
-  }
-  .inline-code {
     background: var(--bg-sunken);
     border: 1px solid var(--line);
-    padding: 1px 6px;
-    border-radius: var(--r-1);
-    font-family: var(--font-mono);
-    font-size: 0.92em;
+    font-size: 11px;
+    color: var(--muted);
+    width: fit-content;
   }
-  .hero-ctas {
+  .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--brand-red);
+  }
+  .headline {
+    font-size: 52px;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin: 0;
+    color: var(--ink);
+  }
+  .brand-red-text { color: #e11d48; }
+  .subhead {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.65;
+    margin: 0;
+    max-width: 500px;
+  }
+  .hero-ctas { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .hero-geo-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: var(--r-3);
+    padding: 12px 16px;
+    font-size: 13.5px;
+    color: #1e40af;
+    max-width: 420px;
+  }
+  .geo-pin { flex-shrink: 0; font-size: 16px; }
+
+  /* ===== HERO DIAGRAM ===== */
+  .hero-diagram {
+    position: relative;
+    height: 420px;
+    display: grid;
+    place-items: center;
+  }
+  .diag-hub {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 160px;
+    background: #fff;
+    border: 2px solid #e11d48;
+    border-radius: 12px;
+    padding: 18px 16px;
+    text-align: center;
+    box-shadow: 0 0 24px rgba(225, 29, 72, 0.12), 0 4px 16px rgba(0,0,0,0.06);
+    z-index: 2;
+  }
+  .diag-hub-icon { margin-bottom: 8px; }
+  .diag-hub-name {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+  }
+  .diag-hub-sub {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 4px;
+    line-height: 1.5;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  /* Diagram cards */
+  .diag-card {
+    position: absolute;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 11px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    max-width: 170px;
+    z-index: 2;
+  }
+  .diag-card-top { top: 4px; left: 50%; transform: translateX(-50%); }
+  .diag-card-left { bottom: 80px; left: 0; }
+  .diag-card-right { bottom: 80px; right: 0; }
+  .diag-card-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: var(--bg-sunken);
+    border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    color: var(--muted);
+  }
+  .diag-card-icon-red {
+    background: #e11d48;
+    border-color: #e11d48;
+  }
+  .diag-card-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+  }
+  .diag-num { color: var(--muted-2); }
+  .diag-card-desc {
+    font-size: 10.5px;
+    color: var(--muted);
+    line-height: 1.45;
+    margin-top: 2px;
+  }
+
+  /* Aux chips */
+  .diag-aux {
+    position: absolute;
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 24px;
-    flex-wrap: wrap;
-  }
-
-  .hero-note {
-    margin-top: 8px;
-    color: var(--muted-2);
-    font-size: 12.5px;
-  }
-  .hero-note a {
-    color: var(--ink);
-    border-bottom: 1px dashed var(--muted-3);
-  }
-
-  /* ---- Hero demo panel (right side) ---- */
-  .hero-demo {
-    background: var(--bg);
-    border: 1px solid var(--line);
-    border-radius: var(--r-4);
-    padding: 24px 26px 22px;
-    box-shadow: var(--shadow-deep);
-    width: 100%;
-    max-width: 520px;
-    justify-self: end;
-  }
-  @media (max-width: 999px) {
-    .hero-demo { justify-self: stretch; max-width: 100%; }
-  }
-
-  .demo-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 11px;
-    color: var(--muted-2);
-    letter-spacing: 0.06em;
-    margin-bottom: 14px;
-  }
-  .demo-eyebrow .dot-live {
-    width: 7px;
-    height: 7px;
-    border-radius: 999px;
-    background: #16a34a;
-    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.22);
-    animation: livePulse 1.8s ease-in-out infinite;
-  }
-  @keyframes livePulse {
-    0%, 100% { box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.22); }
-    50%      { box-shadow: 0 0 0 6px rgba(22, 163, 74, 0.10); }
-  }
-  .demo-title {
-    font-size: 22px;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    margin: 0 0 6px;
-    color: var(--ink);
-    line-height: 1.2;
-  }
-  .demo-sub {
-    font-size: 13.5px;
+    gap: 6px;
+    font-size: 9.5px;
     color: var(--muted);
-    line-height: 1.5;
-    margin: 0 0 18px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-family: var(--font-mono);
+    line-height: 1.3;
+    z-index: 2;
+  }
+  .diag-aux svg { flex-shrink: 0; }
+  .diag-aux-top-left { top: 60px; left: 8px; }
+  .diag-aux-top-right { top: 60px; right: 8px; }
+  .diag-aux-bottom { bottom: 8px; left: 50%; transform: translateX(-50%); white-space: nowrap; }
+
+  /* SVG connectors */
+  .diag-connectors {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
   }
 
-  .demo-form { display: flex; flex-direction: column; gap: 12px; }
-  .demo-field { display: flex; flex-direction: column; gap: 4px; }
-  .demo-field-label {
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--ink-2);
-    letter-spacing: -0.005em;
+  /* ===== LIVE DEMO ===== */
+  .live-demo {
+    padding: 80px 0;
+    border-bottom: 1px solid var(--line);
+    background: #fafafa;
   }
+  .demo-header {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 40px;
+  }
+  .demo-header-right {}
+  .demo-title {
+    font-size: 36px;
+    letter-spacing: -0.025em;
+    margin: 8px 0 0;
+    color: var(--ink);
+  }
+  .demo-subtitle {
+    font-size: 15px;
+    color: var(--muted);
+    margin: 6px 0 0;
+  }
+  .demo-layout {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 24px;
+    align-items: start;
+    max-width: 860px;
+  }
+  .demo-form-wrap {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .demo-form { display: flex; flex-direction: column; gap: 16px; }
+  .demo-field { display: flex; flex-direction: column; gap: 5px; }
+  .demo-field-label { font-size: 13px; font-weight: 500; color: var(--ink); }
   .demo-field input,
   .demo-field textarea {
     font: inherit;
-    color: var(--ink);
-    background: var(--bg);
-    border: 1px solid var(--line);
-    border-radius: var(--r-2);
-    padding: 9px 12px;
     font-size: 14px;
-    line-height: 1.45;
-    transition: border-color 0.12s ease, box-shadow 0.12s ease;
-    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--line-2);
+    border-radius: var(--r-2);
+    background: var(--bg);
+    color: var(--ink);
+    outline: none;
+    resize: vertical;
+    transition: border-color 0.12s;
   }
   .demo-field input:focus,
-  .demo-field textarea:focus {
-    outline: none;
-    border-color: var(--ink);
-    box-shadow: 0 0 0 3px rgba(10, 10, 10, 0.06);
-  }
-  .demo-field textarea { resize: vertical; min-height: 70px; }
-
+  .demo-field textarea:focus { border-color: var(--ink); }
   .demo-geo-preview {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 10px 12px;
-    background: var(--accent-soft);
-    border: 1px solid #cfdcff;
-    border-radius: var(--r-2);
-    color: var(--accent-2);
+    gap: 8px;
     font-size: 12.5px;
-    line-height: 1.45;
-    margin-top: 4px;
-  }
-  .demo-geo-preview strong { font-weight: 600; }
-  .geo-spinner {
-    flex-shrink: 0;
-    width: 12px;
-    height: 12px;
-    border-radius: 999px;
-    border: 2px solid #cfdcff;
-    border-top-color: var(--accent);
-    animation: geoSpin 0.8s linear infinite;
-  }
-  .geo-spinner.ready {
-    animation: none;
-    border-color: var(--accent);
-    background: var(--accent);
-    box-shadow: inset 0 0 0 2px var(--accent-soft);
-  }
-  @keyframes geoSpin { to { transform: rotate(360deg); } }
-
-  .demo-submit { width: 100%; justify-content: center; margin-top: 4px; }
-  .demo-submit:disabled { opacity: 0.65; cursor: wait; }
-
-  .demo-error {
-    margin-top: 8px;
-    padding: 9px 12px;
-    border-radius: var(--r-2);
-    background: #fef2f2;
-    border: 1px solid #fecaca;
-    color: #991b1b;
-    font-size: 12.5px;
-    line-height: 1.45;
-  }
-
-  /* Success state shown after submit */
-  .demo-success { display: flex; flex-direction: column; gap: 14px; }
-  .success-head {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 15px;
-    color: var(--ink);
-  }
-  .success-check {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 22px;
-    height: 22px;
-    border-radius: 999px;
-    background: #16a34a;
-    color: #fff;
-    font-size: 13px;
-    font-weight: 700;
-  }
-  .success-sub {
-    font-size: 13px;
     color: var(--muted);
-    margin: -8px 0 0;
-    line-height: 1.5;
-  }
-  .success-table {
-    display: grid;
-    grid-template-columns: 110px 1fr;
-    gap: 8px 14px;
-    margin: 0;
-    padding: 14px 16px;
+    padding: 8px 12px;
     background: var(--bg-sunken);
     border-radius: var(--r-2);
-    border: 1px solid var(--line-2);
-    font-family: var(--font-mono);
-    font-size: 12.5px;
   }
-  .success-table dt {
-    color: var(--muted-2);
-    text-transform: lowercase;
+  .geo-spinner {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    border: 1.5px solid var(--muted-3);
+    border-top-color: var(--muted);
+    animation: spin 0.8s linear infinite;
+    flex-shrink: 0;
   }
-  .success-table dd {
-    margin: 0;
-    color: var(--ink);
-    word-break: break-word;
-  }
-  .demo-reset {
-    align-self: flex-start;
-    font-family: var(--font-mono);
-    font-size: 12.5px;
-    color: var(--ink);
-    border-bottom: 1px dashed var(--muted-3);
-    padding: 0;
-  }
-  .demo-reset:hover { border-bottom-color: var(--ink); }
-
-  /* ---- Drop-in code section (relocated from the hero) ---- */
-  .dropin {
-    padding: 72px 0;
-    border-bottom: 1px solid var(--line);
-    background: var(--bg-elev);
-  }
-  .dropin .code-tabs { max-width: 1000px; margin: 0 auto; }
-  .dropin-note { text-align: center; margin: 24px 0 0; }
-
-  /* ---- Code tabs ---- */
-  .code-tabs {
-    width: 100%;
-    max-width: 920px;
-    background: var(--code-bg);
-    color: var(--code-fg);
-    border-radius: var(--r-3);
-    overflow: hidden;
-    box-shadow: var(--shadow-deep);
-    font-family: var(--font-mono);
-    border: 1px solid #1f1f22;
-  }
-  .tabs-bar {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-    padding: 6px 6px 0;
-    background: var(--code-bg-2);
-    border-bottom: 1px solid #1f1f22;
-    overflow-x: auto;
-  }
-  .tab {
-    background: transparent;
-    color: var(--muted-2);
-    padding: 8px 14px;
-    border-radius: var(--r-2) var(--r-2) 0 0;
-    font-size: 12.5px;
-    font-family: var(--font-mono);
-    border: 1px solid transparent;
-    border-bottom: 0;
-    margin-bottom: -1px;
-    cursor: pointer;
-    transition: color 0.12s ease, background 0.12s ease;
-  }
-  .tab:hover { color: var(--code-fg); }
-  .tab.active {
-    color: var(--code-fg);
-    background: var(--code-bg);
-    border-color: #1f1f22;
-  }
-  .tabs-spacer { flex: 1; }
-  .tabs-meta {
-    color: #6b7280;
-    font-size: 11.5px;
-    padding: 0 10px;
-  }
-  .code-pane {
-    padding: 22px 26px;
+  .geo-spinner.ready { animation: none; background: var(--ok); border-color: var(--ok); }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .demo-submit { width: 100%; justify-content: center; }
+  .demo-error {
     font-size: 13px;
-    line-height: 1.7;
-    margin: 0;
-    white-space: pre-wrap;
-    word-break: break-word;
+    color: var(--err);
+    padding: 8px 12px;
+    background: #fef2f2;
+    border-radius: var(--r-2);
   }
-  .code-pane.hidden { display: none; }
-  .code-pane .prompt { color: var(--code-prompt); margin-right: 8px; }
-  .code-pane .cmd    { color: var(--code-cmd); font-weight: 600; }
-  .code-pane .str    { color: var(--code-str); }
-  .code-pane .key    { color: var(--code-key); }
-  .code-pane .fn     { color: var(--code-fn); }
-  .code-pane .pun    { color: var(--code-pun); }
-  .code-pane .hl     { color: var(--accent); }
-  .code-pane .ok     { color: var(--code-ok); display: inline-block; margin-top: 8px; }
-  .code-pane .muted  { color: var(--code-muted, #6b7280); display: inline-block; margin-top: 8px; }
 
-  /* ---- § 0.5 Live API console (reuses .code-pane + tokens) ---- */
-  .api-console { padding: 8px 0 44px; }
-  .console {
-    max-width: 980px;
-    margin: 0 auto;
-    border: 1px solid var(--line);
-    border-radius: var(--r-4);
-    overflow: hidden;
-    background: var(--bg-elev);
-    box-shadow: var(--shadow-card);
-  }
-  .console-tabs {
+  .demo-arrow {
     display: flex;
     align-items: center;
     gap: 4px;
-    padding: 8px 10px;
+    padding-top: 100px;
+    color: var(--muted-3);
+  }
+  .demo-arrow-line {
+    width: 32px;
+    border-top: 2px dashed #d1d5db;
+  }
+
+  .demo-result-wrap,
+  .demo-result-placeholder {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .demo-result-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .demo-result-card-empty { opacity: 0.6; }
+  .result-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .result-check {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: #10b981;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .result-check-pending {
+    background: var(--line);
+    color: var(--muted-2);
+  }
+  .result-waiting-hint { font-size: 13px; color: var(--muted-2); margin: 0; }
+  .result-table {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 6px 12px;
+    font-size: 13px;
+    margin: 0;
+  }
+  .result-table dt { color: var(--muted); }
+  .result-table dd { color: var(--ink); margin: 0; word-break: break-all; }
+  .result-link {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--ink);
+    border-bottom: 1px solid var(--line-2);
+    transition: border-color 0.12s;
+  }
+  .result-link:hover { border-color: var(--ink); }
+
+  /* Globe visual */
+  .demo-globe {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+  }
+  .globe-rings {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .globe-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid var(--line-2);
+  }
+  .globe-ring-1 { width: 50px; height: 50px; }
+  .globe-ring-2 { width: 80px; height: 80px; opacity: 0.6; }
+  .globe-ring-3 { width: 110px; height: 110px; opacity: 0.3; }
+  .globe-node {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+  }
+
+  /* ===== ONE PLATFORM ===== */
+  .platform {
+    padding: 80px 0;
     border-bottom: 1px solid var(--line);
-    background: var(--bg-sunken);
+  }
+  .platform-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    gap: 24px;
     flex-wrap: wrap;
   }
-  .ctab {
-    appearance: none;
-    border: 1px solid transparent;
-    background: transparent;
-    color: var(--muted);
-    font-family: var(--font-sans);
-    font-size: 14px;
-    padding: 6px 12px;
-    border-radius: var(--r-2);
-    cursor: pointer;
-    transition: background 0.12s, color 0.12s, border-color 0.12s;
-  }
-  .ctab:hover { color: var(--ink); background: var(--bg); }
-  .ctab.active { color: var(--ink); background: var(--bg); border-color: var(--line); font-weight: 500; }
-  .console-tabs .tabs-spacer { flex: 1 1 auto; }
-  .console-tabs .tabs-meta { font-size: 12px; color: var(--muted-2); white-space: nowrap; }
-  .console-panel { padding: 16px; display: grid; gap: 12px; }
-  .console-panel.hidden { display: none; }
-  .console-req { display: grid; gap: 10px; align-content: start; }
-  .console-curl, .console-res { margin: 0; }
-  .console-res { min-height: 76px; }
-  .console-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-  .console-hint { font-size: 12px; color: var(--muted-2); }
-  @media (min-width: 860px) {
-    .console-panel { grid-template-columns: 1fr 1fr; align-items: stretch; }
-    .console-panel .console-res { height: 100%; }
-  }
-
-  /* ---- Section heads ---- */
-  .section-head {
-    margin-bottom: 40px;
-    max-width: 720px;
-  }
-  .section-head .eyebrow { display: inline-block; margin-bottom: 12px; }
-  .section-title {
-    font-size: 40px;
-    margin: 0 0 16px;
+  .platform-title {
+    font-size: 38px;
     letter-spacing: -0.025em;
-  }
-  .section-sub {
-    font-size: 16px;
-    color: var(--muted);
-    line-height: 1.6;
-    margin: 0;
-    max-width: 560px;
-  }
-  .section-sub a {
+    margin: 8px 0 0;
     color: var(--ink);
-    border-bottom: 1px dashed var(--muted-3);
   }
-
-  /* ---- Pricing ---- */
-  .pricing { padding: 88px 0; }
-  .price-grid {
+  .platform-sub {
+    font-size: 15px;
+    color: var(--muted);
+    margin: 10px 0 0;
+    line-height: 1.6;
+  }
+  .platform-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 16px;
-    align-items: stretch;
   }
-  .price-card {
-    background: var(--bg);
+  .platform-card {
     border: 1px solid var(--line);
-    border-radius: var(--r-4);
-    padding: 28px;
+    border-radius: 12px;
+    padding: 24px;
+    background: var(--bg);
     display: flex;
     flex-direction: column;
-    position: relative;
+    gap: 10px;
   }
-  .price-card-pop {
-    border-color: var(--ink);
-    box-shadow: 0 0 0 1px var(--ink) inset;
+  .platform-card-accent { border-color: var(--ink); }
+  .platform-card-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
-  .price-pop-tag {
-    position: absolute;
-    top: -10px;
-    left: 24px;
-    background: var(--ink);
-    color: #fff;
+  .platform-card-num {
+    font-size: 11px;
+    color: var(--muted-2);
+    background: var(--bg-sunken);
+    border: 1px solid var(--line);
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+  .platform-card-tag {
     font-size: 10.5px;
-    padding: 3px 10px;
-    border-radius: 999px;
-    letter-spacing: 0.04em;
-  }
-  .price-head { margin-bottom: 20px; }
-  .price-name {
-    font-size: 14px;
-    font-weight: 500;
-    margin: 0 0 12px;
+    color: var(--muted);
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: var(--muted);
   }
-  .price-amount {
-    font-size: 14px;
-    margin: 0 0 8px;
-    color: var(--muted);
-  }
-  .price-amount strong {
-    font-size: 40px;
-    color: var(--ink);
+  .platform-card-name {
+    font-size: 19px;
     font-weight: 600;
-    letter-spacing: -0.025em;
-    margin-right: 4px;
-  }
-  .price-blurb {
-    font-size: 13.5px;
-    color: var(--muted);
+    letter-spacing: -0.015em;
     margin: 0;
-    line-height: 1.5;
+    color: var(--ink);
   }
-  .price-feats {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 24px;
-    flex: 1;
-  }
-  .price-feats li {
+  .platform-card-body {
     font-size: 13.5px;
-    color: var(--ink-2);
-    padding: 8px 0 8px 22px;
-    position: relative;
-    line-height: 1.5;
-    border-bottom: 1px solid var(--line-3);
-  }
-  .price-feats li:last-child { border-bottom: 0; }
-  .price-feats li::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 13px;
-    width: 12px;
-    height: 12px;
-    border-radius: 999px;
-    border: 1px solid var(--line-2);
-    background: var(--bg-elev);
-  }
-  .price-feats li::after {
-    content: "";
-    position: absolute;
-    left: 3px;
-    top: 16px;
-    width: 6px;
-    height: 6px;
-    border-radius: 999px;
-    background: var(--accent);
-  }
-  .price-feats strong { color: var(--ink); font-weight: 600; }
-  .price-cta { width: 100%; justify-content: center; }
-  .price-foot {
-    text-align: center;
-    color: var(--muted-2);
-    font-size: 12.5px;
-    margin-top: 32px;
-  }
-  .price-foot a { color: var(--ink); border-bottom: 1px dashed var(--muted-3); }
-  .price-honest {
-    text-align: center;
-    max-width: 620px;
-    margin: 40px auto 0;
     color: var(--muted);
-    font-size: 14.5px;
-    line-height: 1.65;
+    line-height: 1.55;
+    margin: 0;
   }
-  .inline-link {
+  .platform-card-preview {
+    flex: 1;
+    margin: 4px 0;
+    border-radius: var(--r-3);
+    overflow: hidden;
+    border: 1px solid var(--line-3);
+  }
+  .platform-card-preview-code {
+    background: var(--code-bg);
+  }
+  .code-preview {
+    margin: 0;
+    padding: 14px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1.6;
+    overflow: auto;
+    color: var(--code-fg);
+  }
+  .cp-method { color: #93c5fd; }
+  .cp-url { color: #86efac; }
+  .cp-key { color: #a1a1aa; }
+  .cp-val { color: #fcd34d; }
+  .cp-brace { color: var(--code-fg); }
+  .cp-field { color: #f9a8d4; }
+  .cp-str { color: #86efac; }
+
+  .platform-card-preview-inbox {
+    background: var(--bg-elev);
+    padding: 2px 0;
+  }
+  .inbox-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 12px;
+    font-size: 12px;
+    border-bottom: 1px solid var(--line-3);
+    gap: 8px;
+  }
+  .inbox-row:last-child { border-bottom: 0; }
+  .inbox-row-header { background: var(--bg-sunken); }
+  .inbox-addr { font-size: 11.5px; color: var(--ink); font-weight: 500; font-family: var(--font-mono); }
+  .inbox-count {
+    background: #e11d48;
+    color: #fff;
+    border-radius: 999px;
+    font-size: 10px;
+    padding: 1px 6px;
+    font-weight: 700;
+  }
+  .inbox-subject { color: var(--ink); flex: 1; }
+  .inbox-meta { color: var(--muted-2); font-size: 11px; white-space: nowrap; }
+
+  .platform-card-preview-ci {
+    background: var(--bg-elev);
+    padding: 2px 0;
+  }
+  .ci-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    font-size: 12px;
+    border-bottom: 1px solid var(--line-3);
+    gap: 8px;
+  }
+  .ci-row:last-child { border-bottom: 0; }
+  .ci-label { color: var(--ink); font-family: var(--font-mono); font-size: 11px; }
+  .ci-copy {
+    font-size: 11px;
+    color: var(--muted);
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 2px 8px;
+    cursor: pointer;
+  }
+  .ci-check { color: var(--ink); font-size: 11.5px; }
+  .ci-badge { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px; }
+  .ci-badge-ok { background: #dcfce7; color: #15803d; }
+  .platform-card-link {
+    font-size: 12.5px;
     color: var(--ink);
     border-bottom: 1px dashed var(--muted-3);
+    align-self: flex-start;
+    transition: border-color 0.12s;
   }
-  .inline-link:hover { border-bottom-color: var(--ink); }
+  .platform-card-link:hover { border-color: var(--ink); }
 
-  /* ---- § 1 Paths ---- */
+  /* ===== TRUSTED BY BUILDERS ===== */
+  .trusted {
+    padding: 48px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: var(--bg-elev);
+  }
+  .trusted-label {
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted-2);
+    letter-spacing: 0.08em;
+    margin: 0 0 24px;
+  }
+  .trusted-logos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 36px;
+    flex-wrap: wrap;
+  }
+  .trusted-logo {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 14px;
+    color: var(--muted);
+    font-weight: 500;
+    opacity: 0.7;
+    transition: opacity 0.15s;
+  }
+  .trusted-logo:hover { opacity: 1; }
+
+  /* ===== PATHS / CAPABILITIES / CONSOLE / DROPIN ===== */
   .paths { padding: 88px 0; border-top: 1px solid var(--line); }
   .paths-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 16px;
+  }
+  @media (min-width: 960px) {
+    .paths-grid { grid-template-columns: repeat(4, 1fr); }
   }
   .path-card {
     background: var(--bg);
@@ -1624,9 +1735,100 @@ const homeFaqs: Faq[] = [
     border-bottom: 1px dashed var(--muted-3);
     align-self: flex-start;
   }
-  .path-link:hover { border-bottom-color: var(--ink); }
+  .path-link:hover { border-color: var(--ink); }
 
-  /* ---- § 2 Capabilities ---- */
+  .api-console { padding: 88px 0; border-top: 1px solid var(--line); }
+  .console {
+    border: 1px solid var(--line);
+    border-radius: var(--r-4);
+    overflow: hidden;
+  }
+  .console-tabs {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--line);
+    background: var(--bg-sunken);
+    flex-wrap: wrap;
+  }
+  .ctab {
+    appearance: none;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--muted);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    padding: 6px 12px;
+    border-radius: var(--r-2);
+    cursor: pointer;
+    transition: background 0.12s, color 0.12s, border-color 0.12s;
+  }
+  .ctab:hover { color: var(--ink); background: var(--bg); }
+  .ctab.active { color: var(--ink); background: var(--bg); border-color: var(--line); font-weight: 500; }
+  .console-tabs .tabs-spacer { flex: 1 1 auto; }
+  .console-tabs .tabs-meta { font-size: 12px; color: var(--muted-2); white-space: nowrap; }
+  .console-panel { padding: 16px; display: grid; gap: 12px; }
+  .console-panel.hidden { display: none; }
+  .console-req { display: grid; gap: 10px; align-content: start; }
+  .console-curl, .console-res { margin: 0; }
+  .console-res { min-height: 76px; }
+  .console-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .console-hint { font-size: 12px; color: var(--muted-2); }
+  @media (min-width: 860px) {
+    .console-panel { grid-template-columns: 1fr 1fr; align-items: stretch; }
+    .console-panel .console-res { height: 100%; }
+  }
+
+  .dropin { padding: 88px 0; background: var(--bg-elev); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .code-tabs { border: 1px solid var(--line); border-radius: var(--r-4); overflow: hidden; }
+  .tabs-bar {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--line);
+    background: var(--bg-sunken);
+    flex-wrap: wrap;
+  }
+  .tab {
+    appearance: none;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--muted);
+    font-family: var(--font-sans);
+    font-size: 13.5px;
+    padding: 5px 11px;
+    border-radius: var(--r-2);
+    cursor: pointer;
+    transition: background 0.12s, color 0.12s, border-color 0.12s;
+  }
+  .tab:hover { color: var(--ink); background: var(--bg); }
+  .tab.active { color: var(--ink); background: var(--bg); border-color: var(--line); font-weight: 500; }
+  .tabs-spacer { flex: 1 1 auto; }
+  .tabs-meta { font-size: 12px; color: var(--muted-2); }
+  .code-pane {
+    margin: 0;
+    padding: 20px 22px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.65;
+    background: var(--code-bg);
+    color: var(--code-fg);
+    overflow-x: auto;
+    tab-size: 2;
+  }
+  .code-pane.hidden { display: none; }
+  .code-pane .prompt { color: var(--code-prompt); }
+  .code-pane .cmd { color: var(--code-cmd); }
+  .code-pane .str { color: var(--code-str); }
+  .code-pane .hl { color: var(--code-var); }
+  .code-pane .muted { color: var(--code-com); }
+  .code-pane .ok { color: var(--code-ok); }
+  .code-pane .key { color: var(--code-key); }
+  .code-pane .fn { color: var(--code-fn); }
+  .code-pane .pun { color: var(--code-pun); }
+
   .capabilities { padding: 88px 0; background: var(--bg-elev); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
   .cap-list {
     margin: 0;
@@ -1642,106 +1844,78 @@ const homeFaqs: Faq[] = [
     padding: 22px 0;
     border-bottom: 1px solid var(--line-2);
   }
-  .cap-row dt {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--ink);
-    letter-spacing: -0.01em;
-  }
-  .cap-row dd {
-    margin: 0;
-    font-size: 14.5px;
-    color: var(--muted);
-    line-height: 1.65;
-  }
+  .cap-row dt { font-size: 15px; font-weight: 600; color: var(--ink); letter-spacing: -0.01em; }
+  .cap-row dd { margin: 0; font-size: 14.5px; color: var(--muted); line-height: 1.65; }
   .cap-row dd a { color: var(--ink); }
 
-  /* ---- § Headless. By design. ---- */
-  .headless { padding: 88px 0; }
-  .headless-panel {
-    max-width: 760px;
-    margin: 0 auto;
-    text-align: center;
+  /* ===== PRICING ===== */
+  .pricing { padding: 88px 0; }
+  .price-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    align-items: stretch;
   }
-  .headless-panel .eyebrow { display: inline-block; margin-bottom: 12px; }
-  .headless-title {
-    font-size: 44px;
-    margin: 0 0 18px;
-    letter-spacing: -0.025em;
-    line-height: 1.05;
-    color: var(--ink);
+  .price-card {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: var(--r-4);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
   }
-  .headless-body {
-    font-size: 17px;
-    color: var(--muted);
-    line-height: 1.7;
-    margin: 0;
-    max-width: 640px;
-    margin-left: auto;
-    margin-right: auto;
+  .price-card-pop { border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink) inset; }
+  .price-pop-tag {
+    position: absolute;
+    top: -10px;
+    left: 24px;
+    background: var(--ink);
+    color: #fff;
+    font-size: 10.5px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    letter-spacing: 0.04em;
   }
-
-  /* ---- § Closing CTA ---- */
-  .closing {
-    padding: 96px 0 112px;
+  .price-head { margin-bottom: 20px; }
+  .price-name { font-size: 14px; font-weight: 500; margin: 0 0 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+  .price-amount { font-size: 14px; margin: 0 0 8px; color: var(--muted); }
+  .price-amount strong { font-size: 40px; color: var(--ink); font-weight: 600; letter-spacing: -0.025em; margin-right: 4px; }
+  .price-blurb { font-size: 13.5px; color: var(--muted); margin: 0; line-height: 1.5; }
+  .price-feats { list-style: none; padding: 0; margin: 0 0 24px; flex: 1; }
+  .price-feats li {
+    font-size: 13.5px;
+    color: var(--ink-2);
+    padding: 8px 0 8px 22px;
+    position: relative;
+    line-height: 1.5;
+    border-bottom: 1px solid var(--line-3);
+  }
+  .price-feats li:last-child { border-bottom: 0; }
+  .price-feats li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 13px;
+    width: 12px; height: 12px;
+    border-radius: 999px;
+    border: 1px solid var(--line-2);
     background: var(--bg-elev);
-    border-top: 1px solid var(--line);
   }
-  .closing-band {
-    max-width: 720px;
-    margin: 0 auto;
-    text-align: center;
+  .price-feats li::after {
+    content: "";
+    position: absolute;
+    left: 3px; top: 16px;
+    width: 6px; height: 6px;
+    border-radius: 999px;
+    background: var(--accent);
   }
-  .closing-title {
-    font-size: 40px;
-    letter-spacing: -0.025em;
-    line-height: 1.1;
-    margin: 0 0 16px;
-    color: var(--ink);
-  }
-  .closing-sub {
-    font-size: 16px;
-    color: var(--muted);
-    line-height: 1.65;
-    margin: 0 0 28px;
-    max-width: 560px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .closing-sub a {
-    color: var(--ink);
-    border-bottom: 1px dashed var(--muted-3);
-  }
-  .closing-ctas {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
+  .price-feats strong { color: var(--ink); font-weight: 600; }
+  .price-cta { width: 100%; justify-content: center; }
 
-  /* ---- § 3.5 FAQ (answer blocks) ---- */
-  .reshub { padding: 80px 0; border-top: 1px solid var(--line); }
-  .reshub-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 28px; gap: 16px; flex-wrap: wrap; }
-  .reshub-title { font-size: 28px; letter-spacing: -0.02em; margin: 0; }
-  .reshub-all { font-size: 14px; color: var(--accent); white-space: nowrap; }
-  .reshub-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  .reshub-card { display: flex; flex-direction: column; gap: 8px; padding: 22px 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); transition: border-color 0.15s ease, transform 0.15s ease; }
-  .reshub-card:hover { border-color: var(--ink); transform: translateY(-1px); }
-  .reshub-k { font-size: 12px; color: var(--brand-red, #DA291C); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
-  .reshub-d { font-size: 14px; color: var(--muted); line-height: 1.55; }
-  @media (max-width: 820px) { .reshub-grid { grid-template-columns: 1fr; } }
-
+  /* ===== FAQ ===== */
   .faq-home { padding: 88px 0; border-top: 1px solid var(--line); }
-  .faq-home-list {
-    max-width: 760px;
-    margin: 0;
-    border-top: 1px solid var(--line);
-  }
-  .faq-home-item {
-    border-bottom: 1px solid var(--line);
-    padding: 20px 0;
-  }
+  .faq-home-list { max-width: 760px; margin: 0; border-top: 1px solid var(--line); }
+  .faq-home-item { border-bottom: 1px solid var(--line); padding: 20px 0; }
   .faq-home-item summary {
     font-weight: 600;
     font-size: 16.5px;
@@ -1755,36 +1929,63 @@ const homeFaqs: Faq[] = [
     gap: 16px;
   }
   .faq-home-item summary::-webkit-details-marker { display: none; }
-  .faq-home-item summary::after {
-    content: "+";
-    color: var(--muted);
-    font-size: 20px;
-    font-weight: 400;
-    flex-shrink: 0;
-  }
+  .faq-home-item summary::after { content: "+"; color: var(--muted); font-size: 20px; font-weight: 400; flex-shrink: 0; }
   .faq-home-item[open] summary::after { content: "−"; }
-  .faq-home-item p {
-    margin: 12px 0 0;
-    color: var(--muted);
-    font-size: 15px;
-    line-height: 1.65;
-    max-width: 68ch;
-  }
+  .faq-home-item p { margin: 12px 0 0; color: var(--muted); font-size: 15px; line-height: 1.65; max-width: 68ch; }
 
-  /* ---- Responsive ---- */
-  @media (max-width: 960px) {
-    .headline { font-size: 56px; }
-    .section-title { font-size: 32px; }
-    .headless-title { font-size: 34px; }
-    .closing-title { font-size: 30px; }
+  /* ===== RESHUB ===== */
+  .reshub { padding: 80px 0; border-top: 1px solid var(--line); }
+  .reshub-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 28px; gap: 16px; flex-wrap: wrap; }
+  .reshub-title { font-size: 28px; letter-spacing: -0.02em; margin: 0; }
+  .reshub-all { font-size: 14px; color: var(--accent); white-space: nowrap; }
+  .reshub-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .reshub-card { display: flex; flex-direction: column; gap: 8px; padding: 22px 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); transition: border-color 0.15s, transform 0.15s; }
+  .reshub-card:hover { border-color: var(--ink); transform: translateY(-1px); }
+  .reshub-k { font-size: 12px; color: var(--brand-red); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+  .reshub-d { font-size: 14px; color: var(--muted); line-height: 1.55; }
+
+  /* ===== CLOSING ===== */
+  .closing { padding: 96px 0 112px; background: var(--bg-elev); border-top: 1px solid var(--line); }
+  .closing-band { max-width: 720px; margin: 0 auto; text-align: center; }
+  .closing-title { font-size: 40px; letter-spacing: -0.025em; line-height: 1.1; margin: 0 0 16px; color: var(--ink); }
+  .closing-sub { font-size: 16px; color: var(--muted); line-height: 1.65; margin: 0 0 28px; max-width: 560px; margin-left: auto; margin-right: auto; }
+  .closing-sub a { color: var(--ink); border-bottom: 1px dashed var(--muted-3); }
+  .closing-ctas { display: inline-flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; }
+
+  /* ===== SHARED SECTION HEADS ===== */
+  .section-head { margin-bottom: 40px; max-width: 720px; }
+  .section-head .eyebrow { display: inline-block; margin-bottom: 12px; }
+  .section-title { font-size: 40px; margin: 0 0 16px; letter-spacing: -0.025em; }
+  .section-sub { font-size: 16px; color: var(--muted); line-height: 1.6; margin: 0; max-width: 560px; }
+  .section-sub a { color: var(--ink); border-bottom: 1px dashed var(--muted-3); }
+  .inline-link { color: var(--ink); border-bottom: 1px dashed var(--muted-3); }
+  .inline-link:hover { border-bottom-color: var(--ink); }
+  .hero-note { font-size: 12.5px; color: var(--muted-2); margin: 0; }
+  .hero-note a { color: var(--ink); }
+  .dropin-note { margin-top: 20px; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 1024px) {
+    .hero-grid { gap: 40px; }
+    .headline { font-size: 42px; }
+  }
+  @media (max-width: 860px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-diagram { height: 380px; }
+    .demo-layout { grid-template-columns: 1fr; }
+    .demo-arrow { display: none; }
+    .platform-grid { grid-template-columns: 1fr; }
     .price-grid { grid-template-columns: 1fr; }
-    .paths-grid { grid-template-columns: 1fr; }
+    .paths-grid { grid-template-columns: 1fr 1fr; }
+    .reshub-grid { grid-template-columns: 1fr; }
     .cap-row { grid-template-columns: 1fr; gap: 6px; }
-    .review-grid { grid-template-columns: 1fr; }
+    .section-title { font-size: 32px; }
+    .closing-title { font-size: 30px; }
+    .platform-head { flex-direction: column; align-items: flex-start; }
   }
   @media (max-width: 600px) {
-    .headline { font-size: 40px; }
-    .headless-title { font-size: 26px; }
+    .headline { font-size: 34px; }
+    .paths-grid { grid-template-columns: 1fr; }
     .closing-title { font-size: 24px; }
   }
 </style>

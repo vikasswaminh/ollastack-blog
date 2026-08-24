@@ -4,19 +4,18 @@ interface Props { current?: string }
 const { current } = Astro.props;
 const APP = "https://login.ollastack.com";
 const links = [
-  { href: "/", label: "Product", id: "home" },
+  { href: "/", label: "Product", id: "home", hasDropdown: true },
   { href: "/use-cases", label: "Use cases", id: "use-cases" },
   { href: "/email-api", label: "Email API", id: "email-api" },
   { href: "/docs", label: "Docs", id: "docs" },
-  { href: "/docs/api", label: "API", id: "api" },
-  { href: "/resources", label: "Resources", id: "resources" },
+  { href: "/resources", label: "Resources", id: "resources", hasDropdown: true },
   { href: "/blog", label: "Blog", id: "blog" },
   { href: "/pricing", label: "Pricing", id: "pricing" },
 ];
 ---
 
 <header class="nav">
-  <div class="container-wide nav-inner">
+  <div class="nav-inner">
     <div class="nav-left">
       <Logo size={24} />
       <nav class="nav-links" aria-label="Primary">
@@ -24,13 +23,20 @@ const links = [
           <a
             href={link.href}
             class:list={["nav-link", current === link.id && "active"]}
-          >{link.label}</a>
+          >
+            {link.label}
+            {link.hasDropdown && (
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            )}
+          </a>
         ))}
       </nav>
     </div>
     <div class="nav-right">
-      <a class="btn btn-ghost btn-sm nav-signin" href={`${APP}/login`}>Sign in</a>
-      <a class="btn btn-primary btn-sm" href={`${APP}/register`}>
+      <a class="nav-signin" href={`${APP}/login`}>Sign in</a>
+      <a class="btn btn-primary btn-sm nav-cta" href={`${APP}/register`}>
         Start free
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true">
           <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -51,7 +57,6 @@ const links = [
     </div>
   </div>
 
-  <!-- Mobile navigation — the ≤720px replacement for the hidden .nav-links -->
   <nav class="nav-mobile" id="nav-mobile" aria-label="Mobile">
     {links.map((link) => (
       <a
@@ -95,31 +100,44 @@ const links = [
     position: sticky;
     top: 0;
     z-index: 50;
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: saturate(160%) blur(10px);
-    -webkit-backdrop-filter: saturate(160%) blur(10px);
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: saturate(160%) blur(12px);
+    -webkit-backdrop-filter: saturate(160%) blur(12px);
     border-bottom: 1px solid var(--line);
   }
   .nav-inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 56px;
+    height: 60px;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+    padding: 0 32px;
   }
-  .nav-left { display: flex; align-items: center; gap: 28px; }
+  .nav-left { display: flex; align-items: center; gap: 32px; }
   .nav-links { display: flex; align-items: center; gap: 2px; }
   .nav-link {
-    font-size: 13.5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 14px;
     color: var(--muted);
     padding: 6px 10px;
     border-radius: var(--r-2);
     transition: color 0.12s ease;
   }
-  .nav-link:hover { color: var(--ink); }
-  .nav-link.active { color: var(--ink); }
-  .nav-right { display: flex; align-items: center; gap: 8px; }
+  .nav-link:hover, .nav-link.active { color: var(--ink); }
+  .nav-right { display: flex; align-items: center; gap: 10px; }
+  .nav-signin {
+    font-size: 14px;
+    color: var(--muted);
+    padding: 6px 10px;
+    border-radius: var(--r-2);
+    transition: color 0.12s ease;
+  }
+  .nav-signin:hover { color: var(--ink); }
+  .nav-cta { border-radius: 20px; }
 
-  /* Hamburger — hidden on desktop, shown ≤720px in place of .nav-links */
   .nav-burger {
     display: none;
     align-items: center;
@@ -133,15 +151,14 @@ const links = [
     border-radius: var(--r-2);
     cursor: pointer;
   }
-  .nav-burger:hover { background: var(--bg-sunken, rgba(0, 0, 0, 0.04)); }
+  .nav-burger:hover { background: var(--bg-sunken); }
 
-  /* Mobile menu panel — a drop-down under the bar, toggled by the burger */
   .nav-mobile {
     display: none;
     flex-direction: column;
     gap: 2px;
     padding: 10px 16px 16px;
-    background: var(--bg, #fff);
+    background: var(--bg);
     border-bottom: 1px solid var(--line);
   }
   .nav-mobile.open { display: flex; }
@@ -154,23 +171,18 @@ const links = [
   .nav-mobile-link:hover,
   .nav-mobile-link.active {
     color: var(--ink);
-    background: var(--bg-sunken, rgba(0, 0, 0, 0.04));
+    background: var(--bg-sunken);
   }
   .nav-mobile-cta { margin-top: 8px; justify-content: center; }
 
-  /* Collapse to the burger at ≤860px: the 8-item inline nav overflows the bar
-     between ~721–819px (verified in-browser), so switch to the menu before that. */
   @media (max-width: 860px) {
     .nav-links { display: none; }
     .nav-burger { display: inline-flex; }
   }
-  /* Never show the mobile panel or burger on desktop, even if JS left it open */
   @media (min-width: 861px) {
     .nav-mobile { display: none !important; }
     .nav-burger { display: none !important; }
   }
-  /* On the narrowest phones, fold the ghost "Sign in" into the menu to
-     avoid crowding the bar (logo + Start free + burger stay). */
   @media (max-width: 460px) {
     .nav-signin { display: none; }
   }

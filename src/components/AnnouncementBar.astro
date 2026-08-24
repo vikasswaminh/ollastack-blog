@@ -1,63 +1,41 @@
 ---
-// Site-wide announcement strip rendered above the Nav. Pure-presentational —
-// content lives here, dismissable behavior could be added later via a
-// localStorage flag if needed.
+// Announcement bar — blueprint: centered gray strip with red dot + geo-smart leads text
 ---
 
 <div class="announce">
-  <div class="container-wide announce-inner">
-    <span class="announce-chip mono">NEW</span>
+  <div class="announce-inner">
+    <span class="announce-dot" aria-hidden="true"></span>
     <span class="announce-text">
-      AI agents now first-class:
-      <span class="mono announce-highlight">authorize · audit · revoke in one click</span>
-      — your agents submit cleanly, bots stay blocked.
+      <strong>GEO-smart leads</strong> — every form submission auto-stamped with country, city, region, and timezone.
     </span>
-    <a href="/docs/agents" class="announce-cta">Read agent docs →</a>
   </div>
 </div>
 
 <style>
   .announce {
-    background: var(--brand-red);
-    color: #fff;
-    border-bottom: 1px solid var(--brand-red-2);
+    background: #f9f9f9;
+    border-bottom: 1px solid #e5e5e7;
   }
   .announce-inner {
     display: flex;
     align-items: center;
-    gap: 12px;
-    height: 38px;
+    justify-content: center;
+    gap: 8px;
+    height: 36px;
     font-size: 13px;
-    color: #ffe4e1;
+    color: #52525b;
+    padding: 0 28px;
   }
-  .announce-chip {
-    background: #fff;
-    color: var(--brand-red);
-    border-radius: 4px;
-    padding: 2px 7px;
-    font-size: 10.5px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-  }
-  .announce-text {
-    flex: 1;
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .announce-highlight { color: #fff; }
-  .announce-cta {
-    color: #fff;
-    font-size: 13px;
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.12s ease;
+  .announce-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #e11d48;
     flex-shrink: 0;
   }
-  .announce-cta:hover { border-color: #fff; }
+  .announce-text strong { color: #0a0a0a; }
 
-  @media (max-width: 720px) {
-    .announce-text { white-space: normal; line-height: 1.3; }
-    .announce-inner { height: auto; padding: 8px 0; }
+  @media (max-width: 640px) {
+    .announce-inner { font-size: 12px; }
   }
 </style>
