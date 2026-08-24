@@ -8,6 +8,15 @@ export interface PostMeta {
 
 export const posts: PostMeta[] = [
   {
+    slug: "how-to-build-a-form-backend-for-a-static-site",
+    title:
+      "How to Build a Form Backend for a Static Site Without Writing a Server",
+    description:
+      "You don't need Express, a database, or a $5/month droplet just to catch a contact form. Here's exactly how to give a static site a real form backend — spam filtering, notifications, webhooks and all — without writing a line of server code.",
+    date: "2026-08-24",
+    readingTime: "21 min read",
+  },
+  {
     slug: "netlify-forms-alternatives",
     title: "Netlify Forms alternatives in 2026: a migration guide",
     description:
