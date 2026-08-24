@@ -41,6 +41,15 @@ export const posts: PostMeta[] = [
     readingTime: "11 min read",
   },
   {
+    slug: "can-ai-agents-submit-forms-safely",
+    title:
+      "Can AI Agents Submit Forms Safely? Here's What Developers Need to Know",
+    description:
+      "AI agents are filling out and submitting forms on behalf of humans at scale. Here's what \"safe\" actually means for that traffic, where it breaks, and how to build (or choose) a form backend that handles it properly.",
+    date: "2026-08-21",
+    readingTime: "21 min read",
+  },
+  {
     slug: "form-backend-for-ai-agents",
     title:
       "Form backend for AI agents: why forms break for LLMs (and what to do)",
