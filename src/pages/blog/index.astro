@@ -48,47 +48,66 @@ const posts = [...legacyPosts, ...collectionPosts].sort((a, b) =>
       {posts.map((post) => (
         <li>
           <a href={`/blog/${post.slug}`} class="post-card">
-            <div class="post-meta mono">
-              <time datetime={post.date}>{fmtDate(post.date)}</time>
-              <span class="dot">·</span>
-              <span>{post.readingTime}</span>
+            <div class="post-card-top">
+              <div class="post-meta mono">
+                <span class="meta-tag">ARTICLE</span>
+                <time datetime={post.date}>{fmtDate(post.date)}</time>
+                <span class="dot">·</span>
+                <span>{post.readingTime}</span>
+              </div>
+              <span class="post-arrow" aria-hidden="true">→</span>
             </div>
             <h2>{post.title}</h2>
             <p>{post.description}</p>
-            <span class="read-more mono">Read →</span>
+            <div class="post-card-bottom">
+              <span class="read-more mono">Read Article <span class="arrow-anim">→</span></span>
+            </div>
           </a>
         </li>
       ))}
     </ul>
 
-    <p class="more-soon mono">More soon.</p>
+    <p class="more-soon mono">More articles coming soon.</p>
   </div>
 </Base>
 
 <style>
   .blog-shell {
     padding: 72px 28px 96px;
-    max-width: 760px;
+    max-width: 860px;
+    margin: 0 auto;
   }
-  .blog-head { margin-bottom: 56px; }
+  .blog-head {
+    margin-bottom: 56px;
+  }
   .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     font-size: 12px;
-    color: var(--muted);
+    color: #ea580c;
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    margin-bottom: 18px;
+    margin-bottom: 22px;
+    box-shadow: 0 1px 3px rgba(234, 88, 12, 0.06);
   }
   .blog-head h1 {
-    font-size: 44px;
-    margin: 0 0 14px;
-    letter-spacing: -0.02em;
-    line-height: 1.05;
+    font-size: 48px;
+    margin: 0 0 18px;
+    letter-spacing: -0.025em;
+    line-height: 1.08;
+    color: var(--ink);
   }
   .lede {
-    font-size: 18px;
+    font-size: 19px;
     color: var(--muted);
-    line-height: 1.6;
-    max-width: 600px;
+    line-height: 1.65;
+    max-width: 680px;
     margin: 0;
   }
   .post-list {
@@ -97,52 +116,115 @@ const posts = [...legacyPosts, ...collectionPosts].sort((a, b) =>
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 22px;
   }
   .post-card {
     display: block;
-    padding: 28px 24px;
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    background: var(--bg);
-    transition: border-color 0.15s ease, transform 0.15s ease;
+    padding: 34px 32px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     color: var(--ink);
+    position: relative;
+    overflow: hidden;
+    text-decoration: none !important;
+  }
+  .post-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background: #ea580c;
+    opacity: 0;
+    transition: opacity 0.2s ease;
   }
   .post-card:hover {
-    border-color: var(--ink);
-    transform: translateY(-1px);
+    border-color: #ea580c;
+    transform: translateY(-3px);
+    box-shadow: 0 16px 36px rgba(234, 88, 12, 0.09);
+  }
+  .post-card:hover::before {
+    opacity: 1;
+  }
+  .post-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
   }
   .post-meta {
-    font-size: 12px;
+    font-size: 12.5px;
     color: var(--muted-2);
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 10px;
+    gap: 10px;
   }
-  .dot { opacity: 0.5; }
+  .meta-tag {
+    background: #fff7ed;
+    color: #ea580c;
+    border: 1px solid #ffedd5;
+    padding: 3px 9px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+  .post-arrow {
+    font-size: 18px;
+    color: var(--muted-3);
+    transition: all 0.2s ease;
+  }
+  .post-card:hover .post-arrow {
+    color: #ea580c;
+    transform: translateX(4px);
+  }
+  .dot { opacity: 0.4; }
   .post-card h2 {
-    font-size: 22px;
-    margin: 0 0 8px;
-    letter-spacing: -0.01em;
-    line-height: 1.3;
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 0 12px;
+    letter-spacing: -0.015em;
+    line-height: 1.32;
+    color: #0f172a;
+    transition: color 0.15s ease;
+  }
+  .post-card:hover h2 {
+    color: #ea580c;
   }
   .post-card p {
-    color: var(--muted);
-    line-height: 1.6;
-    margin: 0 0 14px;
-    font-size: 15px;
+    color: #475569;
+    line-height: 1.65;
+    margin: 0 0 20px;
+    font-size: 15.5px;
+  }
+  .post-card-bottom {
+    display: flex;
+    align-items: center;
   }
   .read-more {
-    font-size: 12px;
-    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #ea580c;
     text-transform: uppercase;
     letter-spacing: 0.06em;
+  }
+  .arrow-anim {
+    transition: transform 0.2s ease;
+  }
+  .post-card:hover .arrow-anim {
+    transform: translateX(4px);
   }
   .more-soon {
     color: var(--muted-2);
     font-size: 13px;
-    margin-top: 48px;
+    margin-top: 56px;
     text-align: center;
   }
 </style>
