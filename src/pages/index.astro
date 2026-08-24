@@ -115,107 +115,139 @@ const homeFaqs: Faq[] = [
 
       <!-- RIGHT: architecture node diagram -->
       <div class="hero-diagram" aria-label="Ollastack platform architecture diagram">
+        <!-- SVG connector lines -->
+        <svg class="diag-connectors" viewBox="0 0 580 500" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+          <!-- Top card to Center Hub -->
+          <line x1="290" y1="108" x2="290" y2="195" stroke="#e5e7eb" stroke-width="2" stroke-dasharray="4 4"/>
+          <circle cx="290" cy="108" r="3.5" fill="#e11d48"/>
+          <circle cx="290" cy="195" r="3.5" fill="#e11d48"/>
+
+          <!-- Left card to Center Hub -->
+          <line x1="185" y1="265" x2="210" y2="265" stroke="#e5e7eb" stroke-width="2" stroke-dasharray="4 4"/>
+          <circle cx="185" cy="265" r="3.5" fill="#e11d48"/>
+          <circle cx="210" cy="265" r="3.5" fill="#e11d48"/>
+
+          <!-- Right card to Center Hub -->
+          <line x1="370" y1="265" x2="395" y2="265" stroke="#e5e7eb" stroke-width="2" stroke-dasharray="4 4"/>
+          <circle cx="370" cy="265" r="3.5" fill="#e11d48"/>
+          <circle cx="395" cy="265" r="3.5" fill="#e11d48"/>
+
+          <!-- Top-Left Aux to Center Hub -->
+          <path d="M 125 125 Q 170 175 220 215" stroke="#e5e7eb" stroke-width="1.5" stroke-dasharray="4 4"/>
+          <circle cx="125" cy="125" r="3" fill="#9ca3af"/>
+
+          <!-- Top-Right Aux to Center Hub -->
+          <path d="M 455 125 Q 410 175 360 215" stroke="#e5e7eb" stroke-width="1.5" stroke-dasharray="4 4"/>
+          <circle cx="455" cy="125" r="3" fill="#9ca3af"/>
+
+          <!-- Center Hub to Bottom Tag -->
+          <line x1="290" y1="335" x2="290" y2="430" stroke="#e5e7eb" stroke-width="2" stroke-dasharray="4 4"/>
+          <circle cx="290" cy="335" r="3.5" fill="#e11d48"/>
+          <circle cx="290" cy="430" r="3.5" fill="#9ca3af"/>
+        </svg>
+
         <!-- Top chip: BOT DEFENSES READY -->
         <div class="diag-aux diag-aux-top-left">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <span>BOT DEFENSES<br/>READY</span>
+          <div class="diag-aux-icon">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="diag-aux-text">BOT DEFENSES<br/>READY</span>
         </div>
 
         <!-- Top chip: OPENAPI FRIENDLY -->
         <div class="diag-aux diag-aux-top-right">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <polyline points="16 18 22 12 16 6"/>
-            <polyline points="8 6 2 12 8 18"/>
-          </svg>
-          <span>OPENAPI<br/>FRIENDLY</span>
+          <div class="diag-aux-icon">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="16 18 22 12 16 6"/>
+              <polyline points="8 6 2 12 8 18"/>
+            </svg>
+          </div>
+          <span class="diag-aux-text">OPENAPI<br/>FRIENDLY</span>
         </div>
 
         <!-- Card 01: Headless Forms -->
         <div class="diag-card diag-card-top">
-          <div class="diag-card-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <rect x="3" y="3" width="18" height="18" rx="2"/>
-              <line x1="3" y1="9" x2="21" y2="9"/>
-              <line x1="9" y1="21" x2="9" y2="9"/>
+          <div class="diag-card-icon diag-card-icon-form">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="3"/>
+              <line x1="7" y1="8" x2="17" y2="8"/>
+              <line x1="7" y1="12" x2="17" y2="12"/>
+              <line x1="7" y1="16" x2="13" y2="16"/>
             </svg>
           </div>
-          <div>
-            <div class="diag-card-label mono">HEADLESS FORMS <span class="diag-num">01</span></div>
-            <div class="diag-card-desc">One endpoint. Every submission<br/>GEO-stamped, spam-filtered,<br/>and agent-aware.</div>
+          <div class="diag-card-content">
+            <div class="diag-card-header">
+              <span class="diag-card-title">HEADLESS FORMS</span>
+              <span class="diag-card-badge mono">01</span>
+            </div>
+            <p class="diag-card-desc">One endpoint. Every submission GEO-stamped, spam-filtered, and agent-aware.</p>
           </div>
         </div>
-
-        <!-- SVG connector lines -->
-        <svg class="diag-connectors" viewBox="0 0 400 340" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <!-- Top card to center -->
-          <line x1="200" y1="80" x2="200" y2="140" stroke="#d1d5db" stroke-width="1.5" stroke-dasharray="4 3"/>
-          <circle cx="200" cy="80" r="3" fill="#d1d5db"/>
-          <circle cx="200" cy="140" r="3" fill="#d1d5db"/>
-          <!-- Left card to center -->
-          <line x1="95" y1="220" x2="148" y2="220" stroke="#d1d5db" stroke-width="1.5" stroke-dasharray="4 3"/>
-          <circle cx="95" cy="220" r="3" fill="#d1d5db"/>
-          <circle cx="148" cy="220" r="3" fill="#d1d5db"/>
-          <!-- Right card to center -->
-          <line x1="305" y1="220" x2="252" y2="220" stroke="#d1d5db" stroke-width="1.5" stroke-dasharray="4 3"/>
-          <circle cx="305" cy="220" r="3" fill="#d1d5db"/>
-          <circle cx="252" cy="220" r="3" fill="#d1d5db"/>
-          <!-- Center to bottom -->
-          <line x1="200" y1="300" x2="200" y2="330" stroke="#d1d5db" stroke-width="1.5" stroke-dasharray="4 3"/>
-          <circle cx="200" cy="300" r="3" fill="#d1d5db"/>
-        </svg>
 
         <!-- CENTER: main Ollastack hub -->
         <div class="diag-hub">
           <div class="diag-hub-icon" aria-hidden="true">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-              <rect x="2" y="2" width="20" height="20" rx="4" fill="#e11d48"/>
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
+              <rect x="2" y="2" width="20" height="20" rx="5" fill="#e11d48"/>
               <rect x="6" y="7" width="12" height="2" rx="1" fill="#fff"/>
               <rect x="6" y="11" width="12" height="2" rx="1" fill="#fff"/>
               <rect x="6" y="15" width="12" height="2" rx="1" fill="#fff"/>
             </svg>
           </div>
           <div class="diag-hub-name">OLLASTACK</div>
-          <div class="diag-hub-sub">ONE PLATFORM<br/>ONE BACKEND · ONE TOKEN<br/>ONE CONSOLE</div>
+          <div class="diag-hub-sub">
+            <span>ONE PLATFORM</span>
+            <span>ONE BACKEND · ONE TOKEN</span>
+            <span>ONE CONSOLE</span>
+          </div>
         </div>
 
         <!-- Card 02: Agent Mail -->
         <div class="diag-card diag-card-left">
-          <div class="diag-card-icon diag-card-icon-red">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" aria-hidden="true">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-              <polyline points="22,6 12,13 2,6"/>
+          <div class="diag-card-icon diag-card-icon-mail">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#e11d48" stroke-width="2">
+              <rect x="2" y="4" width="20" height="16" rx="3"/>
+              <path d="M22 6L12 13L2 6"/>
             </svg>
           </div>
-          <div>
-            <div class="diag-card-label mono">AGENT MAIL <span class="diag-num">02</span></div>
-            <div class="diag-card-desc">Real email inboxes<br/>your agents own.<br/>Send, receive, and<br/>reply over the API.</div>
+          <div class="diag-card-content">
+            <div class="diag-card-header">
+              <span class="diag-card-title">AGENT MAIL</span>
+              <span class="diag-card-badge mono">02</span>
+            </div>
+            <p class="diag-card-desc">Real email inboxes your agents own. Send, receive, and reply over the API.</p>
           </div>
         </div>
 
         <!-- Card 03: Test Inboxes -->
         <div class="diag-card diag-card-right">
-          <div class="diag-card-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <div class="diag-card-icon diag-card-icon-test">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#e11d48" stroke-width="2">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
               <polyline points="14 2 14 8 20 8"/>
               <line x1="16" y1="13" x2="8" y2="13"/>
               <line x1="16" y1="17" x2="8" y2="17"/>
             </svg>
           </div>
-          <div>
-            <div class="diag-card-label mono">TEST INBOXES <span class="diag-num">03</span></div>
-            <div class="diag-card-desc">Disposable inboxes for<br/>CI. Read OTPs, assert,<br/>and test every email<br/>with ease.</div>
+          <div class="diag-card-content">
+            <div class="diag-card-header">
+              <span class="diag-card-title">TEST INBOXES</span>
+              <span class="diag-card-badge mono">03</span>
+            </div>
+            <p class="diag-card-desc">Disposable inboxes for CI. Read OTPs, assert, and test every email with ease.</p>
           </div>
         </div>
 
         <!-- Bottom chip: TOKEN AUTH -->
         <div class="diag-aux diag-aux-bottom">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/>
-          </svg>
-          <span>SECURE BY DESIGN<br/>TOKEN AUTH</span>
+          <div class="diag-aux-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/>
+            </svg>
+          </div>
+          <span class="diag-aux-text">SECURE BY DESIGN<br/>TOKEN AUTH</span>
         </div>
       </div>
 
@@ -1199,105 +1231,11 @@ const homeFaqs: Faq[] = [
   /* ===== HERO DIAGRAM ===== */
   .hero-diagram {
     position: relative;
-    height: 420px;
-    display: grid;
-    place-items: center;
+    width: 100%;
+    max-width: 580px;
+    height: 500px;
+    margin: 0 auto;
   }
-  .diag-hub {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 160px;
-    background: #fff;
-    border: 2px solid #e11d48;
-    border-radius: 12px;
-    padding: 18px 16px;
-    text-align: center;
-    box-shadow: 0 0 24px rgba(225, 29, 72, 0.12), 0 4px 16px rgba(0,0,0,0.06);
-    z-index: 2;
-  }
-  .diag-hub-icon { margin-bottom: 8px; }
-  .diag-hub-name {
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    color: var(--ink);
-  }
-  .diag-hub-sub {
-    font-size: 10px;
-    color: var(--muted);
-    margin-top: 4px;
-    line-height: 1.5;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-  }
-
-  /* Diagram cards */
-  .diag-card {
-    position: absolute;
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 12px 14px;
-    font-size: 11px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    max-width: 170px;
-    z-index: 2;
-  }
-  .diag-card-top { top: 4px; left: 50%; transform: translateX(-50%); }
-  .diag-card-left { bottom: 80px; left: 0; }
-  .diag-card-right { bottom: 80px; right: 0; }
-  .diag-card-icon {
-    width: 32px; height: 32px;
-    border-radius: 8px;
-    background: var(--bg-sunken);
-    border: 1px solid var(--line);
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-    color: var(--muted);
-  }
-  .diag-card-icon-red {
-    background: #e11d48;
-    border-color: #e11d48;
-  }
-  .diag-card-label {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    color: var(--ink);
-  }
-  .diag-num { color: var(--muted-2); }
-  .diag-card-desc {
-    font-size: 10.5px;
-    color: var(--muted);
-    line-height: 1.45;
-    margin-top: 2px;
-  }
-
-  /* Aux chips */
-  .diag-aux {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 9.5px;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    font-family: var(--font-mono);
-    line-height: 1.3;
-    z-index: 2;
-  }
-  .diag-aux svg { flex-shrink: 0; }
-  .diag-aux-top-left { top: 60px; left: 8px; }
-  .diag-aux-top-right { top: 60px; right: 8px; }
-  .diag-aux-bottom { bottom: 8px; left: 50%; transform: translateX(-50%); white-space: nowrap; }
-
-  /* SVG connectors */
   .diag-connectors {
     position: absolute;
     inset: 0;
@@ -1305,6 +1243,174 @@ const homeFaqs: Faq[] = [
     height: 100%;
     pointer-events: none;
     z-index: 1;
+  }
+
+  /* Center Hub */
+  .diag-hub {
+    position: absolute;
+    top: 53%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 160px;
+    background: #ffffff;
+    border: 2px solid #e11d48;
+    border-radius: 14px;
+    padding: 16px 14px;
+    text-align: center;
+    box-shadow: 0 0 0 1px rgba(225, 29, 72, 0.08), 0 10px 30px rgba(225, 29, 72, 0.12), 0 2px 10px rgba(0,0,0,0.04);
+    z-index: 3;
+  }
+  .diag-hub-icon {
+    display: inline-flex;
+    margin-bottom: 6px;
+  }
+  .diag-hub-name {
+    font-size: 13.5px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .diag-hub-sub {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    font-size: 9.5px;
+    font-family: var(--font-sans);
+    color: var(--muted);
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    line-height: 1.4;
+  }
+
+  /* Diagram Cards (Top, Left, Right) */
+  .diag-card {
+    position: absolute;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 12px 14px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+    z-index: 3;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .diag-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+  }
+
+  .diag-card-top {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 220px;
+  }
+  .diag-card-top:hover {
+    transform: translateX(-50%) translateY(-2px);
+  }
+
+  .diag-card-left {
+    top: 53%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 185px;
+  }
+  .diag-card-left:hover {
+    transform: translateY(calc(-50% - 2px));
+  }
+
+  .diag-card-right {
+    top: 53%;
+    right: 0;
+    transform: translateY(-50%);
+    width: 185px;
+  }
+  .diag-card-right:hover {
+    transform: translateY(calc(-50% - 2px));
+  }
+
+  .diag-card-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: #fef2f2;
+    border: 1px solid #fecdd3;
+    color: #e11d48;
+  }
+  .diag-card-icon-form {
+    background: #f8fafc;
+    border-color: #e2e8f0;
+    color: var(--muted);
+  }
+
+  .diag-card-content {
+    flex: 1;
+    min-width: 0;
+  }
+  .diag-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    margin-bottom: 3px;
+  }
+  .diag-card-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: var(--ink);
+  }
+  .diag-card-badge {
+    font-size: 10px;
+    color: var(--muted-2);
+    font-weight: 600;
+  }
+  .diag-card-desc {
+    font-size: 10.5px;
+    color: var(--muted);
+    line-height: 1.45;
+    margin: 0;
+  }
+
+  /* Aux chips */
+  .diag-aux {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    letter-spacing: 0.03em;
+    line-height: 1.25;
+    z-index: 2;
+  }
+  .diag-aux-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+  }
+  .diag-aux-top-left {
+    top: 95px;
+    left: 20px;
+  }
+  .diag-aux-top-right {
+    top: 95px;
+    right: 20px;
+  }
+  .diag-aux-bottom {
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
   }
 
   /* ===== LIVE DEMO ===== */
