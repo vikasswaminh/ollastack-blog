@@ -1,7 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500;600&display=swap");
 
-/* Daytona-inspired tokens — clean monochrome, one saturated accent,
-   thin neutral borders, dense mono usage for labels. */
+/* Modern clean tokens matching the redesign */
 :root {
   /* Surfaces — pure white page, faint sunken sections. */
   --bg: #ffffff;
@@ -10,16 +9,16 @@
   --bg-deep: #ebebed;
 
   /* Ink scale */
-  --ink: #0a0a0a;
+  --ink: #09090b;
   --ink-2: #18181b;
-  --muted: #52525b;
-  --muted-2: #8a8a93;
-  --muted-3: #b4b4ba;
+  --muted: #64748b;
+  --muted-2: #94a3b8;
+  --muted-3: #cbd5e1;
 
   /* Hairlines */
-  --line: #e5e5e7;
-  --line-2: #ddddde;
-  --line-3: #f0f0f1;
+  --line: #e2e8f0;
+  --line-2: #e5e5e7;
+  --line-3: #f1f5f9;
 
   /* Accent — single saturated electric blue, used sparingly. */
   --accent: #0066ff;
@@ -27,12 +26,10 @@
   --accent-soft: #e7efff;
   --accent-ink: #ffffff;
 
-  /* Brand red — McDonald's red (PMS 485). Third brand color,
-     used on the announce bar + "form backend" wordmark in hero +
-     selective eyebrow accents. Target ~10% of site color presence. */
-  --brand-red: #DA291C;
-  --brand-red-2: #b3211a;
-  --brand-red-soft: #fde8e6;
+  /* Brand red — Crimson Red (#E11D48) */
+  --brand-red: #E11D48;
+  --brand-red-2: #be123c;
+  --brand-red-soft: #fff1f2;
 
   /* Status (rarely used on marketing) */
   --ok: #16a34a;
@@ -53,8 +50,8 @@
   --code-prompt: #93c5fd;
   --code-ok: #86efac;
 
-  --font-sans: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
-  --font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
+  --font-mono: "DM Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
   /* Container widths — legacy vars kept for any inline usage, but
      `.container` / `.container-wide` are now full-width. Sections
@@ -267,9 +264,6 @@ button {
   background-clip: content-box;
 }
 
-/* Subtle dotted-grid background utility (Daytona uses this on hero/sections) */
 .dot-grid {
-  background-image: radial-gradient(circle, var(--line-2) 1px, transparent 1px);
-  background-size: 28px 28px;
-  background-position: -1px -1px;
+  background: #ffffff;
 }
