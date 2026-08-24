@@ -79,7 +79,7 @@ const articleLd = {
 <Base title={title} description={description} current="blog">
   <script type="application/ld+json" set:html={JSON.stringify(articleLd)} is:inline />
   {faqLd && <script type="application/ld+json" set:html={JSON.stringify(faqLd)} is:inline />}
-  <div class="blog-shell container-wide">
+  <div class="blog-shell">
     <aside class="left-rail">
       <a href="/blog" class="back mono">← All posts</a>
       <div class="toc-box">
@@ -225,10 +225,14 @@ const articleLd = {
 <style>
   .blog-shell {
     display: grid;
-    grid-template-columns: 220px minmax(0, 1fr) 240px;
-    gap: 48px;
-    padding: 56px 28px 96px;
+    grid-template-columns: 240px minmax(0, 1fr) 260px;
+    gap: 36px;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 48px 24px 96px;
     align-items: start;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   /* ---------- Left rail ---------- */
@@ -403,7 +407,10 @@ const articleLd = {
   }
 
   /* ---------- Article ---------- */
-  .post { min-width: 0; max-width: 720px; }
+  .post {
+    min-width: 0;
+    width: 100%;
+  }
   .post-head { margin-bottom: 36px; }
   .post-meta {
     font-size: 12.5px;
@@ -415,10 +422,11 @@ const articleLd = {
   }
   .dot { opacity: 0.5; }
   .post-head h1 {
-    font-size: 40px;
+    font-size: 38px;
     margin: 0 0 16px;
     letter-spacing: -0.02em;
-    line-height: 1.12;
+    line-height: 1.15;
+    word-break: break-word;
   }
   .body :global(.lede) {
     font-size: 18.5px;
@@ -703,8 +711,9 @@ const articleLd = {
   /* ---------- Responsive ---------- */
   @media (max-width: 1100px) {
     .blog-shell {
-      grid-template-columns: 200px minmax(0, 1fr);
-      gap: 40px;
+      grid-template-columns: 220px minmax(0, 1fr);
+      gap: 32px;
+      max-width: 900px;
     }
     .right-rail { display: none; }
   }
@@ -719,6 +728,6 @@ const articleLd = {
       border-bottom: 1px solid var(--line);
       padding-bottom: 20px;
     }
-    .post-head h1 { font-size: 32px; }
+    .post-head h1 { font-size: 30px; }
   }
 </style>
