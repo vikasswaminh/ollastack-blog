@@ -82,9 +82,22 @@ const articleLd = {
   <div class="blog-shell container-wide">
     <aside class="left-rail">
       <a href="/blog" class="back mono">← All posts</a>
-      <div class="toc-card">
-        <div class="toc-eyebrow mono">On this page</div>
-        <nav class="toc" id="toc">
+      <div class="toc-box">
+        <div class="toc-box-head">
+          <div class="toc-box-title">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="8" y1="6" x2="21" y2="6"></line>
+              <line x1="8" y1="12" x2="21" y2="12"></line>
+              <line x1="8" y1="18" x2="21" y2="18"></line>
+              <line x1="3" y1="6" x2="3.01" y2="6"></line>
+              <line x1="3" y1="12" x2="3.01" y2="12"></line>
+              <line x1="3" y1="18" x2="3.01" y2="18"></line>
+            </svg>
+            <span>ON THIS PAGE</span>
+          </div>
+          <span class="toc-box-count mono" id="toc-count"></span>
+        </div>
+        <nav class="toc-box-list" id="toc" aria-label="Table of contents">
           <!-- populated by client script from h2[id] in <article> -->
         </nav>
       </div>
@@ -162,6 +175,7 @@ const articleLd = {
   // Build ToC from h2[id] inside <article>. Scroll-spy active section.
   (function () {
     const toc = document.getElementById("toc");
+    const countEl = document.getElementById("toc-count");
     if (!toc) return;
     const headings = Array.from(
       document.querySelectorAll("article .body h2[id]")
@@ -170,17 +184,19 @@ const articleLd = {
       toc.innerHTML = '<p class="toc-empty mono">No sections</p>';
       return;
     }
+    if (countEl) {
+      countEl.textContent = `${headings.length} sections`;
+    }
     toc.innerHTML = headings
-      .map(
-        (h) =>
-          '<a href="#' +
-          h.id +
-          '" data-toc-target="' +
-          h.id +
-          '">' +
-          h.textContent +
-          "</a>"
-      )
+      .map((h, i) => {
+        const num = String(i + 1).padStart(2, "0");
+        return (
+          `<a href="#${h.id}" class="toc-item" data-toc-target="${h.id}">` +
+          `<span class="toc-num mono">${num}</span>` +
+          `<span class="toc-text">${h.textContent}</span>` +
+          `</a>`
+        );
+      })
       .join("");
 
     const links = Array.from(toc.querySelectorAll("a[data-toc-target]"));
@@ -232,14 +248,14 @@ const articleLd = {
     font-weight: 700;
     color: #ea580c;
     background: #fff7ed;
-    border: 1px solid #fed7aa;
+    border: 1.5px solid #fed7aa;
     padding: 7px 16px;
     border-radius: 9999px;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     margin-bottom: 20px;
     transition: all 0.2s ease;
-    box-shadow: 0 1px 4px rgba(234, 88, 12, 0.08);
+    box-shadow: 0 2px 6px rgba(234, 88, 12, 0.08);
     text-decoration: none !important;
     align-self: flex-start;
   }
@@ -248,96 +264,138 @@ const articleLd = {
     color: #ffffff !important;
     border-color: #ea580c;
     transform: translateX(-3px);
-    box-shadow: 0 4px 14px rgba(234, 88, 12, 0.22);
+    box-shadow: 0 4px 14px rgba(234, 88, 12, 0.25);
   }
-  .toc-card {
+
+  /* Table of Contents Professional Box */
+  .toc-box {
     background: #ffffff;
     border: 1.5px solid #e2e8f0;
     border-radius: 16px;
-    padding: 18px 14px 16px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
     display: flex;
     flex-direction: column;
     max-height: calc(100vh - 170px);
     overflow: hidden;
+    transition: border-color 0.2s ease;
   }
-  .toc-eyebrow {
-    font-size: 11px;
-    color: #9a3412;
-    background: #fff7ed;
-    border: 1px solid #fed7aa;
-    padding: 4px 10px;
-    border-radius: 6px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 12px;
-    font-weight: 800;
-    display: inline-flex;
+  .toc-box:hover {
+    border-color: #cbd5e1;
+  }
+  .toc-box-head {
+    background: #0f172a;
+    color: #ffffff;
+    padding: 12px 14px;
+    display: flex;
     align-items: center;
-    gap: 6px;
-    align-self: flex-start;
+    justify-content: space-between;
+    border-bottom: 1px solid #1e293b;
   }
-  .toc-eyebrow::before {
-    content: "";
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #ea580c;
+  .toc-box-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #f8fafc;
   }
-  .toc {
+  .toc-box-title svg {
+    color: #ea580c;
+  }
+  .toc-box-count {
+    font-size: 11px;
+    font-weight: 700;
+    color: #fdba74;
+    background: rgba(234, 88, 12, 0.18);
+    border: 1px solid rgba(234, 88, 12, 0.35);
+    padding: 2px 8px;
+    border-radius: 20px;
+    letter-spacing: 0.02em;
+  }
+  .toc-box-list {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 3px;
+    padding: 10px 8px;
     overflow-y: auto;
-    padding-right: 4px;
+    background: #ffffff;
   }
-  .toc::-webkit-scrollbar {
+  .toc-box-list::-webkit-scrollbar {
     width: 4px;
   }
-  .toc::-webkit-scrollbar-track {
+  .toc-box-list::-webkit-scrollbar-track {
     background: transparent;
   }
-  .toc::-webkit-scrollbar-thumb {
+  .toc-box-list::-webkit-scrollbar-thumb {
     background: #e2e8f0;
     border-radius: 4px;
   }
-  .toc :global(a) {
-    display: block;
-    font-size: 12.5px;
-    color: #64748b;
-    padding: 6px 10px 6px 12px;
-    line-height: 1.35;
+  .toc-box-list :global(.toc-item) {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    padding: 7px 9px;
     border-radius: 8px;
     text-decoration: none !important;
     border-bottom: none !important;
-    transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.16s ease;
     position: relative;
-    font-weight: 500;
   }
-  .toc :global(a:hover) {
-    color: #ea580c !important;
+  .toc-box-list :global(.toc-num) {
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748b;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    padding: 1px 5px;
+    border-radius: 5px;
+    min-width: 22px;
+    text-align: center;
+    line-height: 1.4;
+    flex-shrink: 0;
+    margin-top: 1px;
+    transition: all 0.16s ease;
+  }
+  .toc-box-list :global(.toc-text) {
+    font-size: 12.5px;
+    color: #334155;
+    line-height: 1.4;
+    font-weight: 500;
+    transition: color 0.16s ease;
+  }
+  .toc-box-list :global(.toc-item:hover) {
     background: #f8fafc;
     transform: translateX(2px);
   }
-  .toc :global(a.active) {
-    color: #ea580c !important;
-    font-weight: 700 !important;
+  .toc-box-list :global(.toc-item:hover .toc-text) {
+    color: #ea580c;
+  }
+  .toc-box-list :global(.toc-item:hover .toc-num) {
     background: #fff7ed;
+    color: #ea580c;
+    border-color: #fed7aa;
   }
-  .toc :global(a.active)::before {
-    content: "";
-    position: absolute;
-    left: 2px;
-    top: 20%;
-    height: 60%;
-    width: 3px;
+  .toc-box-list :global(.toc-item.active) {
+    background: #fff7ed;
+    box-shadow: 0 1px 4px rgba(234, 88, 12, 0.08);
+  }
+  .toc-box-list :global(.toc-item.active .toc-text) {
+    color: #9a3412 !important;
+    font-weight: 700 !important;
+  }
+  .toc-box-list :global(.toc-item.active .toc-num) {
     background: #ea580c;
-    border-radius: 4px;
+    color: #ffffff !important;
+    border-color: #ea580c;
+    font-weight: 700;
   }
-  .toc :global(.toc-empty) {
+  .toc-box-list :global(.toc-empty) {
     font-size: 12px;
     color: var(--muted-2);
-    padding: 8px;
+    padding: 10px;
+    text-align: center;
   }
 
   /* ---------- Article ---------- */
