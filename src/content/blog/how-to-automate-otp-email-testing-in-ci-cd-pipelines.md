@@ -41,21 +41,22 @@ For most CI/CD end-to-end tests, an [Email API](/email-api) with isolated inboxe
 
 ---
 
-## Key Takeaways
-
-- **OTP email testing should validate the real verification flow** instead of disabling OTP checks in staging.
-- **Shared Gmail, Outlook, or other consumer inboxes** can introduce delivery delays, authentication problems, spam filtering, and test collisions.
-- **A dedicated [Email API](/email-api)** can provide controlled, programmatic access to test messages.
-- **Give each parallel CI worker a unique email address or mailbox.**
-- **Retrieve the email using an API or webhook** rather than relying on manual inbox access.
-- **Prefer plain-text email when available** because it is generally easier to parse.
-- **For HTML emails, use stable selectors or DOM parsing** instead of searching raw HTML for arbitrary numbers.
-- **Test OTP expiration, resend behavior, invalid codes, and single-use behavior** where those are part of the application requirements.
-- **Store API keys and test credentials in CI secrets.**
-- **Use mock SMTP for fast local integration testing** and a real staging email flow for end-to-end testing.
-- **Keep OTP values, authentication links, and other sensitive test data** out of CI logs and screenshots.
-
----
+<div class="takeaways-box" id="key-takeaways">
+  <div class="takeaways-header">Key Takeaways</div>
+  <ul class="takeaways-list">
+    <li><strong>OTP email testing should validate the real verification flow</strong> instead of disabling OTP checks in staging.</li>
+    <li><strong>Shared Gmail, Outlook, or other consumer inboxes</strong> can introduce delivery delays, authentication problems, spam filtering, and test collisions.</li>
+    <li><strong>A dedicated <a href="/email-api">Email API</a></strong> can provide controlled, programmatic access to test messages.</li>
+    <li><strong>Give each parallel CI worker a unique email address or mailbox.</strong></li>
+    <li><strong>Retrieve the email using an API or webhook</strong> rather than relying on manual inbox access.</li>
+    <li><strong>Prefer plain-text email when available</strong> because it is generally easier to parse.</li>
+    <li><strong>For HTML emails, use stable selectors or DOM parsing</strong> instead of searching raw HTML for arbitrary numbers.</li>
+    <li><strong>Test OTP expiration, resend behavior, invalid codes, and single-use behavior</strong> where those are part of the application requirements.</li>
+    <li><strong>Store API keys and test credentials in CI secrets.</strong></li>
+    <li><strong>Use mock SMTP for fast local integration testing</strong> and a real staging email flow for end-to-end testing.</li>
+    <li><strong>Keep OTP values, authentication links, and other sensitive test data</strong> out of CI logs and screenshots.</li>
+  </ul>
+</div>
 
 ## What Is OTP Email Testing?
 

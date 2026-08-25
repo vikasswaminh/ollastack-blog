@@ -538,6 +538,63 @@ const articleLd = {
   .body :global(pre .c) { color: #94a3b8 !important; font-style: italic; }
   .body :global(.code .prompt),
   .body :global(pre .prompt) { color: #64748b !important; user-select: none; }
+
+  /* Key Takeaways Callout */
+  .body :global(.takeaways-box) {
+    background: #fef2f2 !important;
+    border: 2px solid #fca5a5 !important;
+    border-left: 6px solid #dc2626 !important;
+    border-radius: 16px !important;
+    padding: 24px 28px !important;
+    margin: 32px 0 40px !important;
+    box-shadow: 0 6px 24px rgba(220, 38, 38, 0.08) !important;
+  }
+  .body :global(.takeaways-header),
+  .body :global(.takeaways-title) {
+    font-size: 18px !important;
+    font-weight: 800 !important;
+    margin: 0 0 16px !important;
+    color: #991b1b !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    letter-spacing: -0.01em !important;
+    border: none !important;
+    padding: 0 !important;
+  }
+  .body :global(.takeaways-header svg),
+  .body :global(.takeaways-title svg) {
+    color: #dc2626 !important;
+    stroke: #dc2626 !important;
+    flex-shrink: 0;
+  }
+  .body :global(.takeaways-box ul),
+  .body :global(.takeaways-list) {
+    margin: 0 !important;
+    padding-left: 20px !important;
+    list-style-type: disc !important;
+  }
+  .body :global(.takeaways-box li) {
+    font-size: 15.5px !important;
+    margin-bottom: 10px !important;
+    color: #0f172a !important;
+    line-height: 1.65 !important;
+  }
+  .body :global(.takeaways-box li::marker) {
+    color: #dc2626 !important;
+    font-size: 1.2em !important;
+  }
+  .body :global(.takeaways-box li strong) {
+    color: #0f172a !important;
+    font-weight: 700 !important;
+  }
+  .body :global(.takeaways-box a) {
+    color: #dc2626 !important;
+    font-weight: 700 !important;
+    text-decoration: underline !important;
+    text-underline-offset: 3px !important;
+  }
+
   .last-updated {
     margin-top: 56px;
     padding-top: 24px;

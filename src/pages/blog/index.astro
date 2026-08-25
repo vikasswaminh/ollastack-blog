@@ -10,43 +10,143 @@ const fmtDate = (iso: string) =>
     day: "numeric",
   });
 
-function inferCategory(slug: string, tags: string[] = []): { category: string; categorySlug: string; icon: string } {
+function getPostCategory(slug: string, title = ""): { category: string; categorySlug: string; icon: string } {
   const s = slug.toLowerCase();
-  const t = tags.map((item) => item.toLowerCase());
+  const t = title.toLowerCase();
 
+  // 1. AI Agents
   if (
-    s.includes("agent") ||
-    s.includes("ai") ||
-    t.some((tag) => tag.includes("agent") || tag.includes("ai"))
+    s === "read-otp-verification-code-in-ai-agent" ||
+    s === "build-ai-agent-that-sends-and-receives-email" ||
+    s === "email-for-ai-agents" ||
+    s === "agent-email-identity" ||
+    s === "form-backend-for-ai-agents" ||
+    s === "can-ai-agents-submit-forms-safely" ||
+    s.includes("ai-agent") ||
+    s.includes("agent")
   ) {
     return { category: "AI Agents", categorySlug: "ai-agents", icon: "🤖" };
   }
+
+  // 4. Email Testing
   if (
-    s.includes("email") ||
-    s.includes("otp") ||
-    s.includes("inbox") ||
-    s.includes("testing") ||
+    s === "how-to-automate-otp-email-testing-in-ci-cd-pipelines" ||
+    s === "test-inbox-docker" ||
+    s === "assert-on-email-in-playwright-cypress" ||
+    s === "email-testing-api-for-ci" ||
+    s === "test-otp-email-in-ci" ||
+    s.includes("test-otp") ||
+    s.includes("email-ci-benchmarks") ||
+    (s.includes("test") && (s.includes("email") || s.includes("inbox") || s.includes("otp")))
+  ) {
+    return { category: "Email Testing", categorySlug: "email-testing", icon: "✉️" };
+  }
+
+  // 8. Comparisons
+  if (
+    s === "agentmail-alternative" ||
+    s === "mailosaur-alternative" ||
+    s === "formspree-alternative" ||
+    s === "resend-free-tier-alternative" ||
+    s === "sendgrid-free-alternative" ||
+    s === "formspree-vs-netlify-forms" ||
+    s === "basin-vs-web3forms" ||
+    s === "forminit-alternatives" ||
+    s.includes("-vs-") ||
+    (s.includes("alternative") && !s.includes("migrate"))
+  ) {
+    return { category: "Comparisons", categorySlug: "comparisons", icon: "⚖️" };
+  }
+
+  // 9. Migrations
+  if (
+    s === "migrate-from-getform" ||
+    s === "migrate-from-basin" ||
+    s === "migrate-from-netlify-forms" ||
+    s === "migrate-from-formspree" ||
+    s === "netlify-forms-alternatives" ||
+    s === "formspree-migration-pitfalls" ||
+    s === "formspree-webhook-migration-node" ||
+    s.includes("migrate") ||
+    s.includes("migration")
+  ) {
+    return { category: "Migrations", categorySlug: "migrations", icon: "🚀" };
+  }
+
+  // 10. Integrations
+  if (
+    s === "form-webhooks-guide" ||
+    s === "remix-form-quickstart" ||
+    s === "vue-nuxt-form-quickstart" ||
+    s === "react-hook-form-backend" ||
+    s === "sveltekit-form-quickstart" ||
+    s === "astro-form-quickstart" ||
+    s === "nextjs-quickstart-hosted-form" ||
+    s.includes("quickstart") ||
+    s.includes("hook-form") ||
+    s.includes("webhooks") ||
+    s.includes("nextjs-serverless") ||
+    s.includes("resend-integration") ||
+    s.includes("dodopayments")
+  ) {
+    return { category: "Integrations", categorySlug: "integrations", icon: "🔌" };
+  }
+
+  // 6. Deliverability
+  if (
+    s === "per-tenant-smtp-guide" ||
+    s === "dkim-spf-dmarc-custom-sender" ||
+    s.includes("deliverability") ||
     s.includes("smtp") ||
     s.includes("dkim") ||
-    s.includes("resend") ||
-    s.includes("sendgrid") ||
-    s.includes("mailosaur") ||
-    t.some((tag) => tag.includes("email") || tag.includes("testing") || tag.includes("otp"))
+    s.includes("bounce") ||
+    s.includes("sender-domain")
   ) {
-    return { category: "Email & Testing", categorySlug: "email-testing", icon: "✉️" };
+    return { category: "Deliverability", categorySlug: "deliverability", icon: "🛡️" };
   }
+
+  // 7. Security
   if (
-    s.includes("vs") ||
-    s.includes("alternative") ||
-    s.includes("migrate") ||
-    t.some((tag) => tag.includes("alternative") || tag.includes("comparison") || tag.includes("migrate"))
+    s === "secure-forms-honeypot-captcha" ||
+    s === "ml-quarantine-explained" ||
+    s.includes("security") ||
+    s.includes("quarantine") ||
+    s.includes("ddos") ||
+    s.includes("privacy")
   ) {
-    return { category: "Comparisons & Migrations", categorySlug: "comparisons", icon: "🔄" };
+    return { category: "Security", categorySlug: "security", icon: "🔒" };
   }
-  return { category: "Forms & Backend", categorySlug: "forms-backend", icon: "📋" };
+
+  // 5. Developers
+  if (
+    s === "nodejs-email-api" ||
+    s === "python-email-api" ||
+    s.startsWith("send-email-") ||
+    s.includes("send-email") ||
+    s.includes("python-send") ||
+    s.includes("curl")
+  ) {
+    return { category: "Developers", categorySlug: "developers", icon: "💻" };
+  }
+
+  // 2. Email API
+  if (
+    s === "best-email-api" ||
+    s === "inbound-email-api" ||
+    s === "email-inbox-api" ||
+    s.includes("free-email-api") ||
+    s.includes("email-api") ||
+    s.includes("free-otp-email") ||
+    s.includes("email-scaling")
+  ) {
+    return { category: "Email API", categorySlug: "email-api", icon: "⚡" };
+  }
+
+  // 3. Forms
+  return { category: "Forms", categorySlug: "forms", icon: "📋" };
 }
 
-// Markdown collection posts, mapped to the same shape and merged with legacy posts
+// Markdown collection posts
 const rawCollection = await getCollection("blog", ({ data }) => data.draft !== true);
 const collectionPosts = rawCollection
   .filter(
@@ -55,7 +155,7 @@ const collectionPosts = rawCollection
       p.slug !== "how-to-build-a-form-backend-for-a-static-site"
   )
   .map((p) => {
-    const cat = inferCategory(p.slug, p.data.tags || []);
+    const cat = getPostCategory(p.slug, p.data.title || "");
     return {
       slug: p.slug,
       title: p.data.title,
@@ -72,11 +172,11 @@ const collectionPosts = rawCollection
 const postMap = new Map();
 collectionPosts.forEach((p) => postMap.set(p.slug, p));
 legacyPosts.forEach((p) => {
-  const cat = inferCategory(p.slug);
+  const cat = getPostCategory(p.slug, p.title || "");
   postMap.set(p.slug, {
     ...p,
-    category: p.category || cat.category,
-    categorySlug: p.categorySlug || cat.categorySlug,
+    category: cat.category,
+    categorySlug: cat.categorySlug,
     icon: cat.icon,
   });
 });
@@ -85,46 +185,49 @@ const posts = Array.from(postMap.values()).sort((a, b) =>
   b.date.localeCompare(a.date)
 );
 
-// Category counts
-const categoryCounts = {
-  all: posts.length,
-  "ai-agents": posts.filter((p) => p.categorySlug === "ai-agents").length,
-  "email-testing": posts.filter((p) => p.categorySlug === "email-testing").length,
-  "forms-backend": posts.filter((p) => p.categorySlug === "forms-backend").length,
-  comparisons: posts.filter((p) => p.categorySlug === "comparisons").length,
-};
-
-const categories = [
-  { slug: "all", name: "All Articles", icon: "⚡", count: categoryCounts.all },
-  { slug: "ai-agents", name: "AI Agents", icon: "🤖", count: categoryCounts["ai-agents"] },
-  { slug: "email-testing", name: "Email & Testing", icon: "✉️", count: categoryCounts["email-testing"] },
-  { slug: "forms-backend", name: "Forms & Backend", icon: "📋", count: categoryCounts["forms-backend"] },
-  { slug: "comparisons", name: "Comparisons & Migrations", icon: "🔄", count: categoryCounts.comparisons },
+const CATEGORY_LIST = [
+  { slug: "all", name: "All Articles", icon: "⚡" },
+  { slug: "ai-agents", name: "AI Agents", icon: "🤖" },
+  { slug: "email-api", name: "Email API", icon: "⚡" },
+  { slug: "forms", name: "Forms", icon: "📋" },
+  { slug: "email-testing", name: "Email Testing", icon: "✉️" },
+  { slug: "developers", name: "Developers", icon: "💻" },
+  { slug: "deliverability", name: "Deliverability", icon: "🛡️" },
+  { slug: "security", name: "Security", icon: "🔒" },
+  { slug: "comparisons", name: "Comparisons", icon: "⚖️" },
+  { slug: "migrations", name: "Migrations", icon: "🚀" },
+  { slug: "integrations", name: "Integrations", icon: "🔌" },
 ];
 
+const categoriesWithCounts = CATEGORY_LIST.map((c) => ({
+  ...c,
+  count: c.slug === "all" ? posts.length : posts.filter((p) => p.categorySlug === c.slug).length,
+}));
+
 const popularTopics = [
-  "Playwright", "Cypress", "OTP Verification", "AI Agents", "Security", "Static Sites", "Webhooks", "FastAPI"
+  "Playwright", "Cypress", "OTP", "AI Agents", "Security", "Static Sites", "Webhooks", "FastAPI", "React", "Next.js"
 ];
 ---
 
 <Base
-  title="Blog & Engineering Guides — Ollastack"
-  description="Notes from building a form backend and email infrastructure for AI agents in 2026."
+  title="Engineering Blog & Guides — Ollastack"
+  description="Deep-dives, architecture guides, and production playbooks for AI agents, email verification, and form backends."
   current="blog"
 >
   <div class="blog-page-container">
     
-    <!-- Top Header Banner -->
+    <!-- Hero Atmospheric Header -->
     <header class="blog-header-banner">
-      <div class="container-wide">
+      <div class="banner-ambient-glow" aria-hidden="true"></div>
+      <div class="container-wide header-content-wrapper">
         <div class="header-inner">
           <div class="blog-pill-badge mono">
             <span class="pulse-dot"></span>
-            <span>ENGINEERING BLOG &amp; GUIDES</span>
+            <span>ENGINEERING BLOG &amp; PLAYBOOKS</span>
           </div>
-          <h1 class="page-title">Notes from building a form backend.</h1>
+          <h1 class="page-title">Notes from building the message layer for AI agents.</h1>
           <p class="page-description">
-            Practical pieces on shipping forms, handling submissions, and the details behind a "simple" endpoint that an AI agent actually wants to talk to.
+            Practical pieces on shipping forms, automated email verification in CI, and handling traffic an AI agent actually wants to talk to.
           </p>
         </div>
       </div>
@@ -133,12 +236,12 @@ const popularTopics = [
     <!-- Two-Column Layout Container -->
     <div class="container-wide blog-main-layout">
       
-      <!-- ============ LEFT SIDEBAR: CATEGORIES & SEARCH ============ -->
+      <!-- ============ LEFT SIDEBAR: 10 CATEGORIES & SEARCH ============ -->
       <aside class="blog-sidebar-left">
         <div class="sidebar-sticky-inner">
           
-          <!-- Search Box -->
-          <div class="sidebar-search-box">
+          <!-- Search Card -->
+          <div class="sidebar-search-card">
             <div class="search-input-wrapper">
               <svg class="search-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
                 <circle cx="11" cy="11" r="8"></circle>
@@ -147,7 +250,7 @@ const popularTopics = [
               <input
                 type="text"
                 id="blog-search"
-                placeholder="Search articles..."
+                placeholder="Search articles by keyword..."
                 aria-label="Search articles"
                 class="sidebar-search-input"
               />
@@ -155,11 +258,15 @@ const popularTopics = [
             </div>
           </div>
 
-          <!-- Category Navigation -->
-          <div class="sidebar-section">
-            <div class="sidebar-eyebrow mono">CATEGORIES</div>
+          <!-- Category Navigation Card -->
+          <div class="sidebar-card">
+            <div class="sidebar-card-header">
+              <span class="sidebar-eyebrow mono">EXPLORE TRACKS</span>
+              <span class="sidebar-tracks-count mono">{categoriesWithCounts.length - 1} tracks</span>
+            </div>
+
             <nav class="sidebar-cat-nav" role="tablist" aria-label="Blog categories">
-              {categories.map((cat, idx) => (
+              {categoriesWithCounts.map((cat, idx) => (
                 <button
                   type="button"
                   role="tab"
@@ -168,19 +275,21 @@ const popularTopics = [
                   data-name={cat.name}
                   aria-selected={idx === 0 ? "true" : "false"}
                 >
-                  <span class="cat-left">
-                    <span class="cat-emoji">{cat.icon}</span>
+                  <div class="cat-left">
+                    <span class={`cat-icon-box box-${cat.slug}`}>{cat.icon}</span>
                     <span class="cat-title-text">{cat.name}</span>
-                  </span>
+                  </div>
                   <span class="cat-badge-count mono">{cat.count}</span>
                 </button>
               ))}
             </nav>
           </div>
 
-          <!-- Popular Topics / Tags Filter -->
-          <div class="sidebar-section">
-            <div class="sidebar-eyebrow mono">POPULAR TOPICS</div>
+          <!-- Popular Topics / Tags Card -->
+          <div class="sidebar-card">
+            <div class="sidebar-card-header">
+              <span class="sidebar-eyebrow mono">POPULAR TOPICS</span>
+            </div>
             <div class="topics-tags-cloud">
               {popularTopics.map((topic) => (
                 <button type="button" class="topic-tag-btn mono" data-topic={topic.toLowerCase()}>
@@ -199,13 +308,15 @@ const popularTopics = [
         <!-- Section Title & Meta Header -->
         <div class="feed-header-bar">
           <div class="feed-title-wrap">
-            <h2 class="feed-current-title" id="current-category-name">All Articles</h2>
-            <span class="feed-count-tag mono" id="feed-articles-count">{posts.length} articles</span>
+            <div class="feed-title-with-pill">
+              <h2 class="feed-current-title" id="current-category-name">All Articles</h2>
+              <span class="feed-count-tag mono" id="feed-articles-count">{posts.length} articles</span>
+            </div>
           </div>
           
           <div class="feed-active-filter" id="active-filter-indicator" style="display: none;">
-            <span class="filter-msg mono">Filtered by: <strong id="filter-term-display"></strong></span>
-            <button type="button" id="clear-all-filter-btn" class="clear-filter-link mono">Clear</button>
+            <span class="filter-msg mono">Filtered: <strong id="filter-term-display"></strong></span>
+            <button type="button" id="clear-all-filter-btn" class="clear-filter-link mono">Reset ✕</button>
           </div>
         </div>
 
@@ -222,20 +333,28 @@ const popularTopics = [
               >
                 <a href={`/blog/${post.slug}`} class={`blog-article-card ${isLatest ? "latest-card" : ""}`}>
                   
-                  <div class="card-head-row">
-                    <span class={`cat-pill pill-${post.categorySlug}`}>
-                      <span class="cat-pill-icon">{post.icon}</span>
-                      <span>{post.category}</span>
-                    </span>
-                    <span class="reading-time mono">{post.readingTime}</span>
-                  </div>
+                  <div class="card-inner-top">
+                    <div class="card-head-row">
+                      <span class={`cat-pill pill-${post.categorySlug}`}>
+                        <span class="cat-pill-icon">{post.icon}</span>
+                        <span>{post.category}</span>
+                      </span>
+                      <span class="reading-time mono">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="clock-icon" aria-hidden="true">
+                          <circle cx="12" cy="12" r="10"></circle>
+                          <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        {post.readingTime}
+                      </span>
+                    </div>
 
-                  <h3 class="card-article-title">{post.title}</h3>
-                  <p class="card-article-description">{post.description}</p>
+                    <h3 class="card-article-title">{post.title}</h3>
+                    <p class="card-article-description">{post.description}</p>
+                  </div>
 
                   <div class="card-footer-row">
                     <span class="post-date-text mono">
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="date-cal-icon">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="date-cal-icon" aria-hidden="true">
                         <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                         <line x1="16" y1="2" x2="16" y2="6"></line>
                         <line x1="8" y1="2" x2="8" y2="6"></line>
@@ -245,7 +364,7 @@ const popularTopics = [
                     </span>
 
                     <span class="read-btn mono">
-                      <span>READ</span>
+                      <span>READ GUIDE</span>
                       <span class="arrow-glyph">→</span>
                     </span>
                   </div>
@@ -272,23 +391,42 @@ const popularTopics = [
 
 <style>
   /* ==========================================================================
-     Two-Column Blog Layout (Categories Left, Posts Right)
+     Ultra-Attractive Two-Column Blog Layout (Categories Left, Posts Right)
      ========================================================================== */
   .blog-page-container {
-    background: #fafbfc;
+    background: #f8fafc;
     min-height: 100vh;
-    padding-bottom: 100px;
+    padding-bottom: 120px;
   }
 
-  /* Header Banner */
+  /* Header Banner with Ambient Mesh Glow */
   .blog-header-banner {
+    position: relative;
     background: #ffffff;
     border-bottom: 1px solid #e2e8f0;
-    padding: 60px 0 48px;
+    padding: 68px 0 54px;
+    overflow: hidden;
+  }
+
+  .banner-ambient-glow {
+    position: absolute;
+    top: -160px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 780px;
+    height: 360px;
+    background: radial-gradient(circle, rgba(218, 41, 28, 0.08) 0%, rgba(218, 41, 28, 0) 70%);
+    filter: blur(50px);
+    pointer-events: none;
+  }
+
+  .header-content-wrapper {
+    position: relative;
+    z-index: 2;
   }
 
   .header-inner {
-    max-width: 840px;
+    max-width: 860px;
   }
 
   .blog-pill-badge {
@@ -301,10 +439,10 @@ const popularTopics = [
     color: #DA291C;
     background: #fff1f0;
     border: 1.5px solid #ffccc7;
-    padding: 5px 14px;
+    padding: 6px 15px;
     border-radius: 9999px;
-    margin-bottom: 18px;
-    box-shadow: 0 2px 6px rgba(218, 41, 28, 0.05);
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(218, 41, 28, 0.06);
   }
 
   .pulse-dot {
@@ -312,36 +450,37 @@ const popularTopics = [
     height: 7px;
     border-radius: 50%;
     background: #DA291C;
+    box-shadow: 0 0 0 3px rgba(218, 41, 28, 0.25);
   }
 
   .page-title {
-    font-size: clamp(32px, 4.2vw, 44px);
+    font-size: clamp(32px, 4.4vw, 48px);
     font-weight: 800;
-    line-height: 1.12;
-    letter-spacing: -0.03em;
+    line-height: 1.1;
+    letter-spacing: -0.035em;
     color: #0f172a;
-    margin: 0 0 14px;
+    margin: 0 0 16px;
   }
 
   .page-description {
-    font-size: 17.5px;
-    line-height: 1.6;
-    color: #64748b;
+    font-size: 18px;
+    line-height: 1.62;
+    color: #475569;
     margin: 0;
-    max-width: 680px;
+    max-width: 720px;
   }
 
   /* Main Layout Grid */
   .blog-main-layout {
     display: grid;
-    grid-template-columns: 280px minmax(0, 1fr);
-    gap: 48px;
+    grid-template-columns: 290px minmax(0, 1fr);
+    gap: 44px;
     margin-top: 40px;
     align-items: start;
   }
 
   /* ==========================================================================
-     Left Sidebar: Categories & Filters
+     Left Sidebar: Polished Cards & Navigation
      ========================================================================== */
   .blog-sidebar-left {
     position: sticky;
@@ -351,7 +490,15 @@ const popularTopics = [
   .sidebar-sticky-inner {
     display: flex;
     flex-direction: column;
-    gap: 28px;
+    gap: 20px;
+  }
+
+  .sidebar-search-card {
+    background: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 6px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.02);
   }
 
   /* Search Input */
@@ -371,21 +518,21 @@ const popularTopics = [
 
   .sidebar-search-input {
     width: 100%;
-    padding: 11px 36px 11px 38px;
-    font-size: 14px;
-    border-radius: 10px;
-    border: 1.5px solid #e2e8f0;
-    background: #ffffff;
+    padding: 10px 34px 10px 38px;
+    font-size: 13.5px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    background: #f8fafc;
     color: #0f172a;
     transition: all 0.2s ease;
     font-family: inherit;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
   }
 
   .sidebar-search-input:focus {
     outline: none;
+    background: #ffffff;
     border-color: #DA291C;
-    box-shadow: 0 0 0 3px rgba(218, 41, 28, 0.12);
+    box-shadow: 0 0 0 3px rgba(218, 41, 28, 0.1);
   }
 
   .clear-search-x {
@@ -393,49 +540,70 @@ const popularTopics = [
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
-    background: #f1f5f9;
+    background: #e2e8f0;
     border: none;
     border-radius: 50%;
     width: 20px;
     height: 20px;
     font-size: 11px;
-    color: #64748b;
+    color: #475569;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: background 0.15s ease;
   }
 
-  /* Sidebar Sections */
-  .sidebar-section {
+  .clear-search-x:hover {
+    background: #cbd5e1;
+    color: #0f172a;
+  }
+
+  /* Sidebar Card Container */
+  .sidebar-card {
+    background: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 18px 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+  }
+
+  .sidebar-card-header {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    padding: 0 4px;
   }
 
   .sidebar-eyebrow {
-    font-size: 11px;
+    font-size: 10.5px;
     font-weight: 800;
     letter-spacing: 0.08em;
     color: #94a3b8;
     text-transform: uppercase;
   }
 
+  .sidebar-tracks-count {
+    font-size: 11px;
+    color: #94a3b8;
+  }
+
   /* Category Navigation Buttons */
   .sidebar-cat-nav {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
   }
 
   .sidebar-cat-btn {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 14px;
-    border-radius: 10px;
-    background: #ffffff;
-    border: 1.5px solid #e2e8f0;
+    padding: 8px 10px;
+    border-radius: 11px;
+    background: transparent;
+    border: 1px solid transparent;
     font-size: 13.5px;
     font-weight: 600;
     color: #334155;
@@ -443,14 +611,13 @@ const popularTopics = [
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     font-family: inherit;
     text-align: left;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    width: 100%;
   }
 
   .sidebar-cat-btn:hover {
-    background: #f8fafc;
-    border-color: #cbd5e1;
+    background: #f1f5f9;
     color: #0f172a;
-    transform: translateX(2px);
+    transform: translateX(3px);
   }
 
   .sidebar-cat-btn.active {
@@ -458,16 +625,41 @@ const popularTopics = [
     border-color: #DA291C;
     color: #ffffff;
     box-shadow: 0 4px 14px rgba(218, 41, 28, 0.28);
+    transform: translateX(3px);
   }
 
   .cat-left {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
+    min-width: 0;
   }
 
-  .cat-emoji {
-    font-size: 14px;
+  .cat-icon-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 7px;
+    font-size: 13px;
+    background: #f1f5f9;
+    flex-shrink: 0;
+    transition: background 0.15s ease;
+  }
+
+  .sidebar-cat-btn:hover .cat-icon-box {
+    background: #e2e8f0;
+  }
+
+  .sidebar-cat-btn.active .cat-icon-box {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .cat-title-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .cat-badge-count {
@@ -477,6 +669,12 @@ const popularTopics = [
     border-radius: 9999px;
     background: #f1f5f9;
     color: #64748b;
+    flex-shrink: 0;
+  }
+
+  .sidebar-cat-btn:hover .cat-badge-count {
+    background: #e2e8f0;
+    color: #0f172a;
   }
 
   .sidebar-cat-btn.active .cat-badge-count {
@@ -495,8 +693,8 @@ const popularTopics = [
     font-size: 11.5px;
     font-weight: 600;
     padding: 5px 10px;
-    border-radius: 6px;
-    background: #ffffff;
+    border-radius: 8px;
+    background: #f8fafc;
     border: 1px solid #e2e8f0;
     color: #64748b;
     cursor: pointer;
@@ -507,79 +705,11 @@ const popularTopics = [
     border-color: #DA291C;
     color: #DA291C;
     background: #fff1f0;
-  }
-
-  /* Sidebar Newsletter Box */
-  .sidebar-newsletter-box {
-    background: #0f172a;
-    border-radius: 16px;
-    padding: 20px 18px;
-    color: #ffffff;
-    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
-  }
-
-  .newsletter-mini-chip {
-    font-size: 10px;
-    font-weight: 800;
-    color: #ff8b80;
-    letter-spacing: 0.08em;
-    margin-bottom: 6px;
-  }
-
-  .newsletter-mini-title {
-    font-size: 15px;
-    font-weight: 700;
-    margin: 0 0 6px;
-    color: #ffffff;
-  }
-
-  .newsletter-mini-desc {
-    font-size: 12px;
-    color: #94a3b8;
-    line-height: 1.5;
-    margin: 0 0 14px;
-  }
-
-  .newsletter-mini-form {
-    display: flex;
-    gap: 6px;
-  }
-
-  .newsletter-mini-input {
-    flex: 1;
-    padding: 8px 12px;
-    font-size: 12.5px;
-    border-radius: 8px;
-    border: 1px solid #334155;
-    background: #1e293b;
-    color: #ffffff;
-    outline: none;
-    font-family: inherit;
-    width: 0;
-  }
-
-  .newsletter-mini-input:focus {
-    border-color: #DA291C;
-  }
-
-  .newsletter-mini-btn {
-    background: #DA291C;
-    color: #ffffff;
-    font-weight: 700;
-    font-size: 12px;
-    border: none;
-    padding: 8px 14px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.15s ease;
-  }
-
-  .newsletter-mini-btn:hover {
-    background: #b91c1c;
+    transform: translateY(-1px);
   }
 
   /* ==========================================================================
-     Right Content: Articles Feed & Cards
+     Right Content: Articles Feed & Modern Cards
      ========================================================================== */
   .blog-content-right {
     min-width: 0;
@@ -590,30 +720,32 @@ const popularTopics = [
     align-items: center;
     justify-content: space-between;
     margin-bottom: 24px;
-    padding-bottom: 14px;
+    padding-bottom: 16px;
     border-bottom: 1px solid #e2e8f0;
     flex-wrap: wrap;
     gap: 12px;
   }
 
-  .feed-title-wrap {
+  .feed-title-with-pill {
     display: flex;
     align-items: center;
     gap: 12px;
   }
 
   .feed-current-title {
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 800;
     color: #0f172a;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
     margin: 0;
   }
 
   .feed-count-tag {
-    font-size: 12.5px;
+    font-size: 12px;
+    font-weight: 700;
     color: #64748b;
-    background: #f1f5f9;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
     padding: 3px 10px;
     border-radius: 9999px;
   }
@@ -624,23 +756,34 @@ const popularTopics = [
     gap: 8px;
     font-size: 12.5px;
     color: #64748b;
+    background: #ffffff;
+    padding: 4px 10px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
   }
 
   .clear-filter-link {
-    background: none;
-    border: none;
+    background: #fff1f0;
+    border: 1px solid #ffccc7;
     color: #DA291C;
     font-weight: 700;
     cursor: pointer;
-    text-decoration: underline;
-    font-size: 12.5px;
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 11px;
+    transition: all 0.15s ease;
+  }
+
+  .clear-filter-link:hover {
+    background: #DA291C;
+    color: #ffffff;
   }
 
   /* Cards Grid */
   .blog-cards-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 22px;
+    gap: 24px;
   }
 
   .blog-card-item {
@@ -653,13 +796,13 @@ const popularTopics = [
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
-    padding: 26px 24px;
+    padding: 28px 26px;
     background: #ffffff;
     border: 1.5px solid #e2e8f0;
-    border-radius: 18px;
+    border-radius: 20px;
     text-decoration: none !important;
     color: inherit;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.02);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
     position: relative;
     overflow: hidden;
     transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
@@ -688,9 +831,9 @@ const popularTopics = [
   }
 
   .blog-article-card:hover {
-    transform: translateY(-3px);
+    transform: translateY(-4px);
     border-color: #DA291C;
-    box-shadow: 0 16px 36px rgba(218, 41, 28, 0.1);
+    box-shadow: 0 18px 40px rgba(218, 41, 28, 0.1);
   }
 
   .blog-article-card:hover::before {
@@ -701,56 +844,51 @@ const popularTopics = [
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
   }
 
   .cat-pill {
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    padding: 3px 9px;
-    border-radius: 6px;
+    padding: 4px 10px;
+    border-radius: 8px;
     font-size: 11.5px;
     font-weight: 700;
     letter-spacing: 0.02em;
   }
 
-  .pill-ai-agents {
-    background: #fff1f0;
-    color: #DA291C;
-    border: 1px solid #ffccc7;
-  }
-
-  .pill-email-testing {
-    background: #eff6ff;
-    color: #2563eb;
-    border: 1px solid #bfdbfe;
-  }
-
-  .pill-forms-backend {
-    background: #ecfdf5;
-    color: #059669;
-    border: 1px solid #a7f3d0;
-  }
-
-  .pill-comparisons {
-    background: #f5f3ff;
-    color: #7c3aed;
-    border: 1px solid #ddd6fe;
-  }
+  /* 10 Category Pill Color Codes */
+  .pill-ai-agents { background: #fff1f0; color: #DA291C; border: 1px solid #ffccc7; }
+  .pill-email-api { background: #fff7ed; color: #ea580c; border: 1px solid #ffedd5; }
+  .pill-forms { background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0; }
+  .pill-email-testing { background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; }
+  .pill-developers { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+  .pill-deliverability { background: #fefce8; color: #ca8a04; border: 1px solid #fef08a; }
+  .pill-security { background: #fff1f2; color: #e11d48; border: 1px solid #fecdd3; }
+  .pill-comparisons { background: #f5f3ff; color: #7c3aed; border: 1px solid #ddd6fe; }
+  .pill-migrations { background: #eef2ff; color: #4f46e5; border: 1px solid #c7d2fe; }
+  .pill-integrations { background: #fdf2f8; color: #db2777; border: 1px solid #fbcfe8; }
 
   .reading-time {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
     font-size: 12px;
     color: #94a3b8;
   }
 
+  .clock-icon {
+    color: #cbd5e1;
+  }
+
   .card-article-title {
-    font-size: 19px;
-    font-weight: 700;
-    line-height: 1.35;
+    font-size: 19.5px;
+    font-weight: 750;
+    line-height: 1.34;
     color: #0f172a;
-    letter-spacing: -0.015em;
-    margin: 0 0 10px;
+    letter-spacing: -0.018em;
+    margin: 0 0 12px;
     transition: color 0.15s ease;
   }
 
@@ -760,9 +898,9 @@ const popularTopics = [
 
   .card-article-description {
     font-size: 14px;
-    line-height: 1.6;
+    line-height: 1.62;
     color: #475569;
-    margin: 0 0 20px;
+    margin: 0 0 24px;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
@@ -773,7 +911,7 @@ const popularTopics = [
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-top: 14px;
+    padding-top: 16px;
     border-top: 1px solid #f1f5f9;
   }
 
@@ -792,7 +930,7 @@ const popularTopics = [
   .read-btn {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 5px;
     font-size: 12px;
     font-weight: 800;
     color: #DA291C;
@@ -813,7 +951,7 @@ const popularTopics = [
     padding: 60px 24px;
     background: #ffffff;
     border: 1.5px dashed #cbd5e1;
-    border-radius: 18px;
+    border-radius: 20px;
     margin-top: 20px;
   }
 
@@ -852,9 +990,6 @@ const popularTopics = [
     .sidebar-cat-btn {
       flex: 1 1 auto;
     }
-    .sidebar-newsletter-box {
-      display: none;
-    }
   }
 
   @media (max-width: 640px) {
@@ -862,10 +997,10 @@ const popularTopics = [
       grid-template-columns: 1fr;
     }
     .blog-header-banner {
-      padding: 40px 0 32px;
+      padding: 44px 0 36px;
     }
     .blog-article-card {
-      padding: 20px 18px;
+      padding: 22px 20px;
     }
   }
 </style>
