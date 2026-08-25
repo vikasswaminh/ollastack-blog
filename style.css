@@ -275,23 +275,26 @@ button {
 }
 
 /* ============================================================
-   3. HERO SECTION
+   3. HERO SECTION (SIMPLE & CENTERED, DIAGRAM REMOVED)
    ============================================================ */
 .hero-section {
-  padding: 56px 0 80px 0;
-  overflow: hidden;
+  padding: 24px 0 64px 0;
+  background-color: var(--bg-page);
+  background-image: 
+    radial-gradient(#E2E8F0 1.2px, transparent 1.2px), 
+    radial-gradient(#E2E8F0 1.2px, var(--bg-page) 1.2px);
+  background-size: 28px 28px;
+  background-position: 0 0, 14px 14px;
+  border-bottom: 1px solid var(--border-light);
 }
 
-.hero-layout {
-  display: grid;
-  grid-template-columns: 1fr 1.45fr;
-  gap: 36px;
+.hero-simple-container {
+  max-width: 1040px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-}
-
-/* Left Hero Column */
-.hero-left {
-  max-width: 500px;
 }
 
 .hero-tag-badge {
@@ -300,12 +303,13 @@ button {
   gap: 6px;
   background: #F1F5F9;
   color: #475569;
-  padding: 6px 14px;
+  padding: 6px 16px;
   border-radius: var(--radius-pill);
-  font-size: 0.75rem;
+  font-size: 0.76rem;
   font-weight: 700;
   letter-spacing: 0.05em;
   margin-bottom: 24px;
+  border: 1px solid #E2E8F0;
 }
 
 .badge-blue-dot {
@@ -320,56 +324,69 @@ button {
 }
 
 .hero-main-title {
-  font-size: clamp(2.1rem, 3.1vw, 3.1rem);
+  font-size: clamp(2.2rem, 3.8vw, 3.4rem);
   font-weight: 800;
-  line-height: 1.18;
+  line-height: 1.2;
   letter-spacing: -0.035em;
   color: var(--text-main);
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
-.nowrap-headline {
+.hero-line-nowrap {
   white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .hero-line-nowrap {
+    white-space: normal;
+  }
 }
 
 .text-brand-red {
   color: var(--brand-red);
-  font-weight: 800;
+  font-weight: 900;
+  font-size: 1.24em;
+  display: inline-block;
+  letter-spacing: -0.04em;
+  margin-top: 4px;
 }
 
 .hero-description {
-  font-size: 1.02rem;
+  font-size: 1.08rem;
   line-height: 1.65;
   color: var(--text-sub);
-  margin-bottom: 32px;
+  margin-bottom: 36px;
+  max-width: 720px;
 }
 
 .hero-cta-buttons {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 14px;
   margin-bottom: 36px;
+  flex-wrap: wrap;
 }
 
 .hero-geo-callout {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   background: #F0F7FF;
   border: 1px solid #BAE6FD;
-  border-radius: var(--radius-card);
-  padding: 14px 18px;
+  border-radius: var(--radius-pill);
+  padding: 8px 18px;
 }
 
 .geo-pin {
-  font-size: 1.2rem;
+  font-size: 1rem;
   flex-shrink: 0;
 }
 
 .geo-text {
-  font-size: 0.88rem;
+  font-size: 0.86rem;
   color: #0369A1;
-  line-height: 1.45;
+  line-height: 1.4;
 }
 
 .geo-text strong {
@@ -378,248 +395,7 @@ button {
 }
 
 /* ============================================================
-   HERO RIGHT: ARCHITECTURE DIAGRAM
-   ============================================================ */
-.hero-right {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.diagram-hub-wrapper {
-  position: relative;
-  width: 740px;
-  height: 560px;
-}
-
-/* SVG Connector Lines Behind */
-.hub-connector-svg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* Central Hub Card (OLLASTACK) */
-.center-hub-card {
-  position: absolute;
-  top: 190px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 4;
-  width: 190px;
-  height: 180px;
-  background: #FFFFFF;
-  border: 1.5px solid #FDA4AF;
-  border-radius: 18px;
-  padding: 20px 14px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 10px 32px rgba(225, 29, 72, 0.08), 0 2px 6px rgba(0, 0, 0, 0.03);
-  transition: var(--transition-fast);
-}
-
-.center-hub-card:hover {
-  transform: translateX(-50%) translateY(-2px);
-  box-shadow: 0 14px 40px rgba(225, 29, 72, 0.16);
-}
-
-.hub-icon-wrap {
-  width: 42px;
-  height: 42px;
-  background: var(--brand-red);
-  border-radius: 10px;
-  margin: 0 auto 10px auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 14px rgba(225, 29, 72, 0.35);
-}
-
-.hub-brand-name {
-  font-size: 1.05rem;
-  font-weight: 800;
-  letter-spacing: 0.05em;
-  color: var(--text-main);
-  margin-bottom: 8px;
-}
-
-.hub-stack-points {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  font-size: 0.64rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  color: #64748B;
-}
-
-/* Satellite Cards */
-.sat-card {
-  position: absolute;
-  z-index: 3;
-  background: #FFFFFF;
-  border: 1px solid var(--border-color);
-  border-radius: 14px;
-  padding: 12px 14px;
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-  transition: var(--transition-fast);
-}
-
-.sat-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-hover);
-  border-color: #cbd5e1;
-}
-
-.sat-icon-box {
-  width: 36px;
-  height: 36px;
-  background: #FFF1F2;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.sat-info {
-  flex: 1;
-}
-
-.sat-title-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 4px;
-}
-
-.sat-title {
-  font-size: 0.74rem;
-  font-weight: 800;
-  letter-spacing: 0.03em;
-  color: var(--text-main);
-}
-
-.sat-num {
-  font-size: 0.65rem;
-  font-weight: 700;
-  color: var(--text-muted);
-  background: #F1F5F9;
-  padding: 1px 5px;
-  border-radius: 4px;
-}
-
-.sat-desc {
-  font-size: 0.68rem;
-  color: var(--text-sub);
-  line-height: 1.35;
-}
-
-/* Satellite Positions */
-.sat-top {
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 250px;
-}
-.sat-top:hover {
-  transform: translateX(-50%) translateY(-2px);
-}
-
-.sat-left {
-  top: 360px;
-  left: 0;
-  width: 215px;
-}
-
-.sat-right {
-  top: 360px;
-  right: 0;
-  width: 215px;
-}
-
-/* ============================================================
-   3 SUBFEATURES (CIRCULAR LOGO PINNED EXACTLY ON DOTTED ORBIT LINE)
-   ============================================================ */
-.subfeat-item {
-  position: absolute;
-  z-index: 5;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  text-align: center;
-  gap: 6px;
-  pointer-events: none;
-}
-
-.subfeat-circle {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: #FFF1F2;
-  border: 1.5px solid #FECDD3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 14px rgba(225, 29, 72, 0.12);
-  color: var(--brand-red);
-  pointer-events: auto;
-  transition: all 0.2s ease;
-}
-
-.subfeat-text {
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  line-height: 1.25;
-  color: var(--brand-red); /* BOLD RED */
-  text-transform: uppercase;
-  white-space: nowrap;
-  pointer-events: auto;
-}
-
-.subfeat-item:hover .subfeat-circle {
-  transform: scale(1.08);
-  border-color: var(--brand-red);
-  background: #FFE4E6;
-  box-shadow: 0 6px 18px rgba(225, 29, 72, 0.24);
-}
-
-/* 1. Bot Defenses (Center of circular logo pinned precisely on the left SVG orbit line at X: 139px, Y: 159px) */
-.badge-bot-defenses {
-  left: 139px;
-  top: 159px;
-  transform: translate(-50%, -19px);
-}
-
-/* 2. OpenAPI Friendly (Center of circular logo pinned precisely on the right SVG orbit line at X: 601px, Y: 159px) */
-.badge-openapi {
-  left: 601px;
-  top: 159px;
-  transform: translate(-50%, -19px);
-}
-
-/* 3. Secure by Design Token Auth (Center of circular logo pinned precisely on the bottom vertical line at X: 370px, Y: 440px) */
-.badge-token-auth {
-  left: 370px;
-  top: 440px;
-  transform: translate(-50%, -19px);
-}
-
-/* ============================================================
-   4. LIVE DEMO SECTION
+   5. LIVE DEMO SECTION
    ============================================================ */
 .live-demo-section {
   padding: 80px 0;
@@ -1682,22 +1458,15 @@ button {
    RESPONSIVE DESIGN (TABLET & MOBILE)
    ============================================================ */
 @media (max-width: 1200px) {
-  .hero-layout {
-    grid-template-columns: 1fr;
-    gap: 48px;
-  }
-  .hero-left {
-    max-width: 100%;
+  .hero-trust-bar {
+    flex-direction: column;
     text-align: center;
+    align-items: center;
+    gap: 16px;
   }
-  .hero-tag-badge, .hero-cta-buttons, .hero-geo-callout {
-    justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .diagram-hub-wrapper {
-    margin: 0 auto;
-    transform: scale(0.9);
+  .trust-bar-content {
+    flex-direction: column;
+    text-align: center;
   }
   .demo-interactive-grid {
     grid-template-columns: 1fr;
@@ -1719,8 +1488,20 @@ button {
   }
 }
 
-@media (max-width: 768px) {
-  .nav-pill, .nav-signin {
+@media (max-width: 860px) {
+  .top-meta-inner {
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+    justify-content: center;
+  }
+  .top-meta-left, .top-meta-right {
+    justify-content: center;
+  }
+  .nav-links-center {
+    display: none;
+  }
+  .nav-right {
     display: none;
   }
   .nav-burger {
@@ -1739,17 +1520,11 @@ button {
     gap: 16px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   }
-  .hero-main-title {
-    font-size: 2.3rem;
-  }
-  .diagram-hub-wrapper {
-    width: 100%;
-    max-width: 500px;
-    height: 440px;
-    transform: scale(0.7);
-    transform-origin: top center;
+  .hero-headline-centered {
+    font-size: 2.2rem;
   }
   .footer-layout {
     grid-template-columns: 1fr;
   }
 }
+
