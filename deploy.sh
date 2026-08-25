@@ -21,7 +21,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
 ACCOUNT_ID="${CLOUDFLARE_ACCOUNT_ID:-bc7f0a3ee7f73a27bcbd9f7c82a46876}"
-PROJECT="${CF_PAGES_PROJECT:-form4dev}"
+PROJECT="${CF_PAGES_PROJECT:-ollastack}"
 BRANCH="${CF_PAGES_BRANCH:-main}"
 
 if [[ -z "${CLOUDFLARE_API_TOKEN:-}" ]]; then
