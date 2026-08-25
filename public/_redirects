@@ -12,6 +12,8 @@
 /api/*  https://login.ollastack.com/api/:splat  302
 
 # BEGIN seo-consolidation (2026-08-01): thin/duplicate posts consolidated to one canonical each.
+/blog/how-to-build-a-form-backend-for-a-static-site-without-writing-a-server/  /blog/how-to-build-a-form-backend-for-a-static-site/  301
+/blog/how-to-build-a-form-backend-for-a-static-site-without-writing-a-server  /blog/how-to-build-a-form-backend-for-a-static-site/  301
 /blog/2026-07-16-nextjs-serverless-form-endpoint-longform/  /blog/nextjs-quickstart-hosted-form/  301
 /blog/2026-07-16-nextjs-serverless-form-endpoint-longform  /blog/nextjs-quickstart-hosted-form/  301
 /blog/2026-07-19-hosted-contact-form-longform/  /resources/developer-hub/  301

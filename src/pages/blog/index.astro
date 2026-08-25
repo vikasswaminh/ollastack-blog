@@ -13,17 +13,24 @@ const fmtDate = (iso: string) =>
 
 // Markdown collection posts, mapped to the same shape and merged with the
 // legacy .astro posts, newest first.
-const collectionPosts = (
-  await getCollection("blog", ({ data }) => data.draft !== true)
-).map((p) => ({
-  slug: p.slug,
-  title: p.data.title,
-  description: p.data.description,
-  date: p.data.date.toISOString().slice(0, 10),
-  readingTime: `${p.data.readingTime} min read`,
-}));
+const rawCollection = await getCollection("blog", ({ data }) => data.draft !== true);
+const collectionPosts = rawCollection
+  .filter((p) => p.slug !== "how-to-build-a-form-backend-for-a-static-site-without-writing-a-server")
+  .map((p) => ({
+    slug: p.slug,
+    title: p.data.title,
+    description: p.data.description,
+    date: p.data.date.toISOString().slice(0, 10),
+    readingTime: `${p.data.readingTime} min read`,
+  }));
 
-const posts = [...legacyPosts, ...collectionPosts].sort((a, b) =>
+const postMap = new Map();
+collectionPosts.forEach((p) => postMap.set(p.slug, p));
+legacyPosts.forEach((p) => {
+  if (!postMap.has(p.slug)) postMap.set(p.slug, p);
+});
+
+const posts = Array.from(postMap.values()).sort((a, b) =>
   b.date.localeCompare(a.date)
 );
 ---
