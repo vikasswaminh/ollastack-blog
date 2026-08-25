@@ -213,6 +213,8 @@ const articleLd = {
           if (entry.isIntersecting) {
             links.forEach((l) => l.classList.remove("active"));
             link.classList.add("active");
+            // Auto-scroll the sidebar so active section is visible
+            link.scrollIntoView({ block: "nearest", behavior: "smooth" });
           }
         }
       },
