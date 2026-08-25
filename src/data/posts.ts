@@ -8,7 +8,7 @@ export interface PostMeta {
 
 export const posts: PostMeta[] = [
   {
-    slug: "how-to-build-a-form-backend-for-a-static-site",
+    slug: "how-to-build-a-form-backend-for-a-static-site-without-writing-a-server",
     title:
       "How to Build a Form Backend for a Static Site Without Writing a Server",
     description:

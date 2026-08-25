@@ -15,7 +15,11 @@ const fmtDate = (iso: string) =>
 // legacy .astro posts, newest first.
 const rawCollection = await getCollection("blog", ({ data }) => data.draft !== true);
 const collectionPosts = rawCollection
-  .filter((p) => p.slug !== "how-to-build-a-form-backend-for-a-static-site-without-writing-a-server")
+  .filter(
+    (p) =>
+      p.slug !== "how-to-build-a-form-backend-for-a-static-site-without-writing-a-server" &&
+      p.slug !== "how-to-build-a-form-backend-for-a-static-site"
+  )
   .map((p) => ({
     slug: p.slug,
     title: p.data.title,

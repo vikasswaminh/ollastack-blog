@@ -6,7 +6,21 @@ import { getCollection } from "astro:content";
 import BlogPost from "../../layouts/BlogPost.astro";
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog", ({ data }) => data.draft !== true);
+  const staticSlugs = new Set([
+    "basin-vs-web3forms",
+    "can-ai-agents-submit-forms-safely",
+    "form-backend-for-ai-agents",
+    "forminit-alternatives",
+    "formspree-vs-netlify-forms",
+    "html-form-to-email-without-backend",
+    "netlify-forms-alternatives",
+    "how-to-build-a-form-backend-for-a-static-site",
+    "how-to-build-a-form-backend-for-a-static-site-without-writing-a-server",
+  ]);
+  const posts = await getCollection(
+    "blog",
+    ({ data, slug }) => data.draft !== true && !staticSlugs.has(slug)
+  );
   return posts.map((post) => ({
     params: { slug: post.slug },
     props: { post },
