@@ -8,6 +8,14 @@ export interface PostMeta {
 
 export const posts: PostMeta[] = [
   {
+    slug: "how-to-automate-otp-email-testing-in-ci-cd-pipelines",
+    title: "How to Automate OTP Email Testing in CI/CD Pipelines",
+    description:
+      "The practical guide to testing email verification flows with isolated inboxes, Email APIs, Playwright, Cypress, Selenium, CI workflows, and secure parallel execution.",
+    date: "2026-08-25",
+    readingTime: "18 min read",
+  },
+  {
     slug: "how-to-build-a-form-backend-for-a-static-site-without-writing-a-server",
     title:
       "How to Build a Form Backend for a Static Site Without Writing a Server",
