@@ -5,7 +5,7 @@ export async function getPublishedPosts(): Promise<CollectionEntry<'blog'>[]> {
   const posts = await getCollection('blog', ({ data }) =>
     import.meta.env.PROD ? data.draft !== true : true,
   );
-  return posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+  return posts.sort((a, b) => (b.data.date?.valueOf() || 0) - (a.data.date?.valueOf() || 0));
 }
 
 /** Rough reading time in minutes from raw markdown body. */

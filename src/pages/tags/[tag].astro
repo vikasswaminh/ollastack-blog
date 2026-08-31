@@ -26,7 +26,7 @@ const { posts, tag } = Astro.props;
           url={`/blog/${p.slug}/`}
           title={p.data.title}
           description={p.data.description}
-          pubDate={p.data.pubDate}
+          pubDate={p.data.date}
           tags={p.data.tags}
           minutes={readingTime(p.body)}
         />

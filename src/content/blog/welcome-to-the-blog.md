@@ -1,7 +1,7 @@
 ---
 title: 'Welcome to the OllaStack blog'
 description: 'Product news, how-tos, and practical tips from the OllaStack team.'
-pubDate: 2026-08-27
+date: 2026-08-27
 author: 'OllaStack Team'
 tags: ['announcements']
 ---

@@ -1,7 +1,7 @@
 ---
 title: 'Getting started with OllaStack'
 description: 'A quick tour of OllaStack and how to get up and running in minutes.'
-pubDate: 2026-08-26
+date: 2026-08-26
 author: 'OllaStack Team'
 tags: ['guides']
 ---
