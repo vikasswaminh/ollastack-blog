@@ -222,11 +222,11 @@ const articleLd = {
 <style>
   .blog-shell {
     display: grid;
-    grid-template-columns: 240px minmax(0, 1fr) 260px;
+    grid-template-columns: 260px minmax(0, 1fr) 260px;
     gap: 36px;
-    max-width: 1240px;
+    max-width: 1560px;
     margin: 0 auto;
-    padding: 48px 24px 96px;
+    padding: 40px 20px 96px;
     align-items: start;
     width: 100%;
     box-sizing: border-box;
@@ -630,7 +630,7 @@ const articleLd = {
   /* ---------- Right rail ---------- */
   .right-rail {
     position: sticky;
-    top: 80px;
+    top: max(100px, calc(50vh - 140px));
     align-self: start;
     display: flex;
     flex-direction: column;

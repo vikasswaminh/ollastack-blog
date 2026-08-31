@@ -11,6 +11,17 @@ export interface PostMeta {
 
 export const posts: PostMeta[] = [
   {
+    slug: "what-is-an-agent-email-api",
+    title: "What Is an Agent Email API and Why Does It Matter for AI Workflows?",
+    description:
+      "AI agents are booking meetings, signing up for tools, verifying accounts, and following up on leads — and every one of those tasks eventually hits an inbox. Here's what an agent email API actually is, why a normal transactional email service can't do the job, and how to wire email into an agentic workflow properly.",
+    date: "2026-08-31",
+    readingTime: "21 min read",
+    category: "AI Agents",
+    categorySlug: "ai-agents",
+    featured: true,
+  },
+  {
     slug: "how-to-automate-otp-email-testing-in-ci-cd-pipelines",
     title: "How to Automate OTP Email Testing in CI/CD Pipelines",
     description:
@@ -19,7 +30,6 @@ export const posts: PostMeta[] = [
     readingTime: "18 min read",
     category: "Email & Testing",
     categorySlug: "email-testing",
-    featured: true,
   },
   {
     slug: "how-to-build-a-form-backend-for-a-static-site-without-writing-a-server",
