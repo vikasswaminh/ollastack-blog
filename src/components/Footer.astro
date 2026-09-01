@@ -6,41 +6,20 @@ const APP = "https://login.ollastack.com";
 interface FooterLink { label: string; href: string }
 const groups: { title: string; items: FooterLink[] }[] = [
   {
-    title: "Product",
+    title: "Blog",
     items: [
-      { label: "Overview", href: "/" },
-      { label: "Email API", href: "/email-api" },
-      { label: "Pricing", href: "/pricing" },
-      { label: "Quickstart", href: "/docs#quickstart" },
-      { label: "Blog", href: "/blog" },
+      { label: "All Posts", href: "/blog" },
+      { label: "Tags", href: "/tags" },
+      { label: "RSS Feed", href: "/rss.xml" },
     ],
   },
   {
-    title: "Resources",
+    title: "Categories",
     items: [
-      { label: "All guides", href: "/resources" },
-      { label: "Migration hub", href: "/resources/migration-hub" },
-      { label: "Developer hub", href: "/resources/developer-hub" },
-      { label: "Deliverability hub", href: "/resources/deliverability-hub" },
-    ],
-  },
-  {
-    title: "Developers",
-    items: [
-      { label: "Docs", href: "/docs" },
-      { label: "For AI agents", href: "/docs/agents" },
-      { label: "OpenAPI spec", href: `${APP}/api/openapi.json` },
-      { label: "Webhooks", href: "/docs#webhooks" },
-    ],
-  },
-  {
-    title: "Company",
-    items: [
-      { label: "About", href: "/about" },
-      { label: "Contact", href: "/contact" },
-      { label: "Careers", href: "/careers" },
-      { label: "Custom SMTP", href: "/docs/smtp" },
-      { label: "Blog", href: "/blog" },
+      { label: "AI Agents", href: "/blog?cat=ai-agents" },
+      { label: "Email Testing", href: "/blog?cat=email-testing" },
+      { label: "Comparisons", href: "/blog?cat=comparisons" },
+      { label: "Integrations", href: "/blog?cat=integrations" },
     ],
   },
   {
@@ -49,7 +28,6 @@ const groups: { title: string; items: FooterLink[] }[] = [
       { label: "Sign in", href: `${APP}/login` },
       { label: "Start free", href: `${APP}/register` },
       { label: "Dashboard", href: `${APP}/dashboard` },
-      { label: "Contact us", href: "/contact" },
     ],
   },
 ];
@@ -75,7 +53,7 @@ const groupBrands: FooterLink[] = [
   <div class="container-wide foot">
     <div class="foot-grid">
       <div>
-        <Logo size={22} />
+        <Logo size={28} />
         <p class="tagline">The message layer for AI agents — forms in, email out, tested in CI. One API.</p>
       </div>
       {groups.map((g) => (

@@ -1,5 +1,4 @@
 ---
-import Base from "../../layouts/Base.astro";
 import { getCollection } from "astro:content";
 import { posts as legacyPosts } from "../../data/posts";
 
@@ -10,140 +9,33 @@ const fmtDate = (iso: string) =>
     day: "numeric",
   });
 
-function getPostCategory(slug: string, title = ""): { category: string; categorySlug: string; icon: string } {
+function getPostCategory(slug: string, title = ""): { category: string; categorySlug: string; icon: string; theme: string } {
   const s = slug.toLowerCase();
-  const t = title.toLowerCase();
-
-  // 1. AI Agents
-  if (
-    s === "read-otp-verification-code-in-ai-agent" ||
-    s === "build-ai-agent-that-sends-and-receives-email" ||
-    s === "email-for-ai-agents" ||
-    s === "agent-email-identity" ||
-    s === "form-backend-for-ai-agents" ||
-    s === "can-ai-agents-submit-forms-safely" ||
-    s.includes("ai-agent") ||
-    s.includes("agent")
-  ) {
-    return { category: "AI Agents", categorySlug: "ai-agents", icon: "🤖" };
+  if (s.includes("ai-agent") || s.includes("agent") || s.includes("read-otp")) {
+    return { category: "AI Agents", categorySlug: "ai-agents", icon: "🤖", theme: "cat-rose" };
   }
-
-  // 4. Email Testing
-  if (
-    s === "how-to-automate-otp-email-testing-in-ci-cd-pipelines" ||
-    s === "test-inbox-docker" ||
-    s === "assert-on-email-in-playwright-cypress" ||
-    s === "email-testing-api-for-ci" ||
-    s === "test-otp-email-in-ci" ||
-    s.includes("test-otp") ||
-    s.includes("email-ci-benchmarks") ||
-    (s.includes("test") && (s.includes("email") || s.includes("inbox") || s.includes("otp")))
-  ) {
-    return { category: "Email Testing", categorySlug: "email-testing", icon: "✉️" };
+  if (s.includes("test") || s.includes("playwright") || s.includes("cypress") || s.includes("otp")) {
+    return { category: "Email Testing", categorySlug: "email-testing", icon: "✉️", theme: "cat-blue" };
   }
-
-  // 8. Comparisons
-  if (
-    s === "agentmail-alternative" ||
-    s === "mailosaur-alternative" ||
-    s === "formspree-alternative" ||
-    s === "resend-free-tier-alternative" ||
-    s === "sendgrid-free-alternative" ||
-    s === "formspree-vs-netlify-forms" ||
-    s === "basin-vs-web3forms" ||
-    s === "forminit-alternatives" ||
-    s.includes("-vs-") ||
-    (s.includes("alternative") && !s.includes("migrate"))
-  ) {
-    return { category: "Comparisons", categorySlug: "comparisons", icon: "⚖️" };
+  if (s.includes("-vs-") || s.includes("alternative")) {
+    return { category: "Comparisons", categorySlug: "comparisons", icon: "⚖️", theme: "cat-purple" };
   }
-
-  // 9. Migrations
-  if (
-    s === "migrate-from-getform" ||
-    s === "migrate-from-basin" ||
-    s === "migrate-from-netlify-forms" ||
-    s === "migrate-from-formspree" ||
-    s === "netlify-forms-alternatives" ||
-    s === "formspree-migration-pitfalls" ||
-    s === "formspree-webhook-migration-node" ||
-    s.includes("migrate") ||
-    s.includes("migration")
-  ) {
-    return { category: "Migrations", categorySlug: "migrations", icon: "🚀" };
+  if (s.includes("migrate") || s.includes("migration")) {
+    return { category: "Migrations", categorySlug: "migrations", icon: "🚀", theme: "cat-orange" };
   }
-
-  // 10. Integrations
-  if (
-    s === "form-webhooks-guide" ||
-    s === "remix-form-quickstart" ||
-    s === "vue-nuxt-form-quickstart" ||
-    s === "react-hook-form-backend" ||
-    s === "sveltekit-form-quickstart" ||
-    s === "astro-form-quickstart" ||
-    s === "nextjs-quickstart-hosted-form" ||
-    s.includes("quickstart") ||
-    s.includes("hook-form") ||
-    s.includes("webhooks") ||
-    s.includes("nextjs-serverless") ||
-    s.includes("resend-integration") ||
-    s.includes("dodopayments")
-  ) {
-    return { category: "Integrations", categorySlug: "integrations", icon: "🔌" };
+  if (s.includes("quickstart") || s.includes("webhooks") || s.includes("form-") || s.includes("react-") || s.includes("vue") || s.includes("svelte") || s.includes("remix")) {
+    return { category: "Integrations", categorySlug: "integrations", icon: "🔌", theme: "cat-amber" };
   }
-
-  // 6. Deliverability
-  if (
-    s === "per-tenant-smtp-guide" ||
-    s === "dkim-spf-dmarc-custom-sender" ||
-    s.includes("deliverability") ||
-    s.includes("smtp") ||
-    s.includes("dkim") ||
-    s.includes("bounce") ||
-    s.includes("sender-domain")
-  ) {
-    return { category: "Deliverability", categorySlug: "deliverability", icon: "🛡️" };
+  if (s.includes("smtp") || s.includes("dkim") || s.includes("deliverability")) {
+    return { category: "Deliverability", categorySlug: "deliverability", icon: "🛡️", theme: "cat-teal" };
   }
-
-  // 7. Security
-  if (
-    s === "secure-forms-honeypot-captcha" ||
-    s === "ml-quarantine-explained" ||
-    s.includes("security") ||
-    s.includes("quarantine") ||
-    s.includes("ddos") ||
-    s.includes("privacy")
-  ) {
-    return { category: "Security", categorySlug: "security", icon: "🔒" };
+  if (s.includes("security") || s.includes("quarantine") || s.includes("honeypot") || s.includes("captcha")) {
+    return { category: "Security", categorySlug: "security", icon: "🔒", theme: "cat-slate" };
   }
-
-  // 5. Developers
-  if (
-    s === "nodejs-email-api" ||
-    s === "python-email-api" ||
-    s.startsWith("send-email-") ||
-    s.includes("send-email") ||
-    s.includes("python-send") ||
-    s.includes("curl")
-  ) {
-    return { category: "Developers", categorySlug: "developers", icon: "💻" };
+  if (s.includes("email-api") || s.includes("inbound")) {
+    return { category: "Email API", categorySlug: "email-api", icon: "📬", theme: "cat-sky" };
   }
-
-  // 2. Email API
-  if (
-    s === "best-email-api" ||
-    s === "inbound-email-api" ||
-    s === "email-inbox-api" ||
-    s.includes("free-email-api") ||
-    s.includes("email-api") ||
-    s.includes("free-otp-email") ||
-    s.includes("email-scaling")
-  ) {
-    return { category: "Email API", categorySlug: "email-api", icon: "⚡" };
-  }
-
-  // 3. Forms
-  return { category: "Forms", categorySlug: "forms", icon: "📋" };
+  return { category: "Forms", categorySlug: "forms", icon: "📋", theme: "cat-emerald" };
 }
 
 // Markdown collection posts
@@ -165,6 +57,7 @@ const collectionPosts = rawCollection
       category: cat.category,
       categorySlug: cat.categorySlug,
       icon: cat.icon,
+      theme: cat.theme,
       tags: p.data.tags || [],
     };
   });
@@ -178,964 +71,998 @@ legacyPosts.forEach((p) => {
     category: cat.category,
     categorySlug: cat.categorySlug,
     icon: cat.icon,
+    theme: cat.theme,
   });
 });
 
-const posts = Array.from(postMap.values()).sort((a, b) =>
+const allPosts = Array.from(postMap.values()).sort((a, b) =>
   b.date.localeCompare(a.date)
 );
 
-const CATEGORY_LIST = [
-  { slug: "all", name: "All Articles", icon: "⚡" },
-  { slug: "ai-agents", name: "AI Agents", icon: "🤖" },
-  { slug: "email-api", name: "Email API", icon: "⚡" },
-  { slug: "forms", name: "Forms", icon: "📋" },
-  { slug: "email-testing", name: "Email Testing", icon: "✉️" },
-  { slug: "developers", name: "Developers", icon: "💻" },
-  { slug: "deliverability", name: "Deliverability", icon: "🛡️" },
-  { slug: "security", name: "Security", icon: "🔒" },
-  { slug: "comparisons", name: "Comparisons", icon: "⚖️" },
-  { slug: "migrations", name: "Migrations", icon: "🚀" },
-  { slug: "integrations", name: "Integrations", icon: "🔌" },
+// PURE OLLASTACK: Left Column (FOUNDER SPECIAL)
+const founderSpecialPosts = [
+  { title: "Form Backend vs Form Builder: What Developers Should Choose in 2026", slug: "form-backend-for-ai-agents" },
+  { title: "How to Automate OTP Email Testing in CI/CD Pipelines", slug: "how-to-automate-otp-email-testing-in-ci-cd-pipelines" },
+  { title: "How to Build a Form Backend for a Static Site Without Writing a Server", slug: "how-to-build-a-form-backend-for-a-static-site-without-writing-a-server" },
+  { title: "Self-Host vs Hosted Form Backend: Complete Decision Framework", slug: "self-host-vs-hosted-form-backend" },
+  { title: "Per-Tenant SMTP: Send Notifications from Each Client's Domain", slug: "per-tenant-smtp-guide" },
+  { title: "Form Webhooks Done Right: Cryptographic Signatures & Replay", slug: "form-webhooks-guide" },
+  { title: "Zero Trust Inbound Endpoints: Securing Forms Against Automated Spam", slug: "secure-forms-honeypot-captcha" },
+  { title: "ML Spam Quarantine: Why Your Form Backend Must Fail Open", slug: "ml-quarantine-explained" },
 ];
 
-const categoriesWithCounts = CATEGORY_LIST.map((c) => ({
-  ...c,
-  count: c.slug === "all" ? posts.length : posts.filter((p) => p.categorySlug === c.slug).length,
-}));
+// PURE OLLASTACK: Lead Hero Featured Article
+const heroArticle = {
+  category: "AI Agents",
+  title: "What Is an Agent Email API and Why Does It Matter for AI Workflows?",
+  excerpt: "AI agents are booking meetings, signing up for tools, verifying accounts, and following up on leads — and every one of those tasks eventually hits an inbox. Here is how programmatic email APIs make agents autonomous.",
+  time: "21 min read",
+  slug: "what-is-an-agent-email-api",
+  isNew: true
+};
 
-const popularTopics = [
-  "Playwright", "Cypress", "OTP", "AI Agents", "Security", "Static Sites", "Webhooks", "FastAPI", "React", "Next.js"
+// PURE OLLASTACK: 3 Guide Cards below Hero
+const guideCards = [
+  {
+    category: "AI Agents",
+    title: "Read OTP Verification Code in AI Agent",
+    desc: "Complete guide for programmatic email verification — disposable inbox creation, polling, and OTP extraction regex.",
+    time: "18 min read",
+    slug: "read-otp-verification-code-in-ai-agent",
+    badgeClass: "badge-amber"
+  },
+  {
+    category: "Email Testing",
+    title: "Assert on Email in Playwright & Cypress",
+    desc: "End-to-end testing of magic links, OTP codes, and welcome emails in CI/CD test suites with instant inboxes.",
+    time: "15 min read",
+    slug: "assert-on-email-in-playwright-cypress",
+    badgeClass: "badge-orange"
+  },
+  {
+    category: "Forms",
+    title: "Accept File Uploads in Static Forms",
+    desc: "Add multipart file uploads to static forms without S3 buckets, presigned URLs, or writing custom server logic.",
+    time: "12 min read",
+    slug: "file-uploads-forms-multipart",
+    badgeClass: "badge-yellow"
+  }
+];
+
+// PURE OLLASTACK: Right Column (AI SPECIAL)
+const aiSpecialPosts = [
+  { title: "Build an AI Agent That Sends and Receives Email (with MCP)", slug: "build-ai-agent-that-sends-and-receives-email" },
+  { title: "Give Your AI Agent an Email Identity (Full Duplex Comms)", slug: "agent-email-identity" },
+  { title: "Can AI Agents Submit Forms Safely? What Developers Must Know", slug: "can-ai-agents-submit-forms-safely" },
+  { title: "Test Email in Docker & CI with Ephemeral Disposable Inboxes", slug: "test-inbox-docker" },
+  { title: "AgentMail Alternative: Agent Inboxes + Forms + CI Testing", slug: "agentmail-alternative" },
+  { title: "Email for AI Agents: Dedicated Inboxes vs Send-Only APIs", slug: "email-for-ai-agents" },
+  { title: "How to Secure Public Form Endpoints from AI Scraping & Abuse", slug: "secure-forms-honeypot-captcha" },
+  { title: "Next.js 15 Serverless Form Backend Integration Guide", slug: "nextjs-quickstart-hosted-form" },
+  { title: "DKIM, SPF & DMARC for Transactional Form Notifications", slug: "dkim-spf-dmarc-custom-sender" },
 ];
 ---
 
-<Base
-  title="Engineering Blog & Guides — Ollastack"
-  description="Deep-dives, architecture guides, and production playbooks for AI agents, email verification, and form backends."
-  current="blog"
->
-  <div class="blog-page-container">
-    
-    <!-- Hero Atmospheric Header -->
-    <header class="blog-header-banner">
-      <div class="banner-ambient-glow" aria-hidden="true"></div>
-      <div class="container-wide header-content-wrapper">
-        <div class="header-inner">
-          <div class="blog-pill-badge mono">
-            <span class="pulse-dot"></span>
-            <span>ENGINEERING BLOG &amp; PLAYBOOKS</span>
-          </div>
-          <h1 class="page-title">Notes from building the message layer for AI agents.</h1>
-          <p class="page-description">
-            Practical pieces on shipping forms, automated email verification in CI, and handling traffic an AI agent actually wants to talk to.
-          </p>
-        </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Engineering Blog & Developer Playbooks — Ollastack</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
+</head>
+<body class="nh-exact-body">
+
+  <!-- 1. TOP BLACK UTILITY BAR (FORMAT IDENTICAL TO REFERENCE) -->
+  <div class="top-black-bar">
+    <div class="nh-wrapper top-bar-row">
+      <div class="top-bar-left">
+        <span>GLOBAL EDGE INFRASTRUCTURE</span>
+        <span class="dot-sep">•</span>
+        <a href="https://ollastack.com/docs">API STATUS: 99.99% UPTIME</a>
+        <span class="dot-sep">•</span>
+        <span>24/7 AGENT CLOUD & FORMS</span>
       </div>
-    </header>
+      <div class="top-bar-right">
+        <a href="https://ollastack.com/docs">DOCS & API REF</a>
+        <a href="https://login.ollastack.com/login">SANDBOX TESTER</a>
+        <a href="https://ollastack.com/#email-api">FREE DISPOSABLE INBOX</a>
+        <a href="https://login.ollastack.com/register" class="link-admissions">+ GET FREE API KEY →</a>
+      </div>
+    </div>
+  </div>
 
-    <!-- Two-Column Layout Container -->
-    <div class="container-wide blog-main-layout">
+  <!-- 2. MAIN HEADER NAVBAR (FORMAT IDENTICAL TO REFERENCE) -->
+  <header class="nh-header">
+    <div class="nh-wrapper header-row">
       
-      <!-- ============ LEFT SIDEBAR: 10 CATEGORIES & SEARCH ============ -->
-      <aside class="blog-sidebar-left">
-        <div class="sidebar-sticky-inner">
-          
-          <!-- Search Card -->
-          <div class="sidebar-search-card">
-            <div class="search-input-wrapper">
-              <svg class="search-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
-              <input
-                type="text"
-                id="blog-search"
-                placeholder="Search articles by keyword..."
-                aria-label="Search articles"
-                class="sidebar-search-input"
-              />
-              <button type="button" id="sidebar-clear-search" class="clear-search-x" aria-label="Clear search" style="display: none;">✕</button>
-            </div>
-          </div>
+      <!-- OLLASTACK LOGO -->
+      <a href="/blog" class="ollastack-logo-link" aria-label="Ollastack Blog">
+        <img
+          src="/ollastack-logo-mark.png"
+          alt="Ollastack"
+          width="36"
+          height="36"
+          class="logo-3d-mark"
+          loading="eager"
+        />
+        <span class="logo-text">
+          <span class="text-olla">olla</span><span class="text-stack">stack</span>
+        </span>
+      </a>
 
-          <!-- Category Navigation Card -->
-          <div class="sidebar-card">
-            <div class="sidebar-card-header">
-              <span class="sidebar-eyebrow mono">EXPLORE TRACKS</span>
-              <span class="sidebar-tracks-count mono">{categoriesWithCounts.length - 1} tracks</span>
-            </div>
+      <!-- NAV MENU -->
+      <nav class="nh-nav" aria-label="Primary Navigation">
+        <div class="nav-drop">
+          <a href="https://ollastack.com/#product" class="nav-item">Product <span class="arr">▾</span></a>
+        </div>
+        <a href="/blog" class="nav-item active-nav">Blog</a>
+        <div class="nav-drop">
+          <a href="https://ollastack.com/#use-cases" class="nav-item">Use cases <span class="arr">▾</span></a>
+        </div>
+        <a href="https://ollastack.com/#email-api" class="nav-item">Email API</a>
+        <div class="nav-drop">
+          <a href="https://ollastack.com/docs" class="nav-item">Docs <span class="arr">▾</span></a>
+        </div>
+        <a href="https://ollastack.com/#pricing" class="nav-item">Pricing</a>
+      </nav>
 
-            <nav class="sidebar-cat-nav" role="tablist" aria-label="Blog categories">
-              {categoriesWithCounts.map((cat, idx) => (
-                <button
-                  type="button"
-                  role="tab"
-                  class={`sidebar-cat-btn ${idx === 0 ? "active" : ""}`}
-                  data-category={cat.slug}
-                  data-name={cat.name}
-                  aria-selected={idx === 0 ? "true" : "false"}
-                >
-                  <div class="cat-left">
-                    <span class={`cat-icon-box box-${cat.slug}`}>{cat.icon}</span>
-                    <span class="cat-title-text">{cat.name}</span>
-                  </div>
-                  <span class="cat-badge-count mono">{cat.count}</span>
-                </button>
-              ))}
-            </nav>
-          </div>
+      <!-- RED CTA BUTTON -->
+      <div>
+        <a href="https://login.ollastack.com/register" class="btn-contact-red">Start free →</a>
+      </div>
 
-          <!-- Popular Topics / Tags Card -->
-          <div class="sidebar-card">
-            <div class="sidebar-card-header">
-              <span class="sidebar-eyebrow mono">POPULAR TOPICS</span>
-            </div>
-            <div class="topics-tags-cloud">
-              {popularTopics.map((topic) => (
-                <button type="button" class="topic-tag-btn mono" data-topic={topic.toLowerCase()}>
-                  #{topic}
-                </button>
-              ))}
-            </div>
-          </div>
+    </div>
+  </header>
 
+  <!-- 3. RED SOCIAL PROOF BANNER (FORMAT IDENTICAL TO REFERENCE) -->
+  <div class="nh-red-banner">
+    <div class="nh-wrapper banner-inner">
+      <div class="banner-item">
+        <span class="icon-white">👤</span>
+        <span>Developer-First Infrastructure</span>
+      </div>
+      <span class="b-dot">•</span>
+      <div class="banner-item">
+        <span class="star-gold">4.9★</span>
+        <span>Developer Rating (1,173)</span>
+      </div>
+      <span class="b-dot">•</span>
+      <div class="banner-item">
+        <span class="star-gold">99.99%</span>
+        <span>Global SLA Uptime</span>
+      </div>
+      <span class="b-dot">•</span>
+      <div class="banner-item">
+        <span class="icon-yt">🤖</span>
+        <span>MCP Agent Compatible</span>
+      </div>
+      <span class="b-dot">•</span>
+      <div class="banner-item"><span>10M+ Form Submissions</span></div>
+      <span class="b-dot">•</span>
+      <div class="banner-item"><span>SOC2 Type II Certified</span></div>
+      <span class="b-dot">•</span>
+      <div class="banner-item"><span>Self-Hostable Core</span></div>
+      <span class="b-dot">•</span>
+      <div class="banner-item"><span>Playwright & Cypress CI</span></div>
+      <span class="b-dot">•</span>
+      <div class="banner-item"><span>24/7 Agent Mailboxes</span></div>
+      <span class="b-dot">•</span>
+      <div class="banner-item"><span>Multi-Tenant SMTP</span></div>
+    </div>
+  </div>
+
+  <!-- 4. MAIN 3-COLUMN EDITORIAL CONTENT (FORMAT IDENTICAL TO REFERENCE) -->
+  <main class="nh-main-content">
+    <div class="nh-wrapper magazine-layout">
+
+      <!-- ================= LEFT COLUMN: FOUNDER SPECIAL ================= -->
+      <aside class="col-left">
+        <div class="pill-badge pill-orange">
+          <span>FOUNDER SPECIAL</span>
+        </div>
+
+        <ul class="clean-link-list">
+          {founderSpecialPosts.map((item) => (
+            <li>
+              <a href={`/blog/${item.slug}/`} class="side-link">
+                {item.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <div class="side-view-all">
+          <a href="#all-articles" class="view-all-orange">View All →</a>
         </div>
       </aside>
 
-      <!-- ============ RIGHT CONTENT: BLOG POSTS LIST ============ -->
-      <main class="blog-content-right">
+      <!-- ================= CENTER COLUMN: MAIN FEED ================= -->
+      <section class="col-center">
         
-        <!-- Section Title & Meta Header -->
-        <div class="feed-header-bar">
-          <div class="feed-title-wrap">
-            <div class="feed-title-with-pill">
-              <h2 class="feed-current-title" id="current-category-name">All Articles</h2>
-              <span class="feed-count-tag mono" id="feed-articles-count">{posts.length} articles</span>
+        <!-- Heading -->
+        <div class="center-heading-wrap">
+          <h1 class="center-title">Notes from building the message layer for AI agents.</h1>
+          <p class="center-sub">Practical pieces on shipping forms, automated email verification in CI, and handling traffic an AI agent actually wants to talk to.</p>
+        </div>
+
+        <!-- NEWEST ARTICLES Tab -->
+        <div class="newest-tab-wrap">
+          <span class="pill-newest-badge">
+            <span class="flame-icon">🔥</span>
+            <span>NEWEST ARTICLES</span>
+          </span>
+          <span class="newest-subtext">Latest from our engineering team</span>
+        </div>
+
+        <!-- HERO FEATURED ARTICLE (GOLDEN BORDER) -->
+        <article class="hero-featured-box">
+          <a href={`/blog/${heroArticle.slug}/`} class="hero-link-box">
+            
+            <!-- Left Image -->
+            <div class="hero-img-col">
+              <img
+                src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=700&q=80"
+                alt="AI Agent Email API Architecture"
+                class="hero-img"
+              />
             </div>
-          </div>
-          
-          <div class="feed-active-filter" id="active-filter-indicator" style="display: none;">
-            <span class="filter-msg mono">Filtered: <strong id="filter-term-display"></strong></span>
-            <button type="button" id="clear-all-filter-btn" class="clear-filter-link mono">Reset ✕</button>
-          </div>
+
+            <!-- Right Content -->
+            <div class="hero-text-col">
+              <div class="hero-tag-row">
+                <span class="tag-amber">{heroArticle.category}</span>
+                <span class="tag-new">✨ NEW</span>
+              </div>
+
+              <h2 class="hero-article-title">{heroArticle.title}</h2>
+
+              <p class="hero-article-excerpt">{heroArticle.excerpt}</p>
+
+              <div class="hero-article-meta">
+                <span>{heroArticle.time}</span>
+                <span class="meta-dot">•</span>
+                <span class="read-link-text">Read article →</span>
+              </div>
+            </div>
+
+          </a>
+        </article>
+
+        <!-- 3-CARD ROW WITH GOLDEN/AMBER BORDER (EXACT FORMAT) -->
+        <div class="three-cards-row">
+          {guideCards.map((card) => (
+            <article class="guide-box">
+              <a href={`/blog/${card.slug}/`} class="guide-box-link">
+                <div class="guide-badge-wrap">
+                  <span class={card.badgeClass}>{card.category}</span>
+                </div>
+                <h3 class="guide-title">{card.title}</h3>
+                <p class="guide-desc">{card.desc}</p>
+                <div class="guide-meta">
+                  <span>{card.time}</span>
+                </div>
+              </a>
+            </article>
+          ))}
         </div>
 
-        <!-- Blog Cards 2-Column Grid -->
-        <div class="blog-cards-grid" id="blog-posts-list">
-          {posts.map((post, idx) => {
-            const isLatest = idx === 0;
-            return (
-              <article
-                class="blog-card-item"
-                data-category={post.categorySlug}
-                data-title={post.title.toLowerCase()}
-                data-desc={post.description.toLowerCase()}
-              >
-                <a href={`/blog/${post.slug}`} class={`blog-article-card ${isLatest ? "latest-card" : ""}`}>
-                  
-                  <div class="card-inner-top">
-                    <div class="card-head-row">
-                      <span class={`cat-pill pill-${post.categorySlug}`}>
-                        <span class="cat-pill-icon">{post.icon}</span>
-                        <span>{post.category}</span>
-                      </span>
-                      <span class="reading-time mono">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="clock-icon" aria-hidden="true">
-                          <circle cx="12" cy="12" r="10"></circle>
-                          <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
-                        {post.readingTime}
-                      </span>
-                    </div>
-
-                    <h3 class="card-article-title">{post.title}</h3>
-                    <p class="card-article-description">{post.description}</p>
-                  </div>
-
-                  <div class="card-footer-row">
-                    <span class="post-date-text mono">
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="date-cal-icon" aria-hidden="true">
-                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                        <line x1="16" y1="2" x2="16" y2="6"></line>
-                        <line x1="8" y1="2" x2="8" y2="6"></line>
-                        <line x1="3" y1="10" x2="21" y2="10"></line>
-                      </svg>
-                      {fmtDate(post.date)}
-                    </span>
-
-                    <span class="read-btn mono">
-                      <span>READ GUIDE</span>
-                      <span class="arrow-glyph">→</span>
-                    </span>
-                  </div>
-
-                </a>
-              </article>
-            );
-          })}
+        <!-- MORE RECENT PUBLICATIONS FEED (2-COLUMN GRID) -->
+        <div class="recent-feed-head" id="all-articles">
+          <h3>Recent Publications</h3>
         </div>
 
-        <!-- No Matching Results Message -->
-        <div id="no-posts-found" class="no-posts-box" style="display: none;">
-          <div class="no-posts-icon">🔍</div>
-          <h3>No articles found</h3>
-          <p>No articles matched your search or category filter. Try clearing the search keyword or selecting a different category.</p>
-          <button type="button" id="reset-feed-btn" class="btn btn-primary btn-sm">Show all articles</button>
+        <div class="recent-grid-row">
+          {allPosts.slice(0, 6).map((post) => (
+            <article class="recent-post-card">
+              <a href={`/blog/${post.slug}/`} class="recent-card-link">
+                <div class="recent-card-meta">
+                  <span class="recent-cat-pill">{post.category}</span>
+                  <span class="recent-time">{post.readingTime}</span>
+                </div>
+                <h4 class="recent-card-title">{post.title}</h4>
+                <p class="recent-card-desc">{post.description}</p>
+              </a>
+            </article>
+          ))}
         </div>
 
-      </main>
+      </section>
+
+      <!-- ================= RIGHT COLUMN: AI SPECIAL ================= -->
+      <aside class="col-right">
+        <div class="pill-badge pill-purple">
+          <span>AI SPECIAL</span>
+        </div>
+
+        <ul class="clean-link-list">
+          {aiSpecialPosts.map((item) => (
+            <li>
+              <a href={`/blog/${item.slug}/`} class="side-link">
+                {item.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </aside>
 
     </div>
-  </div>
-</Base>
+  </main>
+
+  <!-- 5. FLOATING RED CTA BUTTON -->
+  <a href="https://login.ollastack.com/register" class="floating-red-btn" id="floating-btn">
+    <span class="spark">✦</span>
+    <span>Start Building Free</span>
+  </a>
+
+  <!-- CLICK CURSOR WAVE RIPPLE SCRIPT -->
+  <script is:inline>
+    (function () {
+      document.addEventListener("click", function (e) {
+        const target = e.target.closest("a, button, .guide-box, .hero-featured-box, .recent-post-card, .side-link");
+        if (!target) return;
+
+        // Create wave ripple element
+        const wave = document.createElement("div");
+        wave.className = "cursor-click-wave";
+        wave.style.left = e.clientX + "px";
+        wave.style.top = e.clientY + "px";
+        document.body.appendChild(wave);
+
+        // Remove after animation completes
+        setTimeout(() => {
+          wave.remove();
+        }, 750);
+      });
+    })();
+  </script>
+</body>
+</html>
 
 <style>
   /* ==========================================================================
-     Ultra-Attractive Two-Column Blog Layout (Categories Left, Posts Right)
+     EXACT REFERENCE LAYOUT STRUCTURE EXCLUSIVELY FOR OLLASTACK
      ========================================================================== */
-  .blog-page-container {
-    background: #f8fafc;
-    min-height: 100vh;
-    padding-bottom: 120px;
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
   }
 
-  /* Header Banner with Ambient Mesh Glow */
-  .blog-header-banner {
-    position: relative;
+  body.nh-exact-body {
+    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background: #ffffff;
-    border-bottom: 1px solid #e2e8f0;
-    padding: 68px 0 54px;
-    overflow: hidden;
+    color: #1a1a1a;
+    -webkit-font-smoothing: antialiased;
+    margin: 0;
+    padding: 0;
   }
 
-  .banner-ambient-glow {
-    position: absolute;
-    top: -160px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 780px;
-    height: 360px;
-    background: radial-gradient(circle, rgba(218, 41, 28, 0.08) 0%, rgba(218, 41, 28, 0) 70%);
-    filter: blur(50px);
-    pointer-events: none;
+  .nh-wrapper {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 28px;
   }
 
-  .header-content-wrapper {
-    position: relative;
-    z-index: 2;
+  /* ------------------- 1. TOP BLACK UTILITY BAR ------------------- */
+  .top-black-bar {
+    background: #000000;
+    color: #cbd5e1;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 6px 0;
+    border-bottom: 1px solid #1f2937;
+  }
+  .top-bar-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .top-bar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .top-bar-left a {
+    color: #cbd5e1;
+    text-decoration: none;
+  }
+  .top-bar-left a:hover {
+    color: #ffffff;
+  }
+  .dot-sep {
+    color: #6b7280;
+  }
+  .top-bar-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .top-bar-right a {
+    color: #cbd5e1;
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  .top-bar-right a:hover {
+    color: #ffffff;
+  }
+  .link-admissions {
+    color: #f97316 !important;
+    font-weight: 800;
   }
 
-  .header-inner {
-    max-width: 860px;
+  /* ------------------- 2. MAIN HEADER NAVBAR ------------------- */
+  .nh-header {
+    background: #ffffff;
+    border-bottom: 1px solid #f1f5f9;
+    padding: 12px 0;
+  }
+  .header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
-  .blog-pill-badge {
+  /* Ollastack Two-Tone Logo */
+  .ollastack-logo-link {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    font-size: 11.5px;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    color: #DA291C;
-    background: #fff1f0;
-    border: 1.5px solid #ffccc7;
-    padding: 6px 15px;
-    border-radius: 9999px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 8px rgba(218, 41, 28, 0.06);
+    gap: 10px;
+    text-decoration: none;
+  }
+  .logo-3d-mark {
+    display: block;
+    object-fit: contain;
+  }
+  .logo-text {
+    font-weight: 900;
+    font-size: 26px;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+  .text-olla {
+    color: #000000;
+  }
+  .text-stack {
+    color: #DC2626;
   }
 
-  .pulse-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: #DA291C;
-    box-shadow: 0 0 0 3px rgba(218, 41, 28, 0.25);
-  }
-
-  .page-title {
-    font-size: clamp(32px, 4.4vw, 48px);
-    font-weight: 800;
-    line-height: 1.1;
-    letter-spacing: -0.035em;
-    color: #0f172a;
-    margin: 0 0 16px;
-  }
-
-  .page-description {
-    font-size: 18px;
-    line-height: 1.62;
-    color: #475569;
-    margin: 0;
-    max-width: 720px;
-  }
-
-  /* Main Layout Grid */
-  .blog-main-layout {
-    display: grid;
-    grid-template-columns: 290px minmax(0, 1fr);
-    gap: 44px;
-    margin-top: 40px;
-    align-items: start;
-  }
-
-  /* ==========================================================================
-     Left Sidebar: Polished Cards & Navigation
-     ========================================================================== */
-  .blog-sidebar-left {
-    position: sticky;
-    top: 84px;
-  }
-
-  .sidebar-sticky-inner {
+  /* Nav Items */
+  .nh-nav {
     display: flex;
-    flex-direction: column;
-    gap: 20px;
+    align-items: center;
+    gap: 32px;
+  }
+  .nav-item {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: #111827;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .nav-item:hover,
+  .nav-item.active-nav {
+    color: #DC2626;
+  }
+  .arr {
+    font-size: 10px;
+    color: #6b7280;
   }
 
-  .sidebar-search-card {
-    background: #ffffff;
-    border: 1.5px solid #e2e8f0;
-    border-radius: 16px;
-    padding: 6px;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.02);
+  /* Red Start Free CTA Button */
+  .btn-contact-red {
+    background: #DC2626;
+    color: #ffffff !important;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 9px 22px;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.15s ease;
+  }
+  .btn-contact-red:hover {
+    background: #b91c1c;
   }
 
-  /* Search Input */
-  .search-input-wrapper {
-    position: relative;
-    width: 100%;
+  /* ------------------- 3. RED SOCIAL PROOF BANNER ------------------- */
+  .nh-red-banner {
+    background: #DC2626;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 8px 0;
+    overflow-x: auto;
+    white-space: nowrap;
   }
-
-  .search-svg {
-    position: absolute;
-    left: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #94a3b8;
-    pointer-events: none;
-  }
-
-  .sidebar-search-input {
-    width: 100%;
-    padding: 10px 34px 10px 38px;
-    font-size: 13.5px;
-    border-radius: 12px;
-    border: 1px solid transparent;
-    background: #f8fafc;
-    color: #0f172a;
-    transition: all 0.2s ease;
-    font-family: inherit;
-  }
-
-  .sidebar-search-input:focus {
-    outline: none;
-    background: #ffffff;
-    border-color: #DA291C;
-    box-shadow: 0 0 0 3px rgba(218, 41, 28, 0.1);
-  }
-
-  .clear-search-x {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: #e2e8f0;
-    border: none;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    font-size: 11px;
-    color: #475569;
-    cursor: pointer;
+  .banner-inner {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.15s ease;
+    gap: 14px;
+  }
+  .banner-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+  }
+  .b-dot {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 9px;
+  }
+  .star-gold {
+    color: #fde047;
+  }
+  .icon-yt {
+    font-size: 10px;
   }
 
-  .clear-search-x:hover {
-    background: #cbd5e1;
-    color: #0f172a;
+  /* ------------------- 4. MAIN 3-COLUMN MAGAZINE LAYOUT ------------------- */
+  .nh-main-content {
+    padding: 36px 0 100px;
+  }
+  .magazine-layout {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr) 220px;
+    gap: 36px;
+    align-items: start;
   }
 
-  /* Sidebar Card Container */
-  .sidebar-card {
+  /* Column Boxes (Left & Right Sidebars: Sticky on Scroll) */
+  .col-left {
+    position: sticky;
+    top: 24px;
     background: #ffffff;
-    border: 1.5px solid #e2e8f0;
-    border-radius: 18px;
-    padding: 18px 16px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+    border: 1.5px solid #fed7aa; /* Soft Orange Box Border */
+    border-radius: 16px;
+    padding: 22px 18px;
+    box-shadow: 0 4px 16px rgba(249, 115, 22, 0.06);
+    box-sizing: border-box;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+  .col-left::-webkit-scrollbar {
+    display: none;
   }
 
-  .sidebar-card-header {
+  .col-right {
+    position: sticky;
+    top: 24px;
+    background: #ffffff;
+    border: 1.5px solid #ddd6fe; /* Soft Purple Box Border */
+    border-radius: 16px;
+    padding: 22px 18px;
+    box-shadow: 0 4px 16px rgba(124, 58, 237, 0.06);
+    box-sizing: border-box;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+  .col-right::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Pills */
+  .pill-badge {
+    display: inline-block;
+    padding: 5px 16px;
+    border-radius: 9999px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    color: #ffffff;
+    margin-bottom: 20px;
+  }
+  .pill-orange {
+    background: #f97316;
+  }
+  .pill-purple {
+    background: #7c3aed;
+  }
+
+  /* Link Lists */
+  .clean-link-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .clean-link-list li {
+    padding-bottom: 14px;
+    border-bottom: 1px solid #f8fafc;
+  }
+  .clean-link-list li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  .side-link {
+    font-size: 13.5px;
+    font-weight: 600;
+    line-height: 1.45;
+    color: #334155;
+    text-decoration: none;
+    display: block;
+    transition: all 0.15s ease;
+  }
+  .side-link:hover {
+    color: #DC2626;
+    transform: translateX(2px);
+  }
+
+  .side-view-all {
+    margin-top: 20px;
+  }
+  .view-all-orange {
+    font-size: 13px;
+    font-weight: 800;
+    color: #f97316;
+    text-decoration: none;
+  }
+  .view-all-orange:hover {
+    text-decoration: underline;
+  }
+
+  /* ------------------- Center Column ------------------- */
+  .center-heading-wrap {
+    margin-bottom: 20px;
+  }
+  .center-title {
+    font-size: 24px;
+    font-weight: 900;
+    color: #111827;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+  .center-sub {
+    font-size: 13.5px;
+    color: #6b7280;
+  }
+
+  /* NEWEST ARTICLES Pill Tab */
+  .newest-tab-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .pill-newest-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #f97316;
+    color: #ffffff;
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    padding: 5px 14px;
+    border-radius: 9999px;
+  }
+  .flame-icon {
+    font-size: 11px;
+  }
+  .newest-subtext {
+    font-size: 12.5px;
+    color: #6b7280;
+    font-weight: 500;
+  }
+
+  /* ------------------- Featured Lead Card ------------------- */
+  .hero-featured-box {
+    background: #ffffff;
+    border: 2px solid #f59e0b; /* Golden Yellow Border */
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    transition: all 0.15s ease;
+  }
+  .hero-featured-box:hover {
+    box-shadow: 0 8px 24px rgba(245, 158, 11, 0.15);
+  }
+  .hero-link-box {
+    display: grid;
+    grid-template-columns: 240px minmax(0, 1fr);
+    text-decoration: none;
+    color: inherit;
+  }
+  .hero-img-col {
+    height: 100%;
+    min-height: 210px;
+  }
+  .hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .hero-text-col {
+    padding: 22px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .hero-tag-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .tag-amber {
+    background: #d97706;
+    color: #ffffff;
+    font-size: 10.5px;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+  .tag-new {
+    background: #f97316;
+    color: #ffffff;
+    font-size: 10.5px;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+  .hero-article-title {
+    font-size: 19px;
+    font-weight: 800;
+    line-height: 1.35;
+    color: #111827;
+    letter-spacing: -0.015em;
+    margin-bottom: 8px;
+  }
+  .hero-article-excerpt {
+    font-size: 13px;
+    line-height: 1.55;
+    color: #4b5563;
+    margin-bottom: 14px;
+  }
+  .hero-article-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11.5px;
+    color: #9ca3af;
+    font-weight: 600;
+  }
+  .read-link-text {
+    color: #f97316;
+    font-weight: 700;
+  }
+
+  /* ------------------- 3-Card Row ------------------- */
+  .three-cards-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 36px;
+  }
+  .guide-box {
+    background: #ffffff;
+    border: 1.5px solid #f59e0b; /* Golden Yellow Border */
+    border-radius: 12px;
+    padding: 18px;
+    transition: all 0.15s ease;
+  }
+  .guide-box:hover {
+    box-shadow: 0 6px 18px rgba(245, 158, 11, 0.12);
+  }
+  .guide-box-link {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+  }
+  .guide-badge-wrap {
+    margin-bottom: 10px;
+  }
+  .badge-amber {
+    display: inline-block;
+    background: #f59e0b;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 2px 7px;
+    border-radius: 4px;
+  }
+  .badge-orange {
+    display: inline-block;
+    background: #ea580c;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 2px 7px;
+    border-radius: 4px;
+  }
+  .badge-yellow {
+    display: inline-block;
+    background: #d97706;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 2px 7px;
+    border-radius: 4px;
+  }
+  .guide-title {
+    font-size: 14.5px;
+    font-weight: 800;
+    line-height: 1.4;
+    color: #111827;
+    margin-bottom: 8px;
+  }
+  .guide-desc {
+    font-size: 12px;
+    line-height: 1.5;
+    color: #6b7280;
+    margin-bottom: 12px;
+    flex-grow: 1;
+  }
+  .guide-meta {
+    font-size: 11px;
+    color: #9ca3af;
+    font-weight: 600;
+  }
+
+  /* ------------------- Recent Publications Grid ------------------- */
+  .recent-feed-head {
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  .recent-feed-head h3 {
+    font-size: 17px;
+    font-weight: 800;
+    color: #111827;
+  }
+  .recent-grid-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+  .recent-post-card {
+    background: #ffffff;
+    border: 2px solid #DC2626; /* Bold Red Highlight Border on ALL boxes */
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: 0 4px 16px rgba(220, 38, 38, 0.08);
+    transition: all 0.2s ease;
+  }
+  .recent-post-card:hover {
+    border-color: #b91c1c;
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(220, 38, 38, 0.18);
+  }
+  .recent-card-link {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+  }
+  .recent-card-meta {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 12px;
-    padding: 0 4px;
   }
-
-  .sidebar-eyebrow {
-    font-size: 10.5px;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    color: #94a3b8;
-    text-transform: uppercase;
-  }
-
-  .sidebar-tracks-count {
+  .recent-cat-pill {
     font-size: 11px;
-    color: #94a3b8;
-  }
-
-  /* Category Navigation Buttons */
-  .sidebar-cat-nav {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .sidebar-cat-btn {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 10px;
-    border-radius: 11px;
-    background: transparent;
-    border: 1px solid transparent;
-    font-size: 13.5px;
-    font-weight: 600;
-    color: #334155;
-    cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-    font-family: inherit;
-    text-align: left;
-    width: 100%;
-  }
-
-  .sidebar-cat-btn:hover {
-    background: #f1f5f9;
-    color: #0f172a;
-    transform: translateX(3px);
-  }
-
-  .sidebar-cat-btn.active {
-    background: #DA291C;
-    border-color: #DA291C;
-    color: #ffffff;
-    box-shadow: 0 4px 14px rgba(218, 41, 28, 0.28);
-    transform: translateX(3px);
-  }
-
-  .cat-left {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    min-width: 0;
-  }
-
-  .cat-icon-box {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 26px;
-    height: 26px;
-    border-radius: 7px;
-    font-size: 13px;
-    background: #f1f5f9;
-    flex-shrink: 0;
-    transition: background 0.15s ease;
-  }
-
-  .sidebar-cat-btn:hover .cat-icon-box {
-    background: #e2e8f0;
-  }
-
-  .sidebar-cat-btn.active .cat-icon-box {
-    background: rgba(255, 255, 255, 0.2);
-  }
-
-  .cat-title-text {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .cat-badge-count {
-    font-size: 11px;
-    font-weight: 700;
-    padding: 1px 7px;
-    border-radius: 9999px;
-    background: #f1f5f9;
-    color: #64748b;
-    flex-shrink: 0;
-  }
-
-  .sidebar-cat-btn:hover .cat-badge-count {
-    background: #e2e8f0;
-    color: #0f172a;
-  }
-
-  .sidebar-cat-btn.active .cat-badge-count {
-    background: rgba(255, 255, 255, 0.25);
-    color: #ffffff;
-  }
-
-  /* Topics Cloud */
-  .topics-tags-cloud {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-
-  .topic-tag-btn {
-    font-size: 11.5px;
-    font-weight: 600;
-    padding: 5px 10px;
-    border-radius: 8px;
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    color: #64748b;
-    cursor: pointer;
-    transition: all 0.15s ease;
-  }
-
-  .topic-tag-btn:hover {
-    border-color: #DA291C;
-    color: #DA291C;
-    background: #fff1f0;
-    transform: translateY(-1px);
-  }
-
-  /* ==========================================================================
-     Right Content: Articles Feed & Modern Cards
-     ========================================================================== */
-  .blog-content-right {
-    min-width: 0;
-  }
-
-  .feed-header-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 24px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid #e2e8f0;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-
-  .feed-title-with-pill {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .feed-current-title {
-    font-size: 24px;
     font-weight: 800;
-    color: #0f172a;
-    letter-spacing: -0.025em;
-    margin: 0;
+    color: #DC2626;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    padding: 3px 9px;
+    border-radius: 6px;
   }
-
-  .feed-count-tag {
+  .recent-time {
     font-size: 12px;
     font-weight: 700;
     color: #64748b;
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    padding: 3px 10px;
-    border-radius: 9999px;
   }
-
-  .feed-active-filter {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 12.5px;
-    color: #64748b;
-    background: #ffffff;
-    padding: 4px 10px;
-    border-radius: 8px;
-    border: 1px solid #e2e8f0;
-  }
-
-  .clear-filter-link {
-    background: #fff1f0;
-    border: 1px solid #ffccc7;
-    color: #DA291C;
-    font-weight: 700;
-    cursor: pointer;
-    border-radius: 4px;
-    padding: 2px 6px;
-    font-size: 11px;
-    transition: all 0.15s ease;
-  }
-
-  .clear-filter-link:hover {
-    background: #DA291C;
-    color: #ffffff;
-  }
-
-  /* Cards Grid */
-  .blog-cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 24px;
-  }
-
-  .blog-card-item {
-    display: flex;
-    transition: opacity 0.25s ease, transform 0.25s ease;
-  }
-
-  .blog-article-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 100%;
-    padding: 28px 26px;
-    background: #ffffff;
-    border: 1.5px solid #e2e8f0;
-    border-radius: 20px;
-    text-decoration: none !important;
-    color: inherit;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
-    position: relative;
-    overflow: hidden;
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .blog-article-card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 4px;
-    height: 100%;
-    background: #DA291C;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-  }
-
-  .latest-card {
-    border-color: #ffccc7;
-    background: linear-gradient(180deg, #ffffff 0%, #fffcfc 100%);
-    box-shadow: 0 6px 20px rgba(218, 41, 28, 0.05);
-  }
-
-  .latest-card::before {
-    opacity: 1;
-  }
-
-  .blog-article-card:hover {
-    transform: translateY(-4px);
-    border-color: #DA291C;
-    box-shadow: 0 18px 40px rgba(218, 41, 28, 0.1);
-  }
-
-  .blog-article-card:hover::before {
-    opacity: 1;
-  }
-
-  .card-head-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 16px;
-  }
-
-  .cat-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    padding: 4px 10px;
-    border-radius: 8px;
-    font-size: 11.5px;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-  }
-
-  /* 10 Category Pill Color Codes */
-  .pill-ai-agents { background: #fff1f0; color: #DA291C; border: 1px solid #ffccc7; }
-  .pill-email-api { background: #fff7ed; color: #ea580c; border: 1px solid #ffedd5; }
-  .pill-forms { background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0; }
-  .pill-email-testing { background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; }
-  .pill-developers { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
-  .pill-deliverability { background: #fefce8; color: #ca8a04; border: 1px solid #fef08a; }
-  .pill-security { background: #fff1f2; color: #e11d48; border: 1px solid #fecdd3; }
-  .pill-comparisons { background: #f5f3ff; color: #7c3aed; border: 1px solid #ddd6fe; }
-  .pill-migrations { background: #eef2ff; color: #4f46e5; border: 1px solid #c7d2fe; }
-  .pill-integrations { background: #fdf2f8; color: #db2777; border: 1px solid #fbcfe8; }
-
-  .reading-time {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 12px;
-    color: #94a3b8;
-  }
-
-  .clock-icon {
-    color: #cbd5e1;
-  }
-
-  .card-article-title {
-    font-size: 19.5px;
-    font-weight: 750;
-    line-height: 1.34;
-    color: #0f172a;
-    letter-spacing: -0.018em;
-    margin: 0 0 12px;
+  .recent-card-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    line-height: 1.35;
+    letter-spacing: -0.015em;
+    color: #000000; /* Deep Bold Black */
+    margin-bottom: 8px;
     transition: color 0.15s ease;
   }
-
-  .blog-article-card:hover .card-article-title {
-    color: #DA291C;
+  .recent-post-card:hover .recent-card-title {
+    color: #DC2626;
+  }
+  .recent-card-desc {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: #334155; /* Higher contrast readable slate */
+    font-weight: 500;
   }
 
-  .card-article-description {
-    font-size: 14px;
-    line-height: 1.62;
-    color: #475569;
-    margin: 0 0 24px;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .card-footer-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 16px;
-    border-top: 1px solid #f1f5f9;
-  }
-
-  .post-date-text {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    color: #64748b;
-  }
-
-  .date-cal-icon {
-    color: #94a3b8;
-  }
-
-  .read-btn {
+  /* ------------------- 5. Floating Red Start Building Button ------------------- */
+  .floating-red-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9999;
+    background: #DC2626;
+    color: #ffffff !important;
+    font-size: 13.5px;
+    font-weight: 800;
+    padding: 11px 22px;
+    border-radius: 9999px;
+    text-decoration: none !important;
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    font-size: 12px;
-    font-weight: 800;
-    color: #DA291C;
-    letter-spacing: 0.05em;
+    gap: 7px;
+    box-shadow: 0 6px 20px rgba(220, 38, 38, 0.45);
+    transition: transform 0.15s ease;
+  }
+  .floating-red-btn:hover {
+    transform: translateY(-2px);
+  }
+  .spark {
+    font-size: 14px;
   }
 
-  .arrow-glyph {
-    transition: transform 0.2s ease;
+  /* ------------------- Cursor Click Wave Animation ------------------- */
+  :global(.cursor-click-wave) {
+    position: fixed;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(220, 38, 38, 0.8) 0%, rgba(249, 115, 22, 0.4) 60%, rgba(220, 38, 38, 0) 100%);
+    border: 2px solid #DC2626;
+    pointer-events: none;
+    transform: translate(-50%, -50%) scale(1);
+    animation: cursorWaveExpand 0.75s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+    z-index: 999999;
+    box-shadow: 0 0 16px rgba(220, 38, 38, 0.6);
   }
 
-  .blog-article-card:hover .arrow-glyph {
-    transform: translateX(4px);
-  }
-
-  /* Empty State */
-  .no-posts-box {
-    text-align: center;
-    padding: 60px 24px;
-    background: #ffffff;
-    border: 1.5px dashed #cbd5e1;
-    border-radius: 20px;
-    margin-top: 20px;
-  }
-
-  .no-posts-icon {
-    font-size: 36px;
-    margin-bottom: 10px;
-  }
-
-  .no-posts-box h3 {
-    font-size: 19px;
-    font-weight: 700;
-    color: #0f172a;
-    margin: 0 0 8px;
-  }
-
-  .no-posts-box p {
-    color: #64748b;
-    font-size: 14.5px;
-    max-width: 440px;
-    margin: 0 auto 18px;
-  }
-
-  /* Responsive Breakpoints */
-  @media (max-width: 960px) {
-    .blog-main-layout {
-      grid-template-columns: 1fr;
-      gap: 32px;
+  @keyframes cursorWaveExpand {
+    0% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
     }
-    .blog-sidebar-left {
-      position: static;
+    50% {
+      opacity: 0.8;
+      transform: translate(-50%, -50%) scale(7);
+      border-width: 3px;
     }
-    .sidebar-cat-nav {
-      flex-direction: row;
-      flex-wrap: wrap;
-    }
-    .sidebar-cat-btn {
-      flex: 1 1 auto;
+    100% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(14);
+      border-width: 1px;
     }
   }
 
-  @media (max-width: 640px) {
-    .blog-cards-grid {
+  /* ------------------- Responsive ------------------- */
+  @media (max-width: 1100px) {
+    .magazine-layout {
+      grid-template-columns: 180px minmax(0, 1fr) 180px;
+      gap: 20px;
+    }
+  }
+  @media (max-width: 900px) {
+    .magazine-layout {
       grid-template-columns: 1fr;
     }
-    .blog-header-banner {
-      padding: 44px 0 36px;
+    .col-left, .col-right {
+      display: none;
     }
-    .blog-article-card {
-      padding: 22px 20px;
+    .three-cards-row {
+      grid-template-columns: 1fr;
+    }
+    .recent-grid-row {
+      grid-template-columns: 1fr;
     }
   }
 </style>
-
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const catButtons = document.querySelectorAll<HTMLButtonElement>(".sidebar-cat-btn");
-    const topicButtons = document.querySelectorAll<HTMLButtonElement>(".topic-tag-btn");
-    const cardItems = document.querySelectorAll<HTMLElement>(".blog-card-item");
-    const searchInput = document.getElementById("blog-search") as HTMLInputElement | null;
-    const clearSearchBtn = document.getElementById("sidebar-clear-search") as HTMLButtonElement | null;
-    const currentCatNameEl = document.getElementById("current-category-name");
-    const articlesCountEl = document.getElementById("feed-articles-count");
-    const filterIndicator = document.getElementById("active-filter-indicator");
-    const filterTermDisplay = document.getElementById("filter-term-display");
-    const clearAllFilterBtn = document.getElementById("clear-all-filter-btn");
-    const noPostsFoundBox = document.getElementById("no-posts-found");
-    const resetFeedBtn = document.getElementById("reset-feed-btn");
-
-    let currentCategory = "all";
-    let searchQuery = "";
-    let currentCategoryLabel = "All Articles";
-
-    function updateView() {
-      let visibleCount = 0;
-
-      cardItems.forEach((item) => {
-        const itemCat = item.getAttribute("data-category") || "";
-        const itemTitle = item.getAttribute("data-title") || "";
-        const itemDesc = item.getAttribute("data-desc") || "";
-
-        const matchesCat = currentCategory === "all" || itemCat === currentCategory;
-        const matchesSearch =
-          !searchQuery ||
-          itemTitle.includes(searchQuery) ||
-          itemDesc.includes(searchQuery) ||
-          itemCat.includes(searchQuery);
-
-        if (matchesCat && matchesSearch) {
-          item.style.display = "flex";
-          visibleCount++;
-        } else {
-          item.style.display = "none";
-        }
-      });
-
-      // Update Category Title & Count
-      if (currentCatNameEl) currentCatNameEl.textContent = currentCategoryLabel;
-      if (articlesCountEl) articlesCountEl.textContent = `${visibleCount} articles`;
-
-      // Active filter banner
-      const isFiltered = currentCategory !== "all" || searchQuery.length > 0;
-      if (filterIndicator) {
-        filterIndicator.style.display = isFiltered ? "flex" : "none";
-        if (filterTermDisplay) {
-          filterTermDisplay.textContent = searchQuery ? `"${searchQuery}"` : currentCategoryLabel;
-        }
-      }
-
-      // Empty state
-      if (noPostsFoundBox) {
-        noPostsFoundBox.style.display = visibleCount === 0 ? "block" : "none";
-      }
-    }
-
-    // Category click
-    catButtons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        catButtons.forEach((b) => {
-          b.classList.remove("active");
-          b.setAttribute("aria-selected", "false");
-        });
-        btn.classList.add("active");
-        btn.setAttribute("aria-selected", "true");
-        currentCategory = btn.getAttribute("data-category") || "all";
-        currentCategoryLabel = btn.getAttribute("data-name") || "All Articles";
-        updateView();
-      });
-    });
-
-    // Topic Tags click
-    topicButtons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const topic = btn.getAttribute("data-topic") || "";
-        if (searchInput) {
-          searchInput.value = topic;
-          searchQuery = topic;
-          if (clearSearchBtn) clearSearchBtn.style.display = "flex";
-          updateView();
-        }
-      });
-    });
-
-    // Search input
-    if (searchInput) {
-      searchInput.addEventListener("input", (e) => {
-        searchQuery = (e.target as HTMLInputElement).value.trim().toLowerCase();
-        if (clearSearchBtn) {
-          clearSearchBtn.style.display = searchQuery.length > 0 ? "flex" : "none";
-        }
-        updateView();
-      });
-    }
-
-    // Clear search
-    if (clearSearchBtn && searchInput) {
-      clearSearchBtn.addEventListener("click", () => {
-        searchInput.value = "";
-        searchQuery = "";
-        clearSearchBtn.style.display = "none";
-        searchInput.focus();
-        updateView();
-      });
-    }
-
-    // Reset All
-    function resetAll() {
-      currentCategory = "all";
-      currentCategoryLabel = "All Articles";
-      searchQuery = "";
-      if (searchInput) searchInput.value = "";
-      if (clearSearchBtn) clearSearchBtn.style.display = "none";
-      catButtons.forEach((b, i) => {
-        if (i === 0) {
-          b.classList.add("active");
-          b.setAttribute("aria-selected", "true");
-        } else {
-          b.classList.remove("active");
-          b.setAttribute("aria-selected", "false");
-        }
-      });
-      updateView();
-    }
-
-    if (clearAllFilterBtn) clearAllFilterBtn.addEventListener("click", resetAll);
-    if (resetFeedBtn) resetFeedBtn.addEventListener("click", resetAll);
-  });
-</script>

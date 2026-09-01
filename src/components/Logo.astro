@@ -1,33 +1,24 @@
 ---
-// ollastack mark — a "stack" icon in brand red (PMS 485, #DA291C).
-// A rounded red square with three EQUAL white bars: a stack of
-// communication channels (forms + agent mail + more), not just a form.
-// Fill-based, so it stays crisp from favicon-tiny to hero-large without
-// depending on stroke weight at small px. The wordmark ("ollastack")
-// sits next to it in ink, matching the brand-red announce-bar treatment.
 interface Props {
   size?: number;
   withWordmark?: boolean;
 }
-const { size = 24, withWordmark = true } = Astro.props;
+const { size = 38, withWordmark = true } = Astro.props;
 ---
 
-<a href="/" aria-label="ollastack" class="logo-lockup">
-  <svg
+<a href="/blog" aria-label="ollastack" class="logo-lockup">
+  <img
+    src="/ollastack-logo-mark.png"
+    alt="Ollastack"
     width={size}
     height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    aria-hidden="true"
-    class="logo-mark"
-  >
-    <rect x="2" y="2" width="20" height="20" rx="4" fill="#DA291C" />
-    <rect x="6" y="7"  width="12" height="2" rx="1" fill="#ffffff" />
-    <rect x="6" y="11" width="12" height="2" rx="1" fill="#ffffff" />
-    <rect x="6" y="15" width="12" height="2" rx="1" fill="#ffffff" />
-  </svg>
+    class="logo-img"
+    loading="eager"
+  />
   {withWordmark && (
-    <span class="wordmark">ollastack</span>
+    <span class="wordmark">
+      <span class="brand-olla">olla</span><span class="brand-stack">stack</span>
+    </span>
   )}
 </a>
 
@@ -35,17 +26,28 @@ const { size = 24, withWordmark = true } = Astro.props;
   .logo-lockup {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    color: var(--ink);
+    gap: 11px;
     text-decoration: none;
   }
-  .logo-mark { display: block; flex-shrink: 0; }
+  .logo-img {
+    display: block;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
   .wordmark {
-    font-family: var(--font-sans);
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    font-size: 16px;
-    color: var(--ink);
+    font-family: 'Plus Jakarta Sans', var(--font-sans), sans-serif;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    font-size: 29px;
     line-height: 1;
+    display: inline-flex;
+  }
+  .brand-olla {
+    color: #000000;
+    font-weight: 900;
+  }
+  .brand-stack {
+    color: #E11D48;
+    font-weight: 900;
   }
 </style>

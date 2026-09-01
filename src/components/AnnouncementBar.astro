@@ -1,41 +1,77 @@
 ---
-// Announcement bar — blueprint: centered gray strip with red dot + geo-smart leads text
+// Exact announcement bar matching the screenshot
 ---
 
-<div class="announce">
-  <div class="announce-inner">
-    <span class="announce-dot" aria-hidden="true"></span>
-    <span class="announce-text">
-      <strong>GEO-smart leads</strong> — every form submission auto-stamped with country, city, region, and timezone.
-    </span>
+<aside class="announce-bar" aria-label="Announcements">
+  <div class="announce-track">
+    <div class="announce-item">
+      <span class="dot-red"></span>
+      <span class="tag-pill">AI AGENTS</span>
+      <span class="announce-text"><strong>Agent Mailboxes</strong> — programmatic OTP reading & automated email verification in CI.</span>
+    </div>
+    <div class="announce-item">
+      <span class="dot-red"></span>
+      <span class="tag-pill">ZERO CONFIG</span>
+      <span class="announce-text"><strong>Multi-Tenant SMTP</strong> — send from your custom domain with automatic DKIM & SPF.</span>
+    </div>
+    <div class="announce-item">
+      <span class="dot-red"></span>
+      <span class="tag-pill">LIVE TESTING</span>
+      <span class="announce-text"><strong>Email Testing API</strong> — disposable inboxes for CI/CD Playwright & Cypress.</span>
+    </div>
   </div>
-</div>
+</aside>
 
 <style>
-  .announce {
-    background: #f9f9f9;
-    border-bottom: 1px solid #e5e5e7;
+  .announce-bar {
+    background: #ffffff;
+    border-bottom: 1px solid #f1f5f9;
+    padding: 8px 0;
+    overflow: hidden;
+    white-space: nowrap;
   }
-  .announce-inner {
+  .announce-track {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    height: 36px;
-    font-size: 13px;
-    color: #52525b;
-    padding: 0 28px;
+    gap: 32px;
+    font-size: 12px;
+    color: #475569;
   }
-  .announce-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #e11d48;
+  .announce-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
     flex-shrink: 0;
   }
-  .announce-text strong { color: #0a0a0a; }
+  .dot-red {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #DC2626;
+    box-shadow: 0 0 6px rgba(220, 38, 38, 0.6);
+  }
+  .tag-pill {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    color: #DC2626;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+  .announce-text strong {
+    color: #0f172a;
+  }
 
-  @media (max-width: 640px) {
-    .announce-inner { font-size: 12px; }
+  @media (max-width: 900px) {
+    .announce-track {
+      justify-content: flex-start;
+      padding: 0 16px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .announce-track::-webkit-scrollbar { display: none; }
   }
 </style>
