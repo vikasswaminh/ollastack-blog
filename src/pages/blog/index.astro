@@ -178,18 +178,18 @@ const aiSpecialPosts = [
   <header class="nh-header">
     <div class="nh-wrapper header-row">
       
-      <!-- OLLASTACK LOGO -->
+      <!-- OLLASTACK CLEAR HIGH-RES LOGO & WORDMARK -->
       <a href="/blog" class="ollastack-logo-link" aria-label="Ollastack Blog">
         <img
           src="/ollastack-logo-mark.png"
           alt="Ollastack"
-          width="36"
-          height="36"
+          width="110"
+          height="110"
           class="logo-3d-mark"
           loading="eager"
         />
-        <span class="logo-text">
-          <span class="text-olla">olla</span><span class="text-stack">stack</span>
+        <span class="logo-wordmark">
+          <span class="logo-olla">olla</span><span class="logo-stack">stack</span>
         </span>
       </a>
 
@@ -499,7 +499,7 @@ const aiSpecialPosts = [
   .nh-header {
     background: #ffffff;
     border-bottom: 1px solid #f1f5f9;
-    padding: 12px 0;
+    padding: 20px 0;
   }
   .header-row {
     display: flex;
@@ -507,27 +507,42 @@ const aiSpecialPosts = [
     justify-content: space-between;
   }
 
-  /* Ollastack Two-Tone Logo */
+  /* Ollastack Authentic Logo */
   .ollastack-logo-link {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
+    gap: 18px;
     text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.18s ease;
+  }
+  .ollastack-logo-link:hover {
+    opacity: 0.92;
+    transform: translateY(-2px);
+  }
+  .ollastack-logo-link:active {
+    transform: scale(0.96);
   }
   .logo-3d-mark {
     display: block;
+    width: 110px;
+    height: 110px;
     object-fit: contain;
+    flex-shrink: 0;
   }
-  .logo-text {
+  .logo-wordmark {
+    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
     font-weight: 900;
-    font-size: 26px;
-    letter-spacing: -0.04em;
+    font-size: 64px;
+    letter-spacing: -0.045em;
     line-height: 1;
+    display: inline-flex;
+    user-select: none;
   }
-  .text-olla {
+  .logo-olla {
     color: #000000;
   }
-  .text-stack {
+  .logo-stack {
     color: #DC2626;
   }
 

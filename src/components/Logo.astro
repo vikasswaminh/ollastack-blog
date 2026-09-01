@@ -3,7 +3,7 @@ interface Props {
   size?: number;
   withWordmark?: boolean;
 }
-const { size = 38, withWordmark = true } = Astro.props;
+const { size = 48, withWordmark = true } = Astro.props;
 ---
 
 <a href="/blog" aria-label="ollastack" class="logo-lockup">
@@ -26,8 +26,17 @@ const { size = 38, withWordmark = true } = Astro.props;
   .logo-lockup {
     display: inline-flex;
     align-items: center;
-    gap: 11px;
+    gap: 12px;
     text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.18s ease;
+  }
+  .logo-lockup:hover {
+    opacity: 0.92;
+    transform: translateY(-2px);
+  }
+  .logo-lockup:active {
+    transform: scale(0.96);
   }
   .logo-img {
     display: block;
@@ -37,17 +46,16 @@ const { size = 38, withWordmark = true } = Astro.props;
   .wordmark {
     font-family: 'Plus Jakarta Sans', var(--font-sans), sans-serif;
     font-weight: 900;
-    letter-spacing: -0.04em;
-    font-size: 29px;
+    letter-spacing: -0.045em;
+    font-size: 34px;
     line-height: 1;
     display: inline-flex;
+    user-select: none;
   }
   .brand-olla {
     color: #000000;
-    font-weight: 900;
   }
   .brand-stack {
-    color: #E11D48;
-    font-weight: 900;
+    color: #DC2626;
   }
 </style>
