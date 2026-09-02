@@ -457,6 +457,31 @@ const articleLd = {
       }
     });
 
+    // Brighten dim syntax comments and text inside code blocks
+    document.querySelectorAll('.article-body-content pre').forEach(function (pre) {
+      pre.querySelectorAll('span').forEach(function (span) {
+        var text = span.textContent.trim();
+        var styleColor = span.style.color ? span.style.color.toLowerCase() : '';
+        if (text.startsWith('#') || text.startsWith('//') || text.startsWith('/*')) {
+          span.style.setProperty('color', '#94a3b8', 'important');
+          span.style.fontWeight = '500';
+        } else if (
+          styleColor.includes('6a737d') ||
+          styleColor.includes('6b7280') ||
+          styleColor.includes('4b5563') ||
+          styleColor.includes('545d68') ||
+          styleColor.includes('565f89') ||
+          styleColor.includes('5c6370') ||
+          styleColor.includes('rgb(106, 115, 125)') ||
+          styleColor.includes('rgb(107, 114, 128)') ||
+          styleColor.includes('rgb(75, 85, 99)') ||
+          styleColor.includes('rgb(84, 93, 104)')
+        ) {
+          span.style.setProperty('color', '#94a3b8', 'important');
+        }
+      });
+    });
+
     // Interactive cursor wave ripple
     document.addEventListener("click", function (e) {
       var target = e.target.closest("a, button, .related-article-card, .side-link");
@@ -1051,9 +1076,10 @@ const articleLd = {
   }
 
   /* Code Blocks */
-  .article-body-content pre {
-    background: #090d16;
-    color: #f8fafc;
+  .article-body-content pre,
+  .article-body-content .astro-code {
+    background: #0d1117 !important;
+    color: #f0f6fc !important;
     padding: 22px 24px;
     border-radius: 12px;
     overflow-x: auto;
@@ -1061,7 +1087,7 @@ const articleLd = {
     font-size: 13.5px;
     line-height: 1.68;
     margin: 26px 0;
-    border: 1px solid #1e293b;
+    border: 1px solid #21262d;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
   }
   .article-body-content code {
@@ -1075,11 +1101,25 @@ const articleLd = {
     border: 1px solid #e2e8f0;
   }
   .article-body-content pre code {
-    background: transparent;
-    color: inherit;
+    background: transparent !important;
+    color: inherit !important;
     padding: 0;
     font-weight: 400;
     border: none;
+  }
+  /* High contrast code comments and faint lines */
+  .article-body-content pre span[style*="6A737D"],
+  .article-body-content pre span[style*="6a737d"],
+  .article-body-content pre span[style*="545d68"],
+  .article-body-content pre span[style*="6b7280"],
+  .article-body-content pre span[style*="4b5563"],
+  .article-body-content pre span[style*="565f89"],
+  .article-body-content pre span[style*="5c6370"],
+  .article-body-content pre span[style*="6272a4"],
+  .article-body-content pre .token.comment,
+  .article-body-content pre .comment {
+    color: #94a3b8 !important; /* clear silver-gray instead of invisible dim gray */
+    font-weight: 500;
   }
 
   /* Tables */

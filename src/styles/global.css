@@ -38,9 +38,9 @@
   /* Code block — dark theme on light page, like Daytona's hero sample */
   --code-bg: #0a0a0a;
   --code-bg-2: #141414;
-  --code-fg: #e6e6e9;
-  --code-com: #6b7280;
-  --code-pun: #a1a1aa;
+  --code-fg: #f0f6fc;
+  --code-com: #94a3b8;
+  --code-pun: #cbd5e1;
   --code-key: #93c5fd;       /* blue tint for keywords */
   --code-str: #86efac;       /* green for strings */
   --code-num: #fcd34d;       /* warm for numbers */
