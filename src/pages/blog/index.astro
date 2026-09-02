@@ -256,7 +256,7 @@ const aiSpecialPosts = [
         <ul class="clean-link-list">
           {founderSpecialPosts.map((item) => (
             <li>
-              <a href={`/blog/${item.slug}/`} class="side-link">
+              <a href={`/blog/${item.slug}`} class="side-link">
                 {item.title}
               </a>
             </li>
@@ -288,7 +288,7 @@ const aiSpecialPosts = [
 
         <!-- HERO FEATURED ARTICLE (GOLDEN BORDER) -->
         <article class="hero-featured-box">
-          <a href={`/blog/${heroArticle.slug}/`} class="hero-link-box">
+          <a href={`/blog/${heroArticle.slug}`} class="hero-link-box">
             
             <!-- Left Image -->
             <div class="hero-img-col">
@@ -324,7 +324,7 @@ const aiSpecialPosts = [
         <div class="three-cards-row">
           {guideCards.map((card) => (
             <article class="guide-box">
-              <a href={`/blog/${card.slug}/`} class="guide-box-link">
+              <a href={`/blog/${card.slug}`} class="guide-box-link">
                 <div class="guide-badge-wrap">
                   <span class={card.badgeClass}>{card.category}</span>
                 </div>
@@ -346,7 +346,7 @@ const aiSpecialPosts = [
         <div class="recent-grid-row">
           {allPosts.slice(0, 6).map((post) => (
             <article class="recent-post-card">
-              <a href={`/blog/${post.slug}/`} class="recent-card-link">
+              <a href={`/blog/${post.slug}`} class="recent-card-link">
                 <div class="recent-card-meta">
                   <span class="recent-cat-pill">{post.category}</span>
                   <span class="recent-time">{post.readingTime}</span>
@@ -369,7 +369,7 @@ const aiSpecialPosts = [
         <ul class="clean-link-list">
           {aiSpecialPosts.map((item) => (
             <li>
-              <a href={`/blog/${item.slug}/`} class="side-link">
+              <a href={`/blog/${item.slug}`} class="side-link">
                 {item.title}
               </a>
             </li>

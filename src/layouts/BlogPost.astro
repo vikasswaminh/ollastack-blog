@@ -174,7 +174,7 @@ const articleLd = {
           {founderSpecialPosts.map((item, index) => (
             <li>
               <a
-                href={`/blog/${item.slug}/`}
+                href={`/blog/${item.slug}`}
                 class:list={["side-link", item.slug === slug && "active-orange"]}
               >
                 <span class="side-num">{String(index + 1).padStart(2, '0')}</span>
@@ -339,7 +339,7 @@ const articleLd = {
             </div>
             <div class="related-cards-grid">
               {related.map((p) => (
-                <a href={`/blog/${p.slug}/`} class="related-article-card">
+                <a href={`/blog/${p.slug}`} class="related-article-card">
                   <div class="rel-meta-row">
                     <span class="rel-cat">{getPostCategory(p.slug).label}</span>
                     <span class="rel-time">{p.readingTime}</span>
@@ -368,7 +368,7 @@ const articleLd = {
           {aiSpecialPosts.map((item, index) => (
             <li>
               <a
-                href={`/blog/${item.slug}/`}
+                href={`/blog/${item.slug}`}
                 class:list={[
                   "side-link",
                   item.slug === slug && "active-purple",

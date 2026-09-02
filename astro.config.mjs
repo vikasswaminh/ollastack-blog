@@ -7,5 +7,5 @@ export default defineConfig({
     assets: "_assets",
   },
   compressHTML: true,
-  trailingSlash: "ignore",
+  trailingSlash: "never",
 });
