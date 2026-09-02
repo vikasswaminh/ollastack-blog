@@ -297,24 +297,35 @@ const articleLd = {
 
         </div> <!-- END OF MAIN ARTICLE BOX -->
 
-        <!-- FAQ ACCORDION (EXCLUDED FROM THE BOX, STANDALONE BELOW) -->
+        <!-- FAQ ACCORDION (STANDALONE BELOW ARTICLE) -->
         {faq && faq.length > 0 && (
-          <section class="post-faq-section">
-            <div class="faq-header-bar">
-              <span class="faq-pill-label">FAQ</span>
-              <h2 id="faq">Frequently Asked Questions</h2>
+          <section class="post-faq-section" aria-label="Frequently Asked Questions">
+            <div class="faq-header-box">
+              <div class="faq-badge-row">
+                <span class="faq-spark-badge">
+                  <span class="faq-icon-spark">💬</span>
+                  <span>FREQUENTLY ASKED QUESTIONS</span>
+                </span>
+              </div>
+              <h2 class="faq-main-title" id="faq">Frequently Asked Questions</h2>
+              <p class="faq-sub-title">Everything you need to know about this guide and its implementation.</p>
             </div>
+
             <div class="faq-accordion-list">
-              {faq.map((f) => (
-                <details class="faq-accordion-item">
+              {faq.map((f, idx) => (
+                <details class="faq-accordion-item" open={idx === 0}>
                   <summary class="faq-accordion-summary">
-                    <span>{f.q}</span>
-                    <svg class="faq-arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                      <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
+                    <span class="faq-question-text">{f.q}</span>
+                    <div class="faq-toggle-circle">
+                      <svg class="faq-arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                      </svg>
+                    </div>
                   </summary>
                   <div class="faq-accordion-body">
-                    <p>{f.a}</p>
+                    <div class="faq-answer-inner">
+                      <p>{f.a}</p>
+                    </div>
                   </div>
                 </details>
               ))}
@@ -1169,74 +1180,140 @@ const articleLd = {
     background: #fafafa;
   }
 
-  /* FAQ Section */
+  /* FAQ Section - Rich & Modern */
   .post-faq-section {
-    margin-top: 40px;
+    margin-top: 48px;
     padding-top: 0;
     border-top: none;
   }
-  .faq-header-bar {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 24px;
+  .faq-header-box {
+    margin-bottom: 26px;
   }
-  .faq-pill-label {
-    background: #DC2626;
-    color: #ffffff;
+  .faq-badge-row {
+    margin-bottom: 8px;
+  }
+  .faq-spark-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+    color: #DC2626;
     font-size: 11px;
     font-weight: 800;
     letter-spacing: 0.06em;
-    padding: 4px 12px;
+    padding: 5px 12px;
     border-radius: 9999px;
+    border: 1px solid #fecdd3;
   }
-  .faq-header-bar h2 {
+  .faq-icon-spark {
+    font-size: 12px;
+  }
+  .faq-main-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: #09090b;
+    letter-spacing: -0.02em;
+    margin: 0 0 6px;
     border-left: none !important;
     padding-left: 0 !important;
-    margin: 0 !important;
-    font-size: 22px;
   }
+  .faq-sub-title {
+    font-size: 14.5px;
+    color: #64748b;
+    margin: 0;
+  }
+
   .faq-accordion-list {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
   }
   .faq-accordion-item {
     background: #ffffff;
     border: 1px solid #e2e8f0;
-    border-radius: 10px;
+    border-radius: 14px;
     overflow: hidden;
-    transition: all 0.18s ease;
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
   }
   .faq-accordion-item:hover {
     border-color: #cbd5e1;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+  }
+  .faq-accordion-item[open] {
+    border-color: #fca5a5;
+    background: #ffffff;
+    box-shadow: 0 6px 20px -2px rgba(220, 38, 38, 0.07);
   }
   .faq-accordion-summary {
-    padding: 18px 22px;
+    padding: 20px 24px;
     font-weight: 700;
-    font-size: 15.5px;
+    font-size: 16px;
     color: #0f172a;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 16px;
     list-style: none;
+    user-select: none;
   }
   .faq-accordion-summary::-webkit-details-marker { display: none; }
-  .faq-arrow-icon {
-    transition: transform 0.2s ease;
+  .faq-question-text {
+    flex: 1;
+    line-height: 1.45;
+  }
+  .faq-accordion-item[open] .faq-question-text {
+    color: #DC2626;
+  }
+
+  .faq-toggle-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #f1f5f9;
+    color: #475569;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex-shrink: 0;
-    stroke: #64748b;
+    transition: all 0.22s ease;
+  }
+  .faq-accordion-item:hover .faq-toggle-circle {
+    background: #fee2e2;
+    color: #DC2626;
+  }
+  .faq-arrow-icon {
+    transition: transform 0.22s ease;
+  }
+  .faq-accordion-item[open] .faq-toggle-circle {
+    background: #DC2626;
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.35);
   }
   .faq-accordion-item[open] .faq-arrow-icon {
     transform: rotate(180deg);
-    stroke: #DC2626;
+    stroke: #ffffff;
   }
+
   .faq-accordion-body {
-    padding: 0 22px 20px;
-    font-size: 14.5px;
-    line-height: 1.7;
-    color: #475569;
+    padding: 0 24px 22px;
+  }
+  .faq-answer-inner {
+    border-left: 3.5px solid #DC2626;
+    background: linear-gradient(135deg, #fffcf9 0%, #fff7ed 100%);
+    padding: 16px 20px;
+    border-radius: 0 10px 10px 0;
+    border: 1px solid #fed7aa;
+    border-left-width: 3.5px;
+    border-left-color: #DC2626;
+  }
+  .faq-answer-inner p {
+    font-size: 15px;
+    line-height: 1.72;
+    color: #1e293b;
+    margin: 0;
   }
 
   /* Bottom Related Articles */
