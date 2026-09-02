@@ -494,18 +494,6 @@ const articleLd = {
     document.querySelectorAll('.article-body-content hr, .article-center-box hr, hr').forEach(function (hr) {
       hr.remove();
     });
-
-    // Interactive cursor wave ripple
-    document.addEventListener("click", function (e) {
-      var target = e.target.closest("a, button, .related-article-card, .side-link");
-      if (!target) return;
-      var wave = document.createElement("div");
-      wave.className = "cursor-click-wave";
-      wave.style.left = e.clientX + "px";
-      wave.style.top = e.clientY + "px";
-      document.body.appendChild(wave);
-      setTimeout(function () { wave.remove(); }, 750);
-    });
   </script>
 </Base>
 
