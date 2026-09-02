@@ -293,59 +293,60 @@ const articleLd = {
           <!-- ARTICLE EDITORIAL BODY CONTENT -->
           <article class="article-body-content">
             <slot />
-
-            <!-- FAQ ACCORDION -->
-            {faq && faq.length > 0 && (
-              <section class="post-faq-section">
-                <div class="faq-header-bar">
-                  <span class="faq-pill-label">FAQ</span>
-                  <h2 id="faq">Frequently Asked Questions</h2>
-                </div>
-                <div class="faq-accordion-list">
-                  {faq.map((f) => (
-                    <details class="faq-accordion-item">
-                      <summary class="faq-accordion-summary">
-                        <span>{f.q}</span>
-                        <svg class="faq-arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                          <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                      </summary>
-                      <div class="faq-accordion-body">
-                        <p>{f.a}</p>
-                      </div>
-                    </details>
-                  ))}
-                </div>
-              </section>
-            )}
           </article>
 
-          <!-- BOTTOM RELATED ARTICLES STRIP -->
-          {related.length > 0 && (
-            <section class="bottom-related-section" aria-label="Related articles">
-              <div class="related-head-bar">
-                <span class="related-badge">EXPLORE MORE</span>
-                <h3>Recommended Next Reads</h3>
-              </div>
-              <div class="related-cards-grid">
-                {related.map((p) => (
-                  <a href={`/blog/${p.slug}/`} class="related-article-card">
-                    <div class="rel-meta-row">
-                      <span class="rel-cat">{getPostCategory(p.slug).label}</span>
-                      <span class="rel-time">{p.readingTime}</span>
-                    </div>
-                    <h4 class="rel-title">{p.title}</h4>
-                    <div class="rel-read-link">
-                      <span>Read guide</span>
-                      <span class="rel-arr">→</span>
-                    </div>
-                  </a>
-                ))}
-              </div>
-            </section>
-          )}
+        </div> <!-- END OF MAIN ARTICLE BOX -->
 
-        </div>
+        <!-- FAQ ACCORDION (EXCLUDED FROM THE BOX, STANDALONE BELOW) -->
+        {faq && faq.length > 0 && (
+          <section class="post-faq-section">
+            <div class="faq-header-bar">
+              <span class="faq-pill-label">FAQ</span>
+              <h2 id="faq">Frequently Asked Questions</h2>
+            </div>
+            <div class="faq-accordion-list">
+              {faq.map((f) => (
+                <details class="faq-accordion-item">
+                  <summary class="faq-accordion-summary">
+                    <span>{f.q}</span>
+                    <svg class="faq-arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </summary>
+                  <div class="faq-accordion-body">
+                    <p>{f.a}</p>
+                  </div>
+                </details>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <!-- BOTTOM RELATED ARTICLES STRIP -->
+        {related.length > 0 && (
+          <section class="bottom-related-section" aria-label="Related articles">
+            <div class="related-head-bar">
+              <span class="related-badge">EXPLORE MORE</span>
+              <h3>Recommended Next Reads</h3>
+            </div>
+            <div class="related-cards-grid">
+              {related.map((p) => (
+                <a href={`/blog/${p.slug}/`} class="related-article-card">
+                  <div class="rel-meta-row">
+                    <span class="rel-cat">{getPostCategory(p.slug).label}</span>
+                    <span class="rel-time">{p.readingTime}</span>
+                  </div>
+                  <h4 class="rel-title">{p.title}</h4>
+                  <div class="rel-read-link">
+                    <span>Read guide</span>
+                    <span class="rel-arr">→</span>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
+
       </main>
 
       <!-- ================= RIGHT COLUMN: AI SPECIAL ================= -->
@@ -705,20 +706,19 @@ const articleLd = {
     background: #ffffff;
     border: 1px solid #e2e8f0;
     border-radius: 16px;
-    padding: 38px 44px 48px;
+    padding: 42px 48px;
     box-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.04), 0 1px 4px rgba(0, 0, 0, 0.02);
     position: relative;
+    margin-bottom: 40px;
   }
 
-  /* Lead Quote Hero Box */
+  /* Lead Quote Hero Box (Seamlessly Integrated) */
   .lead-hero-box {
-    margin-bottom: 24px;
-    background: linear-gradient(180deg, #fcfdfe 0%, #f8fafc 100%);
-    border: 1px solid #f1f5f9;
-    border-radius: 12px;
-    padding: 24px 28px;
+    margin-bottom: 20px;
+    background: transparent;
+    border: none;
+    padding: 0;
     position: relative;
-    overflow: hidden;
   }
   .lead-quote-content {
     border-left: 4.5px solid #09090b;
@@ -737,7 +737,7 @@ const articleLd = {
     user-select: none;
   }
   .lead-quote-text {
-    font-size: 23px;
+    font-size: 24px;
     font-weight: 800;
     line-height: 1.38;
     color: #09090b;
@@ -745,9 +745,9 @@ const articleLd = {
     margin: 0 0 10px;
   }
   .lead-quote-subtitle {
-    font-size: 15px;
+    font-size: 15.5px;
     font-weight: 600;
-    color: #64748b;
+    color: #475569;
     margin: 0;
   }
 
@@ -756,16 +756,16 @@ const articleLd = {
     display: none;
   }
 
-  /* Metadata Row */
+  /* Metadata Row (No dividing lines) */
   .article-meta-row {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     gap: 16px;
-    margin: 20px 0 28px;
-    padding-bottom: 18px;
-    border-bottom: 1px solid #f1f5f9;
+    margin: 18px 0 26px;
+    padding: 0;
+    border: none;
   }
   .meta-left-group {
     display: flex;
@@ -844,28 +844,24 @@ const articleLd = {
     border-color: #cbd5e1;
   }
 
-  /* About the Team Card */
+  /* About the Team Inset Section (No harsh borders) */
   .about-team-card {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 14px;
-    padding: 24px 26px;
-    margin-bottom: 38px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-    transition: box-shadow 0.2s ease;
-  }
-  .about-team-card:hover {
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    background: #f8fafc;
+    border: none;
+    border-radius: 12px;
+    padding: 22px 24px;
+    margin-bottom: 36px;
+    box-shadow: none;
   }
   .team-card-header {
     display: flex;
     align-items: flex-start;
     gap: 18px;
-    margin-bottom: 18px;
+    margin-bottom: 14px;
   }
   .team-avatar-ring {
-    width: 48px;
-    height: 48px;
+    width: 46px;
+    height: 46px;
     border-radius: 50%;
     background: linear-gradient(135deg, #DC2626, #f97316);
     padding: 2px;
@@ -875,7 +871,7 @@ const articleLd = {
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    background: #f8fafc;
+    background: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -912,18 +908,18 @@ const articleLd = {
   .team-card-bio {
     font-size: 13.5px;
     line-height: 1.55;
-    color: #475569;
+    color: #334155;
     margin: 0;
   }
 
-  /* Team Badges Row */
+  /* Team Badges Row (No top dividing line) */
   .team-badges-row {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 12px;
-    padding-top: 16px;
-    border-top: 1px solid #f1f5f9;
+    gap: 10px;
+    padding-top: 12px;
+    border-top: none;
   }
   .team-badge-item {
     display: inline-flex;
