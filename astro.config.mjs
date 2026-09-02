@@ -1,7 +1,7 @@
 import { defineConfig } from "astro/config";
 
 export default defineConfig({
-  site: "https://ollastack.com",
+  site: "https://blogs.ollastack.com",
   output: "static",
   build: {
     assets: "_assets",
