@@ -294,6 +294,24 @@ const articleLd = {
 
         </div> <!-- END OF MAIN ARTICLE BOX -->
 
+        <!-- DEVELOPER PLAYBOOK DIGEST NEWSLETTER CARD -->
+        <div class="developer-digest-card">
+          <div class="digest-inner-wrap">
+            <div class="digest-badge-row">
+              <span class="digest-spark-badge">
+                <span class="digest-icon">📬</span>
+                <span>DEVELOPER PLAYBOOK DIGEST</span>
+              </span>
+            </div>
+            <h3 class="digest-title">Get engineering breakdowns on AI Agents & Email APIs</h3>
+            <p class="digest-desc">Zero marketing fluff. Deep dives on MCP workflows, disposable inboxes, and CI test automation sent straight to your inbox.</p>
+            <form class="digest-form" onsubmit="event.preventDefault(); var b=this.querySelector('.digest-btn'); b.innerText='✓ Subscribed!'; b.style.background='#10B981';">
+              <input type="email" placeholder="developer@company.com" required class="digest-input" aria-label="Work email" />
+              <button type="submit" class="digest-btn">Subscribe Free →</button>
+            </form>
+          </div>
+        </div>
+
         <!-- FAQ ACCORDION (STANDALONE BELOW ARTICLE) -->
         {faq && faq.length > 0 && (
           <section class="post-faq-section" aria-label="Frequently Asked Questions">
@@ -488,6 +506,48 @@ const articleLd = {
           span.style.setProperty('color', '#94a3b8', 'important');
         }
       });
+    });
+
+    // Add interactive code block toolbar with language tag and copy button
+    document.querySelectorAll('.article-body-content pre').forEach(function (pre) {
+      if (pre.parentElement && pre.parentElement.classList.contains('code-block-wrapper')) return;
+      var wrapper = document.createElement('div');
+      wrapper.className = 'code-block-wrapper';
+
+      var lang = pre.getAttribute('data-language') || 'BASH';
+      if (pre.className) {
+        var match = pre.className.match(/language-([a-zA-Z0-9_-]+)/);
+        if (match) lang = match[1];
+      }
+
+      var toolbar = document.createElement('div');
+      toolbar.className = 'code-block-toolbar';
+      toolbar.innerHTML =
+        '<div class="code-lang-tag"><span class="code-lang-dot"></span><span>' + lang.toUpperCase() + '</span></div>' +
+        '<button type="button" class="btn-copy-code" aria-label="Copy code">' +
+          '<svg class="copy-svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>' +
+          '<span class="copy-btn-text">Copy</span>' +
+        '</button>';
+
+      var btn = toolbar.querySelector('.btn-copy-code');
+      btn.addEventListener('click', function () {
+        var codeEl = pre.querySelector('code') || pre;
+        var textToCopy = codeEl.innerText;
+        navigator.clipboard.writeText(textToCopy).then(function () {
+          btn.classList.add('copied');
+          btn.innerHTML = '<span class="copied-check">✓</span><span>Copied!</span>';
+          setTimeout(function () {
+            btn.classList.remove('copied');
+            btn.innerHTML =
+              '<svg class="copy-svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>' +
+              '<span class="copy-btn-text">Copy</span>';
+          }, 2000);
+        });
+      });
+
+      pre.parentNode.insertBefore(wrapper, pre);
+      wrapper.appendChild(toolbar);
+      wrapper.appendChild(pre);
     });
 
     // Remove all <hr> divider line elements completely
@@ -1071,8 +1131,75 @@ const articleLd = {
     border-left-width: 4px;
     border-left-color: #DC2626;
   }
-  .article-body-content blockquote p:last-child {
-    margin-bottom: 0;
+
+  /* Code Block Wrapper & Interactive Copy Toolbar */
+  .code-block-wrapper {
+    margin: 28px 0;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #21262d;
+    background: #0d1117;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.14);
+  }
+  .code-block-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 18px;
+    background: #161b22;
+    border-bottom: 1px solid #21262d;
+    user-select: none;
+  }
+  .code-lang-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 800;
+    color: #94a3b8;
+    letter-spacing: 0.08em;
+    font-family: 'DM Mono', monospace;
+  }
+  .code-lang-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #DC2626;
+  }
+  .btn-copy-code {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #21262d;
+    color: #cbd5e1;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 11.5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+  .btn-copy-code:hover {
+    background: #30363d;
+    color: #ffffff;
+    border-color: #484f58;
+  }
+  .btn-copy-code.copied {
+    background: #065f46;
+    color: #34d399;
+    border-color: #059669;
+  }
+  .copied-check {
+    font-size: 12px;
+  }
+
+  .code-block-wrapper pre,
+  .code-block-wrapper .astro-code {
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
   }
 
   /* Code Blocks */
@@ -1108,15 +1235,6 @@ const articleLd = {
     border: none;
   }
   /* High contrast code comments and faint lines */
-  .article-body-content pre span[style*="6A737D"],
-  .article-body-content pre span[style*="6a737d"],
-  .article-body-content pre span[style*="545d68"],
-  .article-body-content pre span[style*="6b7280"],
-  .article-body-content pre span[style*="4b5563"],
-  .article-body-content pre span[style*="565f89"],
-  .article-body-content pre span[style*="5c6370"],
-  .article-body-content pre span[style*="6272a4"],
-  .article-body-content pre .token.comment,
   .article-body-content pre .comment {
     color: #94a3b8 !important; /* clear silver-gray instead of invisible dim gray */
     font-weight: 500;
@@ -1152,6 +1270,93 @@ const articleLd = {
   }
   .article-body-content tr:hover td {
     background: #fafafa;
+  }
+
+  /* DEVELOPER DIGEST NEWSLETTER CARD SAMPLE */
+  .developer-digest-card {
+    margin-top: 36px;
+    margin-bottom: 0;
+    padding: 34px 40px;
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+    border: 1px solid #334155;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(15, 23, 42, 0.16);
+    color: #ffffff;
+    box-sizing: border-box;
+    width: 100%;
+  }
+  .digest-badge-row {
+    margin-bottom: 12px;
+  }
+  .digest-spark-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(220, 38, 38, 0.18);
+    color: #fca5a5;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    padding: 5px 12px;
+    border-radius: 9999px;
+    border: 1px solid rgba(220, 38, 38, 0.35);
+  }
+  .digest-title {
+    font-size: 21px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+    margin: 0 0 8px;
+    border-left: none !important;
+    padding-left: 0 !important;
+  }
+  .digest-desc {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: #cbd5e1;
+    margin: 0 0 20px;
+    max-width: 640px;
+  }
+  .digest-form {
+    display: flex;
+    gap: 10px;
+    max-width: 520px;
+  }
+  .digest-input {
+    flex: 1;
+    padding: 12px 18px;
+    border-radius: 10px;
+    border: 1px solid #475569;
+    background: rgba(15, 23, 42, 0.85);
+    color: #ffffff;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.18s ease;
+  }
+  .digest-input:focus {
+    border-color: #DC2626;
+  }
+  .digest-btn {
+    background: #DC2626;
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 13.5px;
+    padding: 12px 22px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.18s ease;
+    box-shadow: 0 4px 14px rgba(220, 38, 38, 0.4);
+  }
+  .digest-btn:hover {
+    background: #b91c1c;
+    transform: translateY(-1px);
+  }
+  @media (max-width: 600px) {
+    .digest-form {
+      flex-direction: column;
+    }
   }
 
   /* FAQ Section - Self-contained Box Container */
