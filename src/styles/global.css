@@ -267,3 +267,64 @@ button {
 .dot-grid {
   background: #ffffff;
 }
+
+/* Universal Key Takeaways Callout Card */
+.takeaways-box, #key-takeaways, .key-takeaways-box {
+  background: linear-gradient(135deg, #fffcf9 0%, #fff7ed 100%) !important;
+  border: 1.5px solid #fed7aa !important;
+  border-left: 5px solid #DC2626 !important;
+  border-radius: 12px !important;
+  padding: 24px 28px !important;
+  margin: 36px 0 40px !important;
+  box-shadow: 0 4px 20px rgba(220, 38, 38, 0.05) !important;
+  position: relative;
+  overflow: hidden;
+}
+.takeaways-header {
+  font-size: 17px !important;
+  font-weight: 800 !important;
+  color: #DC2626 !important;
+  letter-spacing: -0.01em;
+  margin-bottom: 16px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  border-bottom: 1px solid #ffedd5 !important;
+  padding-bottom: 12px !important;
+}
+.takeaways-badge-spark {
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+}
+.takeaways-list, .takeaways-box ul {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 14px !important;
+}
+.takeaways-list li, .takeaways-box ul li {
+  position: relative !important;
+  padding-left: 22px !important;
+  font-size: 15.5px !important;
+  line-height: 1.68 !important;
+  color: #1e293b !important;
+  margin-bottom: 0 !important;
+}
+.takeaways-list li::before, .takeaways-box ul li::before {
+  content: "•" !important;
+  position: absolute !important;
+  left: 4px !important;
+  top: -1px !important;
+  color: #DC2626 !important;
+  font-size: 22px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+}
+.takeaways-list li strong, .takeaways-box ul li strong {
+  color: #09090b !important;
+  font-weight: 800 !important;
+}
+

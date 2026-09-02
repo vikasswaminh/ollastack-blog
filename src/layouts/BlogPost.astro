@@ -421,6 +421,40 @@ const articleLd = {
       });
     }
 
+    // Automatically wrap and enhance Key Takeaways sections into highlighted boxes
+    document.querySelectorAll('.article-body-content h2, .article-body-content h3').forEach(function (head) {
+      if (head.textContent.trim().toLowerCase().includes('key takeaway')) {
+        var nextElem = head.nextElementSibling;
+        if (nextElem && (nextElem.tagName === 'UL' || nextElem.tagName === 'OL')) {
+          var wrapper = document.createElement('div');
+          wrapper.className = 'takeaways-box';
+          wrapper.id = 'key-takeaways';
+          
+          var header = document.createElement('div');
+          header.className = 'takeaways-header';
+          header.innerHTML = '<span class="takeaways-badge-spark">⚡</span><span>Key Takeaways</span>';
+          
+          nextElem.classList.add('takeaways-list');
+          
+          head.parentNode.insertBefore(wrapper, head);
+          wrapper.appendChild(header);
+          wrapper.appendChild(nextElem);
+          head.remove();
+        }
+      }
+    });
+
+    // Also enhance any existing .takeaways-box
+    document.querySelectorAll('.takeaways-box').forEach(function (box) {
+      var header = box.querySelector('.takeaways-header');
+      if (header && !header.querySelector('.takeaways-badge-spark')) {
+        var spark = document.createElement('span');
+        spark.className = 'takeaways-badge-spark';
+        spark.textContent = '⚡';
+        header.insertBefore(spark, header.firstChild);
+      }
+    });
+
     // Interactive cursor wave ripple
     document.addEventListener("click", function (e) {
       var target = e.target.closest("a, button, .related-article-card, .side-link");
@@ -929,9 +963,64 @@ const articleLd = {
     padding-left: 4px;
   }
 
-  .article-body-content strong {
-    font-weight: 800;
-    color: #09090b;
+  /* Key Takeaways Highlighted Card */
+  .takeaways-box, #key-takeaways, .key-takeaways-box {
+    background: linear-gradient(135deg, #fffcf9 0%, #fff7ed 100%) !important;
+    border: 1.5px solid #fed7aa !important;
+    border-left: 5px solid #DC2626 !important;
+    border-radius: 12px !important;
+    padding: 24px 28px !important;
+    margin: 36px 0 40px !important;
+    box-shadow: 0 4px 20px rgba(220, 38, 38, 0.05) !important;
+    position: relative;
+    overflow: hidden;
+  }
+  .takeaways-header {
+    font-size: 17px !important;
+    font-weight: 800 !important;
+    color: #DC2626 !important;
+    letter-spacing: -0.01em;
+    margin-bottom: 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    border-bottom: 1px solid #ffedd5 !important;
+    padding-bottom: 12px !important;
+  }
+  .takeaways-badge-spark {
+    font-size: 16px;
+    display: inline-flex;
+    align-items: center;
+  }
+  .takeaways-list, .takeaways-box ul {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 14px !important;
+  }
+  .takeaways-list li, .takeaways-box ul li {
+    position: relative !important;
+    padding-left: 22px !important;
+    font-size: 15.5px !important;
+    line-height: 1.68 !important;
+    color: #1e293b !important;
+    margin-bottom: 0 !important;
+  }
+  .takeaways-list li::before, .takeaways-box ul li::before {
+    content: "•" !important;
+    position: absolute !important;
+    left: 4px !important;
+    top: -1px !important;
+    color: #DC2626 !important;
+    font-size: 22px !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+  }
+  .takeaways-list li strong, .takeaways-box ul li strong {
+    color: #09090b !important;
+    font-weight: 800 !important;
   }
 
   .article-body-content blockquote {
