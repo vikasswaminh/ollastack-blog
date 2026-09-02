@@ -192,158 +192,160 @@ const articleLd = {
         </div>
       </aside>
 
-      <!-- ================= CENTER COLUMN: MAIN ARTICLE ================= -->
+      <!-- ================= CENTER COLUMN: MAIN ARTICLE BOX ================= -->
       <main class="col-center">
-        
-        <!-- LEAD CALLOUT HERO BOX WITH BLACK ACCENT -->
-        <header class="lead-hero-box">
-          <div class="lead-quote-content">
-            <div class="lead-quote-mark">“</div>
-            <h1 class="lead-quote-text">{description}</h1>
-            <p class="lead-quote-subtitle">{title}</p>
-          </div>
-        </header>
-
-        <!-- METADATA ROW WITH BEAUTIFUL CHIPS & QUICK ACTIONS -->
-        <div class="article-meta-row">
-          <div class="meta-left-group">
-            <a href={category.href} class:list={["meta-chip", category.themeClass]}>
-              <span class="meta-icon">{category.icon}</span>
-              <span>{category.label}</span>
-            </a>
-
-            <div class="meta-chip meta-chip-gray">
-              <svg class="meta-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <polyline points="12 6 12 12 16 14"></polyline>
-              </svg>
-              <span>{readingTime}</span>
+        <div class="article-center-box">
+          
+          <!-- LEAD CALLOUT HERO BOX WITH BLACK ACCENT -->
+          <header class="lead-hero-box">
+            <div class="lead-quote-content">
+              <div class="lead-quote-mark">“</div>
+              <h1 class="lead-quote-text">{description}</h1>
+              <p class="lead-quote-subtitle">{title}</p>
             </div>
+          </header>
 
-            <div class="meta-chip meta-chip-gray">
-              <svg class="meta-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                <line x1="16" y1="2" x2="16" y2="6"></line>
-                <line x1="8" y1="2" x2="8" y2="6"></line>
-                <line x1="3" y1="10" x2="21" y2="10"></line>
-              </svg>
-              <span>Updated {fmtMonthYear(updatedAt)}</span>
-            </div>
-          </div>
+          <!-- METADATA ROW WITH BEAUTIFUL CHIPS & QUICK ACTIONS -->
+          <div class="article-meta-row">
+            <div class="meta-left-group">
+              <a href={category.href} class:list={["meta-chip", category.themeClass]}>
+                <span class="meta-icon">{category.icon}</span>
+                <span>{category.label}</span>
+              </a>
 
-          <div class="meta-right-group">
-            <button type="button" class="btn-share-link" id="btn-share" aria-label="Copy link">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-              </svg>
-              <span id="share-text">Copy link</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- ABOUT THE OLLASTACK ENGINEERING TEAM CARD -->
-        <div class="about-team-card">
-          <div class="team-card-header">
-            <div class="team-avatar-ring">
-              <div class="team-avatar-inner">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#09090b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="12" cy="7" r="4"></circle>
+              <div class="meta-chip meta-chip-gray">
+                <svg class="meta-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
                 </svg>
+                <span>{readingTime}</span>
+              </div>
+
+              <div class="meta-chip meta-chip-gray">
+                <svg class="meta-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                <span>Updated {fmtMonthYear(updatedAt)}</span>
               </div>
             </div>
-            <div class="team-info">
-              <div class="team-title-row">
-                <h2 class="team-card-title">About the Ollastack Engineering Team</h2>
-                <span class="verified-badge">
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="20 6 9 17 4 12"></polyline>
+
+            <div class="meta-right-group">
+              <button type="button" class="btn-share-link" id="btn-share" aria-label="Copy link">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                </svg>
+                <span id="share-text">Copy link</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- ABOUT THE OLLASTACK ENGINEERING TEAM CARD -->
+          <div class="about-team-card">
+            <div class="team-card-header">
+              <div class="team-avatar-ring">
+                <div class="team-avatar-inner">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#09090b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
                   </svg>
-                  <span>Verified</span>
-                </span>
+                </div>
               </div>
-              <p class="team-card-bio">
-                Our content is written by industry practitioners with hands-on experience in enterprise cloud & agentic workflows. We don't write theory — we share what actually works in production.
-              </p>
+              <div class="team-info">
+                <div class="team-title-row">
+                  <h2 class="team-card-title">About the Ollastack Engineering Team</h2>
+                  <span class="verified-badge">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    <span>Verified</span>
+                  </span>
+                </div>
+                <p class="team-card-bio">
+                  Our content is written by industry practitioners with hands-on experience in enterprise cloud & agentic workflows. We don't write theory — we share what actually works in production.
+                </p>
+              </div>
+            </div>
+
+            <div class="team-badges-row">
+              <div class="team-badge-item badge-green">
+                <span class="badge-icon">🏢</span>
+                <span>Production Labs</span>
+              </div>
+              <div class="team-badge-item badge-blue">
+                <span class="badge-icon">🛡️</span>
+                <span>SOC2 Type II Certified</span>
+              </div>
+              <div class="team-badge-item badge-purple">
+                <span class="badge-icon">📖</span>
+                <span>Developer Playbooks</span>
+              </div>
+              <div class="team-badge-item badge-amber">
+                <span class="badge-icon">👥</span>
+                <span>10M+ Form Submissions</span>
+              </div>
             </div>
           </div>
 
-          <div class="team-badges-row">
-            <div class="team-badge-item badge-green">
-              <span class="badge-icon">🏢</span>
-              <span>Production Labs</span>
-            </div>
-            <div class="team-badge-item badge-blue">
-              <span class="badge-icon">🛡️</span>
-              <span>SOC2 Type II Certified</span>
-            </div>
-            <div class="team-badge-item badge-purple">
-              <span class="badge-icon">📖</span>
-              <span>Developer Playbooks</span>
-            </div>
-            <div class="team-badge-item badge-amber">
-              <span class="badge-icon">👥</span>
-              <span>10M+ Form Submissions</span>
-            </div>
-          </div>
-        </div>
+          <!-- ARTICLE EDITORIAL BODY CONTENT -->
+          <article class="article-body-content">
+            <slot />
 
-        <!-- ARTICLE EDITORIAL BODY CONTENT -->
-        <article class="article-body-content">
-          <slot />
+            <!-- FAQ ACCORDION -->
+            {faq && faq.length > 0 && (
+              <section class="post-faq-section">
+                <div class="faq-header-bar">
+                  <span class="faq-pill-label">FAQ</span>
+                  <h2 id="faq">Frequently Asked Questions</h2>
+                </div>
+                <div class="faq-accordion-list">
+                  {faq.map((f) => (
+                    <details class="faq-accordion-item">
+                      <summary class="faq-accordion-summary">
+                        <span>{f.q}</span>
+                        <svg class="faq-arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                      </summary>
+                      <div class="faq-accordion-body">
+                        <p>{f.a}</p>
+                      </div>
+                    </details>
+                  ))}
+                </div>
+              </section>
+            )}
+          </article>
 
-          <!-- FAQ ACCORDION -->
-          {faq && faq.length > 0 && (
-            <section class="post-faq-section">
-              <div class="faq-header-bar">
-                <span class="faq-pill-label">FAQ</span>
-                <h2 id="faq">Frequently Asked Questions</h2>
+          <!-- BOTTOM RELATED ARTICLES STRIP -->
+          {related.length > 0 && (
+            <section class="bottom-related-section" aria-label="Related articles">
+              <div class="related-head-bar">
+                <span class="related-badge">EXPLORE MORE</span>
+                <h3>Recommended Next Reads</h3>
               </div>
-              <div class="faq-accordion-list">
-                {faq.map((f) => (
-                  <details class="faq-accordion-item">
-                    <summary class="faq-accordion-summary">
-                      <span>{f.q}</span>
-                      <svg class="faq-arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                      </svg>
-                    </summary>
-                    <div class="faq-accordion-body">
-                      <p>{f.a}</p>
+              <div class="related-cards-grid">
+                {related.map((p) => (
+                  <a href={`/blog/${p.slug}/`} class="related-article-card">
+                    <div class="rel-meta-row">
+                      <span class="rel-cat">{getPostCategory(p.slug).label}</span>
+                      <span class="rel-time">{p.readingTime}</span>
                     </div>
-                  </details>
+                    <h4 class="rel-title">{p.title}</h4>
+                    <div class="rel-read-link">
+                      <span>Read guide</span>
+                      <span class="rel-arr">→</span>
+                    </div>
+                  </a>
                 ))}
               </div>
             </section>
           )}
-        </article>
 
-        <!-- BOTTOM RELATED ARTICLES STRIP -->
-        {related.length > 0 && (
-          <section class="bottom-related-section" aria-label="Related articles">
-            <div class="related-head-bar">
-              <span class="related-badge">EXPLORE MORE</span>
-              <h3>Recommended Next Reads</h3>
-            </div>
-            <div class="related-cards-grid">
-              {related.map((p) => (
-                <a href={`/blog/${p.slug}/`} class="related-article-card">
-                  <div class="rel-meta-row">
-                    <span class="rel-cat">{getPostCategory(p.slug).label}</span>
-                    <span class="rel-time">{p.readingTime}</span>
-                  </div>
-                  <h4 class="rel-title">{p.title}</h4>
-                  <div class="rel-read-link">
-                    <span>Read guide</span>
-                    <span class="rel-arr">→</span>
-                  </div>
-                </a>
-              ))}
-            </div>
-          </section>
-        )}
-
+        </div>
       </main>
 
       <!-- ================= RIGHT COLUMN: AI SPECIAL ================= -->
@@ -674,10 +676,19 @@ const articleLd = {
     min-width: 0;
   }
 
+  .article-center-box {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 38px 44px 48px;
+    box-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.04), 0 1px 4px rgba(0, 0, 0, 0.02);
+    position: relative;
+  }
+
   /* Lead Quote Hero Box */
   .lead-hero-box {
     margin-bottom: 24px;
-    background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+    background: linear-gradient(180deg, #fcfdfe 0%, #f8fafc 100%);
     border: 1px solid #f1f5f9;
     border-radius: 12px;
     padding: 24px 28px;
@@ -1292,6 +1303,10 @@ const articleLd = {
     }
     .col-left {
       display: none;
+    }
+    .article-center-box {
+      padding: 24px 20px 32px;
+      border-radius: 12px;
     }
     .lead-quote-text {
       font-size: 20px;
