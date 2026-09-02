@@ -388,5 +388,5 @@ The practical upshot: the next time you're staring at a `<form>` tag on a static
 - [Ollastack Form Migration and Cutover Hub](https://ollastack.com/resources/migration-hub/)
 - [Ollastack Form Backend API & Webhook Specs](https://ollastack.com/docs/api)
 - [Ollastack Form Design: High Conversion & Zero Spam](https://ollastack.com/blog/form-design-conversion)
-- [Can AI Agents Submit Forms Safely with Ollastack?](https://ollastack.com/blog/can-ai-agents-submit-forms-safely/)
+- [Can AI Agents Submit Forms Safely with Ollastack?](https://ollastack.com/blog/can-ai-agents-submit-forms-safely)
 - [Ollastack Agent Inboxes: Give AI Agents Their Own Email](https://ollastack.com/blog/email-for-ai-agents)

@@ -17,13 +17,13 @@ const { posts, tag } = Astro.props;
 ---
 
 <BaseLayout title={`#${tag}`} description={`Posts tagged ${tag}.`}>
-  <p class="post-eyebrow"><a href="/tags/">← All tags</a></p>
+  <p class="post-eyebrow"><a href="/tags">← All tags</a></p>
   <h1 class="page-title">#{tag}</h1>
   <div class="post-list">
     {
       posts.map((p) => (
         <PostCard
-          url={`/blog/${p.slug}/`}
+          url={`/blog/${p.slug}`}
           title={p.data.title}
           description={p.data.description}
           pubDate={p.data.date}
