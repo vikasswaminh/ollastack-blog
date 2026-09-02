@@ -50,59 +50,6 @@ function getPostCategory(s: string): { label: string; href: string; icon: string
 
 const category = getPostCategory(slug);
 
-// Determine dynamic context-aware sidebar headings based on article topic
-function getSidebarHeadings(s: string) {
-  const lower = s.toLowerCase();
-  if (lower.includes("agent") || lower.includes("ai") || lower.includes("read-otp")) {
-    return {
-      leftBadge: "CORE ARCHITECTURE",
-      leftIcon: "⚡",
-      rightBadge: "AGENT WORKFLOWS",
-      rightIcon: "🤖",
-    };
-  }
-  if (lower.includes("email") || lower.includes("test") || lower.includes("otp") || lower.includes("inbox") || lower.includes("playwright") || lower.includes("cypress")) {
-    return {
-      leftBadge: "CI/CD & AUTOMATION",
-      leftIcon: "🧪",
-      rightBadge: "EMAIL TESTING GUIDES",
-      rightIcon: "✉️",
-    };
-  }
-  if (lower.includes("vs") || lower.includes("alternative")) {
-    return {
-      leftBadge: "DECISION FRAMEWORKS",
-      leftIcon: "⚖️",
-      rightBadge: "BENCHMARKS & COMPARISONS",
-      rightIcon: "📊",
-    };
-  }
-  if (lower.includes("migrate") || lower.includes("migration")) {
-    return {
-      leftBadge: "ZERO-DOWNTIME GUIDES",
-      leftIcon: "🚀",
-      rightBadge: "MIGRATION PLAYBOOKS",
-      rightIcon: "📦",
-    };
-  }
-  if (lower.includes("webhook") || lower.includes("quickstart") || lower.includes("form") || lower.includes("backend") || lower.includes("react") || lower.includes("vue") || lower.includes("svelte")) {
-    return {
-      leftBadge: "PRODUCTION PATTERNS",
-      leftIcon: "⚡",
-      rightBadge: "INTEGRATION GUIDES",
-      rightIcon: "🔌",
-    };
-  }
-  return {
-    leftBadge: "FOUNDER ESSENTIALS",
-    leftIcon: "🔥",
-    rightBadge: "FEATURED PLAYBOOKS",
-    rightIcon: "✨",
-  };
-}
-
-const sidebars = getSidebarHeadings(slug);
-
 const fmtMonthYear = (iso: string) => {
   try {
     const d = new Date(iso.includes("T") ? iso : iso + "T00:00:00Z");
