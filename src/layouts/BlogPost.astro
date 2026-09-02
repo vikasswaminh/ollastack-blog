@@ -196,13 +196,10 @@ const articleLd = {
       <main class="col-center">
         <div class="article-center-box">
           
-          <!-- LEAD CALLOUT HERO BOX WITH BLACK ACCENT -->
-          <header class="lead-hero-box">
-            <div class="lead-quote-content">
-              <div class="lead-quote-mark">“</div>
-              <h1 class="lead-quote-text">{description}</h1>
-              <p class="lead-quote-subtitle">{title}</p>
-            </div>
+          <!-- ARTICLE HEADER -->
+          <header class="article-header-box">
+            <h1 class="article-headline">{title}</h1>
+            <p class="article-lead-desc">{description}</p>
           </header>
 
           <!-- METADATA ROW WITH BEAUTIFUL CHIPS & QUICK ACTIONS -->
@@ -728,42 +725,24 @@ const articleLd = {
     margin-bottom: 40px;
   }
 
-  /* Lead Quote Hero Box (Seamlessly Integrated) */
-  .lead-hero-box {
-    margin-bottom: 20px;
-    background: transparent;
-    border: none;
+  /* Article Header (Clean, High-Hierarchy Typography) */
+  .article-header-box {
+    margin-bottom: 24px;
     padding: 0;
-    position: relative;
   }
-  .lead-quote-content {
-    border-left: 4.5px solid #09090b;
-    padding: 2px 0 2px 20px;
-    position: relative;
-  }
-  .lead-quote-mark {
-    position: absolute;
-    top: -24px;
-    left: 10px;
-    font-size: 64px;
-    font-family: Georgia, serif;
-    color: #e2e8f0;
-    opacity: 0.6;
-    pointer-events: none;
-    user-select: none;
-  }
-  .lead-quote-text {
-    font-size: 24px;
+  .article-headline {
+    font-size: 30px;
     font-weight: 800;
-    line-height: 1.38;
+    line-height: 1.28;
     color: #09090b;
     letter-spacing: -0.025em;
-    margin: 0 0 10px;
+    margin: 0 0 14px;
   }
-  .lead-quote-subtitle {
-    font-size: 15.5px;
-    font-weight: 600;
-    color: #475569;
+  .article-lead-desc {
+    font-size: 16.5px;
+    font-weight: 500;
+    line-height: 1.68;
+    color: #334155;
     margin: 0;
   }
 
