@@ -222,11 +222,11 @@ button {
   border-radius: var(--r-4);
 }
 
-.hr {
-  height: 1px;
-  background: var(--line);
-  border: 0;
-  margin: 0;
+.hr, hr {
+  display: none !important;
+  border: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
 }
 
 /* Display headline — refined Lato typography */

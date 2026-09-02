@@ -483,6 +483,11 @@ const articleLd = {
       });
     });
 
+    // Remove all <hr> divider line elements completely
+    document.querySelectorAll('.article-body-content hr, .article-center-box hr, hr').forEach(function (hr) {
+      hr.remove();
+    });
+
     // Interactive cursor wave ripple
     document.addEventListener("click", function (e) {
       var target = e.target.closest("a, button, .related-article-card, .side-link");
@@ -1016,8 +1021,8 @@ const articleLd = {
     display: flex !important;
     align-items: center !important;
     gap: 8px !important;
-    border-bottom: 1px solid #ffedd5 !important;
-    padding-bottom: 12px !important;
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
   }
   .takeaways-badge-spark {
     font-size: 16px;
@@ -1053,6 +1058,20 @@ const articleLd = {
   .takeaways-list li strong, .takeaways-box ul li strong {
     color: #09090b !important;
     font-weight: 800 !important;
+  }
+
+  /* Completely eliminate horizontal divider lines (<hr>, .hr, etc.) */
+  .article-body-content hr,
+  .article-center-box hr,
+  hr,
+  .hr {
+    display: none !important;
+    border: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
   }
 
   .article-body-content blockquote {
@@ -1152,9 +1171,9 @@ const articleLd = {
 
   /* FAQ Section */
   .post-faq-section {
-    margin-top: 52px;
-    padding-top: 36px;
-    border-top: 2px solid #f1f5f9;
+    margin-top: 40px;
+    padding-top: 0;
+    border-top: none;
   }
   .faq-header-bar {
     display: flex;
@@ -1222,9 +1241,9 @@ const articleLd = {
 
   /* Bottom Related Articles */
   .bottom-related-section {
-    margin-top: 60px;
-    padding-top: 40px;
-    border-top: 1px solid #e2e8f0;
+    margin-top: 48px;
+    padding-top: 0;
+    border-top: none;
   }
   .related-head-bar {
     margin-bottom: 24px;
