@@ -3,10 +3,16 @@ interface Props {
   size?: number;
   withWordmark?: boolean;
 }
-const { size = 48, withWordmark = true } = Astro.props;
+const { size = 35, withWordmark = true } = Astro.props;
+const fontSize = Math.round(size * 0.74);
 ---
 
-<a href="/blog" aria-label="ollastack" class="logo-lockup">
+<a
+  href="/blog"
+  aria-label="ollastack"
+  class="logo-lockup"
+  style={`--logo-size: ${size}px; --wordmark-size: ${fontSize}px;`}
+>
   <img
     src="/ollastack-logo-mark.png"
     alt="Ollastack"
@@ -26,19 +32,21 @@ const { size = 48, withWordmark = true } = Astro.props;
   .logo-lockup {
     display: inline-flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     text-decoration: none;
     cursor: pointer;
     transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.18s ease;
   }
   .logo-lockup:hover {
     opacity: 0.92;
-    transform: translateY(-2px);
+    transform: translateY(-1px);
   }
   .logo-lockup:active {
-    transform: scale(0.96);
+    transform: scale(0.97);
   }
   .logo-img {
+    width: var(--logo-size, 35px);
+    height: var(--logo-size, 35px);
     display: block;
     object-fit: contain;
     flex-shrink: 0;
@@ -47,9 +55,10 @@ const { size = 48, withWordmark = true } = Astro.props;
     font-family: 'Plus Jakarta Sans', var(--font-sans), sans-serif;
     font-weight: 900;
     letter-spacing: -0.045em;
-    font-size: 34px;
+    font-size: var(--wordmark-size, 26px);
     line-height: 1;
     display: inline-flex;
+    align-items: baseline;
     user-select: none;
   }
   .brand-olla {
