@@ -341,11 +341,11 @@ const aiSpecialPosts = [
 
         <!-- MORE RECENT PUBLICATIONS FEED (2-COLUMN GRID) -->
         <div class="recent-feed-head" id="all-articles">
-          <h3>Recent Publications</h3>
+          <h3>All Publications ({allPosts.length})</h3>
         </div>
 
         <div class="recent-grid-row">
-          {allPosts.slice(0, 6).map((post) => (
+          {allPosts.map((post) => (
             <article class="recent-post-card">
               <a href={`/blog/${post.slug}`} class="recent-card-link">
                 <div class="recent-card-meta">
