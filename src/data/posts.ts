@@ -11,6 +11,17 @@ export interface PostMeta {
 
 export const posts: PostMeta[] = [
   {
+    slug: "how-to-connect-a-contact-form-to-email-without-backend-code",
+    title: "How to Connect a Contact Form to Email Without Backend Code (2026 Guide)",
+    description:
+      "Learn how to connect any contact form to your email inbox without writing backend code. A complete, humanized 2026 guide covering mailto links, hosted form endpoints, serverless options, spam protection, file uploads, and AI agent readiness.",
+    date: "2026-09-02",
+    readingTime: "22 min read",
+    category: "Integrations",
+    categorySlug: "integrations",
+    featured: true,
+  },
+  {
     slug: "what-is-an-agent-email-api",
     title: "What Is an Agent Email API and Why Does It Matter for AI Workflows?",
     description:

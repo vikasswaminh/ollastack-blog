@@ -30,10 +30,10 @@ const {
 // Determine category for post
 function getPostCategory(s: string): { label: string; href: string; icon: string; themeClass: string } {
   const lower = s.toLowerCase();
-  if (lower.includes("agent") || lower.includes("ai") || lower.includes("read-otp")) {
+  if (lower.includes("agent") || lower.includes("ai-agent") || lower.startsWith("ai-") || lower.includes("-ai-") || lower.includes("read-otp")) {
     return { label: "AI Agents", href: "/blog?cat=ai-agents", icon: "🤖", themeClass: "pill-cat-rose" };
   }
-  if (lower.includes("email") || lower.includes("test") || lower.includes("otp") || lower.includes("inbox") || lower.includes("playwright") || lower.includes("cypress")) {
+  if (lower.includes("test") || lower.includes("otp") || lower.includes("inbox") || lower.includes("playwright") || lower.includes("cypress")) {
     return { label: "Email Testing", href: "/blog?cat=email-testing", icon: "✉️", themeClass: "pill-cat-blue" };
   }
   if (lower.includes("vs") || lower.includes("alternative")) {
@@ -44,6 +44,9 @@ function getPostCategory(s: string): { label: string; href: string; icon: string
   }
   if (lower.includes("webhook") || lower.includes("quickstart") || lower.includes("form") || lower.includes("backend") || lower.includes("react") || lower.includes("vue") || lower.includes("svelte")) {
     return { label: "Integrations", href: "/blog?cat=integrations", icon: "⚡", themeClass: "pill-cat-amber" };
+  }
+  if (lower.includes("email")) {
+    return { label: "Email API", href: "/blog?cat=email-api", icon: "📬", themeClass: "pill-cat-blue" };
   }
   return { label: "Engineering", href: "/blog", icon: "💡", themeClass: "pill-cat-slate" };
 }
@@ -75,6 +78,7 @@ const faqLd =
 
 // Founder Special sidebar posts
 const founderSpecialPosts = [
+  { title: "How to Connect a Contact Form to Email Without Backend Code", slug: "how-to-connect-a-contact-form-to-email-without-backend-code" },
   { title: "Form Backend vs Form Builder: What Developers Should Choose in 2026", slug: "form-backend-for-ai-agents" },
   { title: "How to Automate OTP Email Testing in CI/CD Pipelines", slug: "how-to-automate-otp-email-testing-in-ci-cd-pipelines" },
   { title: "How to Build a Form Backend for a Static Site Without Writing a Server", slug: "how-to-build-a-form-backend-for-a-static-site-without-writing-a-server" },
@@ -165,7 +169,7 @@ const articleLd = {
 
       <!-- ================= LEFT COLUMN: ESSENTIAL GUIDES ================= -->
       <aside class="col-left">
-        <div class="pill-badge pill-orange">
+        <div class="pill-badge pill-red">
           <span class="badge-fire">⚡</span>
           <span>ESSENTIAL GUIDES</span>
         </div>
@@ -175,7 +179,7 @@ const articleLd = {
             <li>
               <a
                 href={`/blog/${item.slug}`}
-                class:list={["side-link", item.slug === slug && "active-orange"]}
+                class:list={["side-link", item.slug === slug && "active-red"]}
               >
                 <span class="side-num">{String(index + 1).padStart(2, '0')}</span>
                 <span class="side-text">{item.title}</span>
@@ -185,7 +189,7 @@ const articleLd = {
         </ul>
 
         <div class="side-view-all">
-          <a href="/blog#all-articles" class="view-all-orange">
+          <a href="/blog#all-articles" class="view-all-red">
             <span>View All</span>
             <span class="arr">→</span>
           </a>
@@ -571,15 +575,15 @@ const articleLd = {
   .reading-progress-bar {
     height: 100%;
     width: 0%;
-    background: linear-gradient(90deg, #DC2626, #f97316);
-    transition: width 0.08s ease-out;
-    box-shadow: 0 0 8px rgba(220, 38, 38, 0.6);
+    background: #C4281C;
+    transition: width 0.1s ease-out;
+    box-shadow: 0 0 8px rgba(196, 40, 28, 0.6);
   }
 
   .article-top-accent-bar {
     width: 100%;
     height: 3.5px;
-    background: linear-gradient(90deg, #DC2626 0%, #EF4444 60%, #F87171 100%);
+    background: linear-gradient(90deg, #C4281C 0%, #DC2626 60%, #EF4444 100%);
     margin-bottom: 0;
   }
 
@@ -628,15 +632,18 @@ const articleLd = {
     text-transform: uppercase;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   }
-  .pill-orange {
-    background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
-    color: #ea580c;
-    border: 1px solid #fed7aa;
+  .pill-red, .pill-orange {
+    background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+    color: #C4281C;
+    border: 1px solid #fecaca;
+    font-weight: 800;
   }
   .pill-purple {
-    background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
-    color: #9333ea;
-    border: 1px solid #e9d5ff;
+    background: #09090b;
+    color: #ffffff;
+    border: 1px solid #18181b;
+    font-weight: 800;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
   }
   .badge-fire, .badge-spark {
     font-size: 12px;
@@ -665,68 +672,79 @@ const articleLd = {
     transition: all 0.16s ease;
   }
   .side-num {
-    font-size: 10.5px;
-    font-weight: 700;
-    color: #94a3b8;
+    font-size: 11px;
+    font-weight: 800;
+    color: #C4281C;
     margin-top: 2px;
     flex-shrink: 0;
     font-family: 'DM Mono', monospace;
   }
   .purple-num {
-    color: #a855f7;
-    opacity: 0.7;
+    color: #000000;
+    font-weight: 800;
   }
   .side-text {
     flex: 1;
   }
   .side-link:hover {
-    color: #09090b;
+    color: #000000;
     background: #f8fafc;
     transform: translateX(2px);
   }
-  .side-link.active-orange {
-    background: #fff7ed;
-    color: #ea580c;
-    font-weight: 700;
-    border-left: 3px solid #ea580c;
+  .side-link.active-red, .side-link.active-orange {
+    background: #fef2f2;
+    color: #C4281C;
+    font-weight: 800;
+    border-left: 3.5px solid #C4281C;
+  }
+  .side-link.active-red .side-num, .side-link.active-orange .side-num {
+    color: #C4281C;
+    font-weight: 800;
   }
   .side-link.active-purple {
-    background: #faf5ff;
-    color: #7e22ce;
-    font-weight: 700;
-    border-left: 3px solid #9333ea;
+    background: #f8fafc;
+    color: #000000;
+    font-weight: 800;
+    border-left: 3.5px solid #000000;
+  }
+  .side-link.active-purple .side-num {
+    color: #000000;
+    font-weight: 800;
   }
   .side-highlight-purple {
-    background: #faf5ff;
-    color: #7e22ce !important;
+    background: #f8fafc;
+    color: #09090b !important;
     font-weight: 600;
-    border: 1px solid #e9d5ff;
+    border: 1px solid #e2e8f0;
   }
 
   .side-view-all {
     margin-top: 16px;
     padding-left: 8px;
   }
-  .view-all-orange {
+  .view-all-red, .view-all-orange {
     display: inline-flex;
     align-items: center;
     gap: 4px;
     font-size: 12.5px;
-    font-weight: 700;
-    color: #ea580c;
+    font-weight: 800;
+    color: #C4281C;
     text-decoration: none;
     transition: gap 0.15s ease;
   }
-  .view-all-orange:hover .arr { transform: translateX(3px); }
+  .view-all-red:hover .arr, .view-all-orange:hover .arr { transform: translateX(3px); }
   .view-all-purple {
     display: inline-flex;
     align-items: center;
     gap: 4px;
     font-size: 12.5px;
-    font-weight: 700;
-    color: #9333ea;
+    font-weight: 800;
+    color: #09090b;
     text-decoration: none;
-    transition: gap 0.15s ease;
+    transition: gap 0.15s ease, color 0.15s ease;
+  }
+  .view-all-purple:hover {
+    color: #C4281C;
   }
   .view-all-purple:hover .arr { transform: translateX(3px); }
 
@@ -739,20 +757,20 @@ const articleLd = {
     align-items: center;
     justify-content: center;
     gap: 6px;
-    background: #DC2626;
+    background: #C4281C;
     color: #ffffff !important;
     font-size: 13.5px;
     font-weight: 700;
     padding: 10px 18px;
     border-radius: 9999px;
     text-decoration: none !important;
-    box-shadow: 0 4px 14px rgba(220, 38, 38, 0.35);
+    box-shadow: 0 4px 14px rgba(196, 40, 28, 0.35);
     transition: all 0.18s ease;
   }
   .btn-sidebar-counsel:hover {
-    background: #B91C1C;
+    background: #A31F14;
     transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(220, 38, 38, 0.5);
+    box-shadow: 0 6px 20px rgba(196, 40, 28, 0.5);
   }
   .btn-spark {
     font-size: 12px;
@@ -1132,6 +1150,75 @@ const articleLd = {
     border-left-color: #DC2626;
   }
 
+  /* Inline Code Pill Styling */
+  .article-body-content p code,
+  .article-body-content li code,
+  .article-body-content td code {
+    background: #f1f5f9 !important;
+    color: #0f172a !important;
+    padding: 2.5px 7px !important;
+    border-radius: 6px !important;
+    font-size: 13.5px !important;
+    font-weight: 600 !important;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+    border: 1px solid #e2e8f0 !important;
+  }
+
+  /* Rich Markdown Tables with Dark Outline & Strong Divisions */
+  .article-body-content table {
+    width: 100% !important;
+    margin: 32px 0 !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    border: 2px solid #0f172a !important;
+    font-size: 14.5px !important;
+    background: #ffffff !important;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.08) !important;
+    display: table !important;
+  }
+  .article-body-content th {
+    background: #0f172a !important;
+    color: #f8fafc !important;
+    font-weight: 800 !important;
+    text-align: left !important;
+    padding: 15px 18px !important;
+    border-bottom: 2px solid #0f172a !important;
+    border-right: 1.5px solid #334155 !important;
+    letter-spacing: -0.01em !important;
+  }
+  .article-body-content th:last-child {
+    border-right: none !important;
+  }
+  .article-body-content th a {
+    color: #ef4444 !important;
+  }
+  .article-body-content td {
+    padding: 14px 18px !important;
+    border-bottom: 1.5px solid #94a3b8 !important;
+    border-right: 1.5px solid #cbd5e1 !important;
+    color: #0f172a !important;
+    font-weight: 500 !important;
+    line-height: 1.6 !important;
+    vertical-align: middle !important;
+  }
+  .article-body-content td:last-child {
+    border-right: none !important;
+  }
+  .article-body-content tbody tr:nth-child(even) td {
+    background: #f8fafc !important;
+  }
+  .article-body-content tbody tr:nth-child(odd) td {
+    background: #ffffff !important;
+  }
+  .article-body-content tbody tr:last-child td {
+    border-bottom: none !important;
+  }
+  .article-body-content tbody tr:hover td {
+    background: #f1f5f9 !important;
+  }
+
   /* Code Block Wrapper & Interactive Copy Toolbar */
   .code-block-wrapper {
     margin: 28px 0;
@@ -1450,7 +1537,7 @@ const articleLd = {
     line-height: 1.45;
   }
   .faq-accordion-item[open] .faq-question-text {
-    color: #DC2626;
+    color: #C4281C;
   }
 
   .faq-toggle-circle {
@@ -1467,15 +1554,15 @@ const articleLd = {
   }
   .faq-accordion-item:hover .faq-toggle-circle {
     background: #fee2e2;
-    color: #DC2626;
+    color: #C4281C;
   }
   .faq-arrow-icon {
     transition: transform 0.22s ease;
   }
   .faq-accordion-item[open] .faq-toggle-circle {
-    background: #DC2626;
+    background: #C4281C;
     color: #ffffff;
-    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.35);
+    box-shadow: 0 2px 8px rgba(196, 40, 28, 0.35);
   }
   .faq-accordion-item[open] .faq-arrow-icon {
     transform: rotate(180deg);
@@ -1486,13 +1573,13 @@ const articleLd = {
     padding: 0 20px 20px;
   }
   .faq-answer-inner {
-    border-left: 3.5px solid #DC2626;
+    border-left: 3.5px solid #C4281C;
     background: linear-gradient(135deg, #fffcf9 0%, #fff7ed 100%);
     padding: 14px 18px;
     border-radius: 0 8px 8px 0;
     border: 1px solid #fed7aa;
     border-left-width: 3.5px;
-    border-left-color: #DC2626;
+    border-left-color: #C4281C;
   }
   .faq-answer-inner p {
     font-size: 14.5px;
@@ -1514,7 +1601,7 @@ const articleLd = {
     display: inline-block;
     font-size: 11px;
     font-weight: 800;
-    color: #ea580c;
+    color: #C4281C;
     letter-spacing: 0.06em;
     margin-bottom: 6px;
   }
@@ -1553,7 +1640,7 @@ const articleLd = {
     margin-bottom: 12px;
   }
   .rel-cat {
-    color: #ea580c;
+    color: #C4281C;
     font-weight: 700;
   }
   .rel-time {
