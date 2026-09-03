@@ -169,30 +169,25 @@ const articleLd = {
 
       <!-- ================= LEFT COLUMN: ESSENTIAL GUIDES ================= -->
       <aside class="col-left">
-        <div class="pill-badge pill-red">
-          <span class="badge-fire">⚡</span>
-          <span>ESSENTIAL GUIDES</span>
+        <div class="pill-badge pill-orange">
+          <span>⚡ ESSENTIAL GUIDES</span>
         </div>
 
         <ul class="clean-link-list">
-          {founderSpecialPosts.map((item, index) => (
+          {founderSpecialPosts.map((item) => (
             <li>
               <a
                 href={`/blog/${item.slug}`}
-                class:list={["side-link", item.slug === slug && "active-red"]}
+                class:list={["side-link", item.slug === slug && "active-orange"]}
               >
-                <span class="side-num">{String(index + 1).padStart(2, '0')}</span>
-                <span class="side-text">{item.title}</span>
+                {item.title}
               </a>
             </li>
           ))}
         </ul>
 
         <div class="side-view-all">
-          <a href="/blog#all-articles" class="view-all-red">
-            <span>View All</span>
-            <span class="arr">→</span>
-          </a>
+          <a href="/blog#all-articles" class="view-all-orange">View All →</a>
         </div>
       </aside>
 
@@ -382,12 +377,11 @@ const articleLd = {
       <!-- ================= RIGHT COLUMN: AGENT WORKFLOWS ================= -->
       <aside class="col-right">
         <div class="pill-badge pill-purple">
-          <span class="badge-spark">🤖</span>
-          <span>AGENT WORKFLOWS</span>
+          <span>🤖 AGENT WORKFLOWS</span>
         </div>
 
         <ul class="clean-link-list">
-          {aiSpecialPosts.map((item, index) => (
+          {aiSpecialPosts.map((item) => (
             <li>
               <a
                 href={`/blog/${item.slug}`}
@@ -396,18 +390,14 @@ const articleLd = {
                   item.slug === slug && "active-purple",
                 ]}
               >
-                <span class="side-num purple-num">{String(index + 1).padStart(2, '0')}</span>
-                <span class="side-text">{item.title}</span>
+                {item.title}
               </a>
             </li>
           ))}
         </ul>
 
         <div class="side-view-all">
-          <a href="/blog#all-articles" class="view-all-purple">
-            <span>View All</span>
-            <span class="arr">→</span>
-          </a>
+          <a href="/blog#all-articles" class="view-all-purple">View All →</a>
         </div>
 
         <!-- RIGHT RAIL CTA BUTTON -->
@@ -604,149 +594,124 @@ const articleLd = {
   }
 
   /* ---------------- SIDEBARS (LEFT & RIGHT) ---------------- */
-  .col-left, .col-right {
+  .col-left {
     position: sticky;
     top: 84px;
-    align-self: start;
+    background: #ffffff;
+    border: 1.5px solid #fed7aa; /* Soft Orange Box Border */
+    border-radius: 16px;
+    padding: 22px 18px;
+    box-shadow: 0 4px 16px rgba(249, 115, 22, 0.06);
+    box-sizing: border-box;
     max-height: calc(100vh - 100px);
     overflow-y: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    padding-bottom: 24px;
   }
-  .col-left::-webkit-scrollbar, .col-right::-webkit-scrollbar {
+  .col-left::-webkit-scrollbar {
+    display: none;
+  }
+
+  .col-right {
+    position: sticky;
+    top: 84px;
+    background: #ffffff;
+    border: 1.5px solid #ddd6fe; /* Soft Purple Box Border */
+    border-radius: 16px;
+    padding: 22px 18px;
+    box-shadow: 0 4px 16px rgba(124, 58, 237, 0.06);
+    box-sizing: border-box;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .col-right::-webkit-scrollbar {
     display: none;
   }
 
   /* Pill Badges */
   .pill-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
+    display: inline-block;
+    padding: 5px 16px;
+    border-radius: 9999px;
     font-size: 11px;
     font-weight: 800;
-    letter-spacing: 0.06em;
-    padding: 6px 14px;
-    border-radius: 9999px;
-    margin-bottom: 18px;
-    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #ffffff;
+    margin-bottom: 20px;
+    border: none;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   }
-  .pill-red, .pill-orange {
-    background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
-    color: #C4281C;
-    border: 1px solid #fecaca;
-    font-weight: 800;
+  .pill-orange {
+    background: #f97316;
   }
   .pill-purple {
-    background: #09090b;
-    color: #ffffff;
-    border: 1px solid #18181b;
-    font-weight: 800;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
-  }
-  .badge-fire, .badge-spark {
-    font-size: 12px;
+    background: #7c3aed;
   }
 
-  /* Clean list of text links */
+  /* Link Lists */
   .clean-link-list {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 16px;
+  }
+  .clean-link-list li {
+    padding-bottom: 14px;
+    border-bottom: 1px solid #f8fafc;
+  }
+  .clean-link-list li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
   }
   .side-link {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-    font-size: 13px;
+    font-size: 13.5px;
+    font-weight: 600;
     line-height: 1.45;
-    font-weight: 500;
-    color: #475569;
+    color: #334155;
     text-decoration: none;
-    padding: 6px 8px;
-    border-radius: 6px;
-    transition: all 0.16s ease;
-  }
-  .side-num {
-    font-size: 11px;
-    font-weight: 800;
-    color: #C4281C;
-    margin-top: 2px;
-    flex-shrink: 0;
-    font-family: 'DM Mono', monospace;
-  }
-  .purple-num {
-    color: #000000;
-    font-weight: 800;
-  }
-  .side-text {
-    flex: 1;
+    display: block;
+    transition: all 0.15s ease;
   }
   .side-link:hover {
-    color: #000000;
-    background: #f8fafc;
+    color: #DC2626;
     transform: translateX(2px);
   }
-  .side-link.active-red, .side-link.active-orange {
-    background: #fef2f2;
-    color: #C4281C;
-    font-weight: 800;
-    border-left: 3.5px solid #C4281C;
-  }
-  .side-link.active-red .side-num, .side-link.active-orange .side-num {
-    color: #C4281C;
-    font-weight: 800;
+  .side-link.active-orange {
+    color: #ea580c;
+    font-weight: 700;
   }
   .side-link.active-purple {
-    background: #f8fafc;
-    color: #000000;
-    font-weight: 800;
-    border-left: 3.5px solid #000000;
-  }
-  .side-link.active-purple .side-num {
-    color: #000000;
-    font-weight: 800;
-  }
-  .side-highlight-purple {
-    background: #f8fafc;
-    color: #09090b !important;
-    font-weight: 600;
-    border: 1px solid #e2e8f0;
+    color: #7c3aed;
+    font-weight: 700;
   }
 
   .side-view-all {
-    margin-top: 16px;
-    padding-left: 8px;
+    margin-top: 20px;
   }
-  .view-all-red, .view-all-orange {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 12.5px;
+  .view-all-orange {
+    font-size: 13px;
     font-weight: 800;
-    color: #C4281C;
+    color: #f97316;
     text-decoration: none;
-    transition: gap 0.15s ease;
+    transition: all 0.15s ease;
   }
-  .view-all-red:hover .arr, .view-all-orange:hover .arr { transform: translateX(3px); }
+  .view-all-orange:hover {
+    text-decoration: underline;
+  }
   .view-all-purple {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 12.5px;
+    font-size: 13px;
     font-weight: 800;
-    color: #09090b;
+    color: #7c3aed;
     text-decoration: none;
-    transition: gap 0.15s ease, color 0.15s ease;
+    transition: all 0.15s ease;
   }
   .view-all-purple:hover {
-    color: #C4281C;
+    text-decoration: underline;
   }
-  .view-all-purple:hover .arr { transform: translateX(3px); }
 
   /* Right Sidebar Button */
   .right-cta-btn-wrap {
@@ -757,20 +722,20 @@ const articleLd = {
     align-items: center;
     justify-content: center;
     gap: 6px;
-    background: #C4281C;
+    background: #DC2626;
     color: #ffffff !important;
     font-size: 13.5px;
     font-weight: 700;
     padding: 10px 18px;
     border-radius: 9999px;
     text-decoration: none !important;
-    box-shadow: 0 4px 14px rgba(196, 40, 28, 0.35);
+    box-shadow: 0 4px 14px rgba(220, 38, 38, 0.35);
     transition: all 0.18s ease;
   }
   .btn-sidebar-counsel:hover {
-    background: #A31F14;
+    background: #B91C1C;
     transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(196, 40, 28, 0.5);
+    box-shadow: 0 6px 20px rgba(220, 38, 38, 0.5);
   }
   .btn-spark {
     font-size: 12px;
