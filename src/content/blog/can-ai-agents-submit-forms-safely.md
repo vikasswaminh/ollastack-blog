@@ -1,7 +1,7 @@
 ---
 title: "Can AI Agents Submit Forms Safely? Here's What Developers Need to Know"
 description: "AI agents are filling out and submitting forms on behalf of humans at scale. Here's what 'safe' actually means for that traffic, where it breaks, and how to build (or choose) a form backend that handles it properly."
-date: 2026-08-21
+date: 2026-08-24
 author: "By the OllaStack Team"
 readingTime: 21
 tags: ["AI Agents", "Form Backends", "Security"]
