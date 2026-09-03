@@ -108,13 +108,13 @@ export const posts: PostMeta[] = [
   {
     slug: "form-backend-for-ai-agents",
     title:
-      "Form backend for AI agents: why forms break for LLMs (and what to do)",
+      "Form Backend vs Form Builder: What Developers Should Choose in 2026",
     description:
-      "AI agents are increasingly submitting forms on behalf of users — and traditional form backends flag every one of them as spam. Here's why, and how to design a backend that treats agents as first-class users.",
-    date: "2026-05-16",
-    readingTime: "9 min read",
-    category: "AI Agents",
-    categorySlug: "ai-agents",
+      "Compare form backends and form builders in 2026. Learn how APIs, customization, security, webhooks, scalability, AI agents, and developer control affect which option you should choose.",
+    date: "2026-09-01",
+    readingTime: "18 min read",
+    category: "Comparisons",
+    categorySlug: "comparisons",
   },
   {
     slug: "html-form-to-email-without-backend",

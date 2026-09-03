@@ -6,13 +6,13 @@ const APP = "https://login.ollastack.com";
 
 <BlogPost
   slug="form-backend-for-ai-agents"
-  title="Form backend for AI agents: why forms break for LLMs"
-  description="AI agents increasingly submit forms for users, and most backends flag them as spam. Why traditional backends struggle, and what an agent-ready one looks like."
-  faq={[{"q":"Why do form backends flag AI agents as spam?","a":"Traditional anti-abuse (honeypot, CAPTCHA, per-IP limits) assumes a human in a browser, so automated agent traffic trips every check. An agent-ready backend uses a scoped token as the trust boundary instead."},{"q":"How should an agent submit a form?","a":"With a scoped Bearer token owned by the form owner — the submission is trusted, skips the bot defenses, and is tagged as agent traffic in the inbox and audit log."},{"q":"How do agents discover the API?","a":"From the CORS-open OpenAPI document, so an agent reads the endpoints and parameters itself with no docs scraping."}]}
-  publishedAt="2026-05-16"
-  updatedAt="2026-05-16"
-  readingTime="9 min read"
-  ctaLocation="agents"
+  title="Form Backend vs Form Builder: What Developers Should Choose in 2026"
+  description="Compare form backends and form builders in 2026. Learn how APIs, customization, security, webhooks, scalability, AI agents, and developer control affect which option you should choose."
+  faq={[{"q":"What is the difference between a form backend and a form builder?","a":"A form builder provides visual drag-and-drop interfaces and hosted pages, while a form backend provides an API endpoint to connect your own custom HTML, React, Vue, or static site forms without iframe restrictions."},{"q":"When should developers choose a form backend?","a":"Choose a form backend when you want complete control over your frontend markup, design system, custom validation, programmatic webhook triggers, and AI agent integration without vendor lock-in."},{"q":"Can AI agents submit to form backends?","a":"Yes. Modern form backends like Ollastack support authenticated API keys and OpenAPI specs so AI agents can submit structured payloads without triggering honeypots or CAPTCHAs."}]}
+  publishedAt="2026-09-01"
+  updatedAt="2026-09-01"
+  readingTime="18 min read"
+  ctaLocation="blog"
 >
   <p class="lede">
     A meaningful share of form traffic in 2026 isn't coming from a
