@@ -37,7 +37,7 @@ export const posts: PostMeta[] = [
     title: "How to Automate OTP Email Testing in CI/CD Pipelines",
     description:
       "The practical guide to testing email verification flows with isolated inboxes, Email APIs, Playwright, Cypress, Selenium, CI workflows, and secure parallel execution.",
-    date: "2026-08-25",
+    date: "2026-08-27",
     readingTime: "18 min read",
     category: "Email & Testing",
     categorySlug: "email-testing",
