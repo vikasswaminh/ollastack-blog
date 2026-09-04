@@ -11,6 +11,17 @@ export interface PostMeta {
 
 export const posts: PostMeta[] = [
   {
+    slug: "self-host-vs-hosted-form-backend",
+    title: "Self-Host vs Hosted Form Backend: Complete 2026 Decision Framework",
+    description:
+      "Should you build and self-host your own form backend or choose a hosted service? A complete 2026 engineering decision framework covering TCO, deliverability, spam quarantining, AI agent access, compliance, and zero-lock-in architectures.",
+    date: "2026-09-04",
+    readingTime: "22 min read",
+    category: "Comparisons",
+    categorySlug: "comparisons",
+    featured: true,
+  },
+  {
     slug: "how-to-connect-a-contact-form-to-email-without-backend-code",
     title: "How to Connect a Contact Form to Email Without Backend Code (2026 Guide)",
     description:
