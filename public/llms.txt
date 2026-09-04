@@ -32,7 +32,7 @@ Agents discover the whole API from the OpenAPI 3.1 document; every operation shi
 - [Email API](https://ollastack.com/email-api): Send, receive, and test email over a simple API.
 - [Use cases](https://ollastack.com/use-cases): What agents build with Ollastack.
 - [Pricing](https://ollastack.com/pricing): Free and paid tiers.
-- [Blog](https://ollastack.com/blog): Guides and comparisons.
+- [Blog](https://blogs.ollastack.com/blog): Guides and comparisons.
 
 ## Resources
 - [Migration hub](https://ollastack.com/resources/migration-hub): Moving from Formspree, Mailosaur, SendGrid Inbound Parse, and others.

@@ -143,6 +143,41 @@ const aiSpecialPosts = [
   { title: "Next.js 15 Serverless Form Backend Integration Guide", slug: "nextjs-quickstart-hosted-form" },
   { title: "DKIM, SPF & DMARC for Transactional Form Notifications", slug: "dkim-spf-dmarc-custom-sender" },
 ];
+
+// Blog Structured Data JSON-LD
+const blogLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://blogs.ollastack.com/#website",
+      "url": "https://blogs.ollastack.com/blog",
+      "name": "Ollastack Blog",
+      "description": "Technical deep-dives, architectural guides, and developer playbooks on AI agent forms, disposable test inboxes, programmatic email APIs, and webhook reliability.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Ollastack",
+        "url": "https://ollastack.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://blogs.ollastack.com/ollastack-logo-mark.png",
+          "width": 512,
+          "height": 512
+        }
+      }
+    },
+    {
+      "@type": "Blog",
+      "@id": "https://blogs.ollastack.com/blog#blog",
+      "name": "Ollastack Engineering Blog",
+      "url": "https://blogs.ollastack.com/blog",
+      "description": "Technical deep-dives, architectural guides, and developer playbooks on AI agent forms, disposable test inboxes, programmatic email APIs, and webhook reliability.",
+      "isPartOf": {
+        "@id": "https://blogs.ollastack.com/#website"
+      }
+    }
+  ]
+};
 ---
 
 <!DOCTYPE html>
@@ -151,9 +186,45 @@ const aiSpecialPosts = [
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Engineering Blog & Developer Playbooks — Ollastack</title>
+  <meta name="description" content="Technical deep-dives, architectural guides, and developer playbooks on AI agent forms, disposable test inboxes, programmatic email APIs, and webhook reliability." />
+  <link rel="canonical" href="https://blogs.ollastack.com/blog" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  
+  <!-- Favicon & Icons -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Ollastack Blog" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:url" content="https://blogs.ollastack.com/blog" />
+  <meta property="og:title" content="Engineering Blog & Developer Playbooks — Ollastack" />
+  <meta property="og:description" content="Technical deep-dives, architectural guides, and developer playbooks on AI agent forms, disposable test inboxes, programmatic email APIs, and webhook reliability." />
+  <meta property="og:image" content="https://blogs.ollastack.com/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Ollastack Engineering Blog & Developer Playbooks" />
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@ollastack" />
+  <meta name="twitter:creator" content="@ollastack" />
+  <meta name="twitter:title" content="Engineering Blog & Developer Playbooks — Ollastack" />
+  <meta name="twitter:description" content="Technical deep-dives, architectural guides, and developer playbooks on AI agent forms, disposable test inboxes, programmatic email APIs, and webhook reliability." />
+  <meta name="twitter:image" content="https://blogs.ollastack.com/og.png" />
+  <meta name="theme-color" content="#DA291C" />
+  
+  <!-- Sitemaps & RSS -->
+  <link rel="sitemap" href="/sitemap.xml" />
+  <link rel="alternate" type="application/rss+xml" title="Ollastack Blog" href="/rss.xml" />
+  
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
+  
+  <!-- Structured Data JSON-LD -->
+  <script type="application/ld+json" set:html={JSON.stringify(blogLd)} is:inline />
 </head>
 <body class="nh-exact-body">
 

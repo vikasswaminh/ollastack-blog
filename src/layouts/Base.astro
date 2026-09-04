@@ -20,8 +20,9 @@ const {
   docsName,
   docsSlug,
 } = Astro.props;
-const origin = (Astro.site ?? new URL("https://ollastack.com")).origin;
-const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://ollastack.com").toString();
+const origin = (Astro.site ?? new URL("https://blogs.ollastack.com")).origin;
+const cleanPath = Astro.url.pathname.replace(/\.html$/, "").replace(/\/$/, "");
+const canonical = new URL(cleanPath || "/", Astro.site ?? "https://blogs.ollastack.com").toString();
 // Social scrapers require an absolute image URL.
 const ogImage = `${origin}/og.png`;
 ---
@@ -34,6 +35,9 @@ const ogImage = `${origin}/og.png`;
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="canonical" href={canonical} />
   <meta name="description" content={description} />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta property="og:site_name" content="Ollastack Blog" />
+  <meta property="og:locale" content="en_US" />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:type" content="website" />
@@ -43,10 +47,14 @@ const ogImage = `${origin}/og.png`;
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Ollastack — AI agent forms, mailboxes and email testing" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@ollastack" />
+  <meta name="twitter:creator" content="@ollastack" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={ogImage} />
   <meta name="theme-color" content="#fafaf7" />
+  <link rel="sitemap" href="/sitemap.xml" />
+  <link rel="alternate" type="application/rss+xml" title="Ollastack Blog" href="/rss.xml" />
   <title>{title}</title>
   {docsName && docsSlug && (
     <>
@@ -54,6 +62,7 @@ const ogImage = `${origin}/og.png`;
       <script type="application/ld+json" set:html={JSON.stringify(techArticleLd({ title: docsName, description, slug: docsSlug }))} is:inline />
     </>
   )}
+  <slot name="head" />
 </head>
 <body>
   <AnnouncementBar />

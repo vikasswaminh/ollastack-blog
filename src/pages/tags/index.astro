@@ -14,7 +14,7 @@ const tags = [...counts.entries()].sort((a, b) => b[1] - a[1]);
   <div class="tag-cloud">
     {
       tags.map(([t, n]) => (
-        <a class="tag tag-lg" href={`/tags/${t}/`}>
+        <a class="tag tag-lg" href={`/tags/${t}`}>
           #{t} <span class="tag-count">{n}</span>
         </a>
       ))

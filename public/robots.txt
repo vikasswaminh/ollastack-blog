@@ -25,4 +25,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://ollastack.com/sitemap.xml
+Sitemap: https://blogs.ollastack.com/sitemap.xml

@@ -38,7 +38,7 @@ Disposable inboxes on a test subdomain, never spam-filtered (a test must see eve
 - Email API overview: https://ollastack.com/email-api
 - Use cases: https://ollastack.com/use-cases
 - Pricing: https://ollastack.com/pricing
-- Blog: https://ollastack.com/blog
+- Blog: https://blogs.ollastack.com/blog
 - Migration hub (Formspree, Mailosaur, Inbound Parse, ...): https://ollastack.com/resources/migration-hub
 - Developer hub: https://ollastack.com/resources/developer-hub
 - Deliverability hub (SPF/DKIM/DMARC): https://ollastack.com/resources/deliverability-hub
