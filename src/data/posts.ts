@@ -11,6 +11,18 @@ export interface PostMeta {
 
 export const posts: PostMeta[] = [
   {
+    slug: "mailosaur-vs-mailinator-vs-disposable-inboxes",
+    title:
+      "Mailosaur vs Mailinator vs Disposable Inboxes: Which Is Best for QA Testing in 2026",
+    description:
+      "A real-world comparison of Mailosaur, Mailinator and disposable inbox tools for QA testing. Learn which one fits OTP testing, CI pipelines, Playwright, Cypress and automated email verification.",
+    date: "2026-09-04",
+    readingTime: "22 min read",
+    category: "Comparisons",
+    categorySlug: "comparisons",
+    featured: true,
+  },
+  {
     slug: "self-host-vs-hosted-form-backend",
     title: "Self-Host vs Hosted Form Backend: Complete 2026 Decision Framework",
     description:
