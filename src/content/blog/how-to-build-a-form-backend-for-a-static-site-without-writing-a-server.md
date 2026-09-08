@@ -384,9 +384,9 @@ The practical upshot: the next time you're staring at a `<form>` tag on a static
 ---
 
 ## Related reading
-- [Ollastack Form Engine for AI Agents & LLMs](https://ollastack.com/blog/form-backend-for-ai-agents)
+- [Ollastack Form Engine for AI Agents & LLMs](https://ollastack.com/blogform-backend-for-ai-agents)
 - [Ollastack Form Migration and Cutover Hub](https://ollastack.com/resources/migration-hub/)
 - [Ollastack Form Backend API & Webhook Specs](https://ollastack.com/docs/api)
-- [Ollastack Form Design: High Conversion & Zero Spam](https://ollastack.com/blog/form-design-conversion)
-- [Can AI Agents Submit Forms Safely with Ollastack?](https://ollastack.com/blog/can-ai-agents-submit-forms-safely/)
-- [Ollastack Agent Inboxes: Give AI Agents Their Own Email](https://ollastack.com/blog/email-for-ai-agents)
+- [Ollastack Form Design: High Conversion & Zero Spam](https://ollastack.com/blogform-design-conversion)
+- [Can AI Agents Submit Forms Safely with Ollastack?](https://ollastack.com/blogcan-ai-agents-submit-forms-safely/)
+- [Ollastack Agent Inboxes: Give AI Agents Their Own Email](https://ollastack.com/blogemail-for-ai-agents)
