@@ -14,9 +14,7 @@ const APP = "https://login.ollastack.com";
     <!-- Centered Frosted Capsule Nav -->
     <nav class="nav-pill" aria-label="Primary">
       <div class="nav-dropdown-wrap">
-        <a href="/" class:list={["nav-link", (current === "home" || current === "product") && "active"]}>
-          Product <span class="chevron">▾</span>
-        </a>
+        <button type="button" class="nav-link nav-dropdown-btn" aria-expanded="false" aria-haspopup="true">Product <span class="chevron">▾</span></button>
         <div class="nav-dropdown-menu">
           <a href="/#features" class="nav-dropdown-item">Features & Capabilities</a>
           <a href="/email-api" class="nav-dropdown-item">Agent Mail & API</a>
@@ -28,9 +26,7 @@ const APP = "https://login.ollastack.com";
       <a href="/email-api" class:list={["nav-link", current === "email-api" && "active"]}>Email API</a>
       <a href="/docs" class:list={["nav-link", current === "docs" && "active"]}>Docs</a>
       <div class="nav-dropdown-wrap">
-        <a href="/resources" class:list={["nav-link", current === "resources" && "active"]}>
-          Resources <span class="chevron">▾</span>
-        </a>
+        <button type="button" class="nav-link nav-dropdown-btn" aria-expanded="false" aria-haspopup="true">Resources <span class="chevron">▾</span></button>
         <div class="nav-dropdown-menu">
           <a href="/resources" class="nav-dropdown-item">All Resources</a>
           <a href="/resources/developer-hub" class="nav-dropdown-item">Developer Hub</a>

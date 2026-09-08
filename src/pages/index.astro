@@ -71,7 +71,7 @@ const HOME_DESC =
       <!-- Centered Frosted Capsule Nav -->
       <nav class="nav-pill" aria-label="Primary">
         <div class="nav-dropdown-wrap">
-          <a href="/" class="nav-link">Product <span class="chevron">▾</span></a>
+          <button type="button" class="nav-link nav-dropdown-btn" aria-expanded="false" aria-haspopup="true">Product <span class="chevron">▾</span></button>
           <div class="nav-dropdown-menu">
             <a href="/#features" class="nav-dropdown-item">Features & Capabilities</a>
             <a href="/email-api" class="nav-dropdown-item">Agent Mail & API</a>
@@ -83,7 +83,7 @@ const HOME_DESC =
         <a href="/email-api" class="nav-link">Email API</a>
         <a href="/docs" class="nav-link">Docs</a>
         <div class="nav-dropdown-wrap">
-          <a href="/resources" class="nav-link">Resources <span class="chevron">▾</span></a>
+          <button type="button" class="nav-link nav-dropdown-btn" aria-expanded="false" aria-haspopup="true">Resources <span class="chevron">▾</span></button>
           <div class="nav-dropdown-menu">
             <a href="/resources" class="nav-dropdown-item">All Resources</a>
             <a href="/resources/developer-hub" class="nav-dropdown-item">Developer Hub</a>
@@ -869,6 +869,219 @@ const HOME_DESC =
       </div>
     </div>
   </footer>
+
+  
+  <script is:inline>
+    (function () {
+      function initAllInteractive() {
+        // 1. Navbar Dropdowns Click & Hover Toggle
+        var dropdownWraps = document.querySelectorAll('.nav-dropdown-wrap');
+        dropdownWraps.forEach(function (wrap) {
+          var btn = wrap.querySelector('.nav-dropdown-btn, .nav-link');
+          var menu = wrap.querySelector('.nav-dropdown-menu');
+          if (btn && menu) {
+            btn.addEventListener('click', function (e) {
+              e.preventDefault();
+              e.stopPropagation();
+              var wasOpen = wrap.classList.contains('open');
+              dropdownWraps.forEach(function (w) {
+                if (w !== wrap) {
+                  w.classList.remove('open');
+                  var otherBtn = w.querySelector('.nav-dropdown-btn, .nav-link');
+                  if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+                }
+              });
+              wrap.classList.toggle('open', !wasOpen);
+              btn.setAttribute('aria-expanded', !wasOpen ? 'true' : 'false');
+            });
+
+            menu.querySelectorAll('a').forEach(function (link) {
+              link.addEventListener('click', function () {
+                wrap.classList.remove('open');
+                btn.setAttribute('aria-expanded', 'false');
+              });
+            });
+          }
+        });
+
+        document.addEventListener('click', function (e) {
+          dropdownWraps.forEach(function (wrap) {
+            if (!wrap.contains(e.target)) {
+              wrap.classList.remove('open');
+              var btn = wrap.querySelector('.nav-dropdown-btn, .nav-link');
+              if (btn) btn.setAttribute('aria-expanded', 'false');
+            }
+          });
+        });
+
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') {
+            dropdownWraps.forEach(function (wrap) {
+              wrap.classList.remove('open');
+              var btn = wrap.querySelector('.nav-dropdown-btn, .nav-link');
+              if (btn) btn.setAttribute('aria-expanded', 'false');
+            });
+          }
+        });
+
+        // 2. Mobile Navigation Toggle
+        var burger = document.getElementById('nav-burger');
+        var mobileNav = document.getElementById('nav-mobile');
+        if (burger && mobileNav) {
+          burger.addEventListener('click', function (e) {
+            e.stopPropagation();
+            var isOpen = mobileNav.classList.toggle('open');
+            burger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+          });
+
+          document.addEventListener('click', function (e) {
+            if (mobileNav.classList.contains('open') && !mobileNav.contains(e.target) && e.target !== burger) {
+              mobileNav.classList.remove('open');
+              burger.setAttribute('aria-expanded', 'false');
+            }
+          });
+        }
+
+        // 3. Interactive Live Demo Form Submission
+        var demoForm = document.getElementById('hero-interactive-form');
+        var demoSubmitBtn = document.getElementById('demo-submit-button');
+        var liveLeadId = document.getElementById('live-lead-id');
+        var liveTimeVal = document.getElementById('live-time-value');
+        var liveLocVal = document.getElementById('live-loc-value');
+
+        function generateLeadId() {
+          var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+          var id = 'lead_01JX';
+          for (var i = 0; i < 14; i++) {
+            id += chars.charAt(Math.floor(Math.random() * chars.length));
+          }
+          return id;
+        }
+
+        function getFormattedCurrentTime() {
+          var now = new Date();
+          return now.toLocaleString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true,
+            timeZoneName: 'short'
+          });
+        }
+
+        if (demoForm && demoSubmitBtn) {
+          demoForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            var origText = demoSubmitBtn.innerHTML;
+            demoSubmitBtn.innerHTML = 'Submitting…';
+            demoSubmitBtn.disabled = true;
+            demoSubmitBtn.style.opacity = '0.7';
+
+            setTimeout(function () {
+              if (liveLeadId) liveLeadId.textContent = generateLeadId();
+              if (liveTimeVal) liveTimeVal.textContent = getFormattedCurrentTime();
+
+              demoSubmitBtn.innerHTML = '✓ Submitted!';
+              demoSubmitBtn.style.background = '#059669';
+              demoSubmitBtn.style.borderColor = '#059669';
+
+              var outputCard = document.getElementById('demo-output-display');
+              if (outputCard) {
+                outputCard.style.transform = 'scale(1.02)';
+                outputCard.style.boxShadow = '0 12px 32px rgba(5, 150, 105, 0.15)';
+                setTimeout(function () {
+                  outputCard.style.transform = 'scale(1)';
+                  outputCard.style.boxShadow = '';
+                }, 400);
+              }
+
+              setTimeout(function () {
+                demoSubmitBtn.innerHTML = origText;
+                demoSubmitBtn.style.background = '';
+                demoSubmitBtn.style.borderColor = '';
+                demoSubmitBtn.style.opacity = '1';
+                demoSubmitBtn.disabled = false;
+              }, 1800);
+            }, 600);
+          });
+        }
+
+        // 4. API Sandbox Console Tabs
+        var cTabBtns = document.querySelectorAll('.c-tab-btn');
+        var cTabPanels = document.querySelectorAll('.c-tab-panel');
+        cTabBtns.forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var tabKey = btn.dataset.tab;
+            cTabBtns.forEach(function (b) {
+              b.classList.toggle('active', b === btn);
+              b.setAttribute('aria-selected', b === btn ? 'true' : 'false');
+            });
+            cTabPanels.forEach(function (panel) {
+              panel.classList.toggle('active', panel.dataset.tab === tabKey);
+            });
+          });
+        });
+
+        // 5. API Sandbox Live Run Buttons
+        var runFormsBtn = document.getElementById('run-forms-btn');
+        var resFormsOut = document.getElementById('res-forms-output');
+        if (runFormsBtn && resFormsOut) {
+          runFormsBtn.addEventListener('click', function () {
+            runFormsBtn.textContent = 'Running…';
+            setTimeout(function () {
+              resFormsOut.innerHTML = '<span class="c-ok">{\n  "success": true,\n  "id": "' + generateLeadId() + '",\n  "country": "IN",\n  "city": "Bengaluru",\n  "timezone": "Asia/Kolkata",\n  "geo_stamp": "verified",\n  "created_at": "' + new Date().toISOString() + '"\n}</span>';
+              runFormsBtn.textContent = '▶ Run it live';
+            }, 400);
+          });
+        }
+
+        var runTestBtn = document.getElementById('run-test-btn');
+        var resTestOut = document.getElementById('res-test-output');
+        if (runTestBtn && resTestOut) {
+          runTestBtn.addEventListener('click', function () {
+            runTestBtn.textContent = 'Waiting for email…';
+            setTimeout(function () {
+              resTestOut.innerHTML = '<span class="c-ok">{\n  "status": "delivered",\n  "inbox": "test_01HXY2@test.ollastack.com",\n  "otp": "364921",\n  "extracted_code": "364921",\n  "assertion": "PASSED (took 142ms)"\n}</span>';
+              runTestBtn.textContent = '▶ Run it live';
+            }, 600);
+          });
+        }
+
+        // 6. Code Integration Snippet Tabs
+        var codeNavs = document.querySelectorAll('.code-tab-nav');
+        var codeContents = document.querySelectorAll('.code-tab-content');
+        codeNavs.forEach(function (nav) {
+          nav.addEventListener('click', function () {
+            var lang = nav.dataset.lang;
+            codeNavs.forEach(function (n) { n.classList.toggle('active', n === nav); });
+            codeContents.forEach(function (c) { c.classList.toggle('active', c.dataset.lang === lang); });
+          });
+        });
+
+        // 7. Test Inbox Copy Action
+        var copyInboxBtn = document.getElementById('btn-copy-test-inbox');
+        if (copyInboxBtn) {
+          copyInboxBtn.addEventListener('click', function () {
+            if (navigator.clipboard) {
+              navigator.clipboard.writeText('test_01HXY2@test.ollastack.com').then(function () {
+                var orig = copyInboxBtn.textContent;
+                copyInboxBtn.textContent = 'Copied!';
+                setTimeout(function () { copyInboxBtn.textContent = orig; }, 1500);
+              });
+            }
+          });
+        }
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initAllInteractive);
+      } else {
+        initAllInteractive();
+      }
+    })();
+  </script>
 
   <script src="/script.js" defer></script>
 
