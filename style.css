@@ -2097,54 +2097,155 @@ button {
   gap: 14px;
 }
 
+
+/* ============================================================
+   ATTRACTIVE NEO-BRUTALIST DEVELOPER FOOTER
+   ============================================================ */
 .site-footer {
-  border-top: 1px solid var(--border-color);
-  padding: 64px 0 40px 0;
-  background: #FFFFFF;
+  border-top: 2px solid #09090B;
+  padding: 56px 0 40px 0;
+  background: #FAFAFA;
+  position: relative;
 }
 
 .footer-layout {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
+  grid-template-columns: 1.8fr 1.1fr 1.1fr 1.1fr;
   gap: 48px;
 }
 
+.footer-brand-col {
+  padding-right: 20px;
+}
+
 .footer-tagline {
-  font-size: 0.88rem;
-  color: var(--text-sub);
+  font-size: 0.9rem;
+  color: #52525B;
   margin: 16px 0 20px 0;
   max-width: 320px;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 .footer-copyright {
-  font-size: 0.78rem;
-  color: var(--text-light);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #71717A;
+  font-family: var(--font-mono, monospace);
+}
+
+.footer-links-col {
+  display: flex;
+  flex-direction: column;
 }
 
 .footer-col-title {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--text-main);
-  margin-bottom: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #09090B;
+  margin-bottom: 20px;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
+  font-family: var(--font-mono, monospace);
+}
+
+.footer-col-title::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--brand-red, #DC2626);
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(220, 38, 38, 0.4);
 }
 
 .footer-links {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .footer-links a {
-  font-size: 0.88rem;
-  color: var(--text-sub);
-  transition: color 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: #52525B;
+  text-decoration: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 2px 0;
+}
+
+.footer-links a .footer-link-text {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+  display: inline-block;
+}
+
+.footer-links a .footer-arrow {
+  opacity: 0;
+  transform: translateX(-6px);
+  color: var(--brand-red, #DC2626);
+  font-weight: 800;
+  font-size: 0.85rem;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  line-height: 1;
 }
 
 .footer-links a:hover {
-  color: var(--brand-red);
+  color: #09090B;
+}
+
+.footer-links a:hover .footer-link-text {
+  color: #09090B;
+  transform: translateX(3px);
+  font-weight: 600;
+}
+
+.footer-links a:hover .footer-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.footer-chip {
+  font-size: 0.65rem;
+  font-weight: 800;
+  font-family: var(--font-mono, monospace);
+  padding: 2px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+}
+
+.footer-chip.chip-red {
+  background: #FEF2F2;
+  color: #DC2626;
+  border: 1px solid #FECACA;
+}
+
+.footer-chip.chip-dark {
+  background: #09090B;
+  color: #FFFFFF;
+}
+
+.footer-chip.chip-hiring {
+  background: #EFF6FF;
+  color: #2563EB;
+  border: 1px solid #BFDBFE;
 }
 
 /* ============================================================
@@ -2221,4 +2322,536 @@ button {
   .footer-layout {
     grid-template-columns: 1fr;
   }
+}
+
+
+/* ============================================================
+   CLEAN PRECISION ENHANCEMENTS (RED & BLACK NEO-BRUTALIST)
+   ============================================================ */
+
+/* 1. TIGHTENED VERTICAL SPACING (REMOVED EXCESS GAPS) */
+.hero-section {
+  padding: 20px 0 32px 0 !important;
+}
+
+.live-demo-section {
+  padding: 16px 0 24px 0 !important;
+}
+
+.one-platform-section {
+  padding: 28px 0 36px 0 !important;
+}
+
+.trusted-builders-section {
+  padding: 30px 0 34px 0 !important;
+  background: #FFFFFF !important;
+  border-top: 1px solid #E2E8F0 !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+}
+
+.api-console-section {
+  padding: 32px 0 36px 0 !important;
+}
+
+.code-integrations-section {
+  padding: 32px 0 36px 0 !important;
+}
+
+.onboarding-section, .core-features-section {
+  padding: 32px 0 36px 0 !important;
+}
+
+.pricing-section {
+  padding: 32px 0 36px 0 !important;
+}
+
+.cta-bottom-section {
+  padding: 28px 0 40px 0 !important;
+}
+
+.section-tag-row {
+  margin-bottom: 18px !important;
+}
+
+.platform-header-flex {
+  margin-bottom: 24px !important;
+}
+
+/* 2. CARD HEADERS WITH SQUIRCLE ICON BADGES */
+.card-ref-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1.5px solid #F1F5F9;
+}
+
+.card-ref-icon {
+  width: 38px;
+  height: 38px;
+  background: #000000;
+  color: #FFFFFF;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
+}
+
+.card-ref-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #000000;
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+
+/* 3. BOLD DARK BORDERS & SOLID DROP SHADOWS */
+.demo-interactive-grid {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 10px 0 !important;
+  gap: 32px !important;
+}
+
+.demo-input-card, .demo-output-card {
+  background: #FFFFFF !important;
+  border: 2px solid #000000 !important;
+  border-radius: 18px !important;
+  box-shadow: 5px 5px 0px #000000 !important;
+  padding: 30px 28px !important;
+  transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+.demo-input-card:hover, .demo-output-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 6px 6px 0px #000000 !important;
+}
+
+.input-label {
+  font-size: 0.92rem !important;
+  font-weight: 800 !important;
+  color: #000000 !important;
+  margin-bottom: 7px !important;
+}
+
+.input-control {
+  border: 1.8px solid #000000 !important;
+  border-radius: 10px !important;
+  color: #000000 !important;
+  font-weight: 500 !important;
+  padding: 11px 14px !important;
+  background: #FAFAFB !important;
+  transition: all 0.15s ease !important;
+}
+
+.input-control:focus {
+  background: #FFFFFF !important;
+  border-color: var(--brand-red) !important;
+  box-shadow: 3px 3px 0px #000000 !important;
+  outline: none !important;
+}
+
+.demo-submit-btn {
+  background: var(--brand-red) !important;
+  color: #FFFFFF !important;
+  border: 2px solid #000000 !important;
+  border-radius: 12px !important;
+  box-shadow: 4px 4px 0px #000000 !important;
+  font-weight: 800 !important;
+  font-size: 1rem !important;
+  margin-top: 18px !important;
+  padding: 13px 24px !important;
+  transition: all 0.12s ease !important;
+}
+
+.demo-submit-btn:hover {
+  background: var(--brand-red-hover) !important;
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0px #000000 !important;
+}
+
+.demo-submit-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px #000000 !important;
+}
+
+.capture-badge-wrap {
+  border: 1.5px solid #059669 !important;
+  box-shadow: 2px 2px 0px #059669 !important;
+  border-radius: 10px !important;
+  padding: 9px 14px !important;
+  margin-bottom: 18px !important;
+}
+
+.capture-meta-table {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.meta-row {
+  background: #F8FAFC !important;
+  border: 1.5px solid #E2E8F0 !important;
+  border-radius: 10px !important;
+  padding: 11px 14px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  transition: border-color 0.15s ease !important;
+}
+
+.meta-row:hover {
+  border-color: #000000 !important;
+}
+
+/* 4. RED & BLACK MIX EXPLORE ALL DOCS BUTTON */
+.btn-white-pill, .platform-header-action .btn {
+  background: #09090B !important;
+  color: #FFFFFF !important;
+  border: 2px solid #000000 !important;
+  border-radius: var(--radius-pill) !important;
+  padding: 10px 22px !important;
+  font-size: 0.92rem !important;
+  font-weight: 700 !important;
+  box-shadow: 3px 3px 0px #DC2626 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  cursor: pointer !important;
+}
+
+.btn-white-pill .arrow, .platform-header-action .btn .arrow {
+  color: #EF4444 !important;
+  font-weight: 800 !important;
+  transition: transform 0.15s ease, color 0.15s ease !important;
+}
+
+.btn-white-pill:hover, .platform-header-action .btn:hover {
+  background: #DC2626 !important;
+  color: #FFFFFF !important;
+  border-color: #000000 !important;
+  box-shadow: 4px 4px 0px #000000 !important;
+  transform: translate(-1px, -1px) !important;
+}
+
+.btn-white-pill:hover .arrow, .platform-header-action .btn:hover .arrow {
+  color: #FFFFFF !important;
+  transform: translateX(3px) !important;
+}
+
+.btn-white-pill:active, .platform-header-action .btn:active {
+  transform: translate(2px, 2px) !important;
+  box-shadow: 1px 1px 0px #000000 !important;
+}
+
+/* 5. CLEAN STATIC BUILDER CARDS (NO MOVEMENT) */
+.trusted-headline {
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #64748B;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.trusted-static-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.static-builder-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #FFFFFF;
+  border: 1.5px solid #000000;
+  border-radius: 12px;
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #000000;
+  box-shadow: 3px 3px 0px #000000;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
+  cursor: default;
+}
+
+.static-builder-card svg {
+  color: #000000;
+  transition: color 0.15s ease;
+}
+
+.static-builder-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0px #DC2626;
+  border-color: #000000;
+  color: #DC2626;
+}
+
+.static-builder-card:hover svg {
+  color: #DC2626;
+}
+
+/* 6. PLATFORM & OTHER SECTION CARDS */
+.platform-feature-card {
+  border: 2px solid #000000 !important;
+  border-radius: 18px !important;
+  box-shadow: 5px 5px 0px #000000 !important;
+  transition: all 0.15s ease !important;
+}
+
+.platform-feature-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 7px 7px 0px #000000 !important;
+}
+
+.step-card {
+  border: 2px solid #000000 !important;
+  border-radius: 18px !important;
+  box-shadow: 5px 5px 0px #000000 !important;
+}
+
+.pricing-plan-card {
+  border: 2px solid #000000 !important;
+  border-radius: 20px !important;
+  box-shadow: 5px 5px 0px #000000 !important;
+}
+
+.pricing-plan-card.featured-plan {
+  border: 2.5px solid var(--brand-red) !important;
+  box-shadow: 6px 6px 0px var(--brand-red) !important;
+}
+
+.feature-item-row {
+  border: 2px solid #000000 !important;
+  border-radius: 14px !important;
+  box-shadow: 4px 4px 0px #000000 !important;
+}
+
+.console-box, .code-tabs-box {
+  border: 2px solid #000000 !important;
+  box-shadow: 6px 6px 0px #000000 !important;
+  border-radius: 18px !important;
+}
+
+/* HIGHLIGHTED 'TRUSTED BY BUILDERS' TITLE */
+.trusted-headline-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 22px;
+}
+
+.trusted-headline-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #09090B;
+  color: #FFFFFF;
+  border: 1.8px solid #000000;
+  border-radius: 999px;
+  padding: 6px 18px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 3px 3px 0px #DC2626;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.trusted-headline-chip:hover {
+  transform: translateY(-1px);
+  box-shadow: 4px 4px 0px #DC2626;
+}
+
+.trusted-chip-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #DC2626;
+  box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.3);
+}
+
+
+
+
+/* ============================================================
+   CLEAN WHITE NEO-BRUTALIST "WHAT YOU CAPTURE" OUTPUT CARD
+   ============================================================ */
+.demo-output-card {
+  background: #FFFFFF !important;
+  color: #09090B !important;
+  border: 2px solid #000000 !important;
+  box-shadow: 5px 5px 0px #000000 !important;
+  border-radius: 16px !important;
+  padding: 28px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+}
+
+.demo-output-card .card-ref-title {
+  color: #09090B !important;
+  font-weight: 800 !important;
+  font-size: 1.25rem !important;
+}
+
+.demo-output-card .card-ref-icon {
+  background: #09090B !important;
+  border: 2px solid #000000 !important;
+  border-radius: 10px !important;
+  color: #FFFFFF !important;
+}
+
+.demo-output-card .capture-badge-wrap {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: #ECFDF5 !important;
+  color: #047857 !important;
+  border: 1.5px solid #059669 !important;
+  box-shadow: 2px 2px 0px #059669 !important;
+  padding: 10px 16px !important;
+  border-radius: 10px !important;
+  font-size: 0.92rem !important;
+  font-weight: 700 !important;
+  margin-bottom: 16px !important;
+}
+
+.demo-output-card .check-icon {
+  font-weight: 900 !important;
+  color: #059669 !important;
+}
+
+.demo-output-card .capture-meta-table {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  margin-bottom: 20px !important;
+}
+
+.demo-output-card .meta-row {
+  background: #F8FAFC !important;
+  border: 1.5px solid #000000 !important;
+  box-shadow: 2px 2px 0px #000000 !important;
+  border-radius: 10px !important;
+  padding: 11px 14px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  transition: all 0.15s ease !important;
+}
+
+.demo-output-card .meta-row:hover {
+  transform: translate(-1px, -1px) !important;
+  box-shadow: 3px 3px 0px #000000 !important;
+}
+
+.demo-output-card .meta-col-label {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  color: #09090B !important;
+  font-weight: 600 !important;
+  font-size: 0.92rem !important;
+}
+
+.demo-output-card .meta-col-value {
+  font-weight: 700 !important;
+  color: #09090B !important;
+}
+
+.demo-output-card .location-pill {
+  background: #F1F5F9 !important;
+  border: 1px solid #CBD5E1 !important;
+  color: #0F172A !important;
+  padding: 4px 10px !important;
+  border-radius: 6px !important;
+  font-size: 0.88rem !important;
+  font-weight: 700 !important;
+}
+
+.demo-output-card #live-time-value {
+  color: #09090B !important;
+  font-size: 0.9rem !important;
+  font-weight: 700 !important;
+}
+
+.demo-output-card .status-received {
+  color: #047857 !important;
+  background: #D1FAE5 !important;
+  border: 1px solid #6EE7B7 !important;
+  padding: 4px 10px !important;
+  border-radius: 6px !important;
+  font-size: 0.85rem !important;
+  font-weight: 700 !important;
+}
+
+.demo-output-card #live-lead-id {
+  font-family: var(--font-mono, monospace) !important;
+  color: #DC2626 !important;
+  background: #FEF2F2 !important;
+  border: 1px solid #FECACA !important;
+  padding: 4px 10px !important;
+  border-radius: 6px !important;
+  font-size: 0.84rem !important;
+  font-weight: 700 !important;
+}
+
+.demo-output-card .submission-footer-link {
+  margin-top: 6px !important;
+  padding-top: 14px !important;
+  border-top: 1px solid #E2E8F0 !important;
+  text-align: center !important;
+}
+
+.demo-output-card .btn-submission-view {
+  color: #DC2626 !important;
+  font-weight: 700 !important;
+  font-size: 0.92rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  transition: all 0.2s ease !important;
+  text-decoration: none !important;
+}
+
+.demo-output-card .btn-submission-view:hover {
+  color: #B91C1C !important;
+  transform: translateX(3px) !important;
+}
+
+
+/* ============================================================
+   ALL STEP NUMBERS HIGHLIGHTED IN BRAND RED (LIKE 3)
+   ============================================================ */
+.step-badge-num {
+  width: 38px !important;
+  height: 38px !important;
+  background: #FEF2F2 !important;
+  color: #DC2626 !important;
+  border: 1.5px solid #FCA5A5 !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-weight: 800 !important;
+  font-size: 0.95rem !important;
+  margin-bottom: 16px !important;
+  transition: all 0.2s ease !important;
+}
+
+.step-card:hover .step-badge-num {
+  transform: scale(1.08) !important;
+  background: #FEE2E2 !important;
+  border-color: #EF4444 !important;
 }
