@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 230 52" fill="none" role="img" aria-label="ollastack">
-  <!-- ================= 3D ISOMETRIC STACK EMBLEM (ENLARGED) ================= -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 225 52" fill="none" role="img" aria-label="ollastack">
+  <!-- ================= 3D ISOMETRIC STACK EMBLEM ================= -->
   <g transform="translate(1, 0) scale(1.1)">
     <!-- LAYER 3: BOTTOM (DEEP INK / BLACK) -->
     <!-- Top Face -->
@@ -22,8 +22,8 @@
     <path d="M 24 16 C 23.2 15.6, 17 12.5, 16 12 C 15.2 11.5, 15.2 10.5, 16 10 C 17 9.5, 23.2 6.4, 24 6 C 24.8 5.6, 25.8 5.6, 26.6 6 C 27.4 6.4, 33.6 9.5, 34.6 10 C 35.4 10.5, 35.4 11.5, 34.6 12 C 33.6 12.5, 27.4 15.6, 26.6 16 C 25.8 16.4, 24.8 16.4, 24 16 Z" fill="#FFFFFF"/>
   </g>
 
-  <!-- ================= WORDMARK TYPOGRAPHY (ENLARGED) ================= -->
-  <text x="60" y="36" 
+  <!-- ================= WORDMARK TYPOGRAPHY ================= -->
+  <text x="56" y="36" 
         font-family="'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" 
         font-size="34" 
         font-weight="800" 
