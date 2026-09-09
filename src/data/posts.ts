@@ -11,6 +11,7 @@ export interface PostMeta {
 
 export const posts: PostMeta[] = [
   {
+<<<<<<< HEAD
     slug: "what-is-an-agent-email-api",
     title: "What Is an Agent Email API and Why Does It Matter for AI Workflows?",
     description:
@@ -19,6 +20,16 @@ export const posts: PostMeta[] = [
     readingTime: "21 min read",
     category: "AI Agents",
     categorySlug: "ai-agents",
+=======
+    slug: "form-backend-vs-form-builder",
+    title: "Form Backend vs Form Builder: What Developers Should Choose in 2026",
+    description:
+      "Compare form backends and form builders in 2026. Learn how APIs, customization, security, webhooks, scalability, AI agents, and developer control affect which option you should choose.",
+    date: "2026-08-27",
+    readingTime: "18 min read",
+    category: "Comparisons & Migrations",
+    categorySlug: "comparisons",
+>>>>>>> 86ba6b3d1a267e4b88611993627cec1d27036dad
     featured: true,
   },
   {

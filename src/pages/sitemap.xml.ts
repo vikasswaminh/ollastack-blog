@@ -41,7 +41,7 @@ function changefreqFor(url: string): "weekly" | "monthly" {
 
 // Better lastmod for the standalone .astro blog posts, from their post metadata.
 const postDate: Record<string, string> = Object.fromEntries(
-  posts.map((p) => [`/blog/${p.slug}`, p.date])
+  posts.map((p) => [`/blog${p.slug}`, p.date])
 );
 
 const staticEntries: Entry[] = Object.keys(pageFiles)
@@ -51,14 +51,14 @@ const staticEntries: Entry[] = Object.keys(pageFiles)
     url,
     lastmod: postDate[url] ?? TODAY,
     changefreq: changefreqFor(url),
-    priority: url.startsWith("/blog/") ? "0.7" : priorityFor(url),
+    priority: url.startsWith("/blog") ? "0.7" : priorityFor(url),
   }));
 
 // Markdown blog posts (not .astro files, so not in the glob above).
 const collectionBlog: Entry[] = (
   await getCollection("blog", ({ data }) => data.draft !== true)
 ).map((p) => ({
-  url: `/blog/${p.slug}`,
+  url: `/blog${p.slug}`,
   lastmod: (p.data.updated ?? p.data.date).toISOString().slice(0, 10),
   changefreq: "monthly",
   priority: "0.7",

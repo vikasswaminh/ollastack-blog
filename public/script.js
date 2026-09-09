@@ -124,6 +124,65 @@
     initNodeNetwork();
   }
 
+  
+  // 0. Navbar Dropdown Click & Hover Toggle
+  function setupNavDropdowns() {
+    const dropdownWraps = document.querySelectorAll('.nav-dropdown-wrap');
+    dropdownWraps.forEach(wrap => {
+      const btn = wrap.querySelector('.nav-dropdown-btn, .nav-link');
+      const menu = wrap.querySelector('.nav-dropdown-menu');
+      if (btn && menu) {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const wasOpen = wrap.classList.contains('open');
+          dropdownWraps.forEach(w => {
+            if (w !== wrap) {
+              w.classList.remove('open');
+              const otherBtn = w.querySelector('.nav-dropdown-btn');
+              if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+            }
+          });
+          wrap.classList.toggle('open', !wasOpen);
+          btn.setAttribute('aria-expanded', !wasOpen ? 'true' : 'false');
+        });
+
+        menu.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            wrap.classList.remove('open');
+            btn.setAttribute('aria-expanded', 'false');
+          });
+        });
+      }
+    });
+
+    document.addEventListener('click', (e) => {
+      dropdownWraps.forEach(wrap => {
+        if (!wrap.contains(e.target)) {
+          wrap.classList.remove('open');
+          const btn = wrap.querySelector('.nav-dropdown-btn');
+          if (btn) btn.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        dropdownWraps.forEach(wrap => {
+          wrap.classList.remove('open');
+          const btn = wrap.querySelector('.nav-dropdown-btn');
+          if (btn) btn.setAttribute('aria-expanded', 'false');
+        });
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupNavDropdowns);
+  } else {
+    setupNavDropdowns();
+  }
+
   // 1. Mobile Navigation Toggle
   const burger = document.getElementById('nav-burger');
   const mobileNav = document.getElementById('nav-mobile');
