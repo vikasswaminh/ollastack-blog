@@ -11,7 +11,27 @@ export interface PostMeta {
 
 export const posts: PostMeta[] = [
   {
-<<<<<<< HEAD
+    slug: "form-submission-apis-explained-when-to-use-them-and-why-they-matter",
+    title: "Form Submission APIs Explained: When to Use Them and Why They Matter",
+    description:
+      "A complete guide to form submission APIs. Learn what they are, how they work, when to use one instead of a form builder, and why they matter for developers, SaaS products, and AI agents in 2026.",
+    date: "2026-09-09",
+    readingTime: "22 min read",
+    category: "Forms & Backend",
+    categorySlug: "forms-backend",
+    featured: true,
+  },
+  {
+    slug: "what-is-a-headless-form-a-simple-guide-to-modern-developers",
+    title: "What Is a Headless Form? A Simple Guide to Modern Developers",
+    description:
+      "A plain English breakdown of headless forms, what they are, how they work, why developers are switching to them, and how they compare to traditional forms and form builders in 2026.",
+    date: "2026-09-08",
+    readingTime: "23 min read",
+    category: "Forms & Backend",
+    categorySlug: "forms-backend",
+  },
+  {
     slug: "what-is-an-agent-email-api",
     title: "What Is an Agent Email API and Why Does It Matter for AI Workflows?",
     description:
@@ -20,7 +40,8 @@ export const posts: PostMeta[] = [
     readingTime: "21 min read",
     category: "AI Agents",
     categorySlug: "ai-agents",
-=======
+  },
+  {
     slug: "form-backend-vs-form-builder",
     title: "Form Backend vs Form Builder: What Developers Should Choose in 2026",
     description:
@@ -29,8 +50,6 @@ export const posts: PostMeta[] = [
     readingTime: "18 min read",
     category: "Comparisons & Migrations",
     categorySlug: "comparisons",
->>>>>>> 86ba6b3d1a267e4b88611993627cec1d27036dad
-    featured: true,
   },
   {
     slug: "how-to-automate-otp-email-testing-in-ci-cd-pipelines",
